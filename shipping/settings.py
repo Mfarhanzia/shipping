@@ -75,16 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shipping.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+
 
 DATABASES = {
 
@@ -97,7 +91,6 @@ DATABASES = {
             'PORT': '3306',
         }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -117,14 +110,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 LANGUAGE_CODE = 'en-us'
-
 
 TIME_ZONE = 'UTC'
 # TIME_ZONE = 'Asia/Karachi'
@@ -154,25 +145,15 @@ LOGOUT_REDIRECT_URL = 'login'
 PHONENUMBER_DEFAULT_REGION = 'US'
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 
-
 ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
-
 
 # email credential
 Email_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.environ.get('DB_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD =   "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"
-# EMAIL_HOST_PASSWORD = "1Hiq1KADSuuNYuZa69oG5A"
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-# EMAIL_PORT = 465
-DEFAULT_FROM_EMAIL = 'farhan71727@gmail.com'
 EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "mrumah52@gmail.com"
+EMAIL_HOST_PASSWORD = "mqvhllzexgokwjcq"
+
 # Activate Django heroku
 django_heroku.settings(locals())

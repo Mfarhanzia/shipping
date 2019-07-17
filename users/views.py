@@ -35,10 +35,9 @@ def specialuser_signup(request):
                 'uid': userid,
                 'token':account_activation_token.make_token(user),
                 })
-            to_email = "farhan71727@gmail.com"
-            email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
+            to_email = "bilalvasl@gmail.com"
+            email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc="farhan71727@gmail.com")
             email.content_subtype = "html"
-            # email.attach_file()
             # email.send(fail_silently=True)
             email.send()
             messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
@@ -90,7 +89,7 @@ def admincheck(request,uidb64):
                 })
             to_email = user.email
             email =EmailMessage(subject=mail_subject, body=message,from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
-
+            
             email.content_subtype = "html"
             email.send(fail_silently=True)  # sending email with link
 
