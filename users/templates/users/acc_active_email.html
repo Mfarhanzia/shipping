@@ -1,0 +1,69 @@
+{% load static %}
+{% autoescape on %}
+
+<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="min-width:800px;margin-top: 60px;">
+	<tbody>
+		<tr>
+			<td align="center" width="100%">
+				<table align="center" width="800" border="0" bgcolor="#F2F2F2" cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr
+							style='    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
+							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
+								<br />
+								<table>
+									<tbody>
+										<tr>
+											<td><img src="http://{{ domain }}{% static 'users/imgs/arc_logo.png' %}"
+													width="120" height="90" border="0"></td>
+											<td style="padding-left: 60px;""><h1 class=" col text-center c-header"
+												style="text-align: center !important;font-weight: 700;">Account
+												Activation Request</h1>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<br />
+								<span>
+									Hi <b>Admin</a></b>,
+								</span>
+
+								<br /><br />
+
+								<span>
+									It is pleasant to inform you that Mr.{{ user.f_name }} {{user.l_name}} submit a
+									request for activation of their account.
+								</span>
+							</td>
+						</tr>
+						<tr
+							style='font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
+							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
+								<br />
+								<span>
+									<b>To activate </b> his/her account, Please <a
+										href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}"
+										target="_blank">Click here</a>.
+								</span>
+								<br /><br />
+								<span>
+									If Link does not work then open this Url in your browser.<br>
+									http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+								</span>
+								<br /><br />
+								<span>
+									Thanks,<br /> <b>Team Architect</b>
+								</span>
+								<br /> <br /> <br />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+{% endautoescape %}

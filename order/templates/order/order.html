@@ -1,0 +1,48 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for errors in form.non_field.errors %}
+            <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+            {% endfor%}
+            <form method="POST" class="boxshadow2">
+                <h1 class="text-center">Order Details</h1>
+                <hr class="ml-4">
+                {% csrf_token %}
+                {% for field in form %}
+                {% if field == form.letter_of_credit or field == form.line_of_credit or field == form.learn_about_electric_drive or field == form.septic_infrastructure or field == form.installation_septic_infrastructure or field == form.when_to_order %}
+                <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
+                    <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+                    {{field}}
+                </div>
+
+                {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_climate_area or field == form.type_of_development%}
+                <div id="id_checkbox_field_{{forloop.counter}}" class="ml-4 check_ul" style="display: block;">
+                    {{field.label}}
+                    <h1></h1>
+                    {{field}}
+                </div>
+
+                {% else %}
+                <div id="id_{{forloop.counter}}" class="md-form">
+                    
+                    <i class="prefix"> </i>
+                    <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}</label><br>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="form-group fa-pull-right">
+                    <button class="btn btn-outline-info btn-lg" type="submit">SignUp</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

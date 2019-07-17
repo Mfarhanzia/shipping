@@ -1,0 +1,41 @@
+{% extends "users/base.html" %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for errors in form.non_field.errors %}
+            <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+            {% endfor%}
+            <form method="POST" class="boxshadow2">
+                {% csrf_token %}
+                <h1 class="text-center">Registeration</h1>
+                <hr class="ml-4">
+                {% for field in form %}
+
+                    {% if field == form.user_type %}
+                    <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
+                            <label class="label" for="{{field.id_for_label}}">{{field.label}}:</label>
+                            {{field}}
+                        </div>
+
+                {%else%}
+                    <div id="id_{{forloop.counter}}" class="md-form">
+                        <i class="prefix"> </i>
+                        <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                            data-success="right">{{field.label}}</label><br>
+                        {{field}}
+                        {% for error in field.errors %}
+                        <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                        {% endfor %}
+                    </div>
+
+                    {% endif %}
+                {% endfor %}
+                <div class="form-group fa-pull-right">
+                    <button class="btn btn-outline-info btn-lg" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

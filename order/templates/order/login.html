@@ -1,0 +1,56 @@
+{% extends "users/base.html"%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="sm-padding"></div>
+<div class="container">
+    <div class="row ">
+        <div class="col-md-12">
+            <div class="content-section">
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Log In</legend>
+                        
+                        <div class="md-form">
+                            <i class="fas fa-user prefix"></i>
+                            <label for="{{form.username.id_for_label}}" class="label" data-error="wrong" data-success="right">Username</label>
+                            <br>
+                            {{form.username}}
+                        </div>
+                        
+                        <div class="md-form">
+                            <i class="fas fa-lock prefix"></i>
+                            <label for="{{form.password.id_for_label}}" class="label" data-error="wrong" data-success="right">Your Password</label>
+                            <br>
+                            {{form.password}}
+                        </div>
+                    </fieldset>
+<br>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Login</button>
+                    </div>
+
+
+                </form>
+                <!-- <form action="#">
+                    <p>
+                        <label>
+                            <input type="checkbox" checked="checked" />
+                            <span>Yellow</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in" checked="checked" />
+                            <span>Filled in</span>
+                        </label>
+                    </p>
+                </form> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                
+            <table class="table table-striped animate zoomIn">
+                <tr>
+                <th>#</th><th>Company Name</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone Number</th><th>When to Order</th><th>Line of Credit</th></tr>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{order.company_name}}</td>
+                        <td>{{order.f_name}}</td>
+                        <td>{{order.l_name}}</td>
+                        <td>{{order.email}}</td>
+                        <td>{{order.phone_number}}</td>
+                        <td>{{order.when_to_order}}</td>
+                        <td>{{order.how_much_line_of_credit}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <h1 >Content</h1>
+    <div class="row md-padding ">
+        {% for img in image %}
+            {% if img.watermarked_image  %}
+
+            <div class="col-md-6 border-bottom">
+                <img style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
+            </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+</div>
+<script>
+var time = {{time|safe}};
+var uid = "{{uid|safe}}";
+</script>
+{% endblock%}

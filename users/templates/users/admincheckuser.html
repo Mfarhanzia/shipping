@@ -1,0 +1,45 @@
+{% extends "users/base.html" %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST">
+                <table style="font-size: 20px !important;" class="table table-borderless">
+                    <!-- <thead class=""> -->
+                    <th>User Type</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Comapny Name</th>
+                    <th>Title</th>
+                    <th>Phone number</th>
+                    <!-- </thead> -->
+                    <tr>
+                        <td>{{user.user_type}}</td>
+                        <td>{{user.f_name}}</td>
+                        <td>{{user.l_name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.title}}</td>
+                        <td>{{user.company_name}}</td>
+                        <td>{{user.phone_number}}</td>
+                    </tr>
+                </table>
+                <h2></h2>
+                <h2></h2>
+
+                {% csrf_token %}
+                <section title=".slideThree">
+                    <!-- .slideThree -->
+                    <div class="slideThree">
+                        <input type="checkbox" value="True" id="slideThree" name="checkbox" />
+                        <label for="slideThree"></label>
+                    </div>
+                    <button class="btn-primary btn fa-pull-right" type="submit">Activate</button>
+                    <!-- end .slideThree -->
+                </section>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

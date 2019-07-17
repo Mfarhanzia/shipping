@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+
+	<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<!-- boostrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- custom css -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
+
+	<!-- Material Design Bootstrap -->
+	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
+	<!-- animation -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" />
+
+</head>
+
+<body>
+	<!--Navbar-->
+	<div class="container-fluid white-background">
+		<div class="container ">
+			<nav class="navbar navbar-expand-lg white-background navbar-dark  primary-colo">
+
+				<!-- Navbar brand -->
+				<div class="logo">
+					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
+						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">
+							<div data-packed="true" style="width: 96px; pointer-events: none;" class="txtNew"
+								id="comp-ir1r4w4s">
+								<h1 class="font_0" style="line-height:0.3em;">
+									<a href="https://vham287.wixsite.com/mysite" target="_self">
+										<span style="letter-spacing:7px;">
+											<span class="color_15">ARCHI</span>
+										</span>
+										<span style="letter-spacing:7px;">
+											<span class="color_15">TECTS</span>
+										</span>
+									</a>
+								</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+
+				<!-- Collapse button -->
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+					aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- Collapsible content -->
+				<div class="collapse navbar-collapse" id="basicExampleNav">
+
+					<!-- Links -->
+					<ul class="navbar-nav ml-auto ">
+						<li class="nav-item">
+							<a class="nav-link" href="//vham287.wixsite.com/mysite">Home
+								<span class="sr-only">(current)</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="//vham287.wixsite.com/mysite/product">Product</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="//vham287.wixsite.com/mysite/about">About</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="//vham287.wixsite.com/mysite/news">News</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="/">Order</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="//vham287.wixsite.com/mysite/contact">Contact</a>
+						</li>
+						{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="/view-order">View Order</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/logout">LogOut</a>
+						</li>
+						{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/register">Register</a>
+						</li>
+						{% endif %}
+					</ul>
+
+				</div>
+				<!-- Collapsible content -->
+
+			</nav>
+		</div>
+	</div>
+	<div class="col-md-12">
+		{% if messages %}
+		{% for message in messages %}
+		<div class="text-center alert alert-{{ message.tags }}">
+			{{ message }}
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+	<div class="md-padding ">
+		{% block  content %}
+		{% endblock %}
+
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 col-sm-12" style="width: 100%;height: 378px;background-color:#2F2E2E; ">
+				<div class="row" style="">
+					<div class="col-md-4 col-12 f-header">
+						<h1 style="font-size: 45px !important;margin-bottom: -8px;">BE IN</h1>
+						<h1 style="font-size: 45px !important;margin-bottom: 0px;">TOUCH</h1>
+
+					</div>
+					<div class="col-md-4 col-12"
+						style="padding-top:30px ;color: #a0a09f;    font-family: normal normal normal 16px/1.4em futura-lt-w01-light,sans-serif;">
+						<span>12345 Beach Blvd., Stanton, CA 90680 </span>
+						<br>
+						<span>Tel 714-363-1287</span>
+						<br>
+						<span>© 2023 by Architects. Proudly created with Wix.com</span>
+					</div>
+
+					<div class="col-md-4 col-12 social-icon">
+						<a href="https://www.facebook.com/wix" class="fb-ic mr-3" role="button"><i
+								class="fab fa-lg fa-facebook-f"></i></a>
+						<a href="https://twitter.com/wix" class="tw-ic mr-3" role="button"><i
+								class="fab fa-lg fa-twitter"></i></a>
+						<a href="https://www.instagram.com/wix/" class="ins-ic mr-3" role="button"><i
+								class="fab fa-lg fa-instagram"></i></a>
+					</div>
+				</div>
+				<!-- 
+			<table align="center" width="50%" cellspacing="0" cellpadding="0" style="margin-top: 50px;" >
+					<tbody style="color: white;">
+						<tr>
+							<td  height="6" style="text-align: left;">
+								<h1>BE IN</h1>
+								<h1>TOUCH</h1>
+								<h5 class="font_5" style="line-height:1.1em;"><span class="color_11" data-selected="true" data-label-id="0">BE IN&nbsp;<br>
+TOUCH</span></h5>
+							 </td>
+							<td style="color: #a0a09f;font-family: futura-lt-w01-light;text-align: left;">
+								<p>500 Terry Francois St San Francisco, CA 94158 </p>
+								
+								<p>Tel 123-456-7890, Fax 123-456-7890 </p>
+								
+								<p>© 2023 by Architects. Proudly created with Wix.com</p>
+							</td>
+						</tr>
+					</tbody>
+				</table> -->
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>
+	<!-- <script type="text/javascript" src="{% static 'users/js/bootstrap.min.js' %}"></script> -->
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="{% static 'MBD/js/mdb.min.js' %}"></script>
+</body>
+
+</html>
