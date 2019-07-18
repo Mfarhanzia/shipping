@@ -15,6 +15,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 #views
 
+
+def home_view(request):
+    return render(request, 'users/home.html')
+
+
 def specialuser_signup(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 

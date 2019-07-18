@@ -1,9 +1,11 @@
 from django.urls import path
 from django.conf.urls import url
-from .views import specialuser_signup, activate, admincheck
+from .views import specialuser_signup, activate, admincheck, home_view
 
 urlpatterns = [
     path('register/', specialuser_signup ,name='register'),
+
+    path('', home_view, name="home"),
 
     url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),
 

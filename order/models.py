@@ -28,7 +28,7 @@ class Order(models.Model):
 
     Type_Of_Climate_Area = (
 
-        ('Heavy Snow Load','Heavy Snow LoadHeavy Snow Load'),
+        ('Heavy Snow Load','Heavy Snow Load'),
         ('High Wind','High Wind'),
         ('Tornado','Tornado'),
         ('Earthquake','Earthquake'),
@@ -57,14 +57,14 @@ class Order(models.Model):
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-    how_much_letter_of_credit= models.PositiveIntegerField("How much Letter of Credit?", blank=True, null=True)
+    how_much_letter_of_credit= models.PositiveIntegerField("What is the value of your Letter of Credit (in USD)?", blank=True, null=True)
     
     line_of_credit = models.CharField("Do you have a Line of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-    how_much_line_of_credit= models.PositiveIntegerField("How much Line of Credit?", blank=True, null=True)
+    how_much_line_of_credit= models.PositiveIntegerField("What is the currently unused amount in your Line of Credit?", blank=True, null=True)
 
     When_To_Order =(
-        ('urgent','Urgent(within 30days)'),
-        ('other','other'),
+        ('urgent','Urgent(within 30 days)'),
+        ('other','Other'),
         )
 
     when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None)

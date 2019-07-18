@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='order/login.html',redirect_authenticated_user=True), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
-    path('',OrderCreateView.as_view(), name="order"),
+    path('order',OrderCreateView.as_view(), name="order"),
     
     url(r'^view-order/(?P<uidb64>[0-9A-Za-z_\-]+)/$',specialuser_ViewOrder, name="specialuser_ViewOrder"),
 

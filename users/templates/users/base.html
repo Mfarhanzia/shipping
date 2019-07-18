@@ -18,7 +18,8 @@
 
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
-
+	<!-- fonts -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
 	<!-- animation -->
@@ -66,30 +67,15 @@
 					<!-- Links -->
 					<ul class="navbar-nav ml-auto ">
 						<li class="nav-item">
-							<a class="nav-link" href="//vham287.wixsite.com/mysite">Home
+							<a class="nav-link" href="{% url 'home' %}">Home
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" href="//vham287.wixsite.com/mysite/product">Product</a>
+							<a class="nav-link" href="{% url 'order' %}">Order</a>
 						</li>
 
-						<li class="nav-item">
-							<a class="nav-link" href="//vham287.wixsite.com/mysite/about">About</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link" href="//vham287.wixsite.com/mysite/news">News</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link" href="/">Order</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link" href="//vham287.wixsite.com/mysite/contact">Contact</a>
-						</li>
 						{% if user.is_authenticated %}
 						<li class="nav-item">
 							<a class="nav-link" href="/view-order">View Order</a>
@@ -125,8 +111,10 @@
 	<div class="md-padding ">
 		{% block  content %}
 		{% endblock %}
-
 	</div>
+	<!-- homepage -->
+	{% block  homepage %}
+	{% endblock %}
 
 	<div class="container-fluid">
 		<div class="row">
@@ -142,8 +130,6 @@
 						<span>12345 Beach Blvd., Stanton, CA 90680 </span>
 						<br>
 						<span>Tel 714-363-1287</span>
-						<br>
-						<span>© 2023 by Architects. Proudly created with Wix.com</span>
 					</div>
 
 					<div class="col-md-4 col-12 social-icon">
@@ -155,26 +141,6 @@
 								class="fab fa-lg fa-instagram"></i></a>
 					</div>
 				</div>
-				<!-- 
-			<table align="center" width="50%" cellspacing="0" cellpadding="0" style="margin-top: 50px;" >
-					<tbody style="color: white;">
-						<tr>
-							<td  height="6" style="text-align: left;">
-								<h1>BE IN</h1>
-								<h1>TOUCH</h1>
-								<h5 class="font_5" style="line-height:1.1em;"><span class="color_11" data-selected="true" data-label-id="0">BE IN&nbsp;<br>
-TOUCH</span></h5>
-							 </td>
-							<td style="color: #a0a09f;font-family: futura-lt-w01-light;text-align: left;">
-								<p>500 Terry Francois St San Francisco, CA 94158 </p>
-								
-								<p>Tel 123-456-7890, Fax 123-456-7890 </p>
-								
-								<p>© 2023 by Architects. Proudly created with Wix.com</p>
-							</td>
-						</tr>
-					</tbody>
-				</table> -->
 			</div>
 		</div>
 	</div>
@@ -185,15 +151,13 @@ TOUCH</span></h5>
 	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>
-	<!-- <script type="text/javascript" src="{% static 'users/js/bootstrap.min.js' %}"></script> -->
-	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="{% static 'MBD/js/mdb.min.js' %}"></script>
+	
 </body>
 
 </html>

@@ -211,3 +211,25 @@ form {
 }
 
 /* end .slideThree */
+
+.c-banner {
+  margin-top: 0px !important;
+  margin-bottom: 80px !important;
+}
+.content-2 {
+  margin-top: 100px !important;
+  margin-bottom: 100px !important;
+}
+.font_8 {
+  font: normal normal normal 17px futura_ltregular,sans-serif;
+  color: #2F2E2E;
+}
+.font_3 {
+  font: normal normal normal 60px/1.4em didot-w01-italic,serif;
+  color: #2F2E2E !important;
+}
+.l-hieght {
+  line-height: 3px !important;
+}
+
+/* home */
