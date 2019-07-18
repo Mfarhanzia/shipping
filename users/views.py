@@ -49,7 +49,7 @@ def specialuser_signup(request):
             return redirect('/')
     else:
         form = SpecialUserForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
 
 def activate(request, uidb64, token):
     """
@@ -106,5 +106,5 @@ def admincheck(request,uidb64):
     else:
         id = utils.decrypt(uidb64)      # decrypting user id
         user = SpecialUser.objects.get(pk=id)
-        return render(request, 'users/admincheckuser.html',{'user' : user})
+        return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
         

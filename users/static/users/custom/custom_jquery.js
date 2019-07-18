@@ -27,6 +27,11 @@
       $("ul[id=id_septic_infrastructure] > li:first").remove();
       $("ul[id=id_installation_septic_infrastructure] > li:first").remove();
 
+      
+      // add dashes to phone number
+      $('#id_phone_number').keyup(function(){
+        $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
+      });
 
     // $("#id_letter_of_credit").attr('autocomplete', False);
     

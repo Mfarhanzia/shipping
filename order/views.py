@@ -150,5 +150,5 @@ def specialuser_ViewOrder(request,time,uidb64):
     image = Photo.objects.all()
     qs = Order.objects.order_by('-when_to_order','-how_much_line_of_credit')
     
-    return render(request, 'order/view_orders.html', {'orders':qs,'time':int(time),'uid': uidb64, 'image':image })
+    return render(request, 'order/view_orders.html', {'orders':qs,'time':int(time),'uid': uidb64, 'image':image, 'title': 'Orders' })
     
