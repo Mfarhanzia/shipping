@@ -135,11 +135,6 @@
 		}
 		setInterval(counter,1000,...input);
 
-
-
-
-
-
   }); // end DOM ready
   
 })(jQuery); // end jQuery
