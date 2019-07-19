@@ -123,6 +123,7 @@
 	<!-- homepage -->
 	{% block  homepage %}
 	{% endblock %}
+	<!-- jquery -->
 
 	<div class="container-fluid">
 		<div class="row">
@@ -165,7 +166,8 @@
 
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="{% static 'MBD/js/mdb.min.js' %}"></script>
-	
+	{% block  js %}
+	{% endblock %}
 </body>
 
 </html>

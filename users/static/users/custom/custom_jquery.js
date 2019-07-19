@@ -118,22 +118,30 @@
       'border':'none',
       'box-shadow':'none'
     });
+    // t
 
-    let input = [time,uid]
+    // let input = [time,uid]
+ 
+		// function counter(time_left,uid) {
+    //   console.log('trying')
+		// 	var expiryTime = time_left;
+		// 	var time = $('.counter').val();
+		// 	time = parseInt
+		// 	time = time + 1;
+		// 	if(time > expiryTime) {
+		// 		 window.location.href = "/view-order/"+uid;	 
+		// 	}
+		// 	else {
+    //     $('.counter').val;
+		// 	}
+    // }
+    
+    //   console.log('trying')
 
-		function counter(time_left,uid) {
-			var expiryTime = time_left;
-			var time = $('.counter').val();
-			time = parseInt
-			time = time + 1;
-			if(time > expiryTime) {
-				 window.location.href = "/view-order/"+uid;	 
-			}
-			else {
-        $('.counter').val;
-			}
-		}
-		setInterval(counter,1000,...input);
+    //   setInterval(counter,1000,...input);
+
+
+  
 
   }); // end DOM ready
   

@@ -41,7 +41,34 @@
     </div>
 </div>
 <script>
-var time = {{time|safe}};
-var uid = "{{uid|safe}}";
+
 </script>
 {% endblock%}
+
+{% block js %}
+{% if request.user.is_authenticated != True %}
+
+<script>
+    var time = {{time|safe}};
+    var uid = "{{uid|safe}}";   
+    let input = [time,uid]
+ 
+    function counter(time_left,uid) {
+     var expiryTime = time_left;
+     var time = $('.counter').val();
+     time = parseInt
+     time = time + 1;
+     if(time > expiryTime) {
+          window.location.href = "/view-order/"+uid;	 
+     }
+     else {
+ $('.counter').val;
+     }
+}
+
+console.log('trying')
+
+setInterval(counter,1000,...input);
+</script>
+{% endif %}
+{% endblock %}
