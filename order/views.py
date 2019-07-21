@@ -2,8 +2,8 @@
 import random
 import string
 from .import utils
-from .models import Order
 from PIL import Image
+from .models import Order
 from .forms import OrderForm
 from datetime import datetime
 from django.utils import timezone
@@ -24,12 +24,15 @@ class OrderCreateView(FormView):
     form_class = OrderForm
     success_url = '/'
 
+    def get_context_data(self, **kwargs):
+        context = super(OrderCreateView, self).get_context_data(**kwargs)
+        context.update({'title': 'Create Order'})
+        return context
+
     def form_valid(self, form):
         """If the form is valid, redirect to the supplied URL."""
         form.save()
         return redirect(self.get_success_url())
-
-# class ViewOrder(LoginRequiredMixin,ListView):
 
 class ViewOrder(LoginRequiredMixin,ListView):
     """
@@ -38,6 +41,12 @@ class ViewOrder(LoginRequiredMixin,ListView):
     model = Order
     template_name = 'order/view_orders.html'  
     context_object_name = 'orders'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ViewOrder, self).get_context_data(**kwargs)
+        context.update({'title': 'Orders'})
+        return context
+    
 
     def get_queryset(self):
         """ 

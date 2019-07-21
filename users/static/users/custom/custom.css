@@ -35,10 +35,11 @@
 .nav-link:hover {
   color: #A4A4A3!important;
 }
+
 .white-background {
-      background-color: #ffffff !important;
+  background-color: #ffffff !important;
   box-shadow: none  !important;
-  webkit-box-shadow: none  !important; 
+  -webkit-box-shadow: none  !important; 
 }
 table {
       font-family: didot-w01-italic, serif;
@@ -60,14 +61,15 @@ font: normal normal normal 45px/1.4em didot-w01-italic,serif;
 text-align: left !important;
 padding-top: 20px !important;
 padding-left: 300px !important;
-font-style: italic;
-            
+font-style: italic;            
 }
+
 .md-padding {
   margin-top: 5% !important;
   margin-bottom: 5% !important;
 }
-@media only screen and (max-width: 600px) {
+
+@media only screen and (max-width: 991px) {
 .f-header {
   padding-left: 15px !important;
 }
@@ -212,6 +214,8 @@ form {
 
 /* end .slideThree */
 
+/* home */
+
 .c-banner {
   margin-top: 0px !important;
   margin-bottom: 80px !important;
@@ -232,4 +236,19 @@ form {
   line-height: 3px !important;
 }
 
-/* home */
+
+.view_order_table{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px !important;
+
+}
+
+.view_order_table th{
+  font-size: 1rem;
+  font-weight: 600;
+
+}
+
+.view_order_table td{
+  font-size: 1rem;
+}

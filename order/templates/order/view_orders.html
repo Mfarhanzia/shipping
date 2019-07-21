@@ -8,12 +8,12 @@
         <div class="col-md-12">
             <div class="table-responsive">
                 
-            <table class="table table-striped animate zoomIn">
+            <table class="view_order_table table table-striped table-bordered animate zoomIn">
                 <tr>
                 <th>#</th><th>Company Name</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone Number</th><th>When to Order</th><th>Line of Credit</th></tr>
                 {% for order in orders %}
                     <tr>
-                        <td>{{forloop.counter}}</td>
+                        <th><strong>{{forloop.counter}}</strong></th>
                         <td>{{order.company_name}}</td>
                         <td>{{order.f_name}}</td>
                         <td>{{order.l_name}}</td>

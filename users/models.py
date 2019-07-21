@@ -27,8 +27,6 @@ class WaterMark(models.Model):
     def __str__():
         return f'Water Marker'
 
-
-
 class SpecialUser(models.Model):
 
     USER_TYPE = (
@@ -46,8 +44,7 @@ class SpecialUser(models.Model):
     email = models.EmailField('Email',max_length=100)
     phone_number = PhoneNumberField(("Phone Number"))
     activated_on = models.DateTimeField('Activated on()',blank=True, null=True)
-    expire_time = models.DateTimeField('Expire On', blank=True, null=True)
-    
+    expire_time = models.DateTimeField('Expire On', blank=True, null=True) 
     
     def __str__(self):
         return self.f_name
@@ -58,6 +55,7 @@ class SpecialUserLog(models.Model):
     userlog_date = models.DateField('Logged in at: (Date)',blank=True, null=True)
     userlog_time = models.TimeField('Logged in at (Time): ',blank=True, null=True)
 
-
+    def __str__(self):
+        return f'{self.specialuser}'
 
 

@@ -8,34 +8,38 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	
 	{% if title %}
-		<title>Shipping - {{ title }}</title>
-	{% else %}
+		<title class="text-capitalize">Shipping - {{ title }}</title>
+	
+		
+		{% else %}
 		<title>Shipping</title>
-	{% endif %}
-
-
-
-
-	<!-- font awesome -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		{% endif %}
+		
+		
+		
+		
+		<!-- font awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-	<!-- boostrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		
+		<!-- boostrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-	<!-- custom css -->
-	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
-	<!-- fonts -->
+		
+		<!-- custom css -->
+		<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
+		<!-- fonts -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
 	<!-- animation -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" />
-
+	
 </head>
 
 <body>
+
+	
 	<!--Navbar-->
 	<div class="container-fluid white-background">
 		<div class="container ">
