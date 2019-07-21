@@ -45,7 +45,6 @@ class Order(models.Model):
     Type_Of_Electric_Vehicle_Function = (
         ('Standard','Standard'),
         ('Capability to Load Handicapped Person Without Human Assistance','Capability to Load Handicapped Person Without Human Assistance'),
-        ('Standard','Standard'),
     )
 
     company_name = models.CharField('Name of Company',max_length=100)
@@ -64,12 +63,12 @@ class Order(models.Model):
 
     When_To_Order =(
         ('urgent','Urgent(within 30 days)'),
-        ('other','Other'),
+        ('other','Other (days)'),
         )
 
     when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None)
     
-    other_when_to_order = models.PositiveIntegerField('Other', validators=[MinValueValidator(31)], blank=True, null=True) 
+    other_when_to_order = models.PositiveIntegerField('Other (days)', validators=[MinValueValidator(31)], blank=True, null=True) 
 
     type_of_development = MultiSelectField("What type of development(s) are you seeking?",choices=Type_Of_Development, max_length=300, blank=True, null=True)
 
