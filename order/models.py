@@ -87,7 +87,7 @@ class Order(models.Model):
 
     septic_infrastructure  = models.CharField("Does the development site already have septic infrastructure or service?",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True)
 
-    installation_septic_infrastructure  = models.CharField("Does it require the installation of septic infrastructure? (There will be a charge for initial infrastructure installation and periodic maintenance service charges.) ",choices=YES_NO_CHOICES, max_length=100, blank=True, default=None)
+    installation_septic_infrastructure  = models.CharField("Does it require the installation of septic infrastructure? (There will be a charge for initial infrastructure installation and periodic maintenance service charges.) ",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True, default=None)
 
 
     class Meta:
