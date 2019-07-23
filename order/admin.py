@@ -10,7 +10,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = ('f_name','when_to_order','how_much_line_of_credit')
     list_filter = ('when_to_order',)
-    # class Media:
-    #     js = ('users/custom/admin_model.js',)
+    class Media:
+        js = ('users/custom/custom_jquery.js',)
 
 admin.site.register(Order, OrderAdmin)

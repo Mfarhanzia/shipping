@@ -14,6 +14,7 @@ class Order(models.Model):
     )
 
     Type_Of_Development = (
+        ('select all','Select All'),
         ('Commercial','Commercial'),
         ('Mixed-use','Mixed-use'),
         ('Multi-tenant','Multi-tenant'),
@@ -28,6 +29,7 @@ class Order(models.Model):
 
     Type_Of_Climate_Area = (
 
+        ('select all','Select All'),
         ('Heavy Snow Load','Heavy Snow Load'),
         ('High Wind','High Wind'),
         ('Tornado','Tornado'),

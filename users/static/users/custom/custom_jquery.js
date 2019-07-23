@@ -82,9 +82,9 @@
     });
 
     // other1
-    $("#id_type_of_development_9").click(function()
+    $("#id_type_of_development_10").click(function()
     {
-        if($('#id_type_of_development_9').is(":checked"))
+        if($('#id_type_of_development_10').is(":checked"))
         {
             $("#id_14").show();
             $('#id_other_type_of_development').attr('required', 'required');
@@ -98,9 +98,9 @@
     });
 
     // other2
-    $("#id_type_of_climate_area_5").click(function()
+    $("#id_type_of_climate_area_6").click(function()
     {
-        if($('#id_type_of_climate_area_5').is(":checked"))
+        if($('#id_type_of_climate_area_6').is(":checked"))
         {
             $("#id_16").show();
             $('#id_other_type_of_climate_area').attr('required', 'required');
@@ -118,31 +118,40 @@
       'border':'none',
       'box-shadow':'none'
     });
-    // t
 
-    // let input = [time,uid]
- 
-		// function counter(time_left,uid) {
+    //select all
+    $("#id_type_of_development_0").click(function()
+    {  
+      $("#id_type_of_development_1").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_2").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_3").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_4").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_5").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_6").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_7").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_8").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_development_9").prop('checked', $(this).prop('checked'));
+    });
+
+    //select all
+    $("#id_type_of_climate_area_0").click(function()
+    {  
+      $("#id_type_of_climate_area_1").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_climate_area_2").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_climate_area_3").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_climate_area_4").prop('checked', $(this).prop('checked'));
+      $("#id_type_of_climate_area_5").prop('checked', $(this).prop('checked'));  
+    });
+
+
+		// function counter() {
     //   console.log('trying')
-		// 	var expiryTime = time_left;
-		// 	var time = $('.counter').val();
-		// 	time = parseInt
-		// 	time = time + 1;
-		// 	if(time > expiryTime) {
-		// 		 window.location.href = "/view-order/"+uid;	 
-		// 	}
-		// 	else {
-    //     $('.counter').val;
-		// 	}
-    // }
-    
-    //   console.log('trying')
-
-    //   setInterval(counter,1000,...input);
-
-
+    //   $("#id_how_much_letter_of_credit").maskMoney();
+    // }    
+    // $("#id_how_much_letter_of_credit").$maskMoney();
+    // setInterval(counter,1000);
   
-
+    // $("#id_how_much_letter_of_credit").maskMoney();
   }); // end DOM ready
   
 })(jQuery); // end jQuery

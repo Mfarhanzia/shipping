@@ -46,7 +46,7 @@ def specialuser_signup(request):
             # email.send(fail_silently=True)
             email.send()
             messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
-            return redirect('/')
+            return redirect('login')
     else:
         form = SpecialUserForm()
     return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})

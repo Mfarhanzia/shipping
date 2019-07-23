@@ -2,7 +2,7 @@ from django import forms
 from .models import Order
 
 class OrderForm(forms.ModelForm):
-
+    
     class Meta:
         model = Order
 
@@ -16,4 +16,6 @@ class OrderForm(forms.ModelForm):
             'septic_infrastructure' : forms.RadioSelect(),
             'installation_septic_infrastructure' : forms.RadioSelect(),
             # 'type_of_development' : forms.CheckboxSelectMultiple(attrs={'class': 'filled-in'}),
-        }        
+        }
+
+           

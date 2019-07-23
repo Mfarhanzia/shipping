@@ -9,13 +9,14 @@ from datetime import datetime
 from django.utils import timezone
 from django.contrib import messages
 from django.views.generic import ListView
+from django.core.mail import EmailMessage
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from django.utils.http import urlsafe_base64_decode
-from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
+from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
 
 # Create your views here.
 
@@ -32,7 +33,9 @@ class OrderCreateView(FormView):
     def form_valid(self, form):
         """If the form is valid, redirect to the supplied URL."""
         form.save()
+        messages.success(self.request,"Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")
         return redirect(self.get_success_url())
+
 
 class ViewOrder(LoginRequiredMixin,ListView):
     """
