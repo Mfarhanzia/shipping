@@ -155,5 +155,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "mrumah52@gmail.com"
 EMAIL_HOST_PASSWORD = "mqvhllzexgokwjcq"
 
+
+SECURE_SSL_REDIRECT = True
+
 # Activate Django heroku
 django_heroku.settings(locals())

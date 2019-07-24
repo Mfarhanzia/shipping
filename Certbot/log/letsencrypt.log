@@ -1,0 +1,302 @@
+2019-07-24 23:30:01,107:DEBUG:certbot.main:certbot version: 0.36.0
+2019-07-24 23:30:01,107:DEBUG:certbot.main:Arguments: []
+2019-07-24 23:30:01,107:DEBUG:certbot.main:Discovered plugins: PluginsRegistry(PluginEntryPoint#manual,PluginEntryPoint#null,PluginEntryPoint#standalone,PluginEntryPoint#webroot)
+2019-07-24 23:30:01,144:DEBUG:certbot.log:Root logging level set at 20
+2019-07-24 23:30:01,144:INFO:certbot.log:Saving debug log to C:\Certbot\log\letsencrypt.log
+2019-07-24 23:30:01,151:DEBUG:certbot.plugins.selection:Requested authenticator None and installer None
+2019-07-24 23:30:01,160:DEBUG:certbot.plugins.selection:Multiple candidate plugins: * standalone
+Description: Spin up a temporary webserver
+Interfaces: IAuthenticator, IPlugin
+Entry point: standalone = certbot.plugins.standalone:Authenticator
+Initialized: <certbot.plugins.standalone.Authenticator object at 0x05270F70>
+Prep: True
+
+* webroot
+Description: Place files in webroot directory
+Interfaces: IAuthenticator, IPlugin
+Entry point: webroot = certbot.plugins.webroot:Authenticator
+Initialized: <certbot.plugins.webroot.Authenticator object at 0x05270E50>
+Prep: True
+2019-07-24 23:30:31,073:DEBUG:certbot.plugins.selection:Selected authenticator <certbot.plugins.standalone.Authenticator object at 0x05270F70> and installer None
+2019-07-24 23:30:31,073:INFO:certbot.plugins.selection:Plugins selected: Authenticator standalone, Installer None
+2019-07-24 23:30:41,625:DEBUG:acme.client:Sending GET request to https://acme-v02.api.letsencrypt.org/directory.
+2019-07-24 23:30:41,631:DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): acme-v02.api.letsencrypt.org:443
+2019-07-24 23:30:42,524:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "GET /directory HTTP/1.1" 200 658
+2019-07-24 23:30:42,525:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Content-Type: application/json
+Content-Length: 658
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+Expires: Wed, 24 Jul 2019 18:30:46 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Wed, 24 Jul 2019 18:30:46 GMT
+Connection: keep-alive
+
+{
+  "OCIot_YimhI": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
+  "keyChange": "https://acme-v02.api.letsencrypt.org/acme/key-change",
+  "meta": {
+    "caaIdentities": [
+      "letsencrypt.org"
+    ],
+    "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf",
+    "website": "https://letsencrypt.org"
+  },
+  "newAccount": "https://acme-v02.api.letsencrypt.org/acme/new-acct",
+  "newNonce": "https://acme-v02.api.letsencrypt.org/acme/new-nonce",
+  "newOrder": "https://acme-v02.api.letsencrypt.org/acme/new-order",
+  "revokeCert": "https://acme-v02.api.letsencrypt.org/acme/revoke-cert"
+}
+2019-07-24 23:30:46,339:DEBUG:acme.client:Requesting fresh nonce
+2019-07-24 23:30:46,339:DEBUG:acme.client:Sending HEAD request to https://acme-v02.api.letsencrypt.org/acme/new-nonce.
+2019-07-24 23:30:46,768:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "HEAD /acme/new-nonce HTTP/1.1" 200 0
+2019-07-24 23:30:46,769:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: r30dpDClpln-QpbvrYur-2NKi9c4BPWaJcBe0yQXWAk
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+Content-Length: 0
+Expires: Wed, 24 Jul 2019 18:30:50 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Wed, 24 Jul 2019 18:30:50 GMT
+Connection: keep-alive
+
+
+2019-07-24 23:30:46,769:DEBUG:acme.client:Storing nonce: r30dpDClpln-QpbvrYur-2NKi9c4BPWaJcBe0yQXWAk
+2019-07-24 23:30:46,769:DEBUG:acme.client:JWS payload:
+b'{\n  "contact": [\n    "mailto:farhan71727@gmail.com"\n  ],\n  "termsOfServiceAgreed": true,\n  "resource": "new-reg"\n}'
+2019-07-24 23:30:46,779:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-acct:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAiandrIjogeyJuIjogIjFXT1hMcUtDVzgwMUE2QnJBYmwxam1TclZ6UUxtVTRKVkdSZldaNkgxYXNHM2REODNGUnJxYkJLaW51Zm9OQl9HV0c1LVJGcXhUUVVweFJJSEpVUWhQVmFISllGQlFaeUQwUUU1bU1QbE5WZlcySFlhSmhFUkhuNkR1SmFRY3ZFVFYyZHBHRzdGZlVWTEtMeXBjN0hhRmZmbkJiejRyU2tpTmhSWEIycmU0aXJvUkkwME5YU3pLdmtFSmVXenBJS0Itak9KbGNJdGVUUnY4VFcwaUQ2UGZfUVRsakw0N0o5YzBhcXV6ZnQzTmFaRVZ1UHJIZlRHWnN6akNrakpsemZpNUNjS041OEF0TzNfOXdXdEtWM1Zmbi1YYWV6bUVBMWpkdkFWbDRfbHpYSjc2MDJNQ1MyMzlTMURrRGZQSUk2UFNQTnM4NGdsUEdQQjJrcDZmSUd4dyIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSJ9LCAibm9uY2UiOiAicjMwZHBEQ2xwbG4tUXBidnJZdXItMk5LaTljNEJQV2FKY0JlMHlRWFdBayIsICJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LWFjY3QifQ",
+  "signature": "p58BJgyY9bOYxylju2HigkiXpxO4Fi6R8QXRHeDPWPJwXcFcOvCiaQOLyXhqTvWK6Uj1le-ijEXeGMALNyyrgPBhzJPQDdUGYAJl5fbzg1rur92WyfOeuA0E7Uuyi6cJZs1jeJ3bjtt5t_6OE3gxRBMDRRb1vexzHX8EIAmxTUwtbC56ovpXqLOXx8QUGesiiaFJu6AnBamRK2euMk6EGVDb8aT5Xz1-KSywaj5SpV1G1bkZAnzJpcUsRRi3ZnO9D-AKvWHZ0gGrRtn__bs2tc_CZ808DLOFbugAkgo5RymBLxKia7BufxVpIzN1RxtkY1lnCAWNmvvGcbfW6LHCUw",
+  "payload": "ewogICJjb250YWN0IjogWwogICAgIm1haWx0bzpmYXJoYW43MTcyN0BnbWFpbC5jb20iCiAgXSwKICAidGVybXNPZlNlcnZpY2VBZ3JlZWQiOiB0cnVlLAogICJyZXNvdXJjZSI6ICJuZXctcmVnIgp9"
+}
+2019-07-24 23:30:47,460:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-acct HTTP/1.1" 201 581
+2019-07-24 23:30:47,461:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Content-Type: application/json
+Content-Length: 581
+Boulder-Requester: 61933047
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index", <https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf>;rel="terms-of-service"
+Location: https://acme-v02.api.letsencrypt.org/acme/acct/61933047
+Replay-Nonce: RQHNeTBYv0Ub9L3w_Bm322pI0RJOU0lXPvZvG_4TIfQ
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+Expires: Wed, 24 Jul 2019 18:30:50 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Wed, 24 Jul 2019 18:30:50 GMT
+Connection: keep-alive
+
+{
+  "id": 61933047,
+  "key": {
+    "kty": "RSA",
+    "n": "1WOXLqKCW801A6BrAbl1jmSrVzQLmU4JVGRfWZ6H1asG3dD83FRrqbBKinufoNB_GWG5-RFqxTQUpxRIHJUQhPVaHJYFBQZyD0QE5mMPlNVfW2HYaJhERHn6DuJaQcvETV2dpGG7FfUVLKLypc7HaFffnBbz4rSkiNhRXB2re4iroRI00NXSzKvkEJeWzpIKB-jOJlcIteTRv8TW0iD6Pf_QTljL47J9c0aquzft3NaZEVuPrHfTGZszjCkjJlzfi5CcKN58AtO3_9wWtKV3Vfn-XaezmEA1jdvAVl4_lzXJ7602MCS239S1DkDfPII6PSPNs84glPGPB2kp6fIGxw",
+    "e": "AQAB"
+  },
+  "contact": [
+    "mailto:farhan71727@gmail.com"
+  ],
+  "initialIp": "39.42.159.60",
+  "createdAt": "2019-07-24T18:30:50.702594886Z",
+  "status": "valid"
+}
+2019-07-24 23:30:47,461:DEBUG:acme.client:Storing nonce: RQHNeTBYv0Ub9L3w_Bm322pI0RJOU0lXPvZvG_4TIfQ
+2019-07-24 23:30:48,612:DEBUG:certbot.reporter:Reporting to user: Your account credentials have been saved in your Certbot configuration directory at C:\Certbot. You should make a secure backup of this folder now. This configuration directory will also contain certificates and private keys obtained by Certbot so making regular backups of this folder is ideal.
+2019-07-24 23:30:55,285:DEBUG:certbot.main:Picked account: <Account(RegistrationResource(body=Registration(key=JWKRSA(key=<ComparableRSAKey(<cryptography.hazmat.backends.openssl.rsa._RSAPublicKey object at 0x050CD850>)>), contact=('mailto:farhan71727@gmail.com',), agreement=None, status='valid', terms_of_service_agreed=None, only_return_existing=None, external_account_binding=None), uri='https://acme-v02.api.letsencrypt.org/acme/acct/61933047', new_authzr_uri=None, terms_of_service='https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf'), 3ddaf8977d46cc769564455e9e105baf, Meta(creation_dt=datetime.datetime(2019, 7, 24, 18, 30, 47, tzinfo=<UTC>), creation_host='DESKTOP-HPDJ06V'))>
+2019-07-24 23:30:55,286:DEBUG:certbot.display.ops:No installer, picking names manually
+2019-07-24 23:31:21,164:INFO:certbot.main:Obtaining a new certificate
+2019-07-24 23:31:21,535:DEBUG:certbot.crypto_util:Generating key (2048 bits): C:\Certbot\keys\0000_key-certbot.pem
+2019-07-24 23:31:21,548:DEBUG:certbot.crypto_util:Creating CSR: C:\Certbot\csr\0000_csr-certbot.pem
+2019-07-24 23:31:21,549:DEBUG:acme.client:JWS payload:
+b'{\n  "identifiers": [\n    {\n      "type": "dns",\n      "value": "www.boltonblock.com"\n    }\n  ]\n}'
+2019-07-24 23:31:21,556:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/new-order:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvNjE5MzMwNDciLCAibm9uY2UiOiAiUlFITmVUQll2MFViOUwzd19CbTMyMnBJMFJKT1UwbFhQdlp2R180VElmUSIsICJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIn0",
+  "signature": "ljJlVIqKjQ5JOieZIwJcWZ835qh5flQdx4q5rN-dRAPGgxlhM_6VqqMAU3qBoeDz8Dv2rA17jJanF5IiaAvtDw55-t0bhL_cSyNKqed5IOZ0xzNvUuzxCDeZ3PyzLjMXiugZPsgrIIPWG4sRkw6sHf3cRGgC3C5YSbyKLEY5WH86-iMkVQVI_Vazm65gGQ4T9iiArr1UfSR5_3NeObT7rsnOvw5am0dtaxnBG8Szyize6NeOd-xsWpogyok39h-4HHi_w9ktY52KXHYuqeuWkvS2KdgFUvpdpFuGe1zCfWK5BFWFADLiyuO4_5stiqVCja21_an4XwCIf65JLNbh0w",
+  "payload": "ewogICJpZGVudGlmaWVycyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiZG5zIiwKICAgICAgInZhbHVlIjogInd3dy5ib2x0b25ibG9jay5jb20iCiAgICB9CiAgXQp9"
+}
+2019-07-24 23:31:22,038:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/new-order HTTP/1.1" 201 378
+2019-07-24 23:31:22,039:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Content-Type: application/json
+Content-Length: 378
+Boulder-Requester: 61933047
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Location: https://acme-v02.api.letsencrypt.org/acme/order/61933047/774661858
+Replay-Nonce: izIZLMSGatVLaLqFkx9JlxLRI9QCBq10UpVonWXBVzY
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+Expires: Wed, 24 Jul 2019 18:31:25 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Wed, 24 Jul 2019 18:31:25 GMT
+Connection: keep-alive
+
+{
+  "status": "pending",
+  "expires": "2019-07-31T18:31:25.487796039Z",
+  "identifiers": [
+    {
+      "type": "dns",
+      "value": "www.boltonblock.com"
+    }
+  ],
+  "authorizations": [
+    "https://acme-v02.api.letsencrypt.org/acme/authz/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM"
+  ],
+  "finalize": "https://acme-v02.api.letsencrypt.org/acme/finalize/61933047/774661858"
+}
+2019-07-24 23:31:22,039:DEBUG:acme.client:Storing nonce: izIZLMSGatVLaLqFkx9JlxLRI9QCBq10UpVonWXBVzY
+2019-07-24 23:31:22,041:DEBUG:acme.client:JWS payload:
+b''
+2019-07-24 23:31:22,047:DEBUG:acme.client:Sending POST request to https://acme-v02.api.letsencrypt.org/acme/authz/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2FjY3QvNjE5MzMwNDciLCAibm9uY2UiOiAiaXpJWkxNU0dhdFZMYUxxRmt4OUpseExSSTlRQ0JxMTBVcFZvbldYQlZ6WSIsICJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYXV0aHovc05XNUFobHRDSGhUZkgtQWVXN2Y2bkxxVWEwZ0dnZXd6bGg1ekJEZ1pXTSJ9",
+  "signature": "RSL8pul-p6EUJ6UedHAe15EEUHtDX9Lsgq_sw7Nm55WfEwtc3OqaqH5CkwPkA8ChnrcnYhLjLRxUABGokQusNENxTNvy3K_923uEFw8btiiP2nwMxCmuJfnHIe4gnqV6lXUw_LFn6TCOpERFXG1FMYIruNWYhcKwzKsM0eV-c9OGIGutRjaO1uLJaA9SVeNsIPAnWEXYJWsi7BWAHmKg9XhRiPCnerNRULP03wiZxHM1aKwhkx0JAtKosyEMmejpkAtpXsZmIas9Hy3gArcFbsNJPRb_Rifr1VT1uKSGOfa5L9FXooyjMKES42m9JIjEjQFkOt-hW7fRq7MFLqaVuQ",
+  "payload": ""
+}
+2019-07-24 23:31:22,499:DEBUG:urllib3.connectionpool:https://acme-v02.api.letsencrypt.org:443 "POST /acme/authz/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM HTTP/1.1" 200 914
+2019-07-24 23:31:22,500:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Content-Type: application/json
+Content-Length: 914
+Boulder-Requester: 61933047
+Link: <https://acme-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: IKfkwrr-vyEg5wSZz1MTglF9zUUvvAjmRlYRCtWyU40
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+Expires: Wed, 24 Jul 2019 18:31:26 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Wed, 24 Jul 2019 18:31:26 GMT
+Connection: keep-alive
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "www.boltonblock.com"
+  },
+  "status": "pending",
+  "expires": "2019-07-31T18:31:25Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/challenge/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM/18681228491",
+      "token": "wAXLZ-O_4m3CC7VCqkRGqn-b2autGMP8Yi33wJbN0eY"
+    },
+    {
+      "type": "dns-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/challenge/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM/18681228492",
+      "token": "O89SCHsU8z-fiNezuQm2UCA8S7NJ5DvLovhUZbXeyQo"
+    },
+    {
+      "type": "tls-alpn-01",
+      "status": "pending",
+      "url": "https://acme-v02.api.letsencrypt.org/acme/challenge/sNW5AhltCHhTfH-AeW7f6nLqUa0gGgewzlh5zBDgZWM/18681228493",
+      "token": "4joCsO-GJ-j8mL--BotbS6MGA7ZnFnp3ATOhlywZDsY"
+    }
+  ]
+}
+2019-07-24 23:31:22,501:DEBUG:acme.client:Storing nonce: IKfkwrr-vyEg5wSZz1MTglF9zUUvvAjmRlYRCtWyU40
+2019-07-24 23:31:22,501:INFO:certbot.auth_handler:Performing the following challenges:
+2019-07-24 23:31:22,502:INFO:certbot.auth_handler:http-01 challenge for www.boltonblock.com
+2019-07-24 23:31:22,504:DEBUG:acme.standalone:Failed to bind to :80 using IPv6
+2019-07-24 23:31:22,504:DEBUG:acme.standalone:Failed to bind to :80 using IPv4
+2019-07-24 23:31:22,505:DEBUG:certbot.error_handler:Encountered exception:
+Traceback (most recent call last):
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 71, in run
+    address, self.http_01_resources)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\acme\standalone.py", line 190, in __init__
+    BaseDualNetworkedServers.__init__(self, HTTP01Server, *args, **kwargs)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\acme\standalone.py", line 109, in __init__
+    raise socket.error("Could not bind to IPv4 or IPv6.")
+OSError: Could not bind to IPv4 or IPv6.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\auth_handler.py", line 69, in handle_authorizations
+    resps = self.auth.perform(achalls)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 156, in perform
+    return [self._try_perform_single(achall) for achall in achalls]
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 156, in <listcomp>
+    return [self._try_perform_single(achall) for achall in achalls]
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 163, in _try_perform_single
+    _handle_perform_error(error)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 210, in _handle_perform_error
+    raise error
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 161, in _try_perform_single
+    return self._perform_single(achall)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 166, in _perform_single
+    servers, response = self._perform_http_01(achall)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 173, in _perform_http_01
+    servers = self.servers.run(port, challenges.HTTP01, listenaddr=addr)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 73, in run
+    raise errors.StandaloneBindError(error, port)
+certbot.errors.StandaloneBindError: Problem binding to port 80: Could not bind to IPv4 or IPv6.
+
+2019-07-24 23:31:22,506:DEBUG:certbot.error_handler:Calling registered functions
+2019-07-24 23:31:22,506:INFO:certbot.auth_handler:Cleaning up challenges
+2019-07-24 23:31:22,506:DEBUG:certbot.log:Exiting abnormally:
+Traceback (most recent call last):
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 71, in run
+    address, self.http_01_resources)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\acme\standalone.py", line 190, in __init__
+    BaseDualNetworkedServers.__init__(self, HTTP01Server, *args, **kwargs)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\acme\standalone.py", line 109, in __init__
+    raise socket.error("Could not bind to IPv4 or IPv6.")
+OSError: Could not bind to IPv4 or IPv6.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\python37\Lib\runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "c:\python37\Lib\runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\Farhan\PYTHON~1\django\up-venv\Scripts\certbot.exe\__main__.py", line 9, in <module>
+    sys.exit(main())
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\main.py", line 1381, in main
+    return config.func(config, plugins)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\main.py", line 1264, in certonly
+    lineage = _get_and_save_cert(le_client, config, domains, certname, lineage)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\main.py", line 120, in _get_and_save_cert
+    lineage = le_client.obtain_and_enroll_certificate(domains, certname)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\client.py", line 406, in obtain_and_enroll_certificate
+    cert, chain, key, _ = self.obtain_certificate(domains)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\client.py", line 349, in obtain_certificate
+    orderr = self._get_order_and_authorizations(csr.data, self.config.allow_subset_of_names)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\client.py", line 385, in _get_order_and_authorizations
+    authzr = self.auth_handler.handle_authorizations(orderr, best_effort)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\auth_handler.py", line 69, in handle_authorizations
+    resps = self.auth.perform(achalls)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 156, in perform
+    return [self._try_perform_single(achall) for achall in achalls]
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 156, in <listcomp>
+    return [self._try_perform_single(achall) for achall in achalls]
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 163, in _try_perform_single
+    _handle_perform_error(error)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 210, in _handle_perform_error
+    raise error
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 161, in _try_perform_single
+    return self._perform_single(achall)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 166, in _perform_single
+    servers, response = self._perform_http_01(achall)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 173, in _perform_http_01
+    servers = self.servers.run(port, challenges.HTTP01, listenaddr=addr)
+  File "c:\users\farhan\python~1\django\up-venv\lib\site-packages\certbot\plugins\standalone.py", line 73, in run
+    raise errors.StandaloneBindError(error, port)
+certbot.errors.StandaloneBindError: Problem binding to port 80: Could not bind to IPv4 or IPv6.
