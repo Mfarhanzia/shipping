@@ -25,8 +25,8 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['.boltonblock.com',                                                                  'container-shipping.herokuapp.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com',                                                                  'container-shipping.herokuapp.com']
+
 # AUTH_USER_MODEL = 'users.MyUser'
 
 # Application definition
@@ -78,9 +78,6 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-
-SECURE_SSL_REDIRECT = False
 
 
 DATABASES = {
@@ -159,6 +156,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
 
+SECURE_SSL_REDIRECT = True
 
 # Activate Django heroku
 django_heroku.settings(locals())
