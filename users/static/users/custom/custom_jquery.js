@@ -143,7 +143,6 @@
       $("#id_type_of_climate_area_5").prop('checked', $(this).prop('checked'));  
     });
 
-
 		// function counter() {
     //   console.log('trying')
     //   $("#id_how_much_letter_of_credit").maskMoney();

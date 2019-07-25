@@ -3,9 +3,21 @@ from django.db import models
 from datetime import datetime
 from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import AbstractUser
 # Create Models
 
-    
+# class MyUser(AbstractUser):
+#     USERNAME_FIELD = 'email'
+#     email = models.EmailField(('email address'), unique=True) # changes email to unique and blank to false
+#     REQUIRED_FIELDS = []
+
+# MyUser._meta.get_field('email')._unique = True
+# MyUser._meta.get_field('email')._blank = False
+# MyUser._meta.get_field('username')._unique = False
+# MyUser._meta.get_field('username')._blank = True
+# MyUser._meta.get_field('username')._null = True
+
+
 class Photo(models.Model):
     original_image = models.ImageField(upload_to='photos' , default=None)
     watermarked_image = models.ImageField(upload_to='wartermarked_photos', default=None, blank=True, null=True)
