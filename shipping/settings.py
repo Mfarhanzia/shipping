@@ -25,7 +25,7 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com',                                                                  'container-shipping.herokuapp.com']
+ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',                                                                  'container-shipping.herokuapp.com']
 
 # AUTH_USER_MODEL = 'users.MyUser'
 
@@ -150,14 +150,12 @@ ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
 # email credential
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST = 'smtp-relay.gmail.com'
+# EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
-# EMAIL_HOST_USER = os.environ.get('DB_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')
 
 SECURE_SSL_REDIRECT = True
 
