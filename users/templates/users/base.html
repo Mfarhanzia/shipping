@@ -7,40 +7,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="google-site-verification" content="LnQoPAVXbIP5uOPneg1Ct-Uwr-ZAnR7LU1ULgdDot_U" />
-	
+
 	{% if title %}
-		<title class="text-capitalize">Shipping - {{ title }}</title>
-	
-		
-		{% else %}
-		<title>Shipping</title>
-		{% endif %}
-		
-		
-		
-		
-		<!-- font awesome -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+	<title class="text-capitalize">Shipping - {{ title }}</title>
+
+	{% else %}
+	<title>Shipping</title>
+	{% endif %}
+
+	<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-		
-		<!-- boostrap -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+
+	<!-- boostrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		
-		<!-- custom css -->
-		<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
-		<!-- fonts -->
+
+	<!-- custom css -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
+	<!-- fonts -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
 	<!-- animation -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" />
-	
+
 </head>
 
 <body>
 
-	
+
 	<!--Navbar-->
 	<div class="container-fluid white-background">
 		<div class="container ">
@@ -112,14 +108,39 @@
 			</nav>
 		</div>
 	</div>
-	<div class="col-md-12">
-		{% if messages %}
-		{% for message in messages %}
-		<div class="text-center alert alert-{{ message.tags }}">
-			{{ message }}
+	<div class="container text-center">
+		<div class="col-md-12">
+			{% if messages %}
+			{% for message in messages %}
+			<div class="text-center alert alert-{{ message.tags }}">
+				{{ message }}
+			</div>
+			{% endfor %}
+			{% endif %}
 		</div>
-		{% endfor %}
-		{% endif %}
+	</div>
+
+
+	<!-- Error messaging -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				{% if form.errors %}
+				<div id="errors" class="mt-2 pt-30" style="background-color: rgba(238, 238, 238, 0.541); padding: 10px">
+					<div class="inner">
+						<p>There were some errors in the information you entered. Please correct the following:</p>
+						{{ form.non_field_errors }}
+						<ul class="text-danger text-capitalize">
+							{% for field in form %}
+							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+
 	</div>
 	<div class="md-padding ">
 		{% block  content %}
@@ -144,6 +165,8 @@
 						<span>12345 Beach Blvd., Stanton, CA 90680 </span>
 						<br>
 						<span>Tel 714-363-1287</span>
+						<br>
+						<span>Email: info@boltonblock.com</span>
 					</div>
 
 					<div class="col-md-4 col-12 social-icon">
@@ -163,6 +186,7 @@
 
 
 	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'users/dist/jquery.inputmask.js' %}"></script>
 	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"

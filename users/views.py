@@ -24,33 +24,36 @@ def specialuser_signup(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
     """
-
-    if request.method == 'POST':
-        form = SpecialUserForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Account Activation Requested.'
-            userid = utils.encrypt(user.pk)     # encrypting user id
-            message = render_to_string('users/acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': userid,
-                'token':account_activation_token.make_token(user),
-                })
-            to_email = "bilalvasl@gmail.com"
-            # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
-            email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
-            email.content_subtype = "html"
-            # email.send(fail_silently=True)
-            email.send()
-            messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
-            return redirect('login')
+    if request.user.is_authenticated == False:
+        
+        if request.method == 'POST':
+            form = SpecialUserForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Account Activation Requested.'
+                userid = utils.encrypt(user.pk)     # encrypting user id
+                message = render_to_string('users/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': userid,
+                    'token':account_activation_token.make_token(user),
+                    })
+                to_email = "bilalvasl@gmail.com"
+                # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
+                email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
+                email.content_subtype = "html"
+                # email.send(fail_silently=True)
+                email.send()
+                messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
+                return redirect('login')
+        else:
+            form = SpecialUserForm()
+        return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
     else:
-        form = SpecialUserForm()
-    return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
+        return redirect('/')
 
 def activate(request, uidb64, token):
     """
