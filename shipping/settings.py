@@ -150,8 +150,8 @@ ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
 # email credential
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST = 'smtp-relay.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonblock.com"
@@ -159,7 +159,7 @@ EMAIL_HOST_PASSWORD = "yfwvxwjdlcndpsai"
 # EMAIL_HOST_USER = os.environ.get('DB_USER')
 # EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')
 
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # Activate Django heroku
 django_heroku.settings(locals())
