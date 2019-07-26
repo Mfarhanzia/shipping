@@ -156,7 +156,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
 
-# SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # Activate Django heroku
 django_heroku.settings(locals())
