@@ -19,7 +19,7 @@ class OrderForm(forms.ModelForm):
             'installation_septic_infrastructure' : forms.RadioSelect(),    
         }
     def __init__(self, *args, **kwargs):
-        print('+++++++++++++++=')
+        
         super(OrderForm, self).__init__(*args, **kwargs)
         self.fields['how_much_letter_of_credit'].widget.attrs.update({
             'autocomplete': 'off'
@@ -48,9 +48,15 @@ class OrderForm(forms.ModelForm):
         return l_name     
 
     def clean_how_much_letter_of_credit(self):
-        letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','')
-        return letter_of_credit
+        try:
+            letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','')
+            return letter_of_credit
+        except:
+            pass
 
     def clean_how_much_line_of_credit(self):
-        line_of_credit = self.cleaned_data.get("how_much_line_of_credit").replace('$','')
-        return line_of_credit
+        try:
+            line_of_credit = self.cleaned_data.get("how_much_line_of_credit").replace('$','')
+            return line_of_credit
+        except:
+            pass

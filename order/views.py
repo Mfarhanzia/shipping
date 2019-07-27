@@ -43,7 +43,7 @@ class OrderCreateView(FormView):
         message = render_to_string('order/order_mail_to_admin.html', {
             'form': form.cleaned_data, })
         to_email = settings.DEFAULT_FROM_EMAIL
-        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
+        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
 
         email.content_subtype = "html"
         # email.send(fail_silently=True)
