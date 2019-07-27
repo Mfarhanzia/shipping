@@ -58,10 +58,10 @@ class Order(models.Model):
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-    how_much_letter_of_credit= models.CharField("What is the value of your Letter of Credit (in USD)?",max_length=50, blank=True, null=True)
+    how_much_letter_of_credit= models.CharField("What is the value of your Letter of Credit (in USD)?",max_length=50, help_text="in USD$", blank=True, null=True)
 
     line_of_credit = models.CharField("Do you have a Line of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-    how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, blank=True, null=True)
+    how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, help_text="in USD$",blank=True, null=True)
 
     When_To_Order =(
         ('urgent','Urgent(within 30 days)'),
@@ -74,7 +74,7 @@ class Order(models.Model):
 
     type_of_development = MultiSelectField("What type of development(s) are you seeking?",choices=Type_Of_Development, max_length=300, blank=True, null=True)
 
-    other_type_of_development =models.CharField(max_length=300, verbose_name="Other", null=True, blank=True)
+    other_type_of_development = models.CharField(max_length=300, verbose_name="Other", null=True, blank=True)
    
     type_of_climate_area = MultiSelectField("On which type of climate area(s) will the development(s) be sited? ",choices=Type_Of_Climate_Area, max_length=300, blank=True, null=True)
     

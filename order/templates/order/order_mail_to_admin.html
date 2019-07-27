@@ -1,0 +1,174 @@
+{% load static %}
+{% autoescape on %}
+
+<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="min-width:800px;margin-top: 60px;">
+	<tbody>
+		<tr>
+			<td align="center" width="100%">
+				<table align="center" width="800" border="0" bgcolor="#F2F2F2" cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr
+							style='font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
+							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
+								<br />
+								<table>
+									<tbody>
+										<tr>
+											<td><img src="http://{{ domain }}{% static 'users/imgs/arc_logo.png' %}"
+													width="120" height="90" border="0"></td>
+											<td style="padding-left: 60px;"><h1 class=" col text-center c-header"
+												style="text-align: center !important;font-weight: 700;">Order Inquiry</h1>
+											</td>
+										</tr>
+									</tbody>
+                                </table>
+                                
+
+								<br/>
+								<span>
+									Hi <b>Admin</a></b>,
+								</span>
+								<br /><br/>
+								<span>
+									It is pleasant to inform you that {{ form.f_name }} {{form.l_name}} have placed a order.
+								</span>
+							</td>
+                        </tr><br>
+
+        <table style='text-align:left; padding: 0 10px 0 10px'>
+                <tr>
+                </tr>
+                
+                <tr><th>Company Name:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.company_name}}</td>
+                </tr><br>
+                <tr><th>First Name:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.f_name}}</td>
+                </tr><br>
+                <tr><th>Last Name:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.l_name}}</td>
+                </tr><br>
+                <tr><th>Email:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.email}}</td>
+                </tr><br>
+                <tr><th>Phone Number:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.phone_number}}</td>
+                </tr><br>
+                <tr><th>Zip Code:</th>
+                    <td colspan="2"></td>
+                    <td>{{form.zipcode}}</td>
+                </tr><br>
+                {% if form.how_much_letter_of_credit %}
+                <tr><th>Value of your Letter of Credit (in USD)</th>
+                    <td colspan="2"></td>
+                    <td>{{form.how_much_letter_of_credit}}</td>
+                </tr><br>
+                {% endif %}
+                {% if form.how_much_line_of_credit %}
+                <tr><th>What is the currently unused amount in your Line of Credit?</th>
+                    <td colspan="2"></td>
+                    <td>{{form.how_much_line_of_credit}}</td>
+                </tr><br>
+                {% endif %}
+
+                <tr><th>When to Order</th>
+                    <td colspan="2"></td>
+                    {% if form.when_to_order != 'other' %}
+                    <td>{{form.when_to_order}}</td>
+                    {% elif form.when_to_order == 'other' %}
+                    <td>Within {{form.other_when_to_order}} Days</td>
+                    {% endif %}
+                </tr><br>
+                <tr><th>What type of development(s) are you seeking?</th>
+                    <td colspan="2"></td>
+                    <td>
+                    {% for i in form.type_of_development %} 
+                    {% if i == 'select all' or i == 'Other' %}
+                    {% else%}
+                        {{i}} ,
+                    {% endif %}
+                    {% endfor%}
+                    {% if form.other_type_of_development %}
+                    {{form.other_type_of_development}}</td>
+                    {% endif %}
+                    
+                </tr><br>
+
+                <tr><th>On which type of climate area(s) will the development(s) be sited?</th>
+                    <td colspan="2"></td>
+                    <td>
+                    {% for i in form.type_of_climate_area %} 
+                    {% if i == 'select all' or i == 'Other' %}
+                    {% else%}
+                        {{i}},
+                    {% endif %}
+                    {% endfor%}
+                    {% if form.other_type_of_climate_area %}
+                    {{form.other_type_of_climate_area}}</td>
+                    {% endif %}
+                    
+                </tr>   <br> 
+
+                <tr><th>What type of smart home functionality are you interested in learning more about?</th>
+                    <td colspan="2"></td>
+                    <td>
+                    {% for i in form.type_of_smart_home %} 
+                        {{i}},
+                    {% endfor%}</td>
+                </tr> <br>
+
+                <tr><th>Type of  Electric Vehicle Function</th>
+                    <td colspan="2"></td>
+                    <td>
+                    {% for i in form.type_of_electric_vehicle_function %} 
+                        {{i}},
+                    {% endfor%}</td>
+                </tr> <br>
+                {% if form.learn_about_electric_drive %}
+                <tr><th>Learn About Electric Drive</th>
+                    <td colspan="2"></td>
+                    <td>{{form.learn_about_electric_drive}}</td>
+                </tr> <br>
+                {% endif %}
+
+                {% if form.septic_infrastructure %}
+                <tr><th>Does the development site already have septic infrastructure or service?</th>
+                    <td colspan="2"></td>
+                    <td>{{form.septic_infrastructure}}</td>
+                </tr> <br>
+                {% endif %}
+
+                {% if form.installation_septic_infrastructure  %}
+                <tr><th>Does it require the Installation of Septic Infrastructure? </th>
+                    <td colspan="2"></td>
+                    <td>{{form.installation_septic_infrastructure}} </td>
+                </tr> <br>
+                {% endif %}
+
+            </table>
+
+						<tr
+							style='font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
+							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
+								<br />
+								<br /><br />
+								<span>
+									Thanks,<br /> <b>Team Architect</b>
+								</span>
+								<br /> <br /> <br />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+{% endautoescape %}

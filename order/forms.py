@@ -46,3 +46,11 @@ class OrderForm(forms.ModelForm):
                 'Incorrect Last Name'
                 )
         return l_name     
+
+    def clean_how_much_letter_of_credit(self):
+        letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','')
+        return letter_of_credit
+
+    def clean_how_much_line_of_credit(self):
+        line_of_credit = self.cleaned_data.get("how_much_line_of_credit").replace('$','')
+        return line_of_credit

@@ -7,7 +7,7 @@ from .forms import SpecialUserForm
 from django.contrib import messages
 from django.core.mail import EmailMessage 
 from .token import account_activation_token
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.decorators import login_required
@@ -33,7 +33,7 @@ def specialuser_signup(request):
                 user.is_active = False
                 user.save()
                 current_site = get_current_site(request)
-                mail_subject = 'Account Activation Requested.'
+                mail_subject = f"New Registration - {user.company_name} by {user.f_name} {user.l_name}'"
                 userid = utils.encrypt(user.pk)     # encrypting user id
                 message = render_to_string('users/acc_active_email.html', {
                     'user': user,
@@ -41,9 +41,8 @@ def specialuser_signup(request):
                     'uid': userid,
                     'token':account_activation_token.make_token(user),
                     })
-                to_email = "bilalvasl@gmail.com"
-                # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
-                email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",))
+                to_email = settings.DEFAULT_FROM_EMAIL
+                email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
                 email.content_subtype = "html"
                 # email.send(fail_silently=True)
                 email.send()
@@ -80,15 +79,12 @@ def admincheck(request,uidb64):
 
     """
     if request.method=="POST":
-        if request.POST.get('checkbox','') == "True":
-            
+        if request.POST.get('selector','') == "True":        
             id = utils.decrypt(uidb64)      # decrypting user id
             user = SpecialUser.objects.get(pk=id)
-
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
             user.expire_time = timezone.now() + timedelta(hours=12)   #setting expire time
-
             current_site = get_current_site(request)
             mail_subject = 'Account Activated.'
             message = render_to_string('users/specialuseremail.html', {
@@ -105,10 +101,24 @@ def admincheck(request,uidb64):
             user.save()
             messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
             return redirect('register')
+
+        elif request.POST.get('selector','') == "False":
+            id = utils.decrypt(uidb64)      # decrypting user id
+            try:
+                user = get_object_or_404(SpecialUser,pk=id)
+                messages.success(request, f'You have Rejected Access to Company {user.company_name}')
+                user.delete()
+            except:
+                pass
+            
+            return redirect('register')       
         else:
             return redirect('/')
     else:
         id = utils.decrypt(uidb64)      # decrypting user id
-        user = SpecialUser.objects.get(pk=id)
+        try:
+            user = SpecialUser.objects.get(pk=id)
+        except:
+            return redirect('register')
         return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
         

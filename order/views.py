@@ -6,12 +6,14 @@ from PIL import Image
 from .models import Order
 from .forms import OrderForm
 from datetime import datetime
+from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
 from django.views.generic import ListView
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
+from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
@@ -31,9 +33,22 @@ class OrderCreateView(FormView):
         return context
 
     def form_valid(self, form):
+        
         """If the form is valid, redirect to the supplied URL."""
         form.save()
         messages.success(self.request,"Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")
+        
+        mail_subject = f"Order Inquiry -{form.cleaned_data['company_name']} by {form.cleaned_data['f_name']} {form.cleaned_data['l_name']}."
+
+        message = render_to_string('order/order_mail_to_admin.html', {
+            'form': form.cleaned_data, })
+        to_email = settings.DEFAULT_FROM_EMAIL
+        email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
+
+        email.content_subtype = "html"
+        # email.send(fail_silently=True)
+        email.send()       
+
         return redirect(self.get_success_url())
 
 

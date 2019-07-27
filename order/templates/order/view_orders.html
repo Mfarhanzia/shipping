@@ -19,8 +19,12 @@
                         <td>{{order.l_name}}</td>
                         <td>{{order.email}}</td>
                         <td>{{order.phone_number}}</td>
+                        {% if order.when_to_order != 'other' %}
                         <td>{{order.when_to_order}}</td>
-                        <td>{{order.how_much_line_of_credit}}</td>
+                        {% elif order.when_to_order == 'other' %}
+                        <td>Within {{order.other_when_to_order}} Days</td>
+                        {% endif %}
+                        <td>${{order.how_much_line_of_credit}}</td>
                     </tr>
                     {% endfor %}
                 </table>

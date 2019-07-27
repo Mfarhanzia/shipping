@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <form method="POST">
-                <table style="font-size: 20px !important;" class="table table-borderless">
+                <table style="font-size: 20px !important;" class="text-capitalize view_order_table table table-borderless">
                     <!-- <thead class=""> -->
                     <th>User Type</th>
                     <th>First Name</th>
@@ -18,7 +18,7 @@
                         <td>{{user.user_type}}</td>
                         <td>{{user.f_name}}</td>
                         <td>{{user.l_name}}</td>
-                        <td>{{user.email}}</td>
+                        <td style="text-transform: none !important" >{{user.email}}</td>
                         <td>{{user.title}}</td>
                         <td>{{user.company_name}}</td>
                         <td>{{user.phone_number}}</td>
@@ -28,15 +28,40 @@
                 <h2></h2>
 
                 {% csrf_token %}
-                <section title=".slideThree">
-                    <!-- .slideThree -->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 admin_check_radio_ul">
+                            
+                        <ul style="list-style: none; ">
+                            <div class="col-md-5 col-sm-11" style="margin-right:50px">
+                                <li>
+                                    <input type="radio" id="s-option" value='False' name="selector">
+                                    <label for="s-option">Reject</label>
+                                    
+                                    <div class="check"><div class="inside"></div></div>
+                                </li>  
+                            </div>  
+    
+                            <div class="col-md-5 col-sm-11">
+                                <li>
+                                    <input type="radio" id="f-option" value="True" name="selector">
+                                    <label for="f-option">Accept</label>
+                                    
+                                    <div class="check"></div>
+                                </li>
+                            </div>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <!-- <section title=".slideThree">
+                
                     <div class="slideThree">
                         <input type="checkbox" value="True" id="slideThree" name="checkbox" />
                         <label for="slideThree"></label>
                     </div>
-                    <button class="btn-primary btn fa-pull-right" type="submit">Activate</button>
-                    <!-- end .slideThree -->
-                </section>
+                    
+                </section> -->
+                <button class="btn-primary btn fa-pull-right" type="submit">Submit</button>
 
             </form>
         </div>
