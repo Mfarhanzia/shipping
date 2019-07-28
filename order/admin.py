@@ -8,8 +8,9 @@ class OrderAdmin(admin.ModelAdmin):
     #     'letter_of_credit',('line_of_credit',('zipcode')),
     # )
 
-    list_display = ('f_name','when_to_order','how_much_line_of_credit')
+    list_display = ('f_name','when_to_order','how_much_letter_of_credit','how_much_line_of_credit')
     list_filter = ('when_to_order',)
+    list_display_links = ('f_name','when_to_order',)
     class Media:
         js = ('users/custom/custom_jquery.js',)
 

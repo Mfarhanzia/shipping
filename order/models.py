@@ -58,10 +58,16 @@ class Order(models.Model):
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
+
     how_much_letter_of_credit= models.CharField("What is the value of your Letter of Credit (in USD)?",max_length=50, help_text="in USD$", blank=True, null=True)
+    # how_much_letter_of_credit= models.DecimalField("What is the value of your Letter of Credit (in USD)?", max_digits=20, decimal_places=2, help_text="in USD$", blank=True, null=True)
 
     line_of_credit = models.CharField("Do you have a Line of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
+
     how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, help_text="in USD$",blank=True, null=True)
+
+    # how_much_line_of_credit= models.DecimalField("What is the currently unused       amount in your Line of Credit?",max_digits=20, decimal_places=2, help_text="in USD$", blank=True, null=True)
+
 
     When_To_Order =(
         ('urgent','Urgent(within 30 days)'),
@@ -92,5 +98,5 @@ class Order(models.Model):
     installation_septic_infrastructure  = models.CharField("Does it require the installation of septic infrastructure? (There will be a charge for initial infrastructure installation and periodic maintenance service charges.) ",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True, default=None)
 
 
-    class Meta:
-        ordering = ('-when_to_order','-how_much_line_of_credit') 
+    # class Meta:
+    #     ordering = ('-when_to_order', '-how_much_letter_of_credit', '-how_much_line_of_credit') 

@@ -17,7 +17,7 @@
 											<td><img src="http://{{ domain }}{% static 'users/imgs/arc_logo.png' %}"
 													width="120" height="90" border="0"></td>
 											<td style="padding-left: 60px;"><h1 class=" col text-center c-header"
-												style="text-align: center !important;font-weight: 700;">Order Inquiry</h1>
+												style="text-align: center !important;font-weight: 700;">Order Confirmation</h1>
 											</td>
 										</tr>
 									</tbody>
@@ -25,13 +25,13 @@
                                 
 
 								<br/>
-								<span>
-									Hi <b>Admin</a></b>,
+								<span style="font-size: 18px">
+									Hi <b>{{ form.f_name }} {{form.l_name}}</a></b>,
 								</span>
 								<br /><br/>
-								<span>
-									It is pleasant to inform you that {{ form.f_name }} {{form.l_name}} has placed an order.
-								</span>
+								<h3 style="text-align: center; font-size: 24px">
+									Your order has been placed.
+                                </h3>
 							</td>
                         </tr><br>
 

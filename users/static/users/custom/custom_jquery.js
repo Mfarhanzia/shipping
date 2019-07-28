@@ -142,11 +142,12 @@
       $("#id_type_of_climate_area_4").prop('checked', $(this).prop('checked'));
       $("#id_type_of_climate_area_5").prop('checked', $(this).prop('checked'));  
     });
-    
+    $("#id_how_much_letter_of_credit").prop("type", "text");
     $('#id_how_much_letter_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
 
     $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
 
+   
 		// function counter() {
     //   console.log('trying')
     //   $("#id_how_much_letter_of_credit").maskMoney();

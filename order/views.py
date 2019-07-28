@@ -6,8 +6,10 @@ from PIL import Image
 from .models import Order
 from .forms import OrderForm
 from datetime import datetime
+from django.db.models import F
 from django.conf import settings
 from django.utils import timezone
+from decimal import Decimal
 from django.contrib import messages
 from django.views.generic import ListView
 from django.core.mail import EmailMessage
@@ -36,21 +38,33 @@ class OrderCreateView(FormView):
         
         """If the form is valid, redirect to the supplied URL."""
         form.save()
-        messages.success(self.request,"Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")
-        
-        mail_subject = f"Order Inquiry -{form.cleaned_data['company_name']} by {form.cleaned_data['f_name']} {form.cleaned_data['l_name']}."
+                
+        mail_subject = f"Order Inquiry - {form.cleaned_data['company_name']} by {form.cleaned_data['f_name']} {form.cleaned_data['l_name']}."
 
         message = render_to_string('order/order_mail_to_admin.html', {
             'form': form.cleaned_data, })
         to_email = settings.DEFAULT_FROM_EMAIL
+        
         email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
-
+        self.send_mail(form.cleaned_data)
         email.content_subtype = "html"
         # email.send(fail_silently=True)
-        email.send()       
-
+        email.send()
+        messages.success(self.request,"Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")       
         return redirect(self.get_success_url())
 
+
+    def send_mail(self,form):
+        """
+        Sending Order Confirm Mail to User 
+        """
+        mail_subject = f"Order Confirmation"
+        message = render_to_string('order/order_confirm_mail.html', {
+            'form': form, })
+        to_email = form['email']
+        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",))
+        email.content_subtype = "html"
+        email.send()
 
 class ViewOrder(LoginRequiredMixin,ListView):
     """
@@ -65,12 +79,16 @@ class ViewOrder(LoginRequiredMixin,ListView):
         context.update({'title': 'Orders'})
         return context
     
-
     def get_queryset(self):
         """ 
         overriding queryset for ranking the orders
         """
-        qs = Order.objects.order_by('-when_to_order','-how_much_line_of_credit')
+        # qs = Order.objects.order_by('-when_to_order','-how_much_letter_of_credit','-how_much_line_of_credit')
+        
+        qs = Order.objects.annotate(fieldsum=F(('how_much_letter_of_credit')) + F(('how_much_line_of_credit'))).order_by('-when_to_order', '-fieldsum')
+        
+        for i in qs:
+            print(type(i.fieldsum),i.fieldsum)
         return qs
 
 # custom decorator
@@ -83,7 +101,6 @@ def give_special_access(func):
         uid = utils.decrypt(kwargs['uidb64']) # decrypt the userid from url
 
         user = get_object_or_404(SpecialUser, is_active=True, pk=uid)
-        print('timezone.now',timezone.now())
 
         if user and user.expire_time and timezone.now() < user.expire_time: 
             
@@ -107,7 +124,6 @@ def check_session(func):
         uid = utils.decrypt(kwargs['uidb64'])
    
         if uid not in request.session.keys():
-            print("======check_session=======")
             request.session[uid] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
             #entering login time
             # uid = utils.decrypt(kwargs['uidb64'])
@@ -115,8 +131,6 @@ def check_session(func):
             SpecialUserLog.objects.create(specialuser=user, userlog_datetime=timezone.now(), userlog_date=timezone.now(), userlog_time=timezone.now())
             return func(request, *args,**kwargs)
         else:
-            # print("======else_check=======")
-            # print(request.session.keys(),"logkey==",request.session[uid])
             return func(request, *args,**kwargs)
 
     return wrapper
@@ -175,7 +189,7 @@ def specialuser_ViewOrder(request,time,uidb64):
                 watermark_photo(img.original_image,'media/wartermarked_photos/water_marked'+str(id)+'.png', water_mark.water_mark_image, id = id)
 
     image = Photo.objects.all()
-    qs = Order.objects.order_by('-when_to_order','-how_much_line_of_credit')
+    qs = Order.objects.order_by('-when_to_order', '-how_much_letter_of_credit','-how_much_line_of_credit')
     
     return render(request, 'order/view_orders.html', {'orders':qs,'time':int(time),'uid': uidb64, 'image':image, 'title': 'Orders' })
     

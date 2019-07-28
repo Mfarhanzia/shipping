@@ -96,7 +96,7 @@ def admincheck(request,uidb64):
             email =EmailMessage(subject=mail_subject, body=message,from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
 
             email.content_subtype = "html"
-            email.send(fail_silently=True)  # sending email with link
+            email.send()  # sending email with link
 
             user.save()
             messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')

@@ -10,7 +10,7 @@
                 
             <table class="view_order_table table table-striped table-bordered animate zoomIn">
                 <tr>
-                <th>#</th><th>Company Name</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone Number</th><th>When to Order</th><th>Line of Credit</th></tr>
+                <th>#</th><th>Company Name</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone Number</th><th>When to Order</th><th>Letter of Credit</th><th>Line of Credit</th></tr>
                 {% for order in orders %}
                     <tr>
                         <th><strong>{{forloop.counter}}</strong></th>
@@ -24,6 +24,9 @@
                         {% elif order.when_to_order == 'other' %}
                         <td>Within {{order.other_when_to_order}} Days</td>
                         {% endif %}
+
+                        <td>${{order.how_much_letter_of_credit}}</td>
+                        
                         <td>${{order.how_much_line_of_credit}}</td>
                     </tr>
                     {% endfor %}
