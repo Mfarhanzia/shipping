@@ -1,6 +1,6 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block content%}
 
 <div class="container">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <h1 >Content</h1>
-    <div class="row md-padding ">
+    <div class="row md-padding">
         {% for img in image %}
             {% if img.watermarked_image  %}
 
@@ -43,9 +43,14 @@
                 <img style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
             </div>
             {% endif %}
-        {% endfor %}
-        
+        {% endfor %}  
     </div>
+    <div  style="min-width:500px; min-height: 400px ">
+    <div id ='hide' style="min-width:500px; min-height: 400px ">     
+            
+    </div>
+    </div>
+
 </div>
 <script>
 
@@ -76,6 +81,73 @@
 console.log('trying')
 
 setInterval(counter,1000,...input);
+
 </script>
 {% endif %}
+
+
+<script>
+	//Hide Content If cursor is not on page body.
+	function check() {
+        
+		console.warn($('body:hover').length);
+		if ($('body:hover').length != 0) {
+	    	$('#hide').css("display", "block");
+		}
+		else {
+			$('#hide').css("display", "none");
+			// $('#hide').remove();
+		}
+		  // window.clipboardData.setData ("Text", "abc");
+	}
+	setInterval( check, 100 );
+
+	function copyToClipboard() {
+
+      var aux = document.createElement("input");
+      aux.setAttribute("value", "print screen disabled!");      
+      document.body.appendChild(aux);
+      aux.select();
+      document.execCommand("copy");
+      // Remove it from the body
+      document.body.removeChild(aux);
+      console.warn("Print screen disabled!");
+      alert("Print screen disabled!");
+    }
+	//Disable PrtSrc
+    $(window).keyup(function(e){
+      if(e.keyCode == 44){
+        copyToClipboard();
+      }
+    
+    // if(e.keyCode == 123) {
+    //     // return false;
+    //     e.preventDefault();
+    // }
+    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+    //     // return false;
+    //     e.preventDefault();
+    // }
+    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+    //     // return false;
+    //     e.preventDefault();
+    // }
+    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+    //     // return false;
+    //     e.preventDefault();
+    // }
+    // if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+    //     // return false;
+    //     e.preventDefault();
+    // }
+
+
+    });
+    //Disable Right Click
+     $(window).bind("contextmenu",function(e){
+        e.preventDefault();
+     });
+</script>
+
+
 {% endblock %}

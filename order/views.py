@@ -191,10 +191,7 @@ def specialuser_ViewOrder(request,time,uidb64):
 
     image = Photo.objects.all()
     # qs = Order.objects.order_by('-when_to_order', '-how_much_letter_of_credit','-how_much_line_of_credit')
+    
     qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
-
-    
-
-    
     return render(request, 'order/view_orders.html', {'orders':qs,'time':int(time),'uid': uidb64, 'image':image, 'title': 'Orders' })
     

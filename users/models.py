@@ -71,5 +71,5 @@ class SpecialUserLog(models.Model):
         return f'{self.specialuser}'
 
 
-# class Email_list(models.Model):
-#     email = models.EmailField(_("Email"), max_length=254)
+class EmailList(models.Model):
+    email = models.EmailField(("Email"), max_length=254, unique = True)

@@ -1,8 +1,8 @@
 import re
 from django import forms
-from .models import SpecialUser
-class SpecialUserForm(forms.ModelForm):
+from .models import SpecialUser, EmailList
 
+class SpecialUserForm(forms.ModelForm):
     class Meta:
         model = SpecialUser
 
@@ -13,14 +13,11 @@ class SpecialUserForm(forms.ModelForm):
         }
 
     def clean_f_name(self):
-        
         f_name = self.cleaned_data.get("f_name")
-       
         f = re.findall("^[a-zA-Z]+$", f_name)
         if not f:
             raise forms.ValidationError(
-                'Incorrect First Name'
-                )
+                'Incorrect First Name')
         return f_name
 
     def clean_l_name(self):
@@ -28,6 +25,11 @@ class SpecialUserForm(forms.ModelForm):
         l =re.findall("^[a-zA-Z]+$", l_name)
         if not l:
             raise forms.ValidationError(
-                'Incorrect Last Name'
-                )
+                'Incorrect Last Name')
         return l_name
+
+class EmailListForm(forms.ModelForm):
+
+    class Meta:
+        model = EmailList
+        fields = ('email',)

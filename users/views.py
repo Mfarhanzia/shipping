@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.conf import settings 
 from order import utils
 from .models import SpecialUser
-from .forms import SpecialUserForm
+from .forms import SpecialUserForm, EmailListForm
 from django.contrib import messages
 from django.core.mail import EmailMessage 
 from .token import account_activation_token
@@ -17,7 +17,20 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 
 def home_view(request):
-    return render(request, 'users/home.html')
+    
+    if request.method == "POST":
+        form = EmailListForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Thanks for Subscribing')
+        return redirect('/')
+
+    else:
+        form = EmailListForm()
+        return render(request, 'users/home.html', {'form': form})
+
+def floor_plan(request):
+    return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
 
 
 def specialuser_signup(request):
@@ -44,7 +57,7 @@ def specialuser_signup(request):
                 to_email = settings.DEFAULT_FROM_EMAIL
                 email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
                 email.content_subtype = "html"
-                # email.send(fail_silently=True)
+                
                 email.send()
                 messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
                 return redirect('login')

@@ -339,5 +339,16 @@ input[type="radio"]:checked ~ label {
 	color: #032013;
 }
 
-
 /* radio */
+
+#hide{
+  background: url("/static/users/imgs/sample.gif") no-repeat;
+  z-index: 5;
+  height: 50%;
+  width: 100%;
+}
+
+.below_class :hover {
+
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block homepage %}
 
@@ -34,7 +35,7 @@
     <div class="container content-2" >
         <div class="row">
             <div class="col-sm-4" >
-                    <p class="font_8">View a full-scale version of the housing option&nbsp;of your choice---our mobile exhibition is currently&nbsp;located in Southern California. Start by adding your name to our mailing list below [LINK] to be&nbsp;notified&nbsp;of&nbsp;developments&nbsp;and&nbsp;depending on volume we may&nbsp;come&nbsp;to your region!</p>
+                    <p class="font_8">View a full-scale version of the housing option&nbsp;of your choice---our mobile exhibition is currently&nbsp;located in Southern California. Start by adding your name to our mailing list <a class="below_class" href="#id_subscribe">below</a> to be&nbsp;notified&nbsp;of&nbsp;developments&nbsp;and&nbsp;depending on volume we may&nbsp;come&nbsp;to your region!</p>
                     <p class="font_8">&nbsp;</p>
                     <p class="font_8">Your finished home will be <span style="font-weight:bold;">turnkey</span>, including all power and plumbing infrastructure,&nbsp;interior decor such as&nbsp;lighting fixtures, and basic kitchen appliances such as an&nbsp;induction stove, oven, and dishwasher. Additional equipment such as A/C or heating units&nbsp;may be included with your home by necessity or offered as an optional component.</p>
                     <p class="font_8">&nbsp;</p>
@@ -142,5 +143,34 @@
         </div>
     </div>
 </div>
+<div id="id_subscribe" class="container mb-5">
+    <div class="row">
+        <div class="col-md-12 col-sm-12" >
+            <div class="text-center">
+
+                <h2>Subscribe Us</h2>
+            </div>
+            <form method="POST">
+                {%csrf_token%}
+                <div class="md-form">
+                        <i class="prefix"> </i>
+                        <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                            data-success="right">{{form.label}}</label><br>
+                        {{form}}
+                        {% for error in field.errors %}
+                        <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                        {% endfor %}
+                </div>
+            <div class="col text-center">
+                <button  class="  btn btn-outline-info btn-lg waves-effect waves-light"> Subscribe</button>
+            </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% endblock %}

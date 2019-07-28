@@ -1,0 +1,16 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 text-center" >
+        <h1>Floor Plans</h1><br>
+    <embed src="{% static 'users/files/floor_plans.pdf' %}" style="height: 800px; width: 1000px;"  />
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
