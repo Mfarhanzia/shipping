@@ -21,7 +21,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
-
+from django.db.models import FloatField
+from django.db.models.functions import Cast
 # Create your views here.
 
 class OrderCreateView(FormView):
@@ -85,7 +86,7 @@ class ViewOrder(LoginRequiredMixin,ListView):
         """
         # qs = Order.objects.order_by('-when_to_order','-how_much_letter_of_credit','-how_much_line_of_credit')
         
-        qs = Order.objects.annotate(fieldsum=F(('how_much_letter_of_credit')) + F(('how_much_line_of_credit'))).order_by('-when_to_order', '-fieldsum')
+        qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
         
         for i in qs:
             print(type(i.fieldsum),i.fieldsum)
