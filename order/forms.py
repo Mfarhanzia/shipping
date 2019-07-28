@@ -53,24 +53,36 @@ class OrderForm(forms.ModelForm):
         return l_name     
 
     def clean_how_much_letter_of_credit(self):
-        try:
-            letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','').replace(',','')
-            # letter_of_credit = letter_of_credit.split('.')[0]
-            print('letter_of_credit:=====', letter_of_credit)
+        if not self.cleaned_data.get("how_much_letter_of_credit"):
+            letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit")
+            letter_of_credit = '0'
             return letter_of_credit
-        except:
-            pass
+
+        else:
+            try:
+                letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','').replace(',','')
+                # letter_of_credit = letter_of_credit.split('.')[0]
+                print('letter_of_credit:=====', letter_of_credit)
+                return letter_of_credit
+            except:
+                pass
             # return letter_of_credit
             
 
     def clean_how_much_line_of_credit(self):
-        try:
-            line_of_credit = self.cleaned_data.get("how_much_line_of_credit").replace('$','').replace(',','')
-            # line_of_credit = line_of_credit.split('.')[0]
-            print('line_of_credit:=====', line_of_credit)
-            
+        
+        if not self.cleaned_data.get("how_much_line_of_credit"):
+            line_of_credit = self.cleaned_data.get("how_much_line_of_credit")
+            line_of_credit = '0'
             return line_of_credit
-        except:
-            pass            
+
+        else:
+            try:
+                line_of_credit = self.cleaned_data.get("how_much_line_of_credit").replace('$','').replace(',','')
+                
+                print('line_of_credit:=====', line_of_credit)                
+                return line_of_credit
+            except:
+                pass            
             # return line_of_credit
             
