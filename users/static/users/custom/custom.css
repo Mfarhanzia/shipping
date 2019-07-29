@@ -1,6 +1,6 @@
 .logo {
   width: 115px !important;
-  height: 90px !important;
+  height: 100px !important;
   border: 1px solid #2F2E2E !important;
 }
 .color_15 {
@@ -9,11 +9,12 @@
 }
 #comp-ir1r4w4s {
   position: relative;
-  margin: 16px 0px 13px 0;
-  left: 23px;
+  margin: 10px 0px 5px 0;
+  left: 18px;
   grid-area: 1 / 1 / 2 / 2;
   justify-self: start;
   align-self: start;
+  
 }
 .txtNew {
   word-wrap: break-word;
@@ -32,6 +33,11 @@
 .nav-link {
   color: #2F2E2E !important;
 }
+
+.active1 {
+  color: #A4A4A3!important;
+}
+
 .nav-link:hover {
   color: #A4A4A3!important;
 }
@@ -78,7 +84,13 @@ font-style: italic;
 
 .navbar-toggler{
   background: black !important;
+ 
 }
+
+#basicExampleNav{
+  margin-top: 20px !important;
+}
+
 .nav-item{
   background-color:#2f2e2e;
 }

@@ -3,7 +3,7 @@ from django.conf.urls import url
 from .views import specialuser_signup, activate, admincheck, home_view, floor_plan
 
 urlpatterns = [
-    path('register/', specialuser_signup ,name='register'),
+    path('register', specialuser_signup ,name='register'),
 
     path('', home_view, name="home"),
     

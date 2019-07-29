@@ -147,6 +147,32 @@
 
     $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
 
+    var path = window.location.pathname;
+    // alert(path);
+    
+
+    if (path == '/'){
+      $('[href*="/"]').addClass('active1');
+      
+    }
+    else if (path == '/order'){
+      $('[href*="/order"]').addClass('active1');
+    }
+    else if (path == '/login/'){
+      
+      $('[href*="/login"]').addClass('active1');
+    }
+
+    else if (path == '/view-order'){
+      $('[href*="/view-order"]').addClass('active1');
+      
+    }
+    else if (path == '/floor-plan'){
+      $('[href*="/floor-plan"]').addClass('active1');
+    }
+    else if (path == '/register'){  
+      $('[href*="/register"]').addClass('active1');
+    }
 
 		// function counter() {
     //   console.log('trying')
