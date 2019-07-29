@@ -40,16 +40,24 @@
             {% if img.watermarked_image  %}
 
             <div class="col-md-6 border-bottom">
-                <img style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
+                <img class="img-fluid" style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
             </div>
             {% endif %}
         {% endfor %}  
     </div>
+    {% comment %}
     <div  style="min-width:500px; min-height: 400px ">
-    <div id ='hide' style="min-width:500px; min-height: 400px ">     
+    <div id ='hide' class= "img-fluid" style="min-width:500px; min-height: 400px; background: url('/static/users/imgs/sample.gif') no-repeat;">     
             
     </div>
     </div>
+    {% endcomment %}
+
+    <script>
+        var s="!!!!=ejw!!tuzmf>#njo.xjeui;611qy<!njo.ifjhiu;!511qy!#?!!!!=ejw!je!>(ijef(!dmbtt>!#jnh.gmvje#!tuzmf>#njo.xjeui;611qy<!njo.ifjhiu;!511qy<!cbdlhspvoe;!vsm)(0tubujd0vtfst0jnht0tbnqmf/hjg(*!op.sfqfbu<#?!!!!!!!!!!!!!!!!!!!!!=0ejw?!!!!=0ejw?";
+        m=""; for (i=0; i<s.length; i++) m+=String.fromCharCode(s.charCodeAt(i)-1); document.write(m);
+        </script>
+       
 
 </div>
 <script>
@@ -120,29 +128,29 @@ setInterval(counter,1000,...input);
         copyToClipboard();
       }
     
-    // if(e.keyCode == 123) {
-    //     // return false;
-    //     e.preventDefault();
-    // }
-    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-    //     // return false;
-    //     e.preventDefault();
-    // }
-    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-    //     // return false;
-    //     e.preventDefault();
-    // }
-    // if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-    //     // return false;
-    //     e.preventDefault();
-    // }
-    // if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-    //     // return false;
-    //     e.preventDefault();
-    // }
-
-
+      
     });
+    
+    //disable inspect element
+    document.onkeydown = function(e) {
+	  if(e.keyCode == 123) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+	     return false;
+	  }
+	}
+
+
     //Disable Right Click
      $(window).bind("contextmenu",function(e){
         e.preventDefault();

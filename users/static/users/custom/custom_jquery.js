@@ -147,7 +147,7 @@
 
     $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
 
-   
+
 		// function counter() {
     //   console.log('trying')
     //   $("#id_how_much_letter_of_credit").maskMoney();

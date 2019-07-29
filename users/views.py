@@ -21,10 +21,13 @@ def home_view(request):
     if request.method == "POST":
         form = EmailListForm(request.POST)
         if form.is_valid():
+            print('================')
             form.save()
-            messages.success(request, f'Thanks for Subscribing')
-        return redirect('/')
+            messages.success(request, f'Thanks for Subscribing us')
+        else:
+            messages.warning(request, f'You have already Subscribed!')
 
+        return redirect('/')
     else:
         form = EmailListForm()
         return render(request, 'users/home.html', {'form': form})

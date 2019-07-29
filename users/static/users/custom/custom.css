@@ -342,7 +342,7 @@ input[type="radio"]:checked ~ label {
 /* radio */
 
 #hide{
-  background: url("/static/users/imgs/sample.gif") no-repeat;
+  /* background: ; */
   z-index: 5;
   height: 50%;
   width: 100%;
