@@ -175,14 +175,22 @@
       
     }
 
-		// function counter() {
-    //   console.log('trying')
-    //   $("#id_how_much_letter_of_credit").maskMoney();
-    // }    
-    // $("#id_how_much_letter_of_credit").$maskMoney();
-    // setInterval(counter,1000);
-  
-    // $("#id_how_much_letter_of_credit").maskMoney();
+    $("#id_user_type_4").click(function()
+    {
+        $("#id_4").hide();
+        $("#id_company_name").val('');
+        $("#id_5").hide();
+        $("#id_title").val('');
+    });
+
+    $("#id_user_type_3").click(function()
+    {
+        $("#id_4").hide();
+        $("#id_company_name").val('');
+        $("#id_5").hide();
+        $("#id_title").val('');
+    });
+
   }); // end DOM ready
   
 })(jQuery); // end jQuery
