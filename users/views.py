@@ -13,6 +13,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+import random
 #views
 
 
@@ -62,7 +63,11 @@ def specialuser_signup(request):
                 email.content_subtype = "html"
                 
                 email.send()
-                messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
+                if user.user_type == 'dealer':
+                    messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
+                else:
+                    messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
+
                 return redirect('login')
         else:
             form = SpecialUserForm()

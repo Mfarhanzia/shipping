@@ -40,23 +40,31 @@
 <table style='text-align:left; padding: 0 60px 0 60px'>
 	<br>
 		<tr><th colspan="3" style="text-align: center; font-size: 16px;">User INFO.</th>
-		</tr>
+		</tr><br>
 		
 		<tr><th>User Type:</th>
 			<td colspan="2"></td>
 			<td>{{user.user_type}}</td>
 		</tr>
+		{% if user.company_name %}
 		<tr><th>Company Name:</th>
 			<td colspan="2"></td>
 			<td>{{user.company_name}}</td>
 		</tr>
+		{% endif %}
+		{% if user.title%}
 		<tr><th>Title:</th>
 			<td colspan="2"></td>
 			<td>{{user.title}}</td>
 		</tr>
+		{% endif%}
 		<tr><th>Email:</th>
 			<td colspan="2"></td>
 			<td>{{user.email}}</td>
+		</tr>
+		<tr><th>Phone no.:</th>
+			<td colspan="2"></td>
+			<td>{{user.phone_number}}</td>
 		</tr>
 </table>
 
