@@ -112,6 +112,63 @@
             $("#id_16").hide();
         }
     });
+
+    $("#id_user_type").click(function()
+      {    
+        if($('#id_user_type_4').is(":checked"))
+        {
+          $("#id_4").hide();
+          $("#id_company_name").val('');
+          $("#id_5").hide();
+          $("#id_title").val('');
+        }else if($('#id_user_type_3').is(":checked"))
+        {
+          $("#id_4").hide();
+          $("#id_company_name").val('');
+          $("#id_5").hide();
+          $("#id_title").val('');
+        }else if($('#id_user_type_0').is(":checked") || $('#id_user_type_1').is(":checked") ||
+        $('#id_user_type_2').is(":checked"))
+        {
+          $("#id_4").show();
+          $("#id_5").show();
+          $("#id_7").hide();
+          $("#id_7").val('');
+        }else if ($('#id_user_type_3').is(":checked")){
+          $("#id_7").hide();
+          $("#id_7").val('');
+        }
+      });
+
+    // $("#id_user_type").click(function()
+    // {
+       
+        // else
+        // {
+        //   $("#id_4").show();
+        //   // $("#id_company_name").val('');
+        //   $("#id_5").show();
+        //   // $("#id_title").val('');
+        // }
+    // });
+    // $("#id_user_type_3").click(function()
+    // {
+    //     $("#id_4").hide();
+    //     $("#id_company_name").val('');
+    //     $("#id_5").hide();
+    //     $("#id_title").val('');
+    // });
+
+    // $("#id_user_type_4").click(function()
+    // {
+    //     $("#id_4").hide();
+    //     $("#id_company_name").val('');
+    //     $("#id_5").hide();
+    //     $("#id_title").val('');
+    // });
+
+
+
     var $on = 'section';
     $($on).css({
       'background':'none',
@@ -146,11 +203,8 @@
     $('#id_how_much_letter_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
 
     $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
-
-    var path = window.location.pathname;
-    // alert(path);
     
-
+    var path = window.location.pathname;
  
    if (path == '/order'){
       $('[href*="/order"]').addClass('active1');
@@ -175,21 +229,7 @@
       
     }
 
-    $("#id_user_type_4").click(function()
-    {
-        $("#id_4").hide();
-        $("#id_company_name").val('');
-        $("#id_5").hide();
-        $("#id_title").val('');
-    });
 
-    $("#id_user_type_3").click(function()
-    {
-        $("#id_4").hide();
-        $("#id_company_name").val('');
-        $("#id_5").hide();
-        $("#id_title").val('');
-    });
 
   }); // end DOM ready
   

@@ -36,6 +36,8 @@
 								<span>
 									It is pleasant to inform you that Administration approved your request for
 									activation of account.
+									{% if user.dealer_no %}Your Dealer Number is <b>{{user.dealer_no}}</b>
+									{% endif %}
 								</span>
 							</td>
 						</tr>

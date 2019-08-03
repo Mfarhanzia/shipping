@@ -1,3 +1,5 @@
+import random
+import string
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings 
@@ -13,7 +15,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-import random
+
 #views
 
 
@@ -100,9 +102,19 @@ def admincheck(request,uidb64):
 
     """
     if request.method=="POST":
-        if request.POST.get('selector','') == "True":        
+        if request.POST.get('selector','') == "True":
             id = utils.decrypt(uidb64)      # decrypting user id
             user = SpecialUser.objects.get(pk=id)
+            if user.user_type == "dealer":
+                all_users = SpecialUser.objects.all().values_list('dealer_no', flat=True)
+                while True:
+                    random_number = randomstring()                    
+                    if random_number not in all_users:
+                        user.dealer_no = random_number
+                        break
+                    else:
+                        pass
+
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
             user.expire_time = timezone.now() + timedelta(hours=12)   #setting expire time
@@ -142,4 +154,11 @@ def admincheck(request,uidb64):
         except:
             return redirect('register')
         return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
-        
+
+
+def randomstring():
+    abc=''.join((random.SystemRandom().choice(
+        string.digits) for _ in
+        range(6)))
+    return int(abc)
+
