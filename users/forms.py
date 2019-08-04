@@ -1,16 +1,22 @@
 import re
 from django import forms
 from .models import SpecialUser, EmailList
-
+from phonenumber_field.modelfields import PhoneNumberField
 class SpecialUserForm(forms.ModelForm):
     class Meta:
         model = SpecialUser
 
-        fields = ('user_type','f_name','l_name','company_name','title','email','dealer_no','phone_number',)
+        fields = ('user_type','f_name','l_name','company_name','title','email','dealer_no','phone_number')
 
         widgets = {
             'user_type': forms.RadioSelect(),
         }
+    def __init__(self, *args, **kwargs):
+        
+        super(SpecialUserForm, self).__init__(*args, **kwargs)
+        self.fields['phone_number'].widget.attrs.update({
+            'id': 'id_phone_number_8'
+        })
 
     def clean_f_name(self):
         f_name = self.cleaned_data.get("f_name")
@@ -27,7 +33,7 @@ class SpecialUserForm(forms.ModelForm):
             raise forms.ValidationError(
                 'Incorrect Last Name')
         return l_name
-
+    
 class EmailListForm(forms.ModelForm):
 
     class Meta:

@@ -7,7 +7,7 @@
             {% for errors in form.non_field.errors %}
             <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
             {% endfor%}
-            <form method="POST" autocomplete="off" class="boxshadow2">
+            <form method="POST"  class="boxshadow2">
                 <h1 class="text-center">Order Inquiry</h1>
                 <hr class="ml-4">
                 {% csrf_token %}

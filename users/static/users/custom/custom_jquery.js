@@ -38,16 +38,16 @@
     // id_letter_of_credit
     $("#id_letter_of_credit_1").click(function()
     {
-        $("#id_8").show();
-        $('#id_how_much_letter_of_credit').attr('required', 'required');
+      $("#id_8").show();
+      $('#id_how_much_letter_of_credit').attr('required', 'required');
     });
 
     // letter_credit2_hides
     $("#id_letter_of_credit_2").click(function()
     {
-        $('#id_how_much_letter_of_credit').removeAttr('required');
-        $('#id_how_much_letter_of_credit').val('');
-        $("#id_8").hide();
+      $('#id_how_much_letter_of_credit').removeAttr('required');
+      $('#id_how_much_letter_of_credit').val('');
+      $("#id_8").hide();
     });
 
     // line_of_credit show
@@ -113,61 +113,36 @@
         }
     });
 
+    //register.html
     $("#id_user_type").click(function()
       {    
         if($('#id_user_type_4').is(":checked"))
-        {
-          $("#id_4").hide();
+        {  
+          $("#id_register_7").show();
+          $("#id_register_4").hide();
           $("#id_company_name").val('');
-          $("#id_5").hide();
+          $("#id_register_5").hide();
           $("#id_title").val('');
-        }else if($('#id_user_type_3').is(":checked"))
+        }
+        else if($('#id_user_type_3').is(":checked"))
         {
-          $("#id_4").hide();
+          $("#id_register_4").hide();
           $("#id_company_name").val('');
-          $("#id_5").hide();
+          $("#id_register_5").hide();
           $("#id_title").val('');
-        }else if($('#id_user_type_0').is(":checked") || $('#id_user_type_1').is(":checked") ||
+          $("#id_register_7").hide();
+          $("#id_dealer_no").val('');
+        }
+        else if($('#id_user_type_0').is(":checked") || $('#id_user_type_1').is(":checked") ||
         $('#id_user_type_2').is(":checked"))
         {
-          $("#id_4").show();
-          $("#id_5").show();
-          $("#id_7").hide();
-          $("#id_7").val('');
-        }else if ($('#id_user_type_3').is(":checked")){
-          $("#id_7").hide();
-          $("#id_7").val('');
+          $("#id_register_4").show();
+          $("#id_register_5").show();
+          $("#id_register_7").hide();
+          $("#id_dealer_no").val('');
         }
+        
       });
-
-    // $("#id_user_type").click(function()
-    // {
-       
-        // else
-        // {
-        //   $("#id_4").show();
-        //   // $("#id_company_name").val('');
-        //   $("#id_5").show();
-        //   // $("#id_title").val('');
-        // }
-    // });
-    // $("#id_user_type_3").click(function()
-    // {
-    //     $("#id_4").hide();
-    //     $("#id_company_name").val('');
-    //     $("#id_5").hide();
-    //     $("#id_title").val('');
-    // });
-
-    // $("#id_user_type_4").click(function()
-    // {
-    //     $("#id_4").hide();
-    //     $("#id_company_name").val('');
-    //     $("#id_5").hide();
-    //     $("#id_title").val('');
-    // });
-
-
 
     var $on = 'section';
     $($on).css({
@@ -221,12 +196,11 @@
     else if (path == '/floor-plan'){
       $('[href*="/floor-plan"]').addClass('active1');
     }
-    else if (path == '/register'){  
+    else if (path == '/register/'){  
       $('[href*="/register"]').addClass('active1');
     }
     else {
-      $('[href="/"]').addClass('active1');
-      
+      $('[href="/"]').addClass('active1');   
     }
 
 

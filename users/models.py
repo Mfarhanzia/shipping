@@ -4,6 +4,7 @@ from datetime import datetime
 from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 # Create Models
 
 # class MyUser(AbstractUser):
@@ -56,9 +57,9 @@ class SpecialUser(models.Model):
     company_name = models.CharField('Name of Company',max_length=100, blank=True, null=True)
     title = models.CharField('Title',max_length=100, blank=True, null=True)
     email = models.EmailField('Email',max_length=100)
-    dealer_no = models.PositiveIntegerField('Dealer Number', blank=True, null=True)
+    dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
     phone_number = PhoneNumberField(("Phone Number"))
-    activated_on = models.DateTimeField('Activated on()',blank=True, null=True)
+    activated_on = models.DateTimeField('Activated on',blank=True, null=True)
     expire_time = models.DateTimeField('Expire On', blank=True, null=True) 
     
     def __str__(self):

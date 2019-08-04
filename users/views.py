@@ -52,13 +52,16 @@ def specialuser_signup(request):
                 user.is_active = False
                 user.save()
                 current_site = get_current_site(request)
-                mail_subject = f"New Registration - {user.company_name} by {user.f_name} {user.l_name}'"
+                if user.company_name:
+                    mail_subject = f"New Registration - {user.company_name} by {user.f_name} {user.l_name}'"
+                else:
+                    mail_subject = f"New Registration - by {user.f_name} {user.l_name}'"
                 userid = utils.encrypt(user.pk)     # encrypting user id
                 message = render_to_string('users/acc_active_email.html', {
                     'user': user,
                     'domain': current_site.domain,
                     'uid': userid,
-                    'token':account_activation_token.make_token(user),
+                    'token': account_activation_token.make_token(user),
                     })
                 to_email = settings.DEFAULT_FROM_EMAIL
                 email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
@@ -112,8 +115,6 @@ def admincheck(request,uidb64):
                     if random_number not in all_users:
                         user.dealer_no = random_number
                         break
-                    else:
-                        pass
 
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
@@ -154,7 +155,6 @@ def admincheck(request,uidb64):
         except:
             return redirect('register')
         return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
-
 
 def randomstring():
     abc=''.join((random.SystemRandom().choice(
