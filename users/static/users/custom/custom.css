@@ -1,5 +1,9 @@
+html{
+  scroll-behavior: smooth;
+}
+
 .logo {
-  width: 115px !important;
+  width: 120px !important;
   height: 100px !important;
   border: 1px solid #2F2E2E !important;
 }

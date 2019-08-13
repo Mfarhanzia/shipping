@@ -48,6 +48,7 @@ class SpecialUser(models.Model):
         ('banker','Banker'),
         ('dealer','Dealer'),
         ('homeowner','Prospective Homeowner'),
+        ('govt','Municipality/Government Official'),
     )
     
     is_active = models.BooleanField('Active', default=None)

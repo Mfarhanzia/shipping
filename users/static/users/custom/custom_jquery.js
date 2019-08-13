@@ -124,7 +124,7 @@
           $("#id_register_5").hide();
           $("#id_title").val('');
         }
-        else if($('#id_user_type_3').is(":checked"))
+        else if($('#id_user_type_3').is(":checked") || $('#id_user_type_5').is(":checked"))
         {
           $("#id_register_4").hide();
           $("#id_company_name").val('');
@@ -141,7 +141,7 @@
           $("#id_register_7").hide();
           $("#id_dealer_no").val('');
         }
-        
+
       });
 
     var $on = 'section';
@@ -202,9 +202,6 @@
     else {
       $('[href="/"]').addClass('active1');   
     }
-
-
-
   }); // end DOM ready
   
 })(jQuery); // end jQuery
