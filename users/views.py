@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings 
 from order import utils
-from .models import SpecialUser
+from .models import SpecialUser, Dealer, User
 from .forms import SpecialUserForm, EmailListForm
 from django.contrib import messages
 from django.core.mail import EmailMessage 
@@ -15,6 +15,8 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django import forms
+from django.contrib.auth import password_validation
 
 #views
 
@@ -48,6 +50,23 @@ def specialuser_signup(request):
         if request.method == 'POST':
             form = SpecialUserForm(request.POST)
             if form.is_valid():
+                
+                if form.cleaned_data['user_type'] == 'dealer':
+                    print('::::::::::::::::::::::::::::::::')
+                    print('::::::::::::::::::::::::::::::::')
+                    email = form.cleaned_data['email']
+                    ph = form.cleaned_data['phone_number']
+                    fname = form.cleaned_data['f_name']
+                    lname = form.cleaned_data['l_name']
+                    password = request.POST['password']
+                    
+                    dealer = Dealer.objects.create(email=email, phone_number=ph, first_name=fname, last_name=lname)
+                    dealer.is_active = False
+                    dealer.set_password(password)
+                    dealer.save()
+                
+                
+
                 user = form.save(commit=False)
                 user.is_active = False
                 user.save()
@@ -109,20 +128,25 @@ def admincheck(request,uidb64):
             id = utils.decrypt(uidb64)      # decrypting user id
             user = SpecialUser.objects.get(pk=id)
             if user.user_type == "dealer":
-                all_users = SpecialUser.objects.all().values_list('dealer_no', flat=True)
-                while True:
-                    random_number = randomstring()                    
-                    if random_number not in all_users:
-                        user.dealer_no = random_number
-                        break
+                dealer = Dealer.objects.get(email = user.email, first_name = user.f_name, last_name = user.l_name )
 
+                all_users = Dealer.objects.all().values_list('dealer_no', flat=True)
+                if not dealer.dealer_no:
+                    while True:
+                        random_number = randomstring()                    
+                        if random_number not in all_users:
+                            dealer.dealer_no = random_number
+                            break
+            dealer.is_active = True
+            user.dealer_no = dealer.dealer_no
+            dealer.save()
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
             user.expire_time = timezone.now() + timedelta(hours=12)   #setting expire time
             current_site = get_current_site(request)
             mail_subject = 'Account Activated.'
             message = render_to_string('users/specialuseremail.html', {
-                'user': user,
+                'user': dealer,
                 'domain': current_site.domain,
                 'uid': uidb64,  
                 })

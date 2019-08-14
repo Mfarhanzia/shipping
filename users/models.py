@@ -7,16 +7,29 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 # Create Models
 
-# class MyUser(AbstractUser):
-#     USERNAME_FIELD = 'email'
-#     email = models.EmailField(('email address'), unique=True) # changes email to unique and blank to false
-#     REQUIRED_FIELDS = []
+class User(AbstractUser):
+    email = models.EmailField(verbose_name='email address',max_length=255,unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
-# MyUser._meta.get_field('email')._unique = True
-# MyUser._meta.get_field('email')._blank = False
-# MyUser._meta.get_field('username')._unique = False
-# MyUser._meta.get_field('username')._blank = True
-# MyUser._meta.get_field('username')._null = True
+    @property
+    def is_dealer(self):
+        try:
+            self.dealer
+            return True
+        except:
+            return False
+
+class Dealer(User):
+    
+    dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
+    phone_number = PhoneNumberField(("Phone Number"), blank=True, null=True)
+    # content_page+
+
+    class Meta:
+        verbose_name = 'Dealer'
+        verbose_name_plural = 'Dealers'
+
 
 
 class Photo(models.Model):
@@ -48,7 +61,7 @@ class SpecialUser(models.Model):
         ('banker','Banker'),
         ('dealer','Dealer'),
         ('homeowner','Prospective Homeowner'),
-        ('govt','Municipality/Government Official'),
+        ('Municipality/Government Official','Municipality/Government Official'),
     )
     
     is_active = models.BooleanField('Active', default=None)

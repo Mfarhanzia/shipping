@@ -92,9 +92,16 @@
 							<a class="nav-link" href="{% url 'floor_plan' %}">Floor Plans</a>
 						</li>
 						{% if user.is_authenticated %}
-						<li class="nav-item">
-							<a class="nav-link" href="/view-order">View Order</a>
-						</li>
+							{% if user.is_superuser %}
+							<li class="nav-item">
+								<a class="nav-link" href="/view-order">View Order</a>
+							</li>
+							{% endif %}
+							{% if user.is_dealer %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
+							</li>
+							{% endif %}
 						<li class="nav-item">
 							<a class="nav-link" href="/logout">LogOut</a>
 						</li>

@@ -45,19 +45,7 @@
             {% endif %}
         {% endfor %}  
     </div>
-    {% comment %}
-    <div  style="min-width:500px; min-height: 400px ">
-    <div id ='hide' class= "img-fluid" style="min-width:500px; min-height: 400px; background: url('/static/users/imgs/sample.gif') no-repeat;">     
-            
-    </div>
-    </div>
-    {% endcomment %}
 
-    <!-- <script>
-        var s="!!!!=ejw!!tuzmf>#njo.xjeui;611qy<!njo.ifjhiu;!511qy!#?!!!!=ejw!je!>(ijef(!dmbtt>!#jnh.gmvje#!tuzmf>#njo.xjeui;611qy<!njo.ifjhiu;!511qy<!cbdlhspvoe;!vsm)(0tubujd0vtfst0jnht0tbnqmf/hjg(*!op.sfqfbu<#?!!!!!!!!!!!!!!!!!!!!!=0ejw?!!!!=0ejw?";
-        m=""; for (i=0; i<s.length; i++) m+=String.fromCharCode(s.charCodeAt(i)-1); document.write(m);
-        </script> -->
-       
 
 </div>
 <script>
@@ -65,97 +53,3 @@
 </script>
 {% endblock%}
 
-{% block js %}
-{% if request.user.is_authenticated != True %}
-
-<script>
-    var time = {{time|safe}};
-    var uid = "{{uid|safe}}";   
-    let input = [time,uid]
- 
-    function counter(time_left,uid) {
-     var expiryTime = time_left;
-     var time = $('.counter').val();
-     time = parseInt
-     time = time + 1;
-     if(time > expiryTime) {
-          window.location.href = "/view-order/"+uid;	 
-     }
-     else {
- $('.counter').val;
-     }
-}
-
-console.log('trying')
-
-setInterval(counter,1000,...input);
-
-</script>
-{% endif %}
-
-
-<script>
-	//Hide Content If cursor is not on page body.
-	function check() {
-        
-		console.warn($('body:hover').length);
-		if ($('body:hover').length != 0) {
-	    	$('#hide').css("display", "block");
-		}
-		else {
-			$('#hide').css("display", "none");
-			// $('#hide').remove();
-		}
-		  // window.clipboardData.setData ("Text", "abc");
-	}
-	setInterval( check, 100 );
-
-	function copyToClipboard() {
-
-      var aux = document.createElement("input");
-      aux.setAttribute("value", "print screen disabled!");      
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand("copy");
-      // Remove it from the body
-      document.body.removeChild(aux);
-    //   console.warn("Print screen disabled!");
-    //   alert("Print screen disabled!");
-    }
-	//Disable PrtSrc
-    $(window).keyup(function(e){
-      if(e.keyCode == 44){
-        copyToClipboard();
-      }
-    
-      
-    });
-    
-    //disable inspect element
-    document.onkeydown = function(e) {
-	  if(e.keyCode == 123) {
-	     return false;
-	  }
-	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-	     return false;
-	  }
-	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-	     return false;
-	  }
-	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-	     return false;
-	  }
-	  if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-	     return false;
-	  }
-	}
-
-
-    //Disable Right Click
-     $(window).bind("contextmenu",function(e){
-        e.preventDefault();
-     });
-</script>
-
-
-{% endblock %}

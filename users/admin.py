@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SpecialUser, SpecialUserLog, Photo, WaterMark, EmailList 
+from .models import SpecialUser, SpecialUserLog, User, Dealer, Photo, WaterMark, EmailList 
 
 # Register your models here.
 class SpecialUserLogInline(admin.TabularInline):
@@ -31,6 +31,14 @@ class EmailListAdmin(admin.ModelAdmin):
 
 admin.site.register(EmailList,EmailListAdmin)
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['email']  
+admin.site.register(User, UserAdmin)
+
+class DealerAdmin(admin.ModelAdmin):
+ 
+    list_display = ['email'] 
+admin.site.register(Dealer,DealerAdmin)
 
 # class SpecialUserLogAdmin(admin.ModelAdmin):
 #     list_display = ("pk","specialuser",)

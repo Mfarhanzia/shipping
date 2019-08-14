@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import url
-from .views import OrderCreateView, ViewOrder, specialuser_ViewOrder
+from .views import OrderCreateView, ViewOrder, specialuser_ViewOrder, dealer_view
 
 from django.contrib.auth import views as auth_views
 
@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^view-order/(?P<uidb64>[0-9A-Za-z_\-]+)/$',specialuser_ViewOrder, name="specialuser_ViewOrder"),
 
     path('view-order/',ViewOrder.as_view(), name="view-order"),
+    
+    path('dealer/',dealer_view, name="dealer-view"),
 ]

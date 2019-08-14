@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
 INSTALLED_APPS = [
     'phonenumber_field',
     'multiselectfield',
-    'users',
     'order',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-party
     'crispy_forms',  # render forms as bootstrap easily    
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -146,8 +146,9 @@ LOGOUT_REDIRECT_URL = 'login'
 
 ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
 
-# email credential
+AUTH_USER_MODEL = 'users.User'
 
+# email credential
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

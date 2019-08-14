@@ -1,6 +1,6 @@
 import re
 from django import forms
-from .models import SpecialUser, EmailList
+from .models import SpecialUser, EmailList, User
 from phonenumber_field.modelfields import PhoneNumberField
 class SpecialUserForm(forms.ModelForm):
     class Meta:
@@ -33,6 +33,14 @@ class SpecialUserForm(forms.ModelForm):
             raise forms.ValidationError(
                 'Incorrect Last Name')
         return l_name
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if self.cleaned_data['user_type'] == 'dealer':
+            if User.objects.filter(email=email):
+                raise forms.ValidationError(
+                    'Already Exist'
+                )
+        return email
     
 class EmailListForm(forms.ModelForm):
 

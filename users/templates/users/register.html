@@ -2,7 +2,7 @@
 {% block content%}
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" >
             {% for errors in form.non_field.errors %}
             <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
             {% endfor%}
@@ -28,6 +28,7 @@
                         <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
                         {% endfor %}
                     </div>
+
 
                     {% endif %}
                 {% endfor %}

@@ -23,6 +23,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
 from django.db.models import FloatField
 from django.db.models.functions import Cast
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 class OrderCreateView(FormView):
@@ -66,7 +68,8 @@ class OrderCreateView(FormView):
         email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",))
         email.content_subtype = "html"
         email.send()
-
+       
+@method_decorator(user_passes_test(lambda u: u.is_superuser == True), name='dispatch')
 class ViewOrder(LoginRequiredMixin,ListView):
     """
     view for showing orders for authenticated users
@@ -88,8 +91,8 @@ class ViewOrder(LoginRequiredMixin,ListView):
         
         qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
         
-        for i in qs:
-            print(type(i.fieldsum),i.fieldsum)
+        # for i in qs:
+        #     print(type(i.fieldsum),i.fieldsum)
         return qs
 
 # custom decorator
@@ -180,20 +183,27 @@ def specialuser_ViewOrder(request, time, user, uidb64):
     """
     This view is for Special users to whom access will be given by admin for 12 hrs
     """
-    if user.user_type == 'dealer':
-        qs = SpecialUser.objects.filter(user_type = 'homeowner', dealer_no = user.dealer_no)
-        return render(request, 'order/dealer_homeowner.html', {'orders':qs,'time':int(time),'uid': uidb64,'title': 'Dealer' })
+    # if user.user_type == 'dealer':
+    #     qs = SpecialUser.objects.filter(user_type = 'homeowner', dealer_no = user.dealer_no)
+    #     return render(request, 'order/dealer_homeowner.html', {'orders':qs,'time':int(time),'uid': uidb64,'title': 'Dealer' })
 
+    image = Photo.objects.all()
+    water_mark = WaterMark.objects.first()    
+    if water_mark:
+        for img in image:
+            id=img.id
+            if not img.watermarked_image:
+                watermark_photo(img.original_image,'media/wartermarked_photos/water_marked'+str(id)+'.png', water_mark.water_mark_image, id = id)
+
+    image = Photo.objects.all()
+    
+    return render(request, 'order/structural.html', {'time':int(time),'uid': uidb64, 'image':image, 'title': 'Structural' })
+
+@login_required
+def dealer_view(request):
+    if request.user.is_dealer:
+        print(request.user.dealer.dealer_no)
+        qs = SpecialUser.objects.filter(user_type = 'homeowner',dealer_no = request.user.dealer.dealer_no)
+        return render(request, 'order/dealer_homeowner.html', {'orders':qs, 'title': 'Dealer' })
     else:
-        image = Photo.objects.all()
-        water_mark = WaterMark.objects.first()    
-        if water_mark:
-            for img in image:
-                id=img.id
-                if not img.watermarked_image:
-                    watermark_photo(img.original_image,'media/wartermarked_photos/water_marked'+str(id)+'.png', water_mark.water_mark_image, id = id)
-
-        image = Photo.objects.all()
-        
-        return render(request, 'order/structural.html', {'time':int(time),'uid': uidb64, 'image':image, 'title': 'Structural' })
-        
+        return redirect('/')

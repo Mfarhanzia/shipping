@@ -368,3 +368,8 @@ input[type="radio"]:checked ~ label {
 
   cursor: pointer;
 }
+
+.carousel-img1{
+  width: 100% !important;
+  height: 90vh !important;
+}
