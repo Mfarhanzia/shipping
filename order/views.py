@@ -17,14 +17,13 @@ from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
 from django.db.models import FloatField
 from django.db.models.functions import Cast
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 class OrderCreateView(FormView):
@@ -69,11 +68,16 @@ class OrderCreateView(FormView):
         email.content_subtype = "html"
         email.send()
        
-@method_decorator(user_passes_test(lambda u: u.is_superuser == True), name='dispatch')
-class ViewOrder(LoginRequiredMixin,ListView):
+class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
     """
     view for showing orders for authenticated users
     """
+    def test_func(self):
+        
+        if self.request.user.is_superuser:
+            return True
+        else:
+            return False 
     model = Order
     template_name = 'order/view_orders.html'  
     context_object_name = 'orders'
