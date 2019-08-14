@@ -24,7 +24,7 @@ class Dealer(User):
     
     dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
     phone_number = PhoneNumberField(("Phone Number"), blank=True, null=True)
-    # content_page+
+    content_page_link = models.URLField('Structural Conttent Page link', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Dealer'
@@ -65,7 +65,7 @@ class SpecialUser(models.Model):
     )
     
     is_active = models.BooleanField('Active', default=None)
-    user_type = models.CharField('Sign up as', max_length=20, choices = USER_TYPE, default = None)
+    user_type = models.CharField('Sign up as', max_length=32, choices = USER_TYPE, default = None)
     f_name = models.CharField('First Name',max_length=100)
     l_name = models.CharField('Last Name',max_length=100)
     company_name = models.CharField('Name of Company',max_length=100, blank=True, null=True)

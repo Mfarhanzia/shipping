@@ -127,6 +127,7 @@ def admincheck(request,uidb64):
         if request.POST.get('selector','') == "True":
             id = utils.decrypt(uidb64)      # decrypting user id
             user = SpecialUser.objects.get(pk=id)
+            current_site = get_current_site(request)
             if user.user_type == "dealer":
                 dealer = Dealer.objects.get(email = user.email, first_name = user.f_name, last_name = user.l_name )
 
@@ -137,16 +138,17 @@ def admincheck(request,uidb64):
                         if random_number not in all_users:
                             dealer.dealer_no = random_number
                             break
-            dealer.is_active = True
-            user.dealer_no = dealer.dealer_no
-            dealer.save()
+                dealer.is_active = True
+                user.dealer_no = dealer.dealer_no
+            # current_site = get_current_site(request)
+                dealer.content_page_link = f"{current_site.domain}/view-order/{uidb64}"
+                dealer.save()
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
             user.expire_time = timezone.now() + timedelta(hours=12)   #setting expire time
-            current_site = get_current_site(request)
             mail_subject = 'Account Activated.'
             message = render_to_string('users/specialuseremail.html', {
-                'user': dealer,
+                'user': user,
                 'domain': current_site.domain,
                 'uid': uidb64,  
                 })
@@ -157,7 +159,10 @@ def admincheck(request,uidb64):
             email.send()  # sending email with link
 
             user.save()
-            messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
+            if user.company_name:
+                messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
+            else:
+                messages.success(request, f'You have Given Access to {user.f_name} {user.l_name} and an email is sent to user with the access link.')
             return redirect('register')
 
         elif request.POST.get('selector','') == "False":
