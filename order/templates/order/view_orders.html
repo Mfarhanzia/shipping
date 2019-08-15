@@ -1,6 +1,7 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load humanize %}
 {% block content%}
 
 <div class="container">
@@ -25,9 +26,9 @@
                         <td>Within {{order.other_when_to_order}} Days</td>
                         {% endif %}
 
-                        <td>${{order.how_much_letter_of_credit}}</td>
+                        <td>${{order.how_much_letter_of_credit|intcomma}}</td>
                         
-                        <td>${{order.how_much_line_of_credit}}</td>
+                        <td>${{order.how_much_line_of_credit|intcomma}}</td>
                     </tr>
                     {% endfor %}
                 </table>

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # third-party
     'crispy_forms',  # render forms as bootstrap easily    
     'users',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

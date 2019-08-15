@@ -11,8 +11,14 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Comapny Name</th>
-                    <th>Title</th>
+                    {% if user.company_name %}
+                        <th>Comapny Name</th>
+                    {% endif%}
+
+                    {% if user.title %}
+                        <th>Title</th>
+                    {% endif%}
+
                     <th>Phone number</th>
                     <!-- </thead> -->
                     <tr>
@@ -20,8 +26,15 @@
                         <td>{{user.f_name}}</td>
                         <td>{{user.l_name}}</td>
                         <td style="text-transform: none !important" >{{user.email}}</td>
-                        <td>{{user.title}}</td>
-                        <td>{{user.company_name}}</td>
+
+                        {% if user.company_name%}
+                            <td>{{user.company_name}}</td>
+                        {% endif%}
+
+                        {% if user.title %}
+                            <td>{{user.title}}</td>
+                        {% endif%}
+                        
                         <td>{{user.phone_number}}</td>
                     </tr>
                 </table>
