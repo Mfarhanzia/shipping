@@ -369,7 +369,25 @@ input[type="radio"]:checked ~ label {
   cursor: pointer;
 }
 
-.carousel-img1{
-  width: 100% !important;
-  height: 90vh !important;
+
+.overlay{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .7;
+  background: #1C1D21;
+  z-index: -1;
+}
+
+.overlay2{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .8;
+  background: #1C1D21;
+  z-index: 1;
 }
