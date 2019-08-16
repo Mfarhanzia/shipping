@@ -6,7 +6,8 @@
 
 <div class="home-content">
     <div class="container mb-5">
-            <img class="carousel-img1 img-fluid d-block" src="{% static 'users/imgs/exterior-2nd-floor.jpg' %}" alt="First slide">
+            <img style="max-height: 100vh; width: 100%" class="img-fluid d-block" src="{% static 'users/imgs/driveway.jpg' %}" alt="First slide">
+            {% comment %}
         <!-- <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -29,6 +30,7 @@
               <span class="sr-only">Next</span>
             </a>
           </div> -->
+          {% endcomment %}
     </div>
     <div class="container content-1" >
             <span style="letter-spacing:0.15em;font: normal normal normal 22px/1.4em futura_ltregular,sans-serif;">
@@ -91,8 +93,6 @@
                 <a href="#!" target="_self" title="" style="width:291px;height:150px" id="comp-ilc1q78vlink" class="ImageButton_1link ">
                     <img class="animated zoomIn" id="comp-ilc1q78vdefaultImageimage" style="width: 291px; height: 150px; object-fit: contain;" alt="" data-type="image" itemprop="image" src="{% static 'users/imgs/bb851b_6a2590487b894b44becba8c6286e6275_mv2.jpg' %}">
                 </a>
-                
-                <img class="mt-5 img-fluid d-block" src="{% static 'users/imgs/driveway.jpg' %}" alt="First slide">
             
             </div>
           
@@ -176,7 +176,8 @@
             </div>
             <div class="col-md-6 fa-pull-right">
                 <div class="c-banner">
-                    <img style="max-height: 50vh; width: 100% " class="animated zoomIn img-fluid" src="{% static 'users/imgs/driveway.jpg' %}" alt="First slide">
+                    <img style="max-height: 50vh; width: 100% " class="animated zoomIn img-fluid" src="{% static 'users/imgs/exterior-2nd-floor.jpg' %}" alt="First slide">
+                    
                 </div>
             </div> 
         </div>
