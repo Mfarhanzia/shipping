@@ -12,10 +12,6 @@ class SpecialUserForm(forms.ModelForm):
             'user_type': forms.RadioSelect(),
         }
 
-        help_text = {
-            'phone_number' : 'format: XXX-XXX-XXXX',
-        }
-
     def __init__(self, *args, **kwargs):
         
         super(SpecialUserForm, self).__init__(*args, **kwargs)

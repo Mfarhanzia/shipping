@@ -37,7 +37,6 @@
         $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
       });      
 
-    // $("#id_letter_of_credit").attr('autocomplete', False);
     
     // id_letter_of_credit
     $("#id_letter_of_credit_1").click(function()
