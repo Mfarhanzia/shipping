@@ -42,9 +42,11 @@ class OrderCreateView(FormView):
         form.save()
                 
         mail_subject = f"Order Inquiry - {form.cleaned_data['company_name']} by {form.cleaned_data['f_name']} {form.cleaned_data['l_name']}."
-
+        current_site = get_current_site(request)
         message = render_to_string('order/order_mail_to_admin.html', {
-            'form': form.cleaned_data, })
+            'form': form.cleaned_data,
+            'domain': current_site.domain,
+             })
         to_email = settings.DEFAULT_FROM_EMAIL
         
         email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
@@ -60,9 +62,12 @@ class OrderCreateView(FormView):
         """
         Sending Order Confirm Mail to User 
         """
+        current_site = get_current_site(request)
         mail_subject = f"Order Confirmation"
         message = render_to_string('order/order_confirm_mail.html', {
-            'form': form, })
+            'form': form,
+            'domain': current_site.domain
+             })
         to_email = form['email']
         email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",))
         email.content_subtype = "html"
