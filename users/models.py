@@ -72,7 +72,7 @@ class SpecialUser(models.Model):
     title = models.CharField('Title',max_length=100, blank=True, null=True)
     email = models.EmailField('Email',max_length=100)
     dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
-    phone_number = PhoneNumberField(("Phone Number"), help_text="XXX-XXX-XXXX")
+    phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="XXX-XXX-XXXX")
     activated_on = models.DateTimeField('Activated on',blank=True, null=True)
     expire_time = models.DateTimeField('Expire On', blank=True, null=True) 
     

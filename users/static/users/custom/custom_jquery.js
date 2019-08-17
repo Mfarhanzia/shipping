@@ -33,6 +33,10 @@
         $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
       });
 
+      $('#id_phone_number_8').keyup(function(){
+        $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
+      });      
+
     // $("#id_letter_of_credit").attr('autocomplete', False);
     
     // id_letter_of_credit
