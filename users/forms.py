@@ -12,11 +12,9 @@ class SpecialUserForm(forms.ModelForm):
             'user_type': forms.RadioSelect(),
         }
 
-        labels = {
-            'phone_number' : '<span class="text-info" >format: XXX-XXX-XXXX</span>',
+        help_text = {
+            'phone_number' : 'format: XXX-XXX-XXXX',
         }
-
-
 
     def __init__(self, *args, **kwargs):
         
