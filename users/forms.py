@@ -11,6 +11,13 @@ class SpecialUserForm(forms.ModelForm):
         widgets = {
             'user_type': forms.RadioSelect(),
         }
+
+        labels = {
+            'phone_number' : '<span class="text-info" >format: XXX-XXX-XXXX</span>',
+        }
+
+
+
     def __init__(self, *args, **kwargs):
         
         super(SpecialUserForm, self).__init__(*args, **kwargs)
