@@ -4,25 +4,26 @@ import string
 from .import utils
 from PIL import Image
 from .models import Order
+from decimal import Decimal
 from .forms import OrderForm
 from datetime import datetime
 from django.db.models import F
 from django.conf import settings
 from django.utils import timezone
-from decimal import Decimal
 from django.contrib import messages
-from django.views.generic import ListView
+from django.db.models import FloatField
 from django.core.mail import EmailMessage
+from django.views.generic import ListView
+from django.db.models.functions import Cast
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
-from django.db.models import FloatField
-from django.db.models.functions import Cast
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
 
