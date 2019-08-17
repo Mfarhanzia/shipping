@@ -22,7 +22,7 @@
                     <div id="id_register_{{forloop.counter}}" class="md-form">
                         <i class="prefix"> </i>
                         <label for="{{field.id_for_label}}" class="label" data-error="wrong"
-                            data-success="right">{{field.label}}{% if 'Phone' in field.label %}<span class="text-info">format: XXX-XXX-XXXXX </span> {% endif %}</label><br>
+                            data-success="right">{{field.label}}{% if 'Phone' in field.label %}<span style="font-size: small;" class="text-muted ml-2">(format: XXX-XXX-XXXXX) </span> {% endif %}</label><br>
                         {{field}}
                         {% for error in field.errors %}
                         <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
