@@ -53,7 +53,7 @@ class Order(models.Model):
     f_name = models.CharField('First Name',max_length=100)
     l_name = models.CharField('Last Name',max_length=100)
     email = models.EmailField('Email',max_length=100)
-    phone_number = PhoneNumberField(("Phone Number"))
+    phone_number = PhoneNumberField(("Phone Number"), help_text="XXX-XXX-XXXX")
     
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
