@@ -1,0 +1,17 @@
+
+{% extends "users/base.html"%}
+
+{% block content %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-md-12 text-center mt-5 mb-5">
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-lg "><h3>Extend Access</h3></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

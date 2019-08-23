@@ -163,7 +163,7 @@ EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
 DEFAULT_FROM_EMAIL = "info@boltonblock.com"
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # Activate Django heroku
 django_heroku.settings(locals())

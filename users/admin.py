@@ -6,7 +6,8 @@ class SpecialUserLogInline(admin.TabularInline):
     model = SpecialUserLog
 
 class SpecialUserAdmin(admin.ModelAdmin):
-    list_display = ("pk","company_name","email","user_type")
+    list_display = ("pk","email","company_name","user_type")
+    list_display_links = ("pk","email",)
     list_filter = ("user_type",)
     inlines = [SpecialUserLogInline]
     list_per_page = 50
@@ -28,16 +29,20 @@ admin.site.register(WaterMark,WaterMarkAdmin)
 
 class EmailListAdmin(admin.ModelAdmin):
     list_display = ['email']     
-
+    list_per_page = 50
 admin.site.register(EmailList,EmailListAdmin)
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['email']  
+    list_display = ['email']
+    readonly_fields = ('password',) 
+    list_per_page = 50
 admin.site.register(User, UserAdmin)
 
 class DealerAdmin(admin.ModelAdmin):
  
-    list_display = ['email'] 
+    list_display = ['email']
+    readonly_fields = ('password',)
+    list_per_page = 50 
 admin.site.register(Dealer,DealerAdmin)
 
 # class SpecialUserLogAdmin(admin.ModelAdmin):

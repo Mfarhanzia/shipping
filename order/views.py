@@ -15,6 +15,7 @@ from django.db.models import FloatField
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.db.models.functions import Cast
+from users.token import account_activation_token
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from django.template.loader import render_to_string
@@ -126,30 +127,25 @@ def give_special_access(func):
             user.activated_on = None
             user.save()
             messages.warning(request, f'Link is Expired!')
-            return redirect('/')
+            return redirect('re_access',kwargs['uidb64'])
     return wrapper
 
 def check_session(func):
-  
     def wrapper(request,*args, **kwargs):
         """
-        This function checks if the user opens this page first time it makes a session name "logkey" asign a random string to it and adds the current time as login time else if the "logkey" session alredy has value that means user is logged in and it will not save the current time as log in time. 
+        This function checks if the user opens this page first time it makes a session name "logkey" asign user id to it and adds the current time as login time else if the "logkey" session alredy has value that means user is logged in and it will not save the current time as log in time. 
         """
         uid = utils.decrypt(kwargs['uidb64'])
-   
         if uid not in request.session.keys():
             request.session[uid] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
             #entering login time
-            # uid = utils.decrypt(kwargs['uidb64'])
             user = get_object_or_404(SpecialUser, is_active=True, pk=uid)
             SpecialUserLog.objects.create(specialuser=user, userlog_datetime=timezone.now(), userlog_date=timezone.now(), userlog_time=timezone.now())
             return func(request, *args,**kwargs)
         else:
             return func(request, *args,**kwargs)
-
     return wrapper
-        
-
+    
 def watermark_photo(input_image_path,
                     output_image_path,
                     watermark_image_path,id):
@@ -193,10 +189,6 @@ def specialuser_ViewOrder(request, time, user, uidb64):
     """
     This view is for Special users to whom access will be given by admin for 12 hrs
     """
-    # if user.user_type == 'dealer':
-    #     qs = SpecialUser.objects.filter(user_type = 'homeowner', dealer_no = user.dealer_no)
-    #     return render(request, 'order/dealer_homeowner.html', {'orders':qs,'time':int(time),'uid': uidb64,'title': 'Dealer' })
-
     image = Photo.objects.all()
     water_mark = WaterMark.objects.first()    
     if water_mark:
@@ -217,3 +209,21 @@ def dealer_view(request):
         return render(request, 'order/dealer_homeowner.html', {'orders':qs, 'title': 'Dealer' })
     else:
         return redirect('/')
+
+def re_request_access(request, uidb64):
+    current_site = get_current_site(request)
+    if request.method == "POST":
+        id = utils.decrypt(uidb64)
+        user = SpecialUser.objects.get(id=id)
+        message = render_to_string('users/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': uidb64,
+                    'token': account_activation_token.make_token(user),
+                    })
+        to_email = settings.DEFAULT_FROM_EMAIL
+        email =EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
+        email.content_subtype = "html"
+        messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
+        return redirect('/')
+    return render(request, 'order/re_request_access.html')

@@ -20,7 +20,6 @@ from django.contrib.auth import password_validation
 
 #views
 
-
 def home_view(request):
     
     if request.method == "POST":
@@ -40,20 +39,15 @@ def home_view(request):
 def floor_plan(request):
     return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
 
-
 def specialuser_signup(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
     """
-    if request.user.is_authenticated == False:
-        
+    if request.user.is_authenticated == False or request.user.is_dealer == True:
         if request.method == 'POST':
             form = SpecialUserForm(request.POST)
             if form.is_valid():
-                
                 if form.cleaned_data['user_type'] == 'dealer':
-                    print('::::::::::::::::::::::::::::::::')
-                    print('::::::::::::::::::::::::::::::::')
                     email = form.cleaned_data['email']
                     ph = form.cleaned_data['phone_number']
                     fname = form.cleaned_data['f_name']
@@ -63,9 +57,7 @@ def specialuser_signup(request):
                     dealer = Dealer.objects.create(email=email, phone_number=ph, first_name=fname, last_name=lname)
                     dealer.is_active = False
                     dealer.set_password(password)
-                    dealer.save()
-                
-                
+                    dealer.save()  
 
                 user = form.save(commit=False)
                 user.is_active = False
@@ -112,7 +104,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
       return redirect ('admincheck', uidb64)      
     else:
-        messages.warning(request, f'Activation link is invalid!')
+        messages.warning(request, f'Activation link is Expired!')
         return redirect('login')
 
 @login_required
