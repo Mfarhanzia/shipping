@@ -20,7 +20,7 @@ from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
@@ -235,3 +235,10 @@ def re_request_access(request, uidb64):
             messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
         return redirect('/')
     return render(request, 'order/re_request_access.html')
+
+@login_required
+def view_content(request):
+    if request.user.is_superuser:
+        return render(request, 'order/structural.html')
+    else:
+        return redirect('/')

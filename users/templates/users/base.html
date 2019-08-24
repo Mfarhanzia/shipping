@@ -96,13 +96,16 @@
 							<li class="nav-item">
 								<a class="nav-link" href="/view-order">View Order</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/view-content">View Content</a>
+							</li>
 							{% endif %}
 							{% if user.is_dealer %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="//{{ user.dealer.content_page_link }}">View Content</a>
+								<a class="nav-link" href="{{ user.dealer.content_page_link }}">View Content</a>
 							</li>
 							{% endif %}
 						<li class="nav-item">

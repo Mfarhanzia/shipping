@@ -41,7 +41,7 @@ admin.site.register(User, UserAdmin)
 class DealerAdmin(admin.ModelAdmin):
  
     list_display = ['email']
-    readonly_fields = ('password',)
+    readonly_fields = ('password','content_page_link',)
     list_per_page = 50 
 admin.site.register(Dealer,DealerAdmin)
 

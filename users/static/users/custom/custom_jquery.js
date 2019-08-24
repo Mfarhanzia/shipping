@@ -160,7 +160,6 @@
     $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
     
     var path = window.location.pathname;
- 
    if (path == '/order'){
       $('[href*="/order"]').addClass('active1');
     }
@@ -169,9 +168,8 @@
       $('[href*="/login"]').addClass('active1');
     }
 
-    else if (path == '/view-order'){
-      $('[href*="/view-order"]').addClass('active1');
-      
+    else if (path == '/view-order/'){
+      $('[href="/view-order"]').addClass('active1');
     }
     else if (path == '/floor-plan'){
       $('[href*="/floor-plan"]').addClass('active1');
@@ -181,6 +179,10 @@
     }
     else if (path == '/dealer/'){  
       $('[href*="/dealer/"]').addClass('active1');
+    }
+    // else if (path == '/view-content'){  
+    else if (path.indexOf('/view-content') != -1){  
+      $('[href*="/view-content"]').addClass('active1');
     }
     else {
       $('[href="/"]').addClass('active1');   

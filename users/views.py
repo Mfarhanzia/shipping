@@ -1,22 +1,22 @@
 import random
 import string
-from datetime import timedelta
-from django.utils import timezone
-from django.conf import settings 
 from order import utils
-from .models import SpecialUser, Dealer, User
-from .forms import SpecialUserForm, EmailListForm
+from django import forms
+from datetime import timedelta
+from django.conf import settings 
+from django.utils import timezone
 from django.contrib import messages
 from django.core.mail import EmailMessage 
 from .token import account_activation_token
-from django.shortcuts import render, redirect, get_object_or_404
+from .models import SpecialUser, Dealer, User
+from .forms import SpecialUserForm, EmailListForm
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth.decorators import login_required
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django import forms
 from django.contrib.auth import password_validation
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 #views
 
@@ -107,6 +107,7 @@ def activate(request, uidb64, token):
         return redirect('login')
 
 @login_required
+@user_passes_test(lambda user: user.is_superuser == True)
 def admincheck(request,uidb64):
     """
     This function executes if the link is not expired
@@ -133,7 +134,7 @@ def admincheck(request,uidb64):
                 dealer.is_active = True
                 user.dealer_no = dealer.dealer_no
             # current_site = get_current_site(request)
-                dealer.content_page_link = f"{current_site.domain}/view-order/{uidb64}"
+                dealer.content_page_link = f"/view-content/{uidb64}"
                 
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
