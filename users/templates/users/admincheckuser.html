@@ -67,14 +67,16 @@
                         </ul>
                     </div>
                 </div>
-                <!-- <section title=".slideThree">
-                
-                    <div class="slideThree">
-                        <input type="checkbox" value="True" id="slideThree" name="checkbox" />
-                        <label for="slideThree"></label>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <select  name="time" class='form-control'>
+                            <option value="12" selected>Default 12 Hours</option>
+                        {% for i in '123456781234567812345678'|make_list %}
+                            <option value="{{forloop.counter}}">{{forloop.counter}} Hours</option>
+                        {% endfor %}
+                        </select>
                     </div>
-                    
-                </section> -->
+                </div>
                 <button class="btn-primary btn fa-pull-right" type="submit">Submit</button>
 
             </form>

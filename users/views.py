@@ -25,7 +25,6 @@ def home_view(request):
     if request.method == "POST":
         form = EmailListForm(request.POST)
         if form.is_valid():
-            print('================')
             form.save()
             messages.success(request, f'Thanks for Subscribing us')
         else:
@@ -117,6 +116,7 @@ def admincheck(request,uidb64):
     """
     if request.method=="POST":
         if request.POST.get('selector','') == "True":
+            # request
             id = utils.decrypt(uidb64)      # decrypting user id
             user = SpecialUser.objects.get(pk=id)
             current_site = get_current_site(request)
@@ -134,10 +134,11 @@ def admincheck(request,uidb64):
                 user.dealer_no = dealer.dealer_no
             # current_site = get_current_site(request)
                 dealer.content_page_link = f"{current_site.domain}/view-order/{uidb64}"
-                dealer.save()
+                
             user.is_active=True     # setting user to active
             user.activated_on = timezone.now()     #setting activation time
-            user.expire_time = timezone.now() + timedelta(hours=12)   #setting expire time
+            time = request.POST.get("time")
+            user.expire_time = timezone.now() + timedelta(hours=int(time))   #setting expire time
             mail_subject = 'Account Activated.'
             message = render_to_string('users/specialuseremail.html', {
                 'user': user,
@@ -149,7 +150,7 @@ def admincheck(request,uidb64):
 
             email.content_subtype = "html"
             email.send()  # sending email with link
-
+            dealer.save()
             user.save()
             if user.company_name:
                 messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
@@ -161,11 +162,13 @@ def admincheck(request,uidb64):
             id = utils.decrypt(uidb64)      # decrypting user id
             try:
                 user = get_object_or_404(SpecialUser,pk=id)
-                messages.success(request, f'You have Rejected Access to Company {user.company_name}')
+                if user.company_name:
+                    messages.success(request, f'You have Rejected Access to Company {user.company_name}')
+                else:
+                    messages.success(request, f'You have Rejected Access to Company {user.f_name} {user.l_name}')
                 user.delete()
             except:
                 pass
-            
             return redirect('register')       
         else:
             return redirect('/')

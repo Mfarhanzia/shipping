@@ -215,6 +215,10 @@ def re_request_access(request, uidb64):
     if request.method == "POST":
         id = utils.decrypt(uidb64)
         user = SpecialUser.objects.get(id=id)
+        if user.company_name:
+                    mail_subject = f"Access Extend Request - {user.company_name} by {user.f_name} {user.l_name}'"
+        else:
+            mail_subject = f"Access Extend Request - by {user.f_name} {user.l_name}'"
         message = render_to_string('users/acc_active_email.html', {
                     'user': user,
                     'domain': current_site.domain,
@@ -224,6 +228,10 @@ def re_request_access(request, uidb64):
         to_email = settings.DEFAULT_FROM_EMAIL
         email =EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
         email.content_subtype = "html"
-        messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
+        email.send()
+        if user.user_type == 'dealer':
+            messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
+        else:
+            messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
         return redirect('/')
     return render(request, 'order/re_request_access.html')
