@@ -151,7 +151,8 @@ def admincheck(request,uidb64):
 
             email.content_subtype = "html"
             email.send()  # sending email with link
-            dealer.save()
+            if user.user_type == "dealer":
+                dealer.save()
             user.save()
             if user.company_name:
                 messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')

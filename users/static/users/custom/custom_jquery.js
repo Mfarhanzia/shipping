@@ -99,13 +99,13 @@
             $("#id_14").hide();
         }
     });
-
+    
     // other2
     $("#id_type_of_climate_area_6").click(function()
     {
         if($('#id_type_of_climate_area_6').is(":checked"))
         {
-            $("#id_16").show();
+            
             $('#id_other_type_of_climate_area').attr('required', 'required');
         }
         else
@@ -113,6 +113,20 @@
             $('#id_other_type_of_climate_area').removeAttr('required');
             $('#id_other_type_of_climate_area').val('');
             $("#id_16").hide();
+        }
+    });
+   //admin check True
+    $("input[name=selector]").click(function()
+    {
+        if($('#f-option').is(":checked"))
+        {
+          $('#time_access_input').attr('required', 'required');
+          $("#access_time_div").show();
+        }
+        else
+        {
+          $('#time_access_input').removeAttr('required');
+          $("#access_time_div").hide();
         }
     });
 
@@ -187,6 +201,9 @@
     else {
       $('[href="/"]').addClass('active1');   
     }
+
+
+
   }); // end DOM ready
   
 /// register.html validation

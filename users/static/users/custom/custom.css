@@ -123,7 +123,7 @@ form {
 }
 } 
 
-#div_id_how_much_letter_of_credit, #div_id_how_much_line_of_credit, #div_id_other_type_of_development, #div_id_other_type_of_climate_area, #div_id_other_when_to_order{
+#div_id_how_much_letter_of_credit, #div_id_how_much_line_of_credit, #div_id_other_type_of_development, #div_id_other_type_of_climate_area, #div_id_other_when_to_order, #access_time_div{
   display: none;
 }
 
