@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
                     'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com']
 
 # Application definition
-
 INSTALLED_APPS = [
     'phonenumber_field',
     'multiselectfield',
@@ -162,7 +161,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
 DEFAULT_FROM_EMAIL = "info@boltonblock.com"
-
 
 SECURE_SSL_REDIRECT = True
 
