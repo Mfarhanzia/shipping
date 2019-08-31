@@ -74,9 +74,10 @@ def specialuser_signup(request):
                     'token': account_activation_token.make_token(user),
                     })
                 to_email = settings.DEFAULT_FROM_EMAIL
-                email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
-                email.content_subtype = "html"
+                # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
+                email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
                 
+                email.content_subtype = "html"
                 email.send()
                 if user.user_type == 'dealer':
                     messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
