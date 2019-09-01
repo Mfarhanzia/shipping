@@ -145,7 +145,8 @@ def admincheck(request,uidb64):
             message = render_to_string('users/specialuseremail.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid': uidb64,  
+                'uid': uidb64,
+                'time': int(time)  
                 })
             to_email = user.email
             email =EmailMessage(subject=mail_subject, body=message,from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
