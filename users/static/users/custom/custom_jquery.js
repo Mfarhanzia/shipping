@@ -115,22 +115,13 @@
             $("#id_16").hide();
         }
     });
-   //admin check True
+
+   //admin-check Time access show/hide
     $("input[name=selector]").click(function()
     {
-        if($('#f-option').is(":checked"))
-        {
-          $('#time_access_input').attr('required', 'required');
-          $("#access_time_div").show();
-        }
-        else
-        {
-          $('#time_access_input').removeAttr('required');
-          $("#access_time_div").hide();
-        }
+      access_time_admin()
     });
-
-
+    access_time_admin()
 
     //register.html
     $("#id_user_type").click(function(){
@@ -205,7 +196,21 @@
 
 
   }); // end DOM ready
-  
+
+/// show/hide access time 
+function access_time_admin(){
+  if($('#f-option').is(":checked"))
+  {
+    $('#time_access_input').attr('required', 'required');
+    $("#access_time_div").show();
+  }
+  else
+  {
+    $('#time_access_input').removeAttr('required');
+    $("#access_time_div").hide();
+  }
+} 
+
 /// register.html validation
   function register_Validation(){
     $('#dealer_pass_id').remove();    

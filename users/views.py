@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 #views
-
+@login_required(login_url="/register/")
 def home_view(request):
     
     if request.method == "POST":
@@ -73,12 +73,17 @@ def specialuser_signup(request):
                     'uid': userid,
                     'token': account_activation_token.make_token(user),
                     })
-                to_email = settings.DEFAULT_FROM_EMAIL
+                # to_email = settings.DEFAULT_FROM_EMAIL
+                to_email = "farhan71727@gmail.com"
                 # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
                 email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
                 
                 email.content_subtype = "html"
-                email.send()
+                try:
+                    email.send()
+                except Exception as e:
+                    messages.error(request, f'Something went Wrong. Please Try Again!')
+                    return redirect(request.path_info)
                 if user.user_type == 'dealer':
                     messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
                 else:
@@ -116,74 +121,77 @@ def admincheck(request,uidb64):
     if admin clicks on it and submit, it gets uidb64(encrypted userid ) from url and decrypt it and set the user state to active, set a activation time and set expiration time, the Special user will get access to the link which will be sent to user in the email(a new email will be sent to the user with link in this function)
 
     """
-    if request.method=="POST":
-        if request.POST.get('selector','') == "True":
-            # request
-            id = utils.decrypt(uidb64)      # decrypting user id
-            user = SpecialUser.objects.get(pk=id)
-            current_site = get_current_site(request)
-            if user.user_type == "dealer":
-                dealer = Dealer.objects.get(email = user.email, first_name = user.f_name, last_name = user.l_name )
+    try:
+        if request.method=="POST":
+            if request.POST.get('selector','') == "True":
+                # request
+                id = utils.decrypt(uidb64)      # decrypting user id
+                user = SpecialUser.objects.get(pk=id)
+                current_site = get_current_site(request)
+                if user.user_type == "dealer":
+                    dealer = Dealer.objects.get(email = user.email, first_name = user.f_name, last_name = user.l_name )
 
-                all_users = Dealer.objects.all().values_list('dealer_no', flat=True)
-                if not dealer.dealer_no:
-                    while True:
-                        random_number = randomstring()                    
-                        if random_number not in all_users:
-                            dealer.dealer_no = random_number
-                            break
-                dealer.is_active = True
-                user.dealer_no = dealer.dealer_no
-            # current_site = get_current_site(request)
-                dealer.content_page_link = f"/view-content/{uidb64}"
-                
-            user.is_active=True     # setting user to active
-            user.activated_on = timezone.now()     #setting activation time
-            time = request.POST.get("time")
-            user.expire_time = timezone.now() + timedelta(hours=int(time))   #setting expire time
-            mail_subject = 'Account Activated.'
-            message = render_to_string('users/specialuseremail.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': uidb64,
-                'time': int(time)  
-                })
-            to_email = user.email
-            email =EmailMessage(subject=mail_subject, body=message,from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
+                    all_users = Dealer.objects.all().values_list('dealer_no', flat=True)
+                    if not dealer.dealer_no:
+                        while True:
+                            random_number = randomstring()                    
+                            if random_number not in all_users:
+                                dealer.dealer_no = random_number
+                                break
+                    dealer.is_active = True
+                    user.dealer_no = dealer.dealer_no
+                # current_site = get_current_site(request)
+                    dealer.content_page_link = f"/view-content/{uidb64}"
+                    
+                user.is_active=True     # setting user to active
+                user.activated_on = timezone.now()     #setting activation time
+                time = request.POST.get("time")
+                user.expire_time = timezone.now() + timedelta(hours=int(time))   #setting expire time
+                mail_subject = 'Account Activated.'
+                message = render_to_string('users/specialuseremail.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': uidb64,
+                    'time': int(time)  
+                    })
+                to_email = user.email
+                email =EmailMessage(subject=mail_subject, body=message,from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
 
-            email.content_subtype = "html"
-            email.send()  # sending email with link
-            if user.user_type == "dealer":
-                dealer.save()
-            user.save()
-            if user.company_name:
-                messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
+                email.content_subtype = "html"
+                email.send()  # sending email with link
+                if user.user_type == "dealer":
+                    dealer.save()
+                user.save()
+                if user.company_name:
+                    messages.success(request, f'You have Given Access to Company {user.company_name} and an email is sent to Company with the access link')
+                else:
+                    messages.success(request, f'You have Given Access to {user.f_name} {user.l_name} and an email is sent to user with the access link.')
+                return redirect('register')
+
+            elif request.POST.get('selector','') == "False":
+                id = utils.decrypt(uidb64)      # decrypting user id
+                try:
+                    user = get_object_or_404(SpecialUser,pk=id)
+                    if user.company_name:
+                        messages.success(request, f'You have Rejected Access to Company {user.company_name}')
+                    else:
+                        messages.success(request, f'You have Rejected Access to Company {user.f_name} {user.l_name}')
+                    user.delete()
+                except:
+                    pass
+                return redirect('register')       
             else:
-                messages.success(request, f'You have Given Access to {user.f_name} {user.l_name} and an email is sent to user with the access link.')
-            return redirect('register')
-
-        elif request.POST.get('selector','') == "False":
+                return redirect('/')
+        else:
             id = utils.decrypt(uidb64)      # decrypting user id
             try:
-                user = get_object_or_404(SpecialUser,pk=id)
-                if user.company_name:
-                    messages.success(request, f'You have Rejected Access to Company {user.company_name}')
-                else:
-                    messages.success(request, f'You have Rejected Access to Company {user.f_name} {user.l_name}')
-                user.delete()
+                user = SpecialUser.objects.get(pk=id)
             except:
-                pass
-            return redirect('register')       
-        else:
-            return redirect('/')
-    else:
-        id = utils.decrypt(uidb64)      # decrypting user id
-        try:
-            user = SpecialUser.objects.get(pk=id)
-        except:
-            return redirect('register')
-        return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
-
+                return redirect('register')
+            return render(request, 'users/admincheckuser.html', {'user' : user, 'title': 'Admin Check'})
+    except Exception as e:
+        messages.error(request, f'Something went Wrong!')
+        return redirect(request.path_info)
 def randomstring():
     abc=''.join((random.SystemRandom().choice(
         string.digits) for _ in
