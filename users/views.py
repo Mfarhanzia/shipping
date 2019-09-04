@@ -54,7 +54,9 @@ def home_view(request):
 
 @login_required
 def floor_plan(request):
-    if request.user.specuser.home_permission == True:
+    if request.user.is_superuser:
+        return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
+    elif request.user.specuser.home_permission == True:
         return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
     else: 
         return render (request, "users/request_access_home.html")
