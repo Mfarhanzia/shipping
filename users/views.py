@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.mail import EmailMessage 
 from .token import account_activation_token
 from .models import SpecialUser, Dealer, User
-from .forms import SpecialUserForm, EmailListForm
+from .forms import SpecialUserForm, EmailListForm, SpecUserForm
 from django.template.loader import render_to_string
 from django.contrib.auth import password_validation
 from django.utils.encoding import force_bytes, force_text
@@ -19,79 +19,49 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 #views
-@login_required(login_url="/register/")
+@login_required
 def home_view(request):
-    
-    if request.method == "POST":
-        form = EmailListForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Thanks for Subscribing us')
+    if request.user.specuser.home_permission == True:
+        if request.method == "POST":
+            form = EmailListForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, f'Thanks for Subscribing us')
+            else:
+                messages.warning(request, f'You have already Subscribed!')
+
+            return redirect('/')
         else:
-            messages.warning(request, f'You have already Subscribed!')
-
-        return redirect('/')
+            form = EmailListForm()
+            return render(request, 'users/home.html', {'form': form})
     else:
-        form = EmailListForm()
-        return render(request, 'users/home.html', {'form': form})
+        return render (request, "users/request_access_home.html")
 
+@login_required
 def floor_plan(request):
-    return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
-
+    if request.user.specuser.home_permission == True:
+        return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
+    else: 
+        return render (request, "users/request_access_home.html")
+        
 def specialuser_signup(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
     """
-    if request.user.is_authenticated == False or request.user.is_dealer == True:
+    if request.user.is_authenticated == False :
         if request.method == 'POST':
-            form = SpecialUserForm(request.POST)
+            form = SpecUserForm(request.POST)
             if form.is_valid():
-                if form.cleaned_data['user_type'] == 'dealer':
-                    email = form.cleaned_data['email']
-                    ph = form.cleaned_data['phone_number']
-                    fname = form.cleaned_data['f_name']
-                    lname = form.cleaned_data['l_name']
-                    password = request.POST['password']
-                    
-                    dealer = Dealer.objects.create(email=email, phone_number=ph, first_name=fname, last_name=lname)
-                    dealer.is_active = False
-                    dealer.set_password(password)
-                    dealer.save()  
-
                 user = form.save(commit=False)
-                user.is_active = False
+                password = request.POST['password1']
+                user.set_password(password)
+                user.content_permission = False
+                user.home_permission = False
                 user.save()
-                current_site = get_current_site(request)
-                if user.company_name:
-                    mail_subject = f"New Registration - {user.company_name} by {user.f_name} {user.l_name}'"
-                else:
-                    mail_subject = f"New Registration - by {user.f_name} {user.l_name}'"
-                userid = utils.encrypt(user.pk)     # encrypting user id
-                message = render_to_string('users/acc_active_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': userid,
-                    'token': account_activation_token.make_token(user),
-                    })
-                # to_email = settings.DEFAULT_FROM_EMAIL
-                to_email = "farhan71727@gmail.com"
-                # email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
-                email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
-                
-                email.content_subtype = "html"
-                try:
-                    email.send()
-                except Exception as e:
-                    messages.error(request, f'Something went Wrong. Please Try Again!')
-                    return redirect(request.path_info)
-                if user.user_type == 'dealer':
-                    messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
-                else:
-                    messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
-
+                messages.success(request, f'Sign Up Successful!')
                 return redirect('login')
         else:
-            form = SpecialUserForm()
+            form = SpecUserForm()
         return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
     else:
         return redirect('/')
