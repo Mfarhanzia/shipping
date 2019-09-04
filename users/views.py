@@ -21,7 +21,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 #views
 @login_required
 def home_view(request):
-    if request.user.specuser.home_permission == True:
+    if request.user.specuser.home_permission == True or request.user.is_superuser:
         if request.method == "POST":
             form = EmailListForm(request.POST)
             if form.is_valid():
@@ -43,7 +43,7 @@ def floor_plan(request):
         return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
     else: 
         return render (request, "users/request_access_home.html")
-        
+
 def specialuser_signup(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
