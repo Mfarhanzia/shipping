@@ -21,7 +21,22 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 #views
 @login_required
 def home_view(request):
-    if request.user.specuser.home_permission == True or request.user.is_superuser:
+
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = EmailListForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, f'Thanks for Subscribing us')
+            else:
+                messages.warning(request, f'You have already Subscribed!')
+
+            return redirect('/')
+        else:
+            form = EmailListForm()
+            return render(request, 'users/home.html', {'form': form})
+    
+    elif request.user.specuser.home_permission == True:
         if request.method == "POST":
             form = EmailListForm(request.POST)
             if form.is_valid():
