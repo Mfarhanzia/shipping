@@ -102,6 +102,10 @@ class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
     
 
 @login_required
+def home_owner(request):
+    pass
+
+@login_required
 def view_content(request):
     if request.user.is_superuser:
         return render(request, 'order/structural.html')

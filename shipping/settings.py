@@ -25,8 +25,10 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
-                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1']
+# ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
+#                     'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1','*']
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 INSTALLED_APPS = [
