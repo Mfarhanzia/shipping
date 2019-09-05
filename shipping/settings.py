@@ -26,7 +26,7 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 DEBUG = False
 
 ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
-                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1','*']
+                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com']
 # ALLOWED_HOSTS = ['*']
 
 
@@ -88,6 +88,7 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 # }
 
 DATABASES = {
+
     'default': {
             'ENGINE': 'django.db.backends.mysql', 
             'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
