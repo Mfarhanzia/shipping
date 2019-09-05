@@ -86,8 +86,8 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES = {
 
+DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql', 
             'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
