@@ -213,71 +213,42 @@ function access_time_admin(){
 
 /// register.html validation
   function register_Validation(){
-    $('#dealer_pass_id').remove();    
+        
     if($('#id_user_type_4').is(":checked"))
     {  
-      $("#id_register_7").show();
-      $("#id_register_4").hide();
+      $("#id_register_9").show();
+      $("#id_register_7").hide();
       $("#id_company_name").val('');
-      $("#id_register_5").hide();
+      $("#id_register_8").hide();
       $("#id_title").val('');
-      
+
     }
     else if($('#id_user_type_3').is(":checked"))
     {
-      
-      $('<div/>', {
-        id: 'dealer_pass_id',
-        "class": 'md-form',
-        title: 'now this div has a title!'
-      }).insertAfter('#id_register_8');
-
-      $('<i>').attr({
-        class: 'prefix',
-      }).appendTo('#dealer_pass_id');
-      
-      $('<label>').text('Password').attr({
-        for: 'dealer_pass',
-        class: 'label',
-        title: 'Password',
-        placeholder: 'password',
-        error: 'wrong',
-        success: 'right',
-      }).appendTo('#dealer_pass_id');
-
-      $('<br>').appendTo('#dealer_pass_id');
-
-      $('<input>').attr({
-        type: 'password',
-        id: 'dealer_pass',
-        name: 'password',
-        required: true
-      }).appendTo('#dealer_pass_id');
-
-      $("#id_register_4").hide();
-      $("#id_company_name").val('');
-      $("#id_register_5").hide();
-      $("#id_title").val('');
       $("#id_register_7").hide();
+      $("#id_company_name").val('');
+      $("#id_register_8").hide();
+      $("#id_title").val('');
+      $("#id_register_9").hide();
       $("#id_dealer_no").val('');
 
     }
 
     else if($('#id_user_type_5').is(":checked"))
     {
-      $("#id_register_4").hide();
-      $("#id_company_name").val('');
-      $("#id_register_5").hide();
-      $("#id_title").val('');
       $("#id_register_7").hide();
+      $("#id_company_name").val('');
+      $("#id_register_8").hide();
+      $("#id_title").val('');
+      $("#id_register_9").hide();
       $("#id_dealer_no").val('');
     }
     else if($('#id_user_type_0').is(":checked") || $('#id_user_type_1').is(":checked") ||
     $('#id_user_type_2').is(":checked"))
     {
-      $("#id_register_4").show();
-      $("#id_register_5").show();
-      $("#id_register_7").hide();
+      $("#id_register_7").show();
+      $("#id_register_8").show();
+      $("#id_register_9").hide();
       $("#id_dealer_no").val('');
     }
 }

@@ -18,17 +18,15 @@
 											</td>
 											<td style="padding-left: 60px;"><h1 class=" col text-center c-header"
 												style="text-align: center !important;font-weight: 700;color: #319431;">
-												Account Activated Successfully</h1>
+												Access Granted</h1>
 											</td>
 										</tr>
 									</tbody>
 								</table>
 
-
-
 								<br />
 								<span>
-									Hi <b>{{ user.f_name }} {{user.l_name}}</b>,
+									Hi <b>{{ user.first_name }} {{user.last_name}}</b>,
 								</span>
 
 								<br /><br />
@@ -45,30 +43,35 @@
 							style='    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
 							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
 								<br />
-								{% if user.dealer_no %}
+								{% if 'content' in req_for %}
 								<span>
 									<b>To visit page</b> , Please <a
-										href="http://{{ domain }}{% url 'dealer-view' %}"
+										href="http://{{ domain }}{% url 'specialuser_ViewOrder' %}"
 										target="_blank">Click here</a>.
 								</span>
-								<br /><br />
-								<span>
-									If Link does not work then open this Url in your browser.<br>
-									http://{{ domain }}{% url 'dealer-view' %}
-								</span>
+								<br>
 
-								{%else%}
+								{% elif 'home' in req_for %}
 								<span>
 									<b>To visit page</b> , Please <a
-										href="http://{{ domain }}{% url 'specialuser_ViewOrder' uidb64=uid %}"
+										href="http://{{ domain }}"
 										target="_blank">Click here</a>.
 								</span>
-								<br /><br />
+								{%endif%}
+								<br><br>
+
+								{% if 'content' in req_for %}
 								<span>
 									If Link does not work then open this Url in your browser.<br>
-									http://{{ domain }}{% url 'specialuser_ViewOrder' uidb64=uid %}
+									http://{{ domain }}{% url 'specialuser_ViewOrder' %}
+								</span>
+								{% elif 'home' in req_for %}
+								<span>
+									If Link does not work then open this Url in your browser.<br>
+									http://{{ domain }}
 								</span>
 								{% endif %}
+
 								<br /><br />
 								<span>
 									Thanks,<br /> <b>Team BoltonBlock</b>

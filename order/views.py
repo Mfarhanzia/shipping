@@ -1,4 +1,3 @@
-
 import random
 import string
 from .import utils
@@ -15,16 +14,16 @@ from django.db.models import FloatField
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.db.models.functions import Cast
-from users.token import account_activation_token
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
+from users.token import account_activation_token
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
-from users .models import SpecialUser, SpecialUserLog, Photo, WaterMark
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from users .models import Photo, WaterMark, SpecUser
 
 # Create your views here.
 
@@ -80,11 +79,11 @@ class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
     view for showing orders for authenticated users
     """
     def test_func(self):
-        
         if self.request.user.is_superuser:
             return True
         else:
-            return False 
+            return False
+
     model = Order
     template_name = 'order/view_orders.html'  
     context_object_name = 'orders'
@@ -98,148 +97,20 @@ class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
         """ 
         overriding queryset for ranking the orders
         """
-        # qs = Order.objects.order_by('-when_to_order','-how_much_letter_of_credit','-how_much_line_of_credit')
-        
         qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
-        
-        # for i in qs:
-        #     print(type(i.fieldsum),i.fieldsum)
         return qs
-
-# custom decorator
-def give_special_access(func):
-    def wrapper(request, *args,**kwargs):
-        """
-        decorator checks the user expire time with current time.
-        checks if time
-        """
-        uid = utils.decrypt(kwargs['uidb64']) # decrypt the userid from url
-
-        user = get_object_or_404(SpecialUser, is_active=True, pk=uid)
-
-        if user and user.expire_time and timezone.now() < user.expire_time: 
-            
-            time1 = user.expire_time - timezone.now()
-            time = user.expire_time.timestamp() - timezone.now().timestamp()
-            return func(request, time, user,*args,**kwargs)
-        else:
-            user.expire_time = None
-            user.activated_on = None
-            user.save()
-            messages.warning(request, f'Link is Expired!')
-            return redirect('re_access',kwargs['uidb64'])
-    return wrapper
-
-def check_session(func):
-    def wrapper(request,*args, **kwargs):
-        """
-        This function checks if the user opens this page first time it makes a session name "logkey" asign user id to it and adds the current time as login time else if the "logkey" session alredy has value that means user is logged in and it will not save the current time as log in time. 
-        """
-        uid = utils.decrypt(kwargs['uidb64'])
-        if uid not in request.session.keys():
-            request.session[uid] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-            #entering login time
-            user = get_object_or_404(SpecialUser, is_active=True, pk=uid)
-            SpecialUserLog.objects.create(specialuser=user, userlog_datetime=timezone.now(), userlog_date=timezone.now(), userlog_time=timezone.now())
-            return func(request, *args,**kwargs)
-        else:
-            return func(request, *args,**kwargs)
-    return wrapper
     
-def watermark_photo(input_image_path,
-                    output_image_path,
-                    watermark_image_path,id):
-    """
-    Adding watermark and saving in Photo.watermarked_image field
-
-    """
-    base_image = Image.open(input_image_path)
-    watermark = Image.open(watermark_image_path).convert("RGBA")
-    
-    watermark.putalpha(150)
-
-    width, height = base_image.size
-    
-    # pixdata = watermark.load()
-    # watermark_width, watermark_height = watermark.size
-
-    # for y in range(watermark_height):
-    #     for x in range(watermark_width):
-    #         if pixdata[x, y] == (255, 255, 255, 255):
-    #             pixdata[x, y] = (255, 255, 255, 100)
-
-    
-    width_of_watermark , height_of_watermark = watermark.size
-    position1 = (int(width/2-width_of_watermark/2),int(height/2-height_of_watermark/2))
-    
-    transparent = Image.new('RGBA', (width, height), (255, 255, 255, 0))
-    transparent.paste(base_image, (0,0))
-    transparent.paste(watermark, position1, mask=watermark)
-    transparent.save(output_image_path)
-
-    # return transparent
-    a = Photo.objects.get(id=id)
-    path = output_image_path.split('/',1)
-    a.watermarked_image = path[1]
-    a.save()
-    
-@give_special_access
-@check_session
-def specialuser_ViewOrder(request, time, user, uidb64):
-    """
-    This view is for Special users to whom access will be given by admin for 12 hrs
-    """
-    image = Photo.objects.all()
-    water_mark = WaterMark.objects.first()    
-    if water_mark:
-        for img in image:
-            id=img.id
-            if not img.watermarked_image:
-                watermark_photo(img.original_image,'media/wartermarked_photos/water_marked'+str(id)+'.png', water_mark.water_mark_image, id = id)
-    image = Photo.objects.all()
-    expire_time = user.expire_time.timestamp()
-    print('::::::::::::;',expire_time)
-
-    return render(request, 'order/structural.html', {'time':int(time),'uid': uidb64, 'image':image, 'title': 'Structural','expire_time':expire_time })
-
-@login_required
-def dealer_view(request):
-    if request.user.is_dealer:
-        print(request.user.dealer.dealer_no)
-        qs = SpecialUser.objects.filter(user_type = 'homeowner',dealer_no = request.user.dealer.dealer_no)
-        return render(request, 'order/dealer_homeowner.html', {'orders':qs, 'title': 'Dealer' })
-    else:
-        return redirect('/')
-
-def re_request_access(request, uidb64):
-    current_site = get_current_site(request)
-    if request.method == "POST":
-        id = utils.decrypt(uidb64)
-        user = SpecialUser.objects.get(id=id)
-        if user.company_name:
-                    mail_subject = f"Access Extend Request - {user.company_name} by {user.f_name} {user.l_name}'"
-        else:
-            mail_subject = f"Access Extend Request - by {user.f_name} {user.l_name}'"
-        message = render_to_string('users/acc_active_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': uidb64,
-                    'token': account_activation_token.make_token(user),
-                    })
-        to_email = settings.DEFAULT_FROM_EMAIL
-        email =EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],bcc=("farhan71727@gmail.com",), reply_to=(user.email,))
-        email.content_subtype = "html"
-        email.send()
-        if user.user_type == 'dealer':
-            messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.We may contact you if we require additional information. Please give us several business days to activate your account.')
-        else:
-            messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
-        return redirect('/')
-    return render(request, 'order/re_request_access.html')
 
 @login_required
 def view_content(request):
     if request.user.is_superuser:
         return render(request, 'order/structural.html')
+    elif request.user.specuser.content_permission == True:
+        if request.user.specuser.expire_time_spec_content > timezone.now():
+            return render(request, 'order/structural.html')
+        else:
+            user = SpecUser.objects.get(pk=request.user.specuser.id)
+            user.content_permission = False
+            user.save()
     else:
-        return redirect('/')
+        return render(request, 'users/request_access_content.html')

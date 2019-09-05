@@ -1,18 +1,7 @@
 from django.contrib import admin
-from .models import SpecialUser, SpecialUserLog, User, Dealer, Photo, WaterMark, EmailList 
+from .models import User, Photo, WaterMark, EmailList, SpecUser
 
 # Register your models here.
-class SpecialUserLogInline(admin.TabularInline):
-    model = SpecialUserLog
-
-class SpecialUserAdmin(admin.ModelAdmin):
-    list_display = ("pk","email","company_name","user_type")
-    list_display_links = ("pk","email",)
-    list_filter = ("user_type",)
-    inlines = [SpecialUserLogInline]
-    list_per_page = 50
-    
-admin.site.register(SpecialUser, SpecialUserAdmin)
 
 admin.site.register(Photo)
 
@@ -38,15 +27,10 @@ class UserAdmin(admin.ModelAdmin):
     list_per_page = 50
 admin.site.register(User, UserAdmin)
 
-class DealerAdmin(admin.ModelAdmin):
- 
+class SpecUserAdmin(admin.ModelAdmin):
+     
     list_display = ['email']
-    readonly_fields = ('password','content_page_link',)
+    readonly_fields = ('password',)
     list_per_page = 50 
-admin.site.register(Dealer,DealerAdmin)
+admin.site.register(SpecUser,SpecUserAdmin)
 
-# class SpecialUserLogAdmin(admin.ModelAdmin):
-#     list_display = ("pk","specialuser",)
-#     list_display_links = ("pk","specialuser",)
-
-# admin.site.register(SpecialUserLog, SpecialUserLogAdmin)

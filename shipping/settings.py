@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_heroku
+# import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 DEBUG = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
-                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com']
+                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -78,23 +78,23 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
-
     'default': {
-            'ENGINE': 'django.db.backends.mysql', 
-            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-            'NAME': 'shipping',
-            'USER': 'root',
-            'PASSWORD': '',
-            'PORT': '3306',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+# DATABASES = {
+
+#     'default': {
+#             'ENGINE': 'django.db.backends.mysql', 
+#             'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#             'NAME': 'shipping',
+#             'USER': 'root',
+#             'PASSWORD': '',
+#             'PORT': '3306',
+#         }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -165,4 +165,4 @@ if DEBUG == False:
     SECURE_SSL_REDIRECT = True
 
 # Activate Django heroku
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

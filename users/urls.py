@@ -1,8 +1,9 @@
 from django.urls import path
 from django.conf.urls import url
-from .views import specialuser_signup, activate, admincheck, home_view, floor_plan
+from .views import (specialuser_signup, activate, admincheck, home_view, floor_plan,
+        home_access)
 from django.contrib.auth import views as auth_views
-
+    
 urlpatterns = [
     path('register/', specialuser_signup ,name='register'),
     
@@ -34,7 +35,9 @@ urlpatterns = [
     
     path('floor-plan', floor_plan, name="floor_plan"),
 
-    url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',activate, name='activate'),
 
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',activate, name='activate'),
+    url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),
+
+    path('home-access', home_access, name="home-access" )
 ]

@@ -3,13 +3,13 @@
 
 {% block content %}
 
-<div class="container ">
+<div class="container">
     <div class="row">
         <div class="col-md-12 text-center mt-5 mb-5">
             <form method="POST" action="{% url 'home-access' %}">
                 {% csrf_token %}
                 <h4>Click the button to send request to view page.</h4>
-                <button name="req-access" value="home-access" class="btn btn-primary btn-lg mt-4"><h3>Send Request</h3></button>
+                <button name="req-access" value="content-access" class="btn btn-primary btn-lg mt-4"><h3>Send Request</h3></button>
             </form>
         </div>
     </div>

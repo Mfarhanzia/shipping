@@ -4,8 +4,14 @@
     <div class="row">
         <div class="col-md-12">
             <form method="POST">
-                <h1> User Info</h1>
+            {% if 'content' in req_for %}
+                <h1 class="mb-4 text-center text-info"> Access Requested for Special Content</h1>
+            {% elif 'home' in req_for %}
+                <h1 class="mb-4 text-center text-info"> Access Requested for Home View Content</h1>
+          
+            {% endif %}
                 <table style="font-size: 20px !important;" class="text-capitalize view_order_table table table-borderless table-responsive">
+                <legend class="text-center"><b>User Info</b> </legend>
                     <!-- <thead class=""> -->
                     <th>User Type</th>
                     <th>First Name</th>
@@ -23,8 +29,8 @@
                     <!-- </thead> -->
                     <tr>
                         <td>{{user.user_type}}</td>
-                        <td>{{user.f_name}}</td>
-                        <td>{{user.l_name}}</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
                         <td style="text-transform: none !important" >{{user.email}}</td>
 
                         {% if user.company_name%}
