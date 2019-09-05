@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
-#                     'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1','*']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
+                    'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com','127.0.0.1','*']
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 # DATABASES = {
-
 #     'default': {
-#             'ENGINE': 'django.db.backends.mysql', 
-#             'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#             'NAME': 'shipping',
-#             'USER': 'root',
-#             'PASSWORD': '',
-#             'PORT': '3306',
-#         }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
 # }
+DATABASES = {
+
+    'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+            'NAME': 'shipping',
+            'USER': 'root',
+            'PASSWORD': '',
+            'PORT': '3306',
+        }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

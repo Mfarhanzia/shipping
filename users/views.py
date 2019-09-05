@@ -25,7 +25,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 @login_required()
 def home_view(request):
-    print("///////////////",timezone.now())
     if request.user.is_superuser:
         if request.method == "POST":
             form = EmailListForm(request.POST)
@@ -128,12 +127,16 @@ def home_access(request):
             'req_for': req_for,
             'token': account_activation_token.make_token(user),
             })
-        # to_email = settings.DEFAULT_FROM_EMAIL
-        to_email = "farhan71727@gmail.com"
+        to_email = settings.DEFAULT_FROM_EMAIL
+        # to_email = "farhan71727@gmail.com"
 
         email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
         email.content_subtype = "html"
-        email.send()
+        try:
+            email.send()
+        except:
+            messages.error(request, f'Something went Wrong!. Please Try again.')
+            return redirect(request.path_info)
         messages.success(request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
 
         return redirect('login')

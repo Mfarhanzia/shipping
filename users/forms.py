@@ -27,7 +27,7 @@ class SpecUserForm(forms.ModelForm):
     )
     class Meta:
         model = SpecUser
-        fields = ('user_type','email','first_name','last_name','company_name','title','dealer_no','phone_number','password1','password2',)
+        fields = ('user_type','email','password1','password2','first_name','last_name','company_name','title','dealer_no','phone_number')
 
         widgets = {
             'user_type': forms.RadioSelect(),
@@ -43,6 +43,24 @@ class SpecUserForm(forms.ModelForm):
             )
         return password2
     
+    def clean_first_name(self):
+        f_name = self.cleaned_data.get("first_name")
+        f = re.findall("^[a-zA-Z]+$", f_name)
+        if not f:
+            raise forms.ValidationError(
+                'Incorrect First Name'
+                )
+        return f_name
+
+    def clean_last_name(self):
+        l_name = self.cleaned_data.get("last_name")
+        l =re.findall("^[a-zA-Z]+$", l_name)
+        if not l:
+            raise forms.ValidationError(
+                'Incorrect Last Name'
+                )
+        return l_name
+
     def _post_clean(self):
         super()._post_clean()
         # Validate the password after self.instance is updated with form data

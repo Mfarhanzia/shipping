@@ -29,8 +29,9 @@ admin.site.register(User, UserAdmin)
 
 class SpecUserAdmin(admin.ModelAdmin):
      
-    list_display = ['email']
+    list_display = ['email','user_type']
     readonly_fields = ('password',)
+    list_filter = ['user_type']
     list_per_page = 50 
 admin.site.register(SpecUser,SpecUserAdmin)
 

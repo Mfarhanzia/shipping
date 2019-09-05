@@ -117,7 +117,8 @@ def view_content(request):
         return render(request, 'order/structural.html')
     elif request.user.specuser.content_permission == True:
         if request.user.specuser.expire_time_spec_content > timezone.now():
-            return render(request, 'order/structural.html')
+            expire_time = request.user.specuser.expire_time_spec_content.timestamp()
+            return render(request, 'order/structural.html', {'title': 'Structural','expire_time':expire_time })
         else:
             user = SpecUser.objects.get(pk=request.user.specuser.id)
             user.content_permission = False
