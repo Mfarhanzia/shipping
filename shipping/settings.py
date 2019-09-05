@@ -27,7 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['www.boltonblock.com','*.boltonblock.com', 'boltonblock.com',
                     'www.boltonblocks.com','*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com']
-# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,7 +87,6 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 # }
 
 DATABASES = {
-
     'default': {
             'ENGINE': 'django.db.backends.mysql', 
             'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
