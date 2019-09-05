@@ -100,10 +100,16 @@ class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
         qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
         return qs
     
-
 @login_required
-def home_owner(request):
-    pass
+def dealer_view(request):
+    try:
+        if request.user.specuser.user_type == "dealer":
+            qs = SpecUser.objects.filter(user_type = 'homeowner',dealer_no = request.user.specuser.dealer_no)
+            return render(request, 'order/dealer_homeowner.html', {'orders':qs, 'title': 'Dealer' })
+        else:
+            return redirect('/')
+    except Exception as e:
+        return redirect('/')
 
 @login_required
 def view_content(request):

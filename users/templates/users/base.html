@@ -103,13 +103,11 @@
 								<a class="nav-link" href="/view-content">View Content</a>
 							</li>
 							
-							{% if user.is_dealer %}
+							{% if user.specuser.user_type == 'dealer' %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{ user.dealer.content_page_link }}">View Content</a>
-							</li>
+	
 							{% endif %}
 						<li class="nav-item">
 							<a class="nav-link" href="/logout">LogOut</a>
