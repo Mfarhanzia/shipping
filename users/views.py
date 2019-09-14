@@ -4,11 +4,11 @@ from order import utils
 from django import forms
 from datetime import timedelta
 from django.conf import settings 
+from .models import User, SpecUser
 from django.utils import timezone
 from django.contrib import messages
 from django.core.mail import EmailMessage 
 from .token import account_activation_token
-from .models import User, SpecUser
 from .forms import EmailListForm, SpecUserForm
 from django.template.loader import render_to_string
 from django.contrib.auth import password_validation
