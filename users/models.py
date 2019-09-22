@@ -24,7 +24,6 @@ class User(AbstractUser):
 
 
 class SpecUser(User):
-    
     USER_TYPE = (
         ('developer','Developer'),
         ('lender','Lender'),

@@ -1,5 +1,4 @@
-import random
-import string
+import random, string
 from order import utils
 from django import forms
 from datetime import timedelta
@@ -19,9 +18,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 #views
-# def message_login(request):
-#     return  messages.warning(request, f'Login Required!')
-
 
 @login_required()
 def home_view(request):
@@ -75,7 +71,7 @@ def floor_plan(request):
 
 def specialuser_signup(request):
     """
-    this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
+    this function role: get form data saves it and and sending a link to admin through email 
     """
     if request.user.is_authenticated == False :
         if request.method == 'POST':
@@ -83,19 +79,37 @@ def specialuser_signup(request):
             if form.is_valid():
                 user = form.save(commit=False)
                 if form.cleaned_data['user_type'] == "dealer":
+                    # making dealer number of user
                     all_users = SpecUser.objects.filter(user_type="dealer").values_list('dealer_no', flat=True)
-                    print(all_users)
                     while True:
                         random_number = randomstring()                    
                         if random_number not in all_users:
                             user.dealer_no = random_number
                             break
+                    mail_subject = f"Sign Up Successful'"
+                    current_site = get_current_site(request)
+                    message = render_to_string('users/sign_up_mail.html', {
+                        'user': user,
+                        'domain': current_site.domain,
+                        })
+                    to_email = form.cleaned_data['email']
+                    
+                    email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(settings.DEFAULT_FROM_EMAIL,))
+                    email.content_subtype = "html"
+                    try:
+                        email.send()
+                    except:
+                        messages.error(request, f'Something went Wrong!. Please Try again.')
+                        return redirect(request.path_info)
                 password = request.POST['password1']
                 user.set_password(password)
                 user.content_permission = False
                 user.home_permission = False
                 user.save()
-                messages.success(request, f'Sign Up Successful!')
+                if form.cleaned_data['user_type'] == "dealer":
+                    messages.success(request, f'Sign Up Successful! Your Dealer Number is sent to your provided email.')
+                else:
+                    messages.success(request, f'Sign Up Successful!')
                 return redirect('login')
         else:
             form = SpecUserForm()
@@ -104,7 +118,7 @@ def specialuser_signup(request):
         return redirect('/')
 
 @login_required
-@user_passes_test(lambda user: user.is_superuser != True)
+@user_passes_test(lambda user: user.is_superuser != True, redirect_field_name="/")
 def home_access(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
@@ -120,16 +134,16 @@ def home_access(request):
         else:
             mail_subject = f"Access Request - by {user.first_name} {user.last_name}'"
         userid = utils.encrypt(user.pk)     # encrypting user id
+        token_arg = [user,utils.decrypt(req_for)]
         message = render_to_string('users/acc_active_email.html', {
             'user': user,
             'domain': current_site.domain,
             'uid': userid,
             'req_for': req_for,
-            'token': account_activation_token.make_token(user),
+            'token': account_activation_token.make_token(token_arg),
             })
         to_email = settings.DEFAULT_FROM_EMAIL
-        # to_email = "farhan71727@gmail.com"
-
+        
         email =EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
         email.content_subtype = "html"
         try:
@@ -154,7 +168,8 @@ def activate(request, uidb64, req_for ,token):
         user = SpecUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, SpecUser.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
+    token_arg = [user,utils.decrypt(req_for)]
+    if user is not None and account_activation_token.check_token(token_arg, token):
       return redirect ('admincheck', uidb64, req_for)      
     else:
         messages.warning(request, f'Activation link is Expired!')
@@ -238,6 +253,7 @@ def admincheck(request, uidb64, req_for):
         return redirect(request.path_info)
 
 def randomstring():
+    """making random dealer number"""
     abc=''.join((random.SystemRandom().choice(
         string.digits) for _ in
         range(6)))

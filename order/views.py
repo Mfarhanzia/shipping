@@ -50,7 +50,7 @@ class OrderCreateView(FormView):
              })
         to_email = settings.DEFAULT_FROM_EMAIL
         
-        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",), reply_to = (form.cleaned_data['email'],))
+        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to = (form.cleaned_data['email'],))
         self.send_mail(form.cleaned_data)
         email.content_subtype = "html"
         # email.send(fail_silently=True)
@@ -70,7 +70,7 @@ class OrderCreateView(FormView):
             'domain': current_site.domain
              })
         to_email = form['email']
-        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], bcc=("farhan71727@gmail.com",))
+        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
         email.content_subtype = "html"
         email.send()
        
