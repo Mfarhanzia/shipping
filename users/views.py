@@ -4,8 +4,8 @@ from order import utils
 from django import forms
 from datetime import timedelta
 from django.conf import settings
-from .models import User, SpecUser
 from django.utils import timezone
+from .models import User, SpecUser
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
@@ -19,8 +19,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 # views
-
-
 @login_required()
 def home_view(request):
     if request.user.is_superuser:
@@ -58,6 +56,10 @@ def home_view(request):
     return render(request, "users/request_access_home.html")
 
 
+def models(request):
+    return render(request, 'users/models.html')
+
+
 @login_required
 def floor_plan(request):
     if request.user.is_superuser:
@@ -83,7 +85,7 @@ def specialuser_signup(request):
             if form.is_valid():
                 user = form.save(commit=False)
                 if form.cleaned_data['user_type'] == "dealer":
-                    # making dealer number of user
+                    # making dealer number if user_type id dealer
                     all_users = SpecUser.objects.filter(
                         user_type="dealer").values_list('dealer_no', flat=True)
                     while True:

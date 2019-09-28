@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 from .views import (specialuser_signup, activate, admincheck, home_view, floor_plan,
-        home_access)
+        home_access, models)
 from django.contrib.auth import views as auth_views
     
 urlpatterns = [
@@ -39,5 +39,7 @@ urlpatterns = [
 
     url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),
 
-    path('home-access', home_access, name="home-access" )
+    path('home-access', home_access, name="home-access" ),
+
+    path('models', models, name="models" )
 ]
