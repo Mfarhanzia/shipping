@@ -25,6 +25,9 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+if DEBUG == False:
+    SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
                  'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com',       'container-shipping.herokuapp.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
 
@@ -162,8 +165,6 @@ EMAIL_HOST_USER = "info@boltonblock.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW"
 DEFAULT_FROM_EMAIL = "info@boltonblock.com"
 
-if DEBUG == False:
-    SECURE_SSL_REDIRECT = True
 
 # Activate Django heroku
 django_heroku.settings(locals())

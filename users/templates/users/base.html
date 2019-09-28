@@ -148,13 +148,13 @@
 	<!-- Error messaging -->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 col-sm-12">
+			<div class="col-md-8 col-sm-12 m-auto p-auto">
 				{% if form.errors %}
-				<div id="errors" class="mt-2 pt-30" style="background-color: rgba(238, 238, 238, 0.541); padding: 10px">
-					<div class="inner">
+				<div id="errors" class="mt-2 text-center" >
+					<div class="inner font-weight-bold" style="background-color: #d9534f; padding: 10px; border-radius:20px; color:white">
 						<p>There were some errors in the information you entered. Please correct the following:</p>
 						{{ form.non_field_errors }}
-						<ul class="text-danger text-capitalize">
+						<ul class="text-capitalize">
 							{% for field in form %}
 							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
 							{% endfor %}
@@ -164,7 +164,6 @@
 				{% endif %}
 			</div>
 		</div>
-
 	</div>
 	<div class="md-padding">
 		{% block  content %}
