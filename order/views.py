@@ -27,6 +27,7 @@ from users .models import Photo, WaterMark, SpecUser
 
 # Create your views here.
 
+
 class OrderCreateView(FormView):
     template_name = 'order/order.html'
     form_class = OrderForm
@@ -38,28 +39,28 @@ class OrderCreateView(FormView):
         return context
 
     def form_valid(self, form):
-        
         """If the form is valid, redirect to the supplied URL."""
         form.save()
-                
+
         mail_subject = f"Order Inquiry - {form.cleaned_data['company_name']} by {form.cleaned_data['f_name']} {form.cleaned_data['l_name']}."
         current_site = get_current_site(self.request)
         message = render_to_string('order/order_mail_to_admin.html', {
             'form': form.cleaned_data,
             'domain': current_site.domain,
-             })
+        })
         to_email = settings.DEFAULT_FROM_EMAIL
-        
-        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to = (form.cleaned_data['email'],))
+
+        email = EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[
+                             to_email], reply_to=(form.cleaned_data['email'],))
         self.send_mail(form.cleaned_data)
         email.content_subtype = "html"
         # email.send(fail_silently=True)
         email.send()
-        messages.success(self.request,"Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")       
+        messages.success(
+            self.request, "Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")
         return redirect(self.get_success_url())
 
-
-    def send_mail(self,form):
+    def send_mail(self, form):
         """
         Sending Order Confirm Mail to User 
         """
@@ -68,16 +69,19 @@ class OrderCreateView(FormView):
         message = render_to_string('order/order_confirm_mail.html', {
             'form': form,
             'domain': current_site.domain
-             })
+        })
         to_email = form['email']
-        email = EmailMessage(subject=mail_subject,body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
+        email = EmailMessage(subject=mail_subject, body=message,
+                             from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email])
         email.content_subtype = "html"
         email.send()
-       
-class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
+
+
+class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     view for showing orders for authenticated users
     """
+
     def test_func(self):
         if self.request.user.is_superuser:
             return True
@@ -85,31 +89,35 @@ class ViewOrder(LoginRequiredMixin,UserPassesTestMixin,ListView):
             return False
 
     model = Order
-    template_name = 'order/view_orders.html'  
+    template_name = 'order/view_orders.html'
     context_object_name = 'orders'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ViewOrder, self).get_context_data(**kwargs)
         context.update({'title': 'Orders'})
         return context
-    
+
     def get_queryset(self):
         """ 
         overriding queryset for ranking the orders
         """
-        qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit',FloatField())) + (Cast('how_much_line_of_credit',FloatField()))).order_by('-when_to_order', '-fieldsum')
+        qs = Order.objects.annotate(fieldsum=(Cast('how_much_letter_of_credit', FloatField(
+        ))) + (Cast('how_much_line_of_credit', FloatField()))).order_by('-when_to_order', '-fieldsum')
         return qs
-    
+
+
 @login_required
 def dealer_view(request):
     try:
         if request.user.specuser.user_type == "dealer":
-            qs = SpecUser.objects.filter(user_type = 'homeowner',dealer_no = request.user.specuser.dealer_no)
-            return render(request, 'order/dealer_homeowner.html', {'orders':qs, 'title': 'Dealer' })
+            qs = SpecUser.objects.filter(
+                user_type='homeowner', dealer_no=request.user.specuser.dealer_no)
+            return render(request, 'order/dealer_homeowner.html', {'orders': qs, 'title': 'Dealer'})
         else:
             return redirect('/')
     except Exception as e:
         return redirect('/')
+
 
 @login_required
 def view_content(request):
@@ -118,7 +126,7 @@ def view_content(request):
     elif request.user.specuser.content_permission == True:
         if request.user.specuser.expire_time_spec_content > timezone.now():
             expire_time = request.user.specuser.expire_time_spec_content.timestamp()
-            return render(request, 'order/structural.html', {'title': 'Structural','expire_time':expire_time })
+            return render(request, 'order/structural.html', {'title': 'Structural', 'expire_time': expire_time})
         else:
             user = SpecUser.objects.get(pk=request.user.specuser.id)
             user.content_permission = False
