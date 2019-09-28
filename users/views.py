@@ -176,7 +176,7 @@ def activate(request, uidb64, req_for ,token):
         return redirect('login')
 
 @login_required
-@user_passes_test(lambda user: user.is_superuser == True)
+@user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
 def admincheck(request, uidb64, req_for):
     """
     This function executes if the link is not expired

@@ -123,5 +123,4 @@ def view_content(request):
             user = SpecUser.objects.get(pk=request.user.specuser.id)
             user.content_permission = False
             user.save()
-    else:
-        return render(request, 'users/request_access_content.html')
+    return render(request, 'users/request_access_content.html')
