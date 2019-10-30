@@ -1,6 +1,8 @@
 import re
 from django import forms
-from .models import Order
+from .models import Order, MaterialQuotations
+
+
 class OrderForm(forms.ModelForm):
     # how_much_letter_of_credit = forms.CharField()
 
@@ -83,3 +85,8 @@ class OrderForm(forms.ModelForm):
                 pass            
             # return line_of_credit
             
+
+class MaterialQuotationsForm(forms.ModelForm):
+    class Meta:
+        model = MaterialQuotations
+        fields = ("price",)

@@ -1,7 +1,8 @@
 from django.urls import path
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from .views import (OrderCreateView, ViewOrder, view_content,dealer_view)
+from .views import (OrderCreateView, ViewOrder, view_content,dealer_view, vendor_quotations,
+                    view_quotations)
 
 
 urlpatterns = [
@@ -15,4 +16,7 @@ urlpatterns = [
     path('view-order/',ViewOrder.as_view(), name="view-order"),
 
     path('dealer/',dealer_view, name="dealer-view"),
+
+    path('quotation/',vendor_quotations, name="vendor-quotation"),
+    path('view/quotation/',view_quotations, name="view-quotation"),
 ]

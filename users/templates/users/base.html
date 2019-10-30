@@ -41,7 +41,7 @@
 
 	<!--Navbar-->
 	<div class="container-fluid white-background">
-		<div class="container ">
+		<div class="container">
 			<nav class="navbar navbar-expand-lg white-background navbar-dark  primary-colo">
 
 				<!-- Navbar brand -->
@@ -111,8 +111,18 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
 							</li>
-	
 							{% endif %}
+						
+						{% if user.specuser.user_type == "vendor" %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'vendor-quotation' %}">Give Quotation</a>
+							</li>
+							{% elif user.is_superuser %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'view-quotation' %}">View Quotation</a>
+							</li>
+						{% endif %}
+
 						<li class="nav-item">
 							<a class="nav-link" href="/logout">LogOut</a>
 						</li>

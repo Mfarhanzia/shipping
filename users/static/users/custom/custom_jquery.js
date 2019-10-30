@@ -160,9 +160,11 @@
       $("#id_type_of_climate_area_5").prop('checked', $(this).prop('checked'));  
     });
     
-    $('#id_how_much_letter_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
+    $('#id_how_much_letter_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$'})
 
-    $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$'})
+    $('#id_how_much_line_of_credit').inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$'})
+
+    $("input[name=price]").inputmask({'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left'})
     
     var path = window.location.pathname;
    if (path == '/order'){
@@ -251,6 +253,14 @@ function access_time_admin(){
     {
       $("#id_register_7").show();
       $("#id_register_8").show();
+      $("#id_register_9").hide();
+      $("#id_dealer_no").val('');
+    }
+    else if($('#id_user_type_6').is(":checked"))
+    {
+      $("#id_register_7").show();
+      $("#id_register_8").hide();
+      $("#id_title").val('');
       $("#id_register_9").hide();
       $("#id_dealer_no").val('');
     }

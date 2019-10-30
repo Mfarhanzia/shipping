@@ -2,6 +2,10 @@ html{
   scroll-behavior: smooth;
 }
 
+#id_price{
+  text-align: left !important;
+}
+
 .logo {
   width: 120px !important;
   height: 100px !important;

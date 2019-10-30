@@ -2,9 +2,7 @@ import random
 import string
 from .import utils
 from PIL import Image
-from .models import Order
 from decimal import Decimal
-from .forms import OrderForm
 from datetime import datetime
 from django.db.models import F
 from django.conf import settings
@@ -17,8 +15,10 @@ from django.db.models.functions import Cast
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
 from users.token import account_activation_token
-from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .forms import OrderForm, MaterialQuotationsForm    
+from .models import Order, Material, MaterialQuotations
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -132,3 +132,31 @@ def view_content(request):
             user.content_permission = False
             user.save()
     return render(request, 'users/request_access_content.html')
+
+@login_required
+def vendor_quotations(request):
+    try:
+        if request.user.specuser.usertypr =="vendor":
+            if request.method == 'POST':
+                form = MaterialQuotationsForm(request.POST)
+                if form.is_valid():
+                    data = form.save(commit=False)
+                    data.company_name=request.user.specuser.company_name
+                    data.material_name=request.POST.get('material_name')
+                    data.user_name=f"{request.user.specuser.first_name} {request.user.specuser.last_name}"
+                    data.save()
+                return redirect("vendor-quotation")
+                    
+            else:
+                form = MaterialQuotationsForm()
+                qs = Material.objects.all()
+                return render(request, 'order/post_quotation_view.html', {"qs":qs, "title":"Quotation","form":form})
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+@login_required
+def view_quotations(request):
+    qs = MaterialQuotations.objects.all()
+    return render(request, 'order/view_quotations.html', {"qs":qs, "title":"Quotations"})

@@ -1,0 +1,40 @@
+{% extends "users/base.html" %}
+
+{% load static %}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center mb-5">
+                <h3 class="mb-4"><b>Name:</b> {{request.user.specuser.first_name}} {{request.user.specuser.last_name}}
+                    &nbsp;&nbsp;&nbsp; <b>Company Name:</b> {{request.user.specuser.company_name}}</h3>
+                <h1>Select Item To Give Quotation</h1>
+            </div>    
+            <div class="mb-2">
+                
+            </div>       
+            <ul class="text-capitalize text-center">
+                {% for i in qs %}
+                <div class="btn">
+                    <li class="font_8">{{i.name}}</li>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div id="id_radio_field_{{forloop.counter}}" class="ml-4 md-form" style="display: block;">
+                                <label class="label" for="{{field.id_for_label}}">{{field.label}}</label><br>
+                                {{field}}
+                        </div>
+                        
+                        {% endfor %}
+                        <input type="hidden" name="material_name" value="{{i.name}}"  readonly>
+                        <button class="btn btn-blue" type="submit">Post</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

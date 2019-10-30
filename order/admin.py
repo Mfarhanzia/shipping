@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order
+from .models import Order, Material, MaterialQuotations
 # Register your models here.
 
 class OrderAdmin(admin.ModelAdmin):
@@ -15,5 +15,20 @@ class OrderAdmin(admin.ModelAdmin):
 
     class Media:
         js = ('users/custom/custom_jquery.js',)
-
 admin.site.register(Order, OrderAdmin)
+
+class MaterialAdmin(admin.ModelAdmin):
+    
+    list_display = ('name',)
+    list_display_links = ('name',)
+    list_per_page = 50
+admin.site.register(Material, MaterialAdmin)
+
+
+class MaterialQuotationsAdmin(admin.ModelAdmin):
+    
+    list_display = ('company_name',)
+    list_display_links = ('company_name',)
+    list_filter = ('company_name',)
+    list_per_page = 50
+admin.site.register(MaterialQuotations, MaterialQuotationsAdmin)

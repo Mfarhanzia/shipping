@@ -21,39 +21,18 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 # views
 @login_required()
 def home_view(request):
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = EmailListForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request, f'Thanks for Subscribing us')
-            else:
-                messages.warning(request, f'You have already Subscribed!')
-
-            return redirect('/')
+    if request.method == "POST":
+        form = EmailListForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Thanks for Subscribing us')
         else:
-            form = EmailListForm()
-            return render(request, 'users/home.html', {'form': form})
+            messages.warning(request, f'You have already Subscribed!')
 
-    elif request.user.specuser.home_permission == True:
-        if request.user.specuser.expire_time_home > timezone.now():
-            if request.method == "POST":
-                form = EmailListForm(request.POST)
-                if form.is_valid():
-                    form.save()
-                    messages.success(request, f'Thanks for Subscribing us')
-                else:
-                    messages.warning(request, f'You have already Subscribed!')
-                return redirect('/')
-            else:
-                form = EmailListForm()
-                return render(request, 'users/home.html', {'form': form})
-        else:
-            user = SpecUser.objects.get(pk=request.user.specuser.id)
-            user.home_permission = False
-            user.save()
-    # else:
-    return render(request, "users/request_access_home.html")
+        return redirect('/')
+    else:
+        form = EmailListForm()
+        return render(request, 'users/home.html', {'form': form})
 
 
 def models(request):
@@ -62,19 +41,8 @@ def models(request):
 
 @login_required
 def floor_plan(request):
-    if request.user.is_superuser:
-        return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
-    elif request.user.specuser.home_permission == True:
-        if request.user.specuser.expire_time_home > timezone.now():
-            return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
-        else:
-            user = SpecUser.objects.get(pk=request.user.specuser.id)
-            user.home_permission = False
-            user.save()
-    # else:
-    return render(request, "users/request_access_home.html")
-
-
+    return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
+    
 def specialuser_signup(request):
     """
     this function role: get form data saves it and and sending a link to admin through email 

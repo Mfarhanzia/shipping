@@ -31,6 +31,7 @@ class SpecUser(User):
         ('dealer','Dealer'),
         ('homeowner','Prospective Homeowner'),
         ('Municipality/Government Official','Municipality/Government Official'),
+        ('vendor','Vendor'),
     )
 
     user_type = models.CharField('Sign up as', max_length=32, choices = USER_TYPE, default = None)

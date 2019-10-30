@@ -100,3 +100,16 @@ class Order(models.Model):
 
     # class Meta:
     #     ordering = ('-when_to_order', '-how_much_letter_of_credit', '-how_much_line_of_credit') 
+
+
+class Material(models.Model):
+    """Material Required showing this data to vendors for quotations"""
+    name = models.CharField("Material Name", max_length=100)
+
+
+class MaterialQuotations(models.Model):
+    material_name = models.CharField("Material Name", max_length=100,default=None)
+    user_name = models.CharField("Name:", max_length=100)
+    company_name = models.CharField("Company Name:", max_length=100)
+    price = models.CharField("Price", max_length=100)
+    time_date = models.DateTimeField("Quotation Date", auto_now_add=True)
