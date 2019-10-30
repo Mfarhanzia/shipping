@@ -113,3 +113,7 @@ class MaterialQuotations(models.Model):
     company_name = models.CharField("Company Name:", max_length=100)
     price = models.CharField("Price", max_length=100)
     time_date = models.DateTimeField("Quotation Date", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "MaterialQuotation"
+        verbose_name_plural = "MaterialQuotations"
