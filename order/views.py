@@ -136,7 +136,7 @@ def view_content(request):
 @login_required
 def vendor_quotations(request):
     try:
-        if request.user.specuser.usertypr =="vendor":
+        if request.user.specuser.user_type =="vendor":
             if request.method == 'POST':
                 form = MaterialQuotationsForm(request.POST)
                 if form.is_valid():
@@ -157,6 +157,7 @@ def vendor_quotations(request):
         return redirect('/')
 
 @login_required
+@user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
 def view_quotations(request):
     qs = MaterialQuotations.objects.all()
     return render(request, 'order/view_quotations.html', {"qs":qs, "title":"Quotations"})
