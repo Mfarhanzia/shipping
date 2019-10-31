@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 # views
-@login_required()
+# @login_required()
 def home_view(request):
     if request.method == "POST":
         form = EmailListForm(request.POST)
@@ -39,7 +39,7 @@ def models(request):
     return render(request, 'users/models.html')
 
 
-@login_required
+# @login_required
 def floor_plan(request):
     return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
     
