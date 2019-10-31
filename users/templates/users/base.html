@@ -97,21 +97,26 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'floor_plan' %}">Floor Plans</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'video-page' %}">Assembling Process</a>
+							</li>
 						{% endif %}
+
 						{% if user.is_authenticated %}
 							{% if user.is_superuser %}	
-							<li class="nav-item">
-								<a class="nav-link" href="/view-order">View Order</a>
-							</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/view-order">View Order</a>
+								</li>
 							{% endif %}
-							<li class="nav-item">
-								<a class="nav-link" href="/view-content">View Content</a>
-							</li>
-							
+							{% if request.user.specuser.user_type != "vendor" %}
+								<li class="nav-item">
+									<a class="nav-link" href="/view-content">View Content</a>
+								</li>
+							{% endif %}
 							{% if user.specuser.user_type == 'dealer' %}
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
-							</li>
+								<li class="nav-item">
+									<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
+								</li>
 							{% endif %}
 						
 						{% if user.specuser.user_type == "vendor" %}
@@ -139,7 +144,6 @@
 
 				</div>
 				<!-- Collapsible content -->
-
 			</nav>
 		</div>
 	</div>

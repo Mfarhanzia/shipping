@@ -1,12 +1,12 @@
 from django.urls import path
 from django.conf.urls import url
 from .views import (specialuser_signup, activate, admincheck, home_view, floor_plan,
-        home_access, models)
+        home_access, models, video_page)
 from django.contrib.auth import views as auth_views
     
 urlpatterns = [
     path('register/', specialuser_signup ,name='register'),
-    
+    path('assembling/', video_page ,name='video-page'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='users/password_reset.html',

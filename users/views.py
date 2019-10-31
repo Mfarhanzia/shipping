@@ -247,3 +247,6 @@ def randomstring():
         string.digits) for _ in
         range(6)))
     return int(abc)
+
+def video_page(request):
+    return render(request, "order/video.html", {"title":"Assembling"})
