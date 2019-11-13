@@ -171,6 +171,10 @@
             $('[href*="/dealer/"]').addClass('active1');
         } else if (path == '/models') {
             $('[href*="/models"]').addClass('active1');
+        } else if (path == '/exterior-view/') {
+            $('[href*="/exterior-view/"]').addClass('active1');
+        } else if (path == '/interior-view/') {
+            $('[href*="/interior-view/"]').addClass('active1');
         }
         // else if (path == '/view-content'){  
         else if (path.indexOf('/view-content') != -1) {

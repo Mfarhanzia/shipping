@@ -161,3 +161,10 @@ def vendor_quotations(request):
 def view_quotations(request):
     qs = MaterialQuotations.objects.all()
     return render(request, 'order/view_quotations.html', {"qs":qs, "title":"Quotations"})
+
+
+def interior_view(request):
+    return render(request, 'order/interior.html')
+
+def exterior_view(request):
+    return render(request, 'order/exterior.html')

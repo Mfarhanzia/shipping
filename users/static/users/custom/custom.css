@@ -2,6 +2,12 @@ html {
     scroll-behavior: smooth;
 }
 
+.exterior{
+    max-width: 80%;
+    max-height: 100vh;
+    margin-bottom: 13%;      
+}
+
 #id_price {
     text-align: left !important;
 }
@@ -38,7 +44,7 @@ html {
 }
 
 .nav-item {
-    font: normal normal normal 18px/1.4em didot-w01-italic, serif;
+    font: normal normal normal 12px/1.4em didot-w01-italic, serif;
     font-style: italic;
     padding-right: 40px;
 }
