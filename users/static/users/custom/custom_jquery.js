@@ -93,7 +93,7 @@
         // other2
         $("#id_type_of_climate_area_6").click(function() {
             if ($('#id_type_of_climate_area_6').is(":checked")) {
-
+                $("#id_16").show();
                 $('#id_other_type_of_climate_area').attr('required', 'required');
             } else {
                 $('#id_other_type_of_climate_area').removeAttr('required');

@@ -2,11 +2,20 @@ html {
     scroll-behavior: smooth;
 }
 
-.exterior{
-    max-width: 80%;
-    max-height: 100vh;
-    margin-bottom: 13%;      
+.thumb_div{
+    max-height: 450px;
 }
+
+.in_exterior img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    height: 100%;   
+}
+
+.in_exterior img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  }
 
 #id_price {
     text-align: left !important;
@@ -97,6 +106,12 @@ form {
 #id_how_much_letter_of_credit,
 #id_how_much_line_of_credit {
     text-align: left !important;
+}
+
+#id_12{
+    margin-top: -1rem;
+    margin-left: 2.4rem;
+    width: 50%;
 }
 
 .md-padding {

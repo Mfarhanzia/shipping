@@ -67,16 +67,20 @@ class Order(models.Model):
     how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, help_text="in USD$",blank=True, null=True)
 
     # how_much_line_of_credit= models.DecimalField("What is the currently unused       amount in your Line of Credit?",max_digits=20, decimal_places=2, help_text="in USD$", blank=True, null=True)
-
+    STATUS_CHOICES = (("3-6 Months","3-6 Months"),
+        ("6-9 Months", "6-9 Months"),
+        ("1 Year or More", "1 Year or More"),
+        )
 
     When_To_Order =(
         ('urgent','Urgent(within 30 days)'),
-        ('other','Other (days)'),
+        ('other','Other'),
         )
 
     when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None)
     
-    other_when_to_order = models.PositiveIntegerField('Other (days)', validators=[MinValueValidator(31)], blank=True, null=True) 
+    # other_when_to_order = models.PositiveIntegerField('Other (days)', validators=[MinValueValidator(31)], blank=True, null=True) 
+    other_when_to_order = models.CharField("When To Order",choices=STATUS_CHOICES ,max_length=50, default=None, null=True, blank=True)
 
     type_of_development = MultiSelectField("What type of development(s) are you seeking?",choices=Type_Of_Development, max_length=300, blank=True, null=True)
 

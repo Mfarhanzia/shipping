@@ -4,14 +4,12 @@ from .models import Order, MaterialQuotations
 
 
 class OrderForm(forms.ModelForm):
-    # how_much_letter_of_credit = forms.CharField()
-
+ 
+    other_when_to_order = forms.ChoiceField(choices = Order.STATUS_CHOICES, label="", initial='', widget=forms.Select(), required=False)
 
     class Meta:
-        
         model = Order
-       
-        fields = ('company_name','f_name','l_name','email','phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', 'other_when_to_order','type_of_development','other_type_of_development','type_of_climate_area','other_type_of_climate_area','type_of_smart_home','type_of_electric_vehicle_function','learn_about_electric_drive','septic_infrastructure','installation_septic_infrastructure')
+        fields = ('company_name','f_name','l_name','email','phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order','other_when_to_order','type_of_development','other_type_of_development','type_of_climate_area','other_type_of_climate_area','type_of_smart_home','type_of_electric_vehicle_function','learn_about_electric_drive','septic_infrastructure','installation_septic_infrastructure')
     
         widgets = {
             'when_to_order' : forms.RadioSelect(),
@@ -21,6 +19,7 @@ class OrderForm(forms.ModelForm):
             'septic_infrastructure' : forms.RadioSelect(),
             'installation_septic_infrastructure' : forms.RadioSelect(),    
             }
+    field_order = ('company_name','f_name','l_name','email','phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', "other_when_to_order", 'type_of_development','other_type_of_development','type_of_climate_area','other_type_of_climate_area','type_of_smart_home','type_of_electric_vehicle_function','learn_about_electric_drive','septic_infrastructure','installation_septic_infrastructure')
 
     def __init__(self, *args, **kwargs):
         
@@ -28,7 +27,9 @@ class OrderForm(forms.ModelForm):
         self.fields['how_much_letter_of_credit'].widget.attrs.update({
             'autocomplete': 'off'
         })
-
+        self.fields['other_when_to_order'].widget.attrs.update({
+            'class': 'form-control'
+        })
 
 
     def clean_f_name(self):
