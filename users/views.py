@@ -39,6 +39,9 @@ def models(request):
     return render(request, 'users/models.html')
 
 
+def electric_cars_view(request):
+    return render(request, 'users/electric_cars.html')
+
 # @login_required
 def floor_plan(request):
     return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})

@@ -1,10 +1,11 @@
 from django.urls import path
 from django.conf.urls import url
 from .views import (specialuser_signup, activate, admincheck, home_view, floor_plan,
-        home_access, models, video_page)
+        home_access, models, video_page, electric_cars_view)
 from django.contrib.auth import views as auth_views
     
 urlpatterns = [
+    path('electric-cars/', electric_cars_view ,name='electric-cars'),
     path('register/', specialuser_signup ,name='register'),
     path('assembling/', video_page ,name='video-page'),
     path('password-reset/',

@@ -1,0 +1,41 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row in_exterior">
+    <div class="col-md-12 col-sm-12 mb-5"><h2 class="text-center">Electric Cars</h2></div>
+    
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_front_blue.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_front_blue.jpeg' %}" alt="Second slide"></a>
+    </div>
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_rear_blue.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_rear_blue.jpeg' %}" alt="Second slide"></a>
+    </div>
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_side_blue.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_side_blue.jpeg' %}" alt="Second slide"></a>
+    </div>
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_side_rear_blue.jpeg' %}">
+<img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_side_rear_blue.jpeg' %}" alt="Second slide"></a>
+    </div>
+  
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_side_black.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_side_black.jpeg' %}" alt="Second slide"></a>
+    </div>
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_side_orange.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_side_orange.jpeg' %}" alt="Second slide"></a>
+    </div>
+    <div class="col-md-6 col-sm-12 p-4 thumb_div">
+        <a target="_blank" href="{% static 'users/electric_cars/electric_front_orange.jpeg' %}">
+          <img class="carousel-img1 img-fluid d-block" src="{% static 'users/electric_cars/electric_front_orange.jpeg' %}" alt="Second slide"></a>
+    </div>
+  </div>
+</div>
+{% endblock %}
