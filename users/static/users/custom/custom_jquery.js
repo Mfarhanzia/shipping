@@ -1,24 +1,24 @@
 (function($) { // Begin jQuery
     $(function() { // DOM ready
-        // If a link has a dropdown, add sub menu toggle.
-        $('nav ul li a:not(:only-child)').click(function(e) {
-            $(this).siblings('.nav-dropdown').toggle();
-            // Close one dropdown when selecting another
-            $('.nav-dropdown').not($(this).siblings()).hide();
-            e.stopPropagation();
-        });
-        // Clicking away from dropdown will remove the dropdown class
-        $('html').click(function() {
-            $('.nav-dropdown').hide();
-        });
-        // Toggle open and close nav styles on click
-        $('#nav-toggle').click(function() {
-            $('nav ul').slideToggle();
-        });
-        // Hamburger to X toggle
-        $('#nav-toggle').on('click', function() {
-            this.classList.toggle('active');
-        });
+        // // If a link has a dropdown, add sub menu toggle.
+        // $('nav ul li a:not(:only-child)').click(function(e) {
+        //     $(this).siblings('.nav-dropdown').toggle();
+        //     // Close one dropdown when selecting another
+        //     $('.nav-dropdown').not($(this).siblings()).hide();
+        //     e.stopPropagation();
+        // });
+        // // Clicking away from dropdown will remove the dropdown class
+        // $('html').click(function() {
+        //     $('.nav-dropdown').hide();
+        // });
+        // // Toggle open and close nav styles on click
+        // $('#nav-toggle').click(function() {
+        //     $('nav ul').slideToggle();
+        // });
+        // // Hamburger to X toggle
+        // $('#nav-toggle').on('click', function() {
+        //     this.classList.toggle('active');
+        // });
 
         //remove blank options
         $("ul[id=id_letter_of_credit] > li:first").remove();
@@ -93,7 +93,7 @@
         // other2
         $("#id_type_of_climate_area_6").click(function() {
             if ($('#id_type_of_climate_area_6').is(":checked")) {
-                $("#id_16").show();
+
                 $('#id_other_type_of_climate_area').attr('required', 'required');
             } else {
                 $('#id_other_type_of_climate_area').removeAttr('required');
@@ -171,10 +171,18 @@
             $('[href*="/dealer/"]').addClass('active1');
         } else if (path == '/models') {
             $('[href*="/models"]').addClass('active1');
-        } else if (path == '/exterior-view/') {
-            $('[href*="/exterior-view/"]').addClass('active1');
-        } else if (path == '/interior-view/') {
-            $('[href*="/interior-view/"]').addClass('active1');
+        }
+        else if (path == '/electric-cars/') {
+            $('[href="/electric-cars/"]').addClass('active1');
+            $('.electric_car').addClass('active1');
+        }
+        else if (path == '/electric-cars/interior') {
+            $('.electric_car').addClass('active1');
+            $('[href*="/electric-cars/interior"]').addClass('active1');
+        }
+        else if (path == '/electric-cars/exterior') {
+            $('.electric_car').addClass('active1');
+            $('[href*="/electric-cars/exterior"]').addClass('active1');
         }
         // else if (path == '/view-content'){  
         else if (path.indexOf('/view-content') != -1) {
@@ -239,3 +247,7 @@
     }
 
 })(jQuery); // end jQuery
+function format(){
+    console.log("sadasd");
+    $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+}

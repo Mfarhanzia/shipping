@@ -18,10 +18,9 @@
 	<!-- font awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
 	<!-- boostrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
@@ -32,18 +31,15 @@
 	<!-- animation -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" />
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />
-
-
+	
 </head>
 
 <body>
-
-
+	
 	<!--Navbar-->
 	<div class="container-fluid white-background">
-		<div class="container">
-			<nav class="navbar navbar-expand-lg white-background navbar-dark  primary-colo">
-
+		<div class="container-fluid" >
+			<nav class="navbar navbar-expand-lg white-background navbar-dark">
 				<!-- Navbar brand -->
 				<div class="logo">
 					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
@@ -90,8 +86,13 @@
 								<a class="nav-link" href="{% url 'order' %}">Order</a>
 							</li>
 
-							<li class="nav-item ">
-								<a class="nav-link" href="{% url 'models' %}">Models</a>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle model" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										<a class="dropdown-item" href="{% url 'models' %}">View Models</a>
+										<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>
+										<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>
+								</div>
 							</li>
 
 							<li class="nav-item">
@@ -100,14 +101,16 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'video-page' %}">Assembling Process</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'interior-view' %}">Interior</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'exterior-view' %}">Exterior</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'electric-cars' %}">Electric Cars</a>
+						
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Electric Cars
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								  <a class="dropdown-item" href="{% url 'electric-cars' %}">Cars</a>
+								  <a class="dropdown-item" href="{% url 'cars-interior' %}">Car Interior</a>
+								  <a class="dropdown-item" href="{% url 'cars-exterior' %}">Car Exterior</a>
+								</div>
 							</li>
 						{% endif %}
 
@@ -237,7 +240,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/dist/jquery.inputmask.js' %}"></script>
 	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
@@ -249,6 +251,7 @@
 
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="{% static 'MBD/js/mdb.min.js' %}"></script>
+	
 	{% block  js %}
 	{% endblock %}
 </body>
