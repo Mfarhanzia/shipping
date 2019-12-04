@@ -105,10 +105,21 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
+@login_required
 def order_form(request):
-    pricing = ContainerPricing.objects.all().order_by('id')
-    return render(request, "order/form_order.html",{"pricing":pricing})
-
+    if request.user.is_superuser:
+        pricing = ContainerPricing.objects.all().order_by('id')
+        return render(request, "order/form_order.html",{"pricing":pricing})
+    elif request.user.specuser.content_permission == True:
+        if request.user.specuser.expire_time_spec_content > timezone.now():
+            expire_time = request.user.specuser.expire_time_spec_content.timestamp()
+            pricing = ContainerPricing.objects.all().order_by('id')
+            return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing})
+        else:
+            user = SpecUser.objects.get(pk=request.user.specuser.id)
+            user.content_permission = False
+            user.save()
+    return render(request, 'users/request_access_content.html')
 
 @login_required
 def dealer_view(request):
