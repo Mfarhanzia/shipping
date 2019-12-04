@@ -151,25 +151,37 @@
 
         var path = window.location.pathname;
         if (path == '/order') {
-            $('[href*="/order"]').addClass('active1');
-        } else if (path == '/login/') {
-
+            $('[href="/order"]').addClass('active1');
+        }else if (path == '/order-form/') {
+            $('[href="/order-form/"]').addClass('active1');
+        }
+         
+        else if (path == '/login/') {
             $('[href*="/login"]').addClass('active1');
         } else if (path == '/view-order/') {
             $('[href="/view-order"]').addClass('active1');
-        } else if (path == '/floor-plan') {
+        } 
+        else if (path == '/floor-plan') {
+            $('.plans').addClass('active1');
             $('[href*="/floor-plan"]').addClass('active1');
-        } else if (path == '/assembling/') {
+        }
+         else if (path == '/assembling/') {
             $('[href*="/assembling/"]').addClass('active1');
-        } else if (path == '/quotation/') {
+        }
+         else if (path == '/quotation/') {
             $('[href*="/quotation/"]').addClass('active1');
-        } else if (path == '/view/quotation/') {
+        }
+         else if (path == '/view/quotation/') {
             $('[href*="/view/quotation/"]').addClass('active1');
-        } else if (path == '/register/') {
+        }
+         else if (path == '/register/') {
             $('[href*="/register"]').addClass('active1');
-        } else if (path == '/dealer/') {
+        }
+         else if (path == '/dealer/') {
             $('[href*="/dealer/"]').addClass('active1');
-        } else if (path == '/models') {
+        }
+         else if (path == '/models') {
+            $('.models').addClass('active1');
             $('[href*="/models"]').addClass('active1');
         }
         else if (path == '/electric-cars/') {
@@ -187,7 +199,8 @@
         // else if (path == '/view-content'){  
         else if (path.indexOf('/view-content') != -1) {
             $('[href*="/view-content"]').addClass('active1');
-        } else {
+        }
+         else {
             $('[href="/"]').addClass('active1');
         }
 

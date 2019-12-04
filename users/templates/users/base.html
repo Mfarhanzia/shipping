@@ -82,12 +82,22 @@
 							</a>
 						</li>
 						{% if request.user.specuser.user_type != "vendor" %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<a class="dropdown-item" href="{% url 'order' %}">Place Order</a>
+									{% if user.is_superuser %}	
+									<a class="dropdown-item" href="/view-order">View Order</a>
+									
+									{% endif %}
+								</div>
+							</li>
 							<li class="nav-item ">
-								<a class="nav-link" href="{% url 'order' %}">Order</a>
+								<a class="nav-link" href="{% url 'order-form' %}">Order Form</a>
 							</li>
 
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle model" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
+								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 										<a class="dropdown-item" href="{% url 'models' %}">View Models</a>
 										<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>
@@ -95,13 +105,13 @@
 								</div>
 							</li>
 
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'floor_plan' %}">Floor Plans</a>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle plans" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Plans</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
+								</div>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'video-page' %}">Assembling Process</a>
-							</li>
-						
+													
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Electric Cars
@@ -115,11 +125,7 @@
 						{% endif %}
 
 						{% if user.is_authenticated %}
-							{% if user.is_superuser %}	
-								<li class="nav-item">
-									<a class="nav-link" href="/view-order">View Order</a>
-								</li>
-							{% endif %}
+
 							{% if request.user.specuser.user_type != "vendor" %}
 								<li class="nav-item">
 									<a class="nav-link" href="/view-content">View Content</a>
@@ -135,14 +141,24 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'vendor-quotation' %}">Give Quotation</a>
 							</li>
-							{% elif user.is_superuser %}
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'view-quotation' %}">View Quotation</a>
-							</li>
 						{% endif %}
 
+
+						{% endif %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								More
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								{% if user.is_superuser %}
+									<a class="dropdown-item" href="{% url 'view-quotation' %}">View Quotation</a>
+								{% endif %}
+								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>
+							</div>
+						</li>
+						{% if request.user.is_authenticated %}
 						<li class="nav-item">
-							<a class="nav-link" href="/logout">LogOut</a>
+								<a class="nav-link" href="/logout">LogOut</a>
 						</li>
 						{% else %}
 						<li class="nav-item">
@@ -203,7 +219,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12 col-sm-12" style="width: 100%;height: 378px;background-color:#2F2E2E; ">
+			<div class="col-md-12 col-sm-12 pt-5 pb-5" style="width: 100%;background-color:#2F2E2E; ">
 				<div class="row" style="">
 					<div class="col-md-4 col-12 f-header">
 						<h1 style="font-size: 45px !important;margin-bottom: -8px;">BE IN</h1>
@@ -218,7 +234,7 @@
 						<br>
 						<span>Email: info@boltonblock.com</span>
 					</div>
-					<div class="col-md-4 col-12 social-icon">
+					<div class="col-md-4 col-12 social-icon text-center mb-3">
 						<a href="#" class="fb-ic mr-3" role="button"><i
 								class="fab fa-lg fa-facebook-f"></i></a>
 						<a href="#" class="tw-ic mr-3" role="button"><i
@@ -227,8 +243,8 @@
 								class="fab fa-lg fa-instagram"></i></a>
 					</div>
 				</div>
-							{% comment %}  {% endcomment %}
-		<div class="text-center">
+							
+		<div class="row text-center">
 			<div class="col-md-12 col-sm-12 patent-class">
 				<div>
 					<h5>PATENT PENDING USTPO PATENT PENDING.</h5>
@@ -236,7 +252,7 @@
 				</div>
 			</div>
 		</div> 
-		{% comment %}  {% endcomment %}
+
 			</div>
 		</div>
 	</div>

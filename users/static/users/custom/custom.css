@@ -58,9 +58,7 @@ html {
     padding-right: 40px;
 }
 /*  */
-.dropdown-menu {
-margin: 0 50% !important; 
-}
+
  
 /* .dropdown {
     position: relative;
@@ -152,6 +150,9 @@ form {
 }
 
 @media only screen and (max-width: 991px) {
+    .dropdown-menu {
+        margin: 0 45% !important; 
+        }
     .f-header {
         padding-left: 15px !important;
     }
@@ -485,5 +486,5 @@ input[type="radio"]:checked~label {
 .patent-class {
     color: #a0a09f !important;
     font-family: normal normal normal 16px/1.4em futura-lt-w01-light, sans-serif !important;
-    margin-top: 2%;
+    /* margin: 2%; */
 }

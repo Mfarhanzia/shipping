@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from .views import (OrderCreateView, ViewOrder, view_content,dealer_view, vendor_quotations,
-                    view_quotations, exterior_view, interior_view)
+                    view_quotations, exterior_view, interior_view, order_form)
 
 
 urlpatterns = [
@@ -23,4 +23,5 @@ urlpatterns = [
     
     path('interior-view/', interior_view, name='interior-view'),
     path('exterior-view/', exterior_view, name='exterior-view'),
+    path('order-form/', order_form, name='order-form'),
 ]

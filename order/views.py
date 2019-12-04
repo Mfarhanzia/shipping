@@ -1,6 +1,5 @@
-import random
-import string
 from .import utils
+import random, string
 from PIL import Image
 from decimal import Decimal
 from datetime import datetime
@@ -17,13 +16,13 @@ from django.views.generic.edit import FormView
 from users.token import account_activation_token
 from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
+from users .models import Photo, WaterMark, SpecUser
 from .forms import OrderForm, MaterialQuotationsForm    
-from .models import Order, Material, MaterialQuotations
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import Order, Material, MaterialQuotations, ContainerPricing
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from users .models import Photo, WaterMark, SpecUser
 
 # Create your views here.
 
@@ -106,6 +105,11 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
+def order_form(request):
+    pricing = ContainerPricing.objects.all().order_by('id')
+    return render(request, "order/form_order.html",{"pricing":pricing})
+
+
 @login_required
 def dealer_view(request):
     try:
@@ -165,6 +169,7 @@ def view_quotations(request):
 
 def interior_view(request):
     return render(request, 'order/interior.html')
+
 
 def exterior_view(request):
     return render(request, 'order/exterior.html')

@@ -1,0 +1,33 @@
+{% extends 'users/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 table-responsive">
+            <div class="text-center mb-5"><h2>Agreement </h2></div>
+            <table class="table view_order_table table-bordered text-center">
+                <legend><strong>Minimum Orders</strong>. Preliminary Orders must be made in a minimum combination of two (2) prototypes accordingly:</legend>
+                <thead>
+                    <tr>  
+                        <th> No. of Floors</th>
+                        <th>Variant</th>
+                        <th>Approximate Square Feet</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in pricing %}
+                    <tr>
+                        <td>{{data.no_of_floors}}</td>
+                        <td>{{data.variant}}</td>
+                        <td>{{data.square_feet}}</td>
+                        <td >$ {{data.price|intcomma}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
