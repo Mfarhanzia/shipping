@@ -12,6 +12,7 @@ django-multiselectfield==0.1.8
 django-phonenumber-field==3.0.1
 django-select-multiple-field==0.4.2
 django-watermark==0.1.8
+django-widget-tweaks==1.4.5
 gunicorn==19.9.0
 mysqlclient==1.4.2
 phonenumbers==8.10.14
