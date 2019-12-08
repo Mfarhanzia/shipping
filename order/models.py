@@ -124,10 +124,10 @@ class MaterialQuotations(models.Model):
         
 
 class ContainerPricing(models.Model):
-    no_of_floors = models.CharField("No. of Floors", max_length=100,default=None,blank=True, null=True)
-    variant = models.CharField("Variant", max_length=100,blank=True, null=True)
-    square_feet = models.CharField("Approximate Square Feet", max_length=100,blank=True, null=True)
-    price = models.DecimalField("Price", max_digits=20, decimal_places=2,blank=True, null=True)
+    no_of_floors = models.CharField("No. of Floors", max_length=100)
+    variant = models.CharField("Variant", max_length=100)
+    square_feet = models.CharField("Approximate Square Feet", max_length=100)
+    price = models.DecimalField("Price", max_digits=20, decimal_places=2)
 
     class Meta:
         verbose_name = "Containers Pricing"
@@ -138,7 +138,7 @@ class ContainerPricing(models.Model):
 
 
 class CartOrder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
-    quantity = models.PositiveIntegerField("Quantity", blank=True, null=True)
-    ordered_on = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField("Quantity")
+    ordered_on = models.DateTimeField(auto_now_add=True)
