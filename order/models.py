@@ -124,10 +124,10 @@ class MaterialQuotations(models.Model):
         
 
 class ContainerPricing(models.Model):
-    no_of_floors = models.CharField("No. of Floors", max_length=100,default=None)
-    variant = models.CharField("Variant", max_length=100)
-    square_feet = models.CharField("Approximate Square Feet", max_length=100)
-    price = models.DecimalField("Price", max_digits=20, decimal_places=2)
+    no_of_floors = models.CharField("No. of Floors", max_length=100,default=None,blank=True, null=True)
+    variant = models.CharField("Variant", max_length=100,blank=True, null=True)
+    square_feet = models.CharField("Approximate Square Feet", max_length=100,blank=True, null=True)
+    price = models.DecimalField("Price", max_digits=20, decimal_places=2,blank=True, null=True)
 
     class Meta:
         verbose_name = "Containers Pricing"
