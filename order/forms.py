@@ -91,3 +91,12 @@ class MaterialQuotationsForm(forms.ModelForm):
     class Meta:
         model = MaterialQuotations
         fields = ("price",)
+
+
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 50)]
+# print(PRODUCT_QUANTITY_CHOICES.a)
+# PRODUCT_QUANTITY_CHOICES[0]=("Choose Quantity","Choose Quantity")
+
+class AddProductForm(forms.Form):
+    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int,initial='')
+    # update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)

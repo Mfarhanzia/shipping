@@ -3,7 +3,7 @@ from multiselectfield import MultiSelectField
 from localflavor.us.models import USZipCodeField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import MinValueValidator
-
+from users.models import User
 # Create your models here.
 
 class Order(models.Model):
@@ -132,3 +132,13 @@ class ContainerPricing(models.Model):
     class Meta:
         verbose_name = "Containers Pricing"
         verbose_name_plural = "Containers Pricing"
+
+    def __str__(self):
+        return f"{self.no_of_floors} {self.variant}"
+
+
+class CartOrder(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField("Quantity")
+    ordered_on = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <div class="text-center mb-4"><h1>Your Order</h1></div>
+            <table class="table view_order_table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>No. of Floors</th>
+                        <th>Variant</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for value in cart %}
+                    <tr>                       
+                        <td>{{value.floors}}</td>
+                        <td>{{value.variant}}</td>
+                        <td>{{value.quantity}}</td>
+                        <td>$ {{value.price|intcomma}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tr>
+                    <th colspan="3">Total</th>
+                    <td>$ {{ cart.get_total_price|intcomma }}</td>
+                </tr>
+            </table>
+            <form method="POST" action="{%url 'save-cart'%}">
+                {% csrf_token %}
+                <button type="submit" class="fa-pull-right btn btn-outline-info ">Save Order</button>
+            </form>
+            <a  class="btn btn-outline-info" href="{% url 'order-form' %}">Add More</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

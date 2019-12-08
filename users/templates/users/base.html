@@ -92,10 +92,15 @@
 									{% endif %}
 								</div>
 							</li>
+							{% if user.is_superuser %}
+								<li class="nav-item ">
+									<a class="nav-link" href="{% url 'view-container-orders' %}">View Container Orders</a>
+								</li>
+							{% else %}
 							<li class="nav-item ">
 								<a class="nav-link" href="{% url 'order-form' %}">Order Form</a>
 							</li>
-
+							{% endif %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

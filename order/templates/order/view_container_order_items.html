@@ -1,0 +1,41 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table view_order_table table-bordered text-center">
+                <legend class="text-center mb-5 text-capitalize"><h2><b>Order by: </b> {{items.1.user.first_name}} {{items.1.user.last_name}}</h2><br><b>Email:</b> {{items.1.user.email}}</legend>
+                <thead>
+                    <tr>
+                        <th>No of Floors</th>
+                        <th>Variant</th>
+                        <th>Area</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Order Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in items %}
+                        <tr>
+                            <td>{{i.order_items.no_of_floors}}</td>
+                            <td>{{i.order_items.variant}}</td>
+                            <td>{{i.order_items.square_feet}}</td>
+                            <td>{{i.quantity}}</td>
+                            <td class="text-capitalize">$ {{i.order_items.price|intcomma}} (per unit)</td>
+                            <td>{{i.ordered_on}}</td>
+                            
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock%}
+

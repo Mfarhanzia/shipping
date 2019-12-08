@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import User, Photo, WaterMark, EmailList, SpecUser
-
+from order.models import CartOrder
+from django.db.models import Sum, F, ExpressionWrapper, DecimalField,FloatField
 # Register your models here.
 
 admin.site.register(Photo)
@@ -21,17 +22,26 @@ class EmailListAdmin(admin.ModelAdmin):
     list_per_page = 50
 admin.site.register(EmailList,EmailListAdmin)
 
+
+class CartOrderAdmin(admin.TabularInline):
+    model = CartOrder
+    list_display = ['user','orderitems']
+    
+
 class UserAdmin(admin.ModelAdmin):
     list_display = ['email']
     readonly_fields = ('password',) 
+    inlines = [CartOrderAdmin]
     list_per_page = 50
+
 admin.site.register(User, UserAdmin)
 
+
 class SpecUserAdmin(admin.ModelAdmin):
-     
     list_display = ['email','user_type']
     readonly_fields = ('password',)
     list_filter = ['user_type']
-    list_per_page = 50 
+    list_per_page = 50
+    inlines = [CartOrderAdmin]
 admin.site.register(SpecUser,SpecUserAdmin)
 

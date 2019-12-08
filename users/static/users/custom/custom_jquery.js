@@ -258,9 +258,18 @@
             $("#id_dealer_no").val('');
         }
     }
+    //register.html
+    $("#myselect").on('change',function() {
+        ajax()
+    });
+    ajax()
 
 })(jQuery); // end jQuery
 function format(){
     console.log("sadasd");
     $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+}
+
+function ajax() {
+    document.getElementById("price_span").innerHTML= "$ " + $('#myselect option:selected').val().toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"); 
 }

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 if DEBUG == False:
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',  # render forms as bootstrap easily
     'users',
     'django.contrib.humanize',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,10 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
 
 AUTH_USER_MODEL = 'users.User'
+
+CART_SESSION_ID = 'order'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # email credential
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

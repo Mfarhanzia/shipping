@@ -1,0 +1,36 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table view_order_table table-bordered text-center">
+                <legend class="text-center mb-5"><h2>Orders</h2></legend>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Customer Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in orders %}
+                        {% ifchanged %}
+                        <tr>
+                            <td class="text-capitalize">{{i.user.first_name}} {{i.user.last_name}}</td>
+                            <td>{{i.user.email}}</td>
+                            <td><a class="btn" href="{% url 'view-container-order-items' i.user.id %}">View Order</a></td>
+                        </tr>
+                        {% endifchanged %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock%}
+

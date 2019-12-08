@@ -8,6 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import FloatField
+from order.order_class import OrderClass
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.db.models.functions import Cast
@@ -17,13 +18,13 @@ from users.token import account_activation_token
 from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
-from .forms import OrderForm, MaterialQuotationsForm    
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Order, Material, MaterialQuotations, ContainerPricing
+from .forms import OrderForm, MaterialQuotationsForm, AddProductForm   
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.views.decorators.http import require_POST
 # Create your views here.
 
 
@@ -107,19 +108,69 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 @login_required
 def order_form(request):
+    form = AddProductForm()
+
     if request.user.is_superuser:
         pricing = ContainerPricing.objects.all().order_by('id')
-        return render(request, "order/form_order.html",{"pricing":pricing})
+        return render(request, "order/form_order.html",{"pricing":pricing, "form":form})
     elif request.user.specuser.content_permission == True:
         if request.user.specuser.expire_time_spec_content > timezone.now():
             expire_time = request.user.specuser.expire_time_spec_content.timestamp()
             pricing = ContainerPricing.objects.all().order_by('id')
-            return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing})
+            return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing, "form":form})
         else:
             user = SpecUser.objects.get(pk=request.user.specuser.id)
             user.content_permission = False
             user.save()
     return render(request, 'users/request_access_content.html')
+
+@require_POST
+def add_order(request, pk):
+    """adding container order to session"""
+    cart = OrderClass(request)
+    product = get_object_or_404(ContainerPricing, id=pk)
+    form = AddProductForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        if cd['quantity'] !=0:
+            cart.add(product=product, quantity=cd['quantity'])   
+    return redirect('cart-detail')
+
+
+def cart_detail(request):
+    """showing the detail of orders before saving"""
+    cart = OrderClass(request)
+    return render(request,'order/cart_detail.html', {'cart': cart})
+
+@require_POST
+def save_cart(request):
+    """saving the container orders"""
+    cart = OrderClass(request)
+    # for i in cart:
+        # print('==',i)
+    for item in cart:
+        CartOrder.objects.create(
+        user_id=request.user.id,
+        order_items = item['product'],
+        quantity = item['quantity'] 
+    )
+    cart.clear()
+    return redirect('/')
+
+
+@login_required
+@user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
+def view_container_orders(request):
+    all_orders = CartOrder.objects.all()
+    return render(request, "order/view_container_orders.html", {"orders":all_orders})
+
+
+@login_required
+@user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
+def view_container_order_items(request, pk):
+    items = CartOrder.objects.filter(user_id=pk)
+    return render(request, "order/view_container_order_items.html", {"items":items})
+
 
 @login_required
 def dealer_view(request):
