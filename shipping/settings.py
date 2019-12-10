@@ -162,9 +162,9 @@ CART_SESSION_ID = 'order'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-MIGRATION_MODULES = {
-    'users': 'extra_migrations.users',
-}
+# MIGRATION_MODULES = {
+#     'users': 'extra_migrations.users',
+# }
 
 
 # email credential
