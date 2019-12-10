@@ -138,7 +138,7 @@ class ContainerPricing(models.Model):
 
 
 class CartOrder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default='')
-    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True, default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField("Quantity")
     ordered_on = models.DateTimeField(auto_now_add=True)

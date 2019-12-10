@@ -11,6 +11,8 @@ class OrderAdmin(admin.ModelAdmin):
         js = ('users/custom/custom_jquery.js',)
 admin.site.register(Order, OrderAdmin)
 
+admin.site.register(CartOrder)
+
 
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ('name',)
