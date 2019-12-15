@@ -23,15 +23,15 @@ class EmailListAdmin(admin.ModelAdmin):
 admin.site.register(EmailList,EmailListAdmin)
 
 
-# class CartOrderAdmin(admin.TabularInline):
-#     model = CartOrder
-#     list_display = ['user','orderitems']
+class CartOrderAdmin(admin.TabularInline):
+    model = CartOrder
+    list_display = ['user','orderitems']
     
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['email']
     readonly_fields = ('password',) 
-    # inlines = [CartOrderAdmin]
+    inlines = [CartOrderAdmin]
     list_per_page = 50
 
 admin.site.register(User, UserAdmin)
@@ -42,6 +42,6 @@ class SpecUserAdmin(admin.ModelAdmin):
     readonly_fields = ('password',)
     list_filter = ['user_type']
     list_per_page = 50
-    # inlines = [CartOrderAdmin]
+    inlines = [CartOrderAdmin]
 admin.site.register(SpecUser,SpecUserAdmin)
 

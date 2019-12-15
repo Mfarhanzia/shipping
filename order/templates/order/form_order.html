@@ -33,15 +33,16 @@
     <h1 class="text-center"><strong>Place Order</strong></h1>
     <div class="row m-5">
         {% for data in pricing %}
-        <div class="col-md-6 col-sm-12 form-control p-3" style="border: 8px solid rgba(228, 228, 226, 0.537);" >
+        <div class="col-md-5 col-sm-12 form-control p-3 m-4 " style="border: 8px solid rgba(228, 228, 226, 0.537);" >
             <form method="POST" class="m-3" action="/add-order/{{data.id}}/">
                 {% csrf_token %}
                 <span id="price_span" class="form-control"><strong>No of Floors: </strong>{{data.no_of_floors}} &nbsp;<br><strong>Variant: </strong>{{data.variant}}<br>
                     <strong>Price: </strong>$ {{data.price|intcomma}}
                 </span>
-                <strong>Quantity: </strong>{{form.quantity|add_class:"browser-default custom-select"}}
+                <br><span><strong>Quantity: </strong>{{form.quantity|add_class:"browser-default custom-select"}}</span>
+                <br><br><span><strong>Delivery Data: </strong>{{form.delivery_date|add_class:"browser-default custom-select"}}</span>
                 
-                <button class=" btn btn-outline-info btn-lg waves-effect waves-light mt-5 mb-5">Add Order </button>
+                <button class=" btn btn-outline-info btn-lg waves-effect waves-light mt-5 mb-4">Add Order </button>
             </form>
         </div>
         {% endfor %}

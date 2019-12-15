@@ -13,7 +13,9 @@
                         <th>No. of Floors</th>
                         <th>Variant</th>
                         <th>Quantity</th>
+                        <th>Delivery Date</th>
                         <th>Price</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,12 +24,14 @@
                         <td>{{value.floors}}</td>
                         <td>{{value.variant}}</td>
                         <td>{{value.quantity}}</td>
+                        <td>{{value.delivery_date|naturalday}}</td>
                         <td>$ {{value.price|intcomma}}</td>
+                        <td><a href="{% url 'remove-cart' value.product.id %}">Remove</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
                 <tr>
-                    <th colspan="3">Total</th>
+                    <th colspan="5">Total</th>
                     <td>$ {{ cart.get_total_price|intcomma }}</td>
                 </tr>
             </table>

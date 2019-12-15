@@ -99,4 +99,10 @@ PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 50)]
 
 class AddProductForm(forms.Form):
     quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int,initial='')
-    # update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+    delivery_date = forms.DateField(
+            label ="Delivery Date:",
+            widget=forms.DateInput(attrs={
+                    'type': 'date',
+                    'class': 'form-group',
+                }))
+    

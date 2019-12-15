@@ -3,7 +3,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from .views import (OrderCreateView, ViewOrder, view_content,dealer_view, vendor_quotations,
                     view_quotations, exterior_view, interior_view, order_form, add_order,
-                    cart_detail, save_cart, view_container_orders,view_container_order_items)
+                    cart_detail, save_cart, view_container_orders,view_container_order_items, cart_remove,create_order_pdf)
 
 
 urlpatterns = [
@@ -31,5 +31,7 @@ urlpatterns = [
     path('save-order/', save_cart, name='save-cart'),
     path('container/orders', view_container_orders, name='view-container-orders'),
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
+    path('remove/order/<int:pk>/', cart_remove, name='remove-cart'),
+    path('order/pdf', create_order_pdf, name='order-pdf'),
 
 ]

@@ -133,7 +133,7 @@ def add_order(request, pk):
     if form.is_valid():
         cd = form.cleaned_data
         if cd['quantity'] !=0:
-            cart.add(product=product, quantity=cd['quantity'])   
+            cart.add(product=product, quantity=cd['quantity'], delivery_date=cd["delivery_date"])   
     return redirect('cart-detail')
 
 
@@ -141,6 +141,14 @@ def cart_detail(request):
     """showing the detail of orders before saving"""
     cart = OrderClass(request)
     return render(request,'order/cart_detail.html', {'cart': cart})
+
+
+def cart_remove(request, pk):
+    cart = OrderClass(request)
+    product = get_object_or_404(ContainerPricing, id=pk)
+    cart.remove(product)
+    return redirect('cart-detail')
+ 
 
 @require_POST
 def save_cart(request):
@@ -152,7 +160,8 @@ def save_cart(request):
         CartOrder.objects.create(
         user_id=request.user.id,
         order_items = item['product'],
-        quantity = item['quantity'] 
+        quantity = item['quantity'], 
+        delivery_date = item['delivery_date'].replace('"',''), 
     )
     cart.clear()
     return redirect('/')
@@ -168,8 +177,13 @@ def view_container_orders(request):
 @login_required
 @user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
 def view_container_order_items(request, pk):
-    items = CartOrder.objects.filter(user_id=pk)
+    items = CartOrder.objects.filter(user=pk)
+    print("===",items)
     return render(request, "order/view_container_order_items.html", {"items":items})
+
+
+def create_order_pdf(reqeust):
+    pass
 
 
 @login_required

@@ -8,7 +8,9 @@
     <div class="row">
         <div class="col-md-12 table-responsive">
             <table class="table view_order_table table-bordered text-center">
-                <legend class="text-center mb-5 text-capitalize"><h2><b>Order by: </b> {{items.1.user.first_name}} {{items.1.user.last_name}}</h2><br><b>Email:</b> {{items.1.user.email}}</legend>
+                {% for data in items|slice:":1" %}
+                    <legend class="text-center mb-5 text-capitalize"><h2><b>Order by: </b> {{data.user.first_name}} {{data.user.last_name}}</h2><br><b>Email:</b> {{data.user}}</legend>
+                {% endfor %}
                 <thead>
                     <tr>
                         <th>No of Floors</th>
@@ -16,7 +18,8 @@
                         <th>Area</th>
                         <th>Quantity</th>
                         <th>Price</th>
-                        <th>Order Date</th>
+                        <th>Ordered on</th>
+                        <th>Delivery Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +31,7 @@
                             <td>{{i.quantity}}</td>
                             <td class="text-capitalize">$ {{i.order_items.price|intcomma}} (per unit)</td>
                             <td>{{i.ordered_on}}</td>
+                            <td>{{i.delivery_date}}</td>
                             
                         </tr>
                     {% endfor %}
