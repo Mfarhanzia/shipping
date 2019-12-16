@@ -2,6 +2,10 @@ html {
     scroll-behavior: smooth;
 }
 
+.pdf{
+    margin-left: 180px; 
+}
+
 .thumb_div{
     max-height: 450px;
 }

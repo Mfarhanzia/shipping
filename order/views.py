@@ -1,5 +1,5 @@
 from .import utils
-import random, string
+import random, string, json
 from PIL import Image
 from decimal import Decimal
 from datetime import datetime
@@ -19,12 +19,19 @@ from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import render, redirect, get_object_or_404
 from .forms import OrderForm, MaterialQuotationsForm, AddProductForm   
-from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder
 from django.views.decorators.http import require_POST
+
+from xhtml2pdf import pisa
+from django_xhtml2pdf.utils import generate_pdf
+from django.template.loader import get_template
+from django.template import Context
+from io import BytesIO
+
 # Create your views here.
 
 
@@ -124,6 +131,7 @@ def order_form(request):
             user.save()
     return render(request, 'users/request_access_content.html')
 
+
 @require_POST
 def add_order(request, pk):
     """adding container order to session"""
@@ -154,17 +162,41 @@ def cart_remove(request, pk):
 def save_cart(request):
     """saving the container orders"""
     cart = OrderClass(request)
-    # for i in cart:
-        # print('==',i)
+    order_ids = []
     for item in cart:
-        CartOrder.objects.create(
+        current_order = CartOrder.objects.create(
         user_id=request.user.id,
         order_items = item['product'],
         quantity = item['quantity'], 
-        delivery_date = item['delivery_date'].replace('"',''), 
-    )
+        delivery_date = item['delivery_date'].replace('"',''),
+        )
+        order_ids.append(int(current_order.id))
     cart.clear()
-    return redirect('/')
+    request.session['list_ids'] = json.dumps(order_ids)
+    return redirect("order-pdf")
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+def create_order_pdf(request):
+    print("::::::::::::::::::+++++++++++++++++++++=")
+    ids = json.loads(request.session['list_ids'])
+    print("==============",type(ids),ids)
+    template = get_template('order/order_pdf.html')
+    cart = CartOrder.objects.filter(id__in=ids)
+    context = {
+        "cart": cart,}  
+    html = template.render(context)
+    pdf = render_to_pdf('order/order_pdf.html', context)
+    return pdf
 
 
 @login_required
@@ -178,12 +210,7 @@ def view_container_orders(request):
 @user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
 def view_container_order_items(request, pk):
     items = CartOrder.objects.filter(user=pk)
-    print("===",items)
     return render(request, "order/view_container_order_items.html", {"items":items})
-
-
-def create_order_pdf(reqeust):
-    pass
 
 
 @login_required
