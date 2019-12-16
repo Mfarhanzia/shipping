@@ -208,7 +208,7 @@ def create_order_pdf(request):
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     to_email = settings.DEFAULT_FROM_EMAIL
-    to_email = "farhan71727@gmail.com"
+    # to_email = "farhan71727@gmail.com"
     email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],)
     email.attach('order_details.pdf', pdf2 , 'application/pdf')
     email.encoding = 'us-ascii'
