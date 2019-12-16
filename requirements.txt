@@ -16,7 +16,6 @@ django-multiselectfield==0.1.8
 django-phonenumber-field==3.0.1
 django-select-multiple-field==0.4.2
 django-watermark==0.1.8
-django-weasyprint==0.5.4
 django-widget-tweaks==1.4.5
 django-xhtml2pdf==0.0.4
 gunicorn==19.9.0
@@ -24,7 +23,6 @@ html5lib==1.0.1
 phonenumbers==8.10.14
 pilkit==2.0
 Pillow==6.1.0
-pkg-resources==0.0.0
 psycopg2==2.7.5
 psycopg2-binary==2.8.4
 pycparser==2.19
