@@ -133,7 +133,7 @@ td{
     <p><b>IN WITNESS WHEREOF,</b> the Parties have executed this Preliminary Order Form on
             the day and year indicated below.
     </p>
-    {% for data in cart %}
+    {% for data in cart||slice:":1" %}
         <p style="font-size: 18px;">Buyer: &nbsp; <u>{{data.user.first_name|title}} {{data.user.last_name|title}} </u> 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dated:</span>
         </p>
