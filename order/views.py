@@ -31,6 +31,8 @@ from django_xhtml2pdf.utils import generate_pdf
 from django.template.loader import get_template
 from django.template import Context
 from io import BytesIO
+from weasyprint import HTML, CSS
+from weasyprint.fonts import FontConfiguration
 
 # Create your views here.
 
@@ -182,20 +184,34 @@ def render_to_pdf(template_src, context_dict={}):
     result = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
     return None
 
 
 def create_order_pdf(request):
-    print("::::::::::::::::::+++++++++++++++++++++=")
     ids = json.loads(request.session['list_ids'])
-    print("==============",type(ids),ids)
+    # print("==============",type(ids),ids)
     template = get_template('order/order_pdf.html')
     cart = CartOrder.objects.filter(id__in=ids)
     context = {
         "cart": cart,}  
     html = template.render(context)
-    pdf = render_to_pdf('order/order_pdf.html', context)
+    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # try:
+
+    # html2 = render_to_string('order/order_pdf.html', context)
+    # pdf2 = HTML(string=html).write_pdf()
+    mail_subject = f"Order PDF"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    to_email = "farhan71727@gmail.com"
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],)
+    
+    email.attach('invoicex.pdf', pdf2 , 'application/pdf')
+    # email.content_subtype = "pdf"
+    email.encoding = 'us-ascii'
+    email.send()
+    # except Exception as e: 
+        # print("\n==========Error=========",e)
     return pdf
 
 
