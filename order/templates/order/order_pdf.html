@@ -19,9 +19,6 @@ h1{
 p{
     font-size: 16px;
 }
-td{
-    text-align: center;
-}
 
 
 </style>
@@ -45,7 +42,7 @@ td{
             (2) prototypes accordingly:</p>
     <p><b>Individual units:</b> single-family homes, duplex, triplex, man camps, employee housing,
             and other</p>
-    <table style="font-size:20px; border: 1px black solid" >
+    <table style="font-size:20px; border: 1px black solid; text-align: center;" >
         <h1>Your Order</h1>
         <thead>
             <tr style="padding: 5px;">
@@ -134,11 +131,21 @@ td{
             the day and year indicated below.
     </p>
     {% for data in cart|slice:":1" %}
-        <p style="font-size: 18px;">Buyer: &nbsp; <u>{{data.user.first_name|title}} {{data.user.last_name|title}} </u> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dated:</span>
-        </p>
+    <table>
+        <tr style="font-size: 18px; padding: 0; text-align: left;">
+            <td colspan="2">Buyer:&nbsp; <u>{{data.user.first_name|title}} {{data.user.last_name|title}} </u></td>
+            <td>Date:&nbsp; {{date}}</td>
+        </tr>
+    </table>
     {% endfor %}
-    <p>Seller: <u>Bolt on Bloks, LLC</u> </p>
+    <br>
+    <table>
+        <tr style="font-size: 18px; padding: 0; text-align: left;">
+            <td colspan="2">Seller:&nbsp; <u>Bolt on Bloks, LLC</u></td>
+            <td>Date:&nbsp; {{date}}</td>
+        </tr>
+    </table>
+
     <br>
     <p style="font-size: 18px;">All parties, add initials to each page and sign the last.</p>
 </body>

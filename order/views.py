@@ -2,7 +2,7 @@ from .import utils
 import random, string, json
 from PIL import Image
 from decimal import Decimal
-from datetime import datetime
+from datetime import date
 from django.db.models import F
 from django.conf import settings
 from django.utils import timezone
@@ -193,19 +193,22 @@ def create_order_pdf(request):
     # print("==============",type(ids),ids)
     template = get_template('order/order_pdf.html')
     cart = CartOrder.objects.filter(id__in=ids)
+    date_ = date.today()
     context = {
-        "cart": cart,}  
+        "cart": cart,
+        "date":date_,
+        }  
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
 
     ##sending email with attachment(pdf)    
-    mail_subject = f"Order PDF"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # mail_subject = f"Order PDF"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
 
     return pdf
 
