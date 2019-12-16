@@ -115,23 +115,33 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
+# @login_required
+# def order_form(request):
+    # """ order form with permission"""
+#     form = AddProductForm()
+
+#     if request.user.is_superuser:
+#         pricing = ContainerPricing.objects.all().order_by('id')
+#         return render(request, "order/form_order.html",{"pricing":pricing, "form":form})
+#     elif request.user.specuser.content_permission == True:
+#         if request.user.specuser.expire_time_spec_content > timezone.now():
+#             expire_time = request.user.specuser.expire_time_spec_content.timestamp()
+#             pricing = ContainerPricing.objects.all().order_by('id')
+#             return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing, "form":form})
+#         else:
+#             user = SpecUser.objects.get(pk=request.user.specuser.id)
+#             user.content_permission = False
+#             user.save()
+#     return render(request, 'users/request_access_content.html')
+
 @login_required
 def order_form(request):
+    """ order form without permission"""
     form = AddProductForm()
 
-    if request.user.is_superuser:
-        pricing = ContainerPricing.objects.all().order_by('id')
-        return render(request, "order/form_order.html",{"pricing":pricing, "form":form})
-    elif request.user.specuser.content_permission == True:
-        if request.user.specuser.expire_time_spec_content > timezone.now():
-            expire_time = request.user.specuser.expire_time_spec_content.timestamp()
-            pricing = ContainerPricing.objects.all().order_by('id')
-            return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing, "form":form})
-        else:
-            user = SpecUser.objects.get(pk=request.user.specuser.id)
-            user.content_permission = False
-            user.save()
-    return render(request, 'users/request_access_content.html')
+    pricing = ContainerPricing.objects.all().order_by('id')
+    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,'title': 'Order Form'})
+
 
 
 @require_POST
@@ -204,7 +214,10 @@ def create_order_pdf(request):
         }  
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    user_mail = cart[0].user.email
+    try:
+        user_mail = cart[0].user.email
+    except Exception as e:
+        return redirect("order-form")
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     to_email = settings.DEFAULT_FROM_EMAIL
