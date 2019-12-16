@@ -162,11 +162,6 @@ CART_SESSION_ID = 'order'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# MIGRATION_MODULES = {
-#     'users': 'extra_migrations.users',
-# }
-
-
 # email credential
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

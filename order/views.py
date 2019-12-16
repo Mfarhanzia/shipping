@@ -204,12 +204,12 @@ def create_order_pdf(request):
         }  
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-
+    user_mail = cart[0].user.email
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     to_email = settings.DEFAULT_FROM_EMAIL
     # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email],)
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],user_mail,),)
     email.attach('order_details.pdf', pdf2 , 'application/pdf')
     email.encoding = 'us-ascii'
     email.send()
