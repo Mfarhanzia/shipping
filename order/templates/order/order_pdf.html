@@ -65,14 +65,14 @@ p{
                 <td>{{value.order_items.square_feet}}</td>
                 <td>{{value.quantity}}</td>
                 <td>{{value.delivery_date}}</td>
-                <td>$ {{value.price|intcomma}}</td>
+                <td>$ {{value.order_items.price|intcomma}} (per item)</td>
             </tr>
             {% endfor %}
         </thead>
     </table>
     <p><b>Multi-unit complex:</b> apartment buildings, mixed-use, hotel, motel, boutique hotel,
             condominium, town homes, hospitals, student housing, and other</p>
-    <p style="font-size:18px"><b>Total:</b> $</p>
+    <p style="font-size:18px"><b>Total:</b> $ {{total|intcomma}}</p>
     <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary
             Order, Buyer has seven (7) business days from said execution to indicate in writing to
             Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days
