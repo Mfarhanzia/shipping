@@ -257,9 +257,10 @@ def dealer_view(request):
 
 
 @login_required
-def view_content(request):
+def view_struc_drawings(request):
+    """structural_drawings"""
     if request.user.is_superuser:
-        return render(request, 'order/structural.html')
+        return render(request, 'order/structural.html',{'title': 'Structural Drawings',})
     elif request.user.specuser.content_permission == True:
         if request.user.specuser.expire_time_spec_content > timezone.now():
             expire_time = request.user.specuser.expire_time_spec_content.timestamp()
@@ -269,6 +270,41 @@ def view_content(request):
             user.content_permission = False
             user.save()
     return render(request, 'users/request_access_content.html')
+
+
+@login_required
+def view_arc_drawings(request):
+    """architectural_drawings"""
+    if request.user.is_superuser:
+        return render(request, 'order/architectural_drawings.html',{'title': 'Architectural Drawings'})
+    elif request.user.specuser.content_permission == True:
+        if request.user.specuser.expire_time_spec_content > timezone.now():
+            expire_time = request.user.specuser.expire_time_spec_content.timestamp()
+            return render(request, 'order/architectural_drawings.html', {'title': 'Architectural Drawings', 'expire_time': expire_time})
+        else:
+            user = SpecUser.objects.get(pk=request.user.specuser.id)
+            user.content_permission = False
+            user.save()
+    return render(request, 'users/request_access_content.html')
+
+
+@login_required
+def view_report_pdfs(request):
+    """Report FEA SAP"""
+    if request.user.is_superuser:
+        return render(request, 'order/report_sap_pdfs.html',{'title': 'Report FEA SAP'})
+    elif request.user.specuser.content_permission == True:
+        if request.user.specuser.expire_time_spec_content > timezone.now():
+            expire_time = request.user.specuser.expire_time_spec_content.timestamp()
+            return render(request, 'order/report_sap_pdfs.html', {'title': 'Report FEA SAP', 'expire_time': expire_time})
+        else:
+            user = SpecUser.objects.get(pk=request.user.specuser.id)
+            user.content_permission = False
+            user.save()
+    return render(request, 'users/request_access_content.html')
+
+
+
 
 @login_required
 def vendor_quotations(request):

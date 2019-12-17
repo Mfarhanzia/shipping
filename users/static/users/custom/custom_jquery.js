@@ -197,8 +197,17 @@
             $('[href*="/electric-cars/exterior"]').addClass('active1');
         }
         // else if (path == '/view-content'){  
-        else if (path.indexOf('/view-content') != -1) {
-            $('[href*="/view-content"]').addClass('active1');
+        else if (path.indexOf('/view/structural-drawings') != -1) {
+            $('[href="/view/structural-drawings"]').addClass('active1');
+            $('.designs').addClass('active1');
+        }
+        else if (path.indexOf('/view/architectural-drawings') != -1) {
+            $('[href="/view/architectural-drawings"]').addClass('active1');
+            $('.designs').addClass('active1');
+        }
+        else if (path.indexOf('/view/reportsap') != -1) {
+            $('[href="/view/reportsap"]').addClass('active1');
+            $('.designs').addClass('active1');
         }
          else {
             $('[href="/"]').addClass('active1');

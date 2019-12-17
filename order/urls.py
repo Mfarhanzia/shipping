@@ -1,9 +1,9 @@
 from django.urls import path
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from .views import (OrderCreateView, ViewOrder, view_content,dealer_view, vendor_quotations,
+from .views import (OrderCreateView, ViewOrder, view_struc_drawings,dealer_view, vendor_quotations,
                     view_quotations, exterior_view, interior_view, order_form, add_order,
-                    cart_detail, save_cart, view_container_orders,view_container_order_items, cart_remove,create_order_pdf)
+                    cart_detail, save_cart, view_container_orders,view_container_order_items, cart_remove,create_order_pdf,view_report_pdfs, view_arc_drawings)
 
 
 urlpatterns = [
@@ -12,7 +12,9 @@ urlpatterns = [
     
     path('order',OrderCreateView.as_view(), name="order"),
     
-    path('view-content',view_content, name="specialuser_ViewOrder"),
+    path('view/structural-drawings',view_struc_drawings, name="struc-drawings"),
+    path('view/architectural-drawings',view_arc_drawings, name="arc-drawings"),
+    path('view/reportsap', view_report_pdfs, name="report-sap"),
 
     path('view-order/',ViewOrder.as_view(), name="view-order"),
 

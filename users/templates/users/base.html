@@ -131,9 +131,16 @@
 
 						{% if user.is_authenticated %}
 
-							{% if request.user.specuser.user_type != "vendor" %}
-								<li class="nav-item">
-									<a class="nav-link" href="/view-content">View Content</a>
+							{% if request.user.specuser.user_type != "vendor" %}	
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle designs"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Designs Info
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										<a class="nav-link" href="{% url 'struc-drawings' %}">Structural drawings</a>
+									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>
+									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>
+									</div>
 								</li>
 							{% endif %}
 							{% if user.specuser.user_type == 'dealer' %}

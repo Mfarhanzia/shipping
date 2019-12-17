@@ -13,8 +13,32 @@
         </div> <br>
     </div>
     {% endif %}
+    <div class="row md-padding">
+        <div class="col-md-12 col-sm-12 p-5"><h1 class="text-center">Structural Design</h1></div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/structural_drawings/1-story-1-wide-structural-plans.pdf' %}">1-story-1-wide-structural-plans</a>
+            <embed src="{% static 'users/files/structural_drawings/1-story-1-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/structural_drawings/1-story-2-wide-structural-plans.pdf' %}">1-story-1-wide-structural-plans</a>
+            <embed src="{% static 'users/files/structural_drawings/1-story-2-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/structural_drawings/2-story-1-wide-structural-plans.pdf' %}">1-story-1-wide-structural-plans</a>
+            <embed src="{% static 'users/files/structural_drawings/2-story-1-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/structural_drawings/2-story-2-wide-structural-plans.pdf' %}">1-story-1-wide-structural-plans</a>
+            <embed src="{% static 'users/files/structural_drawings/2-story-2-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+  
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/structural_drawings/3-story-2-wide-structural-plans.pdf' %}">1-story-1-wide-structural-plans</a>
+            <embed src="{% static 'users/files/structural_drawings/3-story-2-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+    </div>
     <div class="row md-padding justify-content-center">
-        <h1 class="text-center">Structural Design</h1>
+        
         {% for img in image %}
             {% if img.watermarked_image  %}
 

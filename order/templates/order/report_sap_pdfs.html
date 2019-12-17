@@ -1,0 +1,152 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content%}
+
+<div class="container">
+    {% if request.user.is_superuser != True %}
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-sm-12"><h2 class="text-center mt-5"> <b>Remaining Time:</b></h2>
+        </div>
+        <div id="flipdown" class="col-md-8 col-sm-12 flipdown text-center mb-5 ">
+                
+        </div> <br>
+    </div>
+    {% endif %}
+    <div class="row md-padding">
+        <div class="col-md-12 col-sm-12 p-5">
+            <h1 class="text-center"> Report FEA SAP</h1>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/report/Report FEA SAP_1story1wide.pdf' %}"><h3>Report FEA SAP 1story 1wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP_1story1wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <a href="{% static 'users/files/report/Report FEA SAP_1story2wide.pdf' %}"><h3>Report FEA SAP 1story 2wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP_1story2wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12 mt-5">
+            <a href="{% static 'users/files/report/Report FEA SAP_2story1wide.pdf' %}"><h3>Report FEA SAP 2story 1wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP_2story1wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12 mt-5">
+            <a href="{% static 'users/files/report/Report FEA SAP_2story2wide.pdf' %}"><h3>Report FEA SAP 2story 2wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP_2story2wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12 mt-5">
+            <a href="{% static 'users/files/report/Report FEA SAP3story1wide.pdf' %}"><h3>Report FEA SAP 3story 1wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP3story1wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+        <div class="col-md-6 col-sm-12 mt-5">
+            <a href="{% static 'users/files/report/Report FEA SAP3story3wide.pdf' %}"><h3>Report FEA SAP 3story 3wide</h3></a>
+            <embed src="{% static 'users/files/report/Report FEA SAP3story3wide.pdf' %}" type="application/pdf" height="500px" width="100%">
+        </div>
+ 
+  
+ 
+    </div>
+
+    
+
+  
+    {% if request.user.is_superuser != True %}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+        // Unix timestamp (in seconds) to count down to
+        //var lastDate = new Date("26/03/2019").getTime() / 1000;
+        
+        var lastDate = {{expire_time|safe}};        
+        
+        // Set up FlipDown
+        var flipdown = new FlipDown(lastDate)
+        // Start the countdown
+        .start()
+        // Do something when the countdown ends
+        .ifEnded(() => {
+            console.log('The countdown has ended!');
+            location.reload();
+            //window.location.href = "/view-content/"+uid;
+        });
+        var ver = document.getElementById('ver');
+        ver.innerHTML = flipdown.version;
+    });
+    </script>
+    
+{% endif %}
+</div>
+
+{% endblock%}
+
+{% block js %}
+
+{% if request.user.is_superuser != True %}
+<script>
+	//Hide Content If cursor is not on page body.
+	function check() {
+        
+		console.warn($('body:hover').length);
+		if ($('body:hover').length != 0) {
+            $('#hide').css("display", "block");
+            $('.hide_on_out').css("display", "block");
+            $('#hide2').css("display", "block");
+            
+		}
+		else {
+            $('#hide').css("display", "none");
+            // $('.hide_on_out').css("display", "none");
+            $('#hide2').css("display", "block");
+			
+		}
+		  // window.clipboardData.setData ("Text", "abc");
+	}
+	setInterval( check, 100 );
+
+	function copyToClipboard() {
+
+      var aux = document.createElement("input");
+      aux.setAttribute("value", "print screen disabled!");      
+      document.body.appendChild(aux);
+      aux.select();
+      document.execCommand("copy");
+      // Remove it from the body
+      document.body.removeChild(aux);
+    //   console.warn("Print screen disabled!");
+    //   alert("Print screen disabled!");
+    }
+	//Disable PrtSrc
+    $(window).keyup(function(e){
+      if(e.keyCode == 44){
+        copyToClipboard();
+      }  
+    });
+    
+    // disable inspect element
+    document.onkeydown = function(e) {
+	  if(e.keyCode == 123) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+	     return false;
+	  }
+	  if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+	     return false;
+	  }
+	}
+
+    //Disable Right Click
+     $(window).bind("contextmenu",function(e){
+        e.preventDefault();
+     });
+
+     $('img').on('dragstart', function(event) { event.preventDefault(); });
+</script>
+{% endif %}
+{% endblock %}
