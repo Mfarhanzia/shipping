@@ -140,7 +140,7 @@ def order_form(request):
     form = AddProductForm()
 
     pricing = ContainerPricing.objects.all().order_by('id')
-    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,'title': 'Order Form'})
+    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,'title': 'Order'})
 
 
 
@@ -205,7 +205,10 @@ def create_order_pdf(request):
     cart = CartOrder.objects.filter(id__in=ids)
     total = 0
     for data in cart:
-        total += data.quantity * data.order_items.price 
+        if data.quantity >20:
+            total += data.quantity * data.order_items.price21 
+        else:
+            total += data.quantity * data.order_items.price 
     date_ = date.today()
     context = {
         "cart": cart,
@@ -218,14 +221,14 @@ def create_order_pdf(request):
         user_mail = cart[0].user.email
     except Exception as e:
         return redirect("order-form")
-    ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],user_mail,),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # ###sending email with attachment(pdf)    
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],user_mail,),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
     return pdf
 
 
@@ -289,7 +292,7 @@ def view_arc_drawings(request):
 
 
 @login_required
-def view_report_pdfs(request):
+def view_report_sap(request):
     """Report FEA SAP"""
     if request.user.is_superuser:
         return render(request, 'order/report_sap_pdfs.html',{'title': 'Report FEA SAP'})

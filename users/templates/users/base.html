@@ -98,7 +98,7 @@
 								</li>
 							{% else %}
 							<li class="nav-item ">
-								<a class="nav-link" href="{% url 'order-form' %}">Order Form</a>
+								<a class="nav-link" href="{% url 'order-form' %}">Place an Order</a>
 							</li>
 							{% endif %}
 							<li class="nav-item dropdown">
@@ -109,18 +109,8 @@
 										<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>
 								</div>
 							</li>
-
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle plans" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Plans</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
-								</div>
-							</li>
-													
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Electric Cars
-								</a>
+								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Electric Cars</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 								  <a class="dropdown-item" href="{% url 'electric-cars' %}">Cars</a>
 								  <a class="dropdown-item" href="{% url 'cars-interior' %}">Car Interior</a>
@@ -128,9 +118,7 @@
 								</div>
 							</li>
 						{% endif %}
-
 						{% if user.is_authenticated %}
-
 							{% if request.user.specuser.user_type != "vendor" %}	
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle designs"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -140,6 +128,8 @@
 										<a class="nav-link" href="{% url 'struc-drawings' %}">Structural drawings</a>
 									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>
 									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>
+
+									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
 									</div>
 								</li>
 							{% endif %}

@@ -121,15 +121,14 @@ class MaterialQuotations(models.Model):
     class Meta:
         verbose_name = "MaterialQuotation"
         verbose_name_plural = "MaterialQuotations"
-        
+
 
 class ContainerPricing(models.Model):
     no_of_floors = models.CharField("No. of Floors", max_length=100)
     variant = models.CharField("Variant", max_length=100)
     square_feet = models.CharField("Approximate Square Feet", max_length=100)
     price = models.DecimalField("Price", max_digits=20, decimal_places=2)
-
-
+    price21 = models.DecimalField("Delivered Price Delivered to site for 21 or more units", max_digits=20, decimal_places=2, blank=True, null=True) 
     class Meta:
         verbose_name = "Containers Pricing"
         verbose_name_plural = "Containers Pricing"

@@ -153,41 +153,6 @@ form {
     margin-bottom: 5% !important;
 }
 
-/* Removes the clear button from date inputs */
-input[type="date"]::-webkit-clear-button {
-    display: none;
-}
-
-/* Removes the spin button */
-input[type="date"]::-webkit-inner-spin-button { 
-    display: none;
-}
-
-/* Always display the drop down caret */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    color: #2c3e50;
-}
-
-/* A few custom styles for date inputs */
-input[type="date"] {
-    appearance: none;
-    -webkit-appearance: none;
-    color: #95a5a6;
-    font-family: "Helvetica", arial, sans-serif;
-    font-size: 18px;
-    border:1px solid #ecf0f1;
-    background:#ecf0f1;
-    padding:5px;
-    display: inline-block !important;
-    visibility: visible !important;
-}
-
-input[type="date"], focus {
-    color: #95a5a6;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-}
 
 
 @media only screen and (max-width: 991px) {
@@ -528,4 +493,47 @@ input[type="radio"]:checked~label {
     color: #a0a09f !important;
     font-family: normal normal normal 16px/1.4em futura-lt-w01-light, sans-serif !important;
     /* margin: 2%; */
+}
+.order_form_h2{
+    font-family: 'Times New Roman';
+}
+
+.order_form_h2 h2 {
+    text-decoration: underline;
+    text-align: center;
+    font-weight: bold;
+    padding: 2%;
+}
+.order_form_h2 b {
+    font-weight: bold;
+}
+.order_form_h2 p {
+    font-size: 20px;
+    
+}
+
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #2c3e50;
+}
+
+/* A few custom styles for date inputs */
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    color: #575d5e;
+    font-family: "Helvetica", arial, sans-serif;
+    font-size: 18px;
+    border:1px solid #ecf0f1;
+    background:#d7dadb;
+    padding:5px;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+input[type="date"], focus {
+    color: #95a5a6;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
 }
