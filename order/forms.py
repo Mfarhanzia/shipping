@@ -93,12 +93,28 @@ class MaterialQuotationsForm(forms.ModelForm):
         fields = ("price",)
 
 
-PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 50)]
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 200)]
+OTHER_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 50)]
+FLOOR_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 13)]
 # print(PRODUCT_QUANTITY_CHOICES.a)
-# PRODUCT_QUANTITY_CHOICES[0]=("Choose Quantity","Choose Quantity")
+PRODUCT_QUANTITY_CHOICES[0]=(0,"-")
+FLOOR_QUANTITY_CHOICES[0]=(0,"-")
+OTHER_QUANTITY_CHOICES[0]=(0,"-")
 
 class AddProductForm(forms.Form):
-    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int,initial='')
+    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+    delivery_date = forms.DateField(
+            label ="Delivery Date:",
+            widget=forms.DateInput(attrs={
+                    'type': 'date',
+                    'class': 'form-group',
+                }))
+
+class AddCustomProductForm(forms.Form):
+    no_of_floors = forms.ChoiceField(choices=FLOOR_QUANTITY_CHOICES)
+    width = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES)
+    depth = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES)
+    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
     delivery_date = forms.DateField(
             label ="Delivery Date:",
             widget=forms.DateInput(attrs={

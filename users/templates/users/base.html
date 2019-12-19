@@ -82,16 +82,17 @@
 							</a>
 						</li>
 						{% if request.user.specuser.user_type != "vendor" %}
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Order</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="{% url 'order' %}">Place Order</a>
-									{% if user.is_superuser %}	
-									<a class="dropdown-item" href="/view-order">View Order</a>
-									
-									{% endif %}
-								</div>
-							</li>
+						
+						{% if user.is_superuser %}	
+						<li class="nav-item">
+							<a class="nav-link" href="/view-order">View Buyer<br>Applications</a>
+						</li>
+						{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'order' %}">Buyer Application</a>
+						</li>
+						{% endif %}
+							
 							{% if user.is_superuser %}
 								<li class="nav-item ">
 									<a class="nav-link" href="{% url 'view-container-orders' %}">View Container Orders</a>

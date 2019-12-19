@@ -19,7 +19,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
 from django.contrib.sites.shortcuts import get_current_site
-from .forms import OrderForm, MaterialQuotationsForm, AddProductForm   
+from .forms import OrderForm, MaterialQuotationsForm, AddProductForm , AddCustomProductForm  
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -138,10 +138,9 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
 def order_form(request):
     """ order form without permission"""
     form = AddProductForm()
-
+    form2 = AddCustomProductForm()
     pricing = ContainerPricing.objects.all().order_by('id')
-    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,'title': 'Order'})
-
+    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,"form2":form2,'title': 'Order'})
 
 
 @require_POST
@@ -158,6 +157,7 @@ def add_order(request, pk):
 
 
 def cart_detail(request):
+    print(request.session.items())
     """showing the detail of orders before saving"""
     cart = OrderClass(request)
     return render(request,'order/cart_detail.html', {'cart': cart})
@@ -200,7 +200,6 @@ def render_to_pdf(template_src, context_dict={}):
 
 def create_order_pdf(request):
     ids = json.loads(request.session['list_ids'])
-    # print("==============",type(ids),ids)
     template = get_template('order/order_pdf.html')
     cart = CartOrder.objects.filter(id__in=ids)
     total = 0

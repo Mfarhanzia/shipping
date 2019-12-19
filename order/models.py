@@ -137,6 +137,18 @@ class ContainerPricing(models.Model):
         return f"{self.no_of_floors} {self.variant}"
 
 
+class CustomContainerPricing(models.Model):
+    sqfeet_per_room = models.CharField("Approximate Square Feet per room", max_length=100)
+    custom_price = models.DecimalField("Price per 290s.f. room(for 20units or less)", max_digits=20, decimal_places=2)
+    custom_price21 = models.DecimalField("Price per 290s.f. room(for 21units or more)", max_digits=20, decimal_places=2, blank=True, null=True) 
+    class Meta:
+        verbose_name = "Custom Containers Pricing"
+        verbose_name_plural = "Custom  Containers Pricing"
+
+    def __str__(self):
+        return f"Custom Container Pricing"
+
+
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE)

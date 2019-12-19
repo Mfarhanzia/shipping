@@ -353,7 +353,7 @@ form {
 }
 
 .view_order_table {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 20px !important;
 }
 
@@ -364,6 +364,10 @@ form {
 
 .view_order_table td {
     font-size: 1rem;
+    padding: 4px 3px 2px 3px !important;
+    /* content: ''; */
+    /* display: block;  */
+    width: 5em;
 }
 
 
@@ -532,7 +536,7 @@ input[type="date"] {
 }
 
 input[type="date"], focus {
-    color: #95a5a6;
+    color: #2c3333;
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;

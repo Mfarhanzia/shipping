@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
 # Register your models here.
 
 class OrderAdmin(admin.ModelAdmin):
@@ -23,10 +23,17 @@ admin.site.register(Material, MaterialAdmin)
 
 class ContainerPricingAdmin(admin.ModelAdmin):
     
-    list_display = ('no_of_floors','variant',)
+    list_display = ('pk', 'no_of_floors','variant',)
     list_display_links = ('no_of_floors','variant',)
     list_per_page = 50
 admin.site.register(ContainerPricing, ContainerPricingAdmin)
+
+class CustomContainerPricingAdmin(admin.ModelAdmin):
+    list_display = ('pk','sqfeet_per_room',)
+    list_display_links = ('pk','sqfeet_per_room',)
+    list_per_page = 50
+
+admin.site.register(CustomContainerPricing, CustomContainerPricingAdmin)
 
 
 class MaterialQuotationsAdmin(admin.ModelAdmin):
