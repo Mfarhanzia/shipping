@@ -1,14 +1,13 @@
 from .import utils
-import random, string, json
 from PIL import Image
 from decimal import Decimal
 from datetime import date
+import random, string, json
 from django.db.models import F
 from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import FloatField
-# from order.order_class import OrderClass
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.db.models.functions import Cast
