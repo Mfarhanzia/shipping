@@ -7,9 +7,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 table-responsive">
-            <table class="table view_order_table table-bordered text-center">
+            <table class="table table-striped view_order_table table-bordered text-center">
                 {% for data in items|slice:":1" %}
-                    <legend class="text-center mb-5 text-capitalize"><h2><b>Order by: </b> {{data.user.first_name}} {{data.user.last_name}}</h2><br><b>Email:</b> {{data.user}}</legend>
+                    <legend class="text-center mb-5"><h2 class="text-capitalize"><b>Order by: </b> {{data.user.first_name}} {{data.user.last_name}}</h2><br><b>Email:</b> {{data.user.email}}</legend>
                 {% endfor %}
                 <thead>
                     <tr>
@@ -24,6 +24,7 @@
                 </thead>
                 <tbody>
                     {% for i in items %}
+                    {% if i.order_items.no_of_floors %}
                         <tr>
                             <td>{{i.order_items.no_of_floors}}</td>
                             <td>{{i.order_items.variant}}</td>
@@ -32,14 +33,47 @@
                             <td class="text-capitalize">$ {{i.order_items.price|intcomma}} (per unit)</td>
                             <td>{{i.ordered_on}}</td>
                             <td>{{i.delivery_date}}</td>
-                            
                         </tr>
+                        {% endif %}
                     {% endfor %}
-
+                </tbody>
+            </table><br>
+            <table class="table view_order_table table-bordered text-center table-striped">
+                {% for data in items|slice:":1" %}
+                    <legend class="text-center mb-5"><h2 class="text-capitalize"><b>Custom Orders </b></h2></legend>
+                {% endfor %}
+                <thead>
+                <tr>
+                    <th> No. of Floors</th>
+                    <th>Width </th>
+                    <th>Depth</th>
+                    <th>Approx. <br>Square Feet per room</th>
+                    <th>Price per 290s.f. room(for 20units or less)</th>
+                    <th>Price per 290s.f. room(for 21units or more)</th>
+                    <th>Qty</th>
+                    <th>Ordered On</th>
+                    <th>Date Delivered<br> (to site)</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in items %}
+                        {% if i.custom_floors %}
+                        <tr>
+                            <td>{{i.custom_floors}}</td>
+                            <td>{{i.custom_width}}</td>
+                            <td>{{i.custom_depth}}</td>
+                            <td>{{i.custom_order.sqfeet_per_room}}</td>
+                            <td>$ {{i.custom_order.custom_price|intcomma}}</td>
+                            <td>$ {{i.custom_order.custom_price21|intcomma}}</td>
+                            <td>{{i.quantity}}</td>
+                            <td>{{i.ordered_on}}</td>
+                            <td>{{i.delivery_date}}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 {% endblock%}
-

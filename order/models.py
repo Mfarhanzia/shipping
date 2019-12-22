@@ -151,7 +151,12 @@ class CustomContainerPricing(models.Model):
 
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
+    
+    custom_order = models.ForeignKey(CustomContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
+    custom_floors = models.CharField("No. of Floors", max_length=100, blank=True, null=True)
+    custom_width = models.CharField("Width", max_length=100, blank=True, null=True)
+    custom_depth = models.CharField("Depth", max_length=100, blank=True, null=True)
     quantity = models.PositiveIntegerField("Quantity")
     delivery_date = models.DateField(default=None, blank=True, null=True)
     ordered_on = models.DateField(auto_now_add=True)

@@ -15,10 +15,17 @@ h1{
     text-align: center;
     text-decoration: underline;
 }
-
+@font-face {
+    font-family: 'Brush Script Std';
+    src: url('/static/users/fonts/New folder/BrushScriptStd.ttf');
+    font-weight: normal;
+    font-style: normal;
+}               
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Brush Script Std';
+
 }
+
 p{
     font-size: 16px;
 }
@@ -29,8 +36,6 @@ table {
 table td {
     padding: 2px;
 }
-
-
 
 </style>
 </head>
@@ -47,7 +52,6 @@ table td {
     <p><b>Individual units:</b> single-family homes, duplex, triplex, man camps, employee housing,
             and other</p>
     <table style="border: 1px black solid;">
-        <h1>Your Order</h1>
         <thead>
             <tr style="padding: 2px;">
                 <td><b>No. of Floors</b></td>
@@ -59,9 +63,7 @@ table td {
                 <td><b>Delivery Date</b></td>
             </tr>
         </thead>
-        
         <thead>
-
             {% for value in cart %}
             <tr style="padding: 1 1px 0 3px;">                       
                 <td> {{value.order_items.no_of_floors}}</td>
@@ -77,6 +79,36 @@ table td {
     </table>
     <p><b>Multi-unit complex:</b> apartment buildings, mixed-use, hotel, motel, boutique hotel,
             condominium, town homes, hospitals, student housing, and other</p>
+        <table  style="border: 1px black solid;">
+            <thead >
+                <tr style="padding: 2px;">  
+                    <th > No. of Floors</th>
+                    <th>Width </th>
+                    <th>Depth</th>
+                    <th>Approx. <br>Square Feet per room</th>
+                    <th>Price per 290s.f. room(for 20units or less)</th>
+                    <th>Price per 290s.f. room(for 21units or more)</th>
+                    <th>Qty</th>
+                    <th>Date Delivered<br> (to site)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding: 1 1px 0 3px;">
+                    {% if custom_order_obj.custom_floors %}
+                        <td>{{custom_order_obj.custom_floors}} stories</td>
+                        <td><span>{{custom_order_obj.custom_width}} wide </span></td>
+                        <td>{{custom_order_obj.custom_depth}} deep</td>
+                        <td>{{custom_order_obj.custom_order.sqfeet_per_room}}</td>
+                        <td>$ {{custom_order_obj.custom_order.custom_price|intcomma}}</td>
+                        <td>$ {{custom_order_obj.custom_order.custom_price21|intcomma}}</td>
+                        <td>{{custom_order_obj.quantity}}</td>
+                        <td>{{custom_order_obj.delivery_date}}</td>
+                    {% else %}
+                        <td colspan="7"></td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
     <p style="font-size:18px"><b>Total:</b> $ {{total|intcomma}}</p>
     <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer's reasonable satisfaction. 
     </p>
@@ -125,7 +157,6 @@ table td {
             <td>Date:&nbsp; {{date}}</td>
         </tr>
     </table>
-
     <br>
     <p style="font-size: 18px;">All parties, add initials to each page and sign the last.</p>
 </body>

@@ -360,6 +360,7 @@ form {
 .view_order_table th {
     font-size: 1rem;
     font-weight: 600;
+    vertical-align: middle !important;
 }
 
 .view_order_table td {

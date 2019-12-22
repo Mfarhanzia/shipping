@@ -268,17 +268,78 @@
         }
     }
     //register.html
-    $("#myselect").on('change',function() {
-        ajax()
+    // $("#myselect").on('change',function() {
+    //     ajax()
+    // });
+    // ajax()
+
+    // form submissions
+    $("#form_save").click(function() {
+        $("#order_form").submit();
     });
-    ajax()
+    $("#form_submission").click(function() {
+        form_submissions()
+    });
+
 
 })(jQuery); // end jQuery
 function format(){
     console.log("sadasd");
     $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
 }
+function total(){
+    $('#total').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+}
 
 function ajax() {
     document.getElementById("price_span").innerHTML= "$ " + $('#myselect option:selected').val().toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"); 
 }
+
+function form_submissions(){
+    var frm = $("#order_form");
+    // frm.submit(function () {
+        $.ajax({
+         
+            type: "GET",
+            url: "/add-order/",
+            data: frm.serialize(),
+            dataType: "json",
+            success: function (data) {
+                var parts = data.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                parts.join(".")
+                console.log("========",parts.join("."))
+                $("#total").html("$ " + parts.join("."));
+              
+            },
+            error: function(data) {
+                // console.log("success",data)
+                // $("#MESSAGE-DIV").html("Something went wrong!");
+            }
+        });
+        return false;
+    // });
+}
+
+// function form_save(){
+//     var frm = $("#order_form");
+//     console.log("data",frm)
+//     frm.submit(function () {
+//         $.ajax({
+//             type: frm.attr('method'),
+//             url: "/add-order/",
+//             data: frm.serialize(),
+//             // data:json,
+//             dataType: "json",
+//             success: function (data) {
+//                 $("#total").html("$ " + data.total);
+//                 console.log("abc",data.total)
+//             },
+//             error: function(data) {
+//                 console.log("success",data)
+//                 // $("#MESSAGE-DIV").html("Something went wrong!");
+//             }
+//         });
+//         return false;
+//     });
+// }

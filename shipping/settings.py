@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users',
     'django.contrib.humanize',
     'widget_tweaks',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

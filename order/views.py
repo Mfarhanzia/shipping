@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import FloatField
-from order.order_class import OrderClass
+# from order.order_class import OrderClass
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.db.models.functions import Cast
@@ -23,7 +23,7 @@ from .forms import OrderForm, MaterialQuotationsForm, AddProductForm , AddCustom
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
 from django.views.decorators.http import require_POST
 
 from xhtml2pdf import pisa
@@ -31,8 +31,8 @@ from django_xhtml2pdf.utils import generate_pdf
 from django.template.loader import get_template
 from django.template import Context
 from io import BytesIO
-# from weasyprint import HTML, CSS
-# from weasyprint.fonts import FontConfiguration
+from django.http import JsonResponse
+
 
 # Create your views here.
 
@@ -115,75 +115,105 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
-# @login_required
-# def order_form(request):
-    # """ order form with permission"""
-#     form = AddProductForm()
-
-#     if request.user.is_superuser:
-#         pricing = ContainerPricing.objects.all().order_by('id')
-#         return render(request, "order/form_order.html",{"pricing":pricing, "form":form})
-#     elif request.user.specuser.content_permission == True:
-#         if request.user.specuser.expire_time_spec_content > timezone.now():
-#             expire_time = request.user.specuser.expire_time_spec_content.timestamp()
-#             pricing = ContainerPricing.objects.all().order_by('id')
-#             return render(request, "order/form_order.html", {'title': 'Order Form', 'expire_time': expire_time, "pricing":pricing, "form":form})
-#         else:
-#             user = SpecUser.objects.get(pk=request.user.specuser.id)
-#             user.content_permission = False
-#             user.save()
-#     return render(request, 'users/request_access_content.html')
-
 @login_required
 def order_form(request):
     """ order form without permission"""
     form = AddProductForm()
     form2 = AddCustomProductForm()
     pricing = ContainerPricing.objects.all().order_by('id')
-    return render(request, "order/form_order.html",{"pricing":pricing, "form":form,"form2":form2,'title': 'Order'})
+    custom_pricing = CustomContainerPricing.objects.all()[0]
+
+    context = {"pricing":pricing,
+     "form":form,
+     "form2":form2,
+     'title': 'Order',
+     "quantity": range(50),
+     "custom_pricing":custom_pricing,
+     }
+    return render(request, "order/form_order.html", context)
 
 
-@require_POST
-def add_order(request, pk):
+def add_order(request, pk=None):
     """adding container order to session"""
-    cart = OrderClass(request)
-    product = get_object_or_404(ContainerPricing, id=pk)
-    form = AddProductForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        if cd['quantity'] !=0:
-            cart.add(product=product, quantity=cd['quantity'], delivery_date=cd["delivery_date"])   
-    return redirect('cart-detail')
 
+    quantities = request.GET.getlist('quantity')
+    dates = request.GET.getlist('date_')
 
-def cart_detail(request):
-    print(request.session.items())
-    """showing the detail of orders before saving"""
-    cart = OrderClass(request)
-    return render(request,'order/cart_detail.html', {'cart': cart})
+    no_of_floors = request.GET['no_of_floors']
+    width = request.GET['width']
+    depth = request.GET['depth']
+    cus_qty = request.GET['custom_quantity']
+    cus_date = request.GET['custom_date']
+    print("custom",no_of_floors,width,depth, cus_date, cus_qty)
+    total = 0
+    for q,d in zip(quantities,dates):
+        if q == "" or d == "":
+            continue
+        qty = int(q.split("##")[0]) 
+        pk = int(q.split("##")[1]) 
+        
+        product = get_object_or_404(ContainerPricing, id=pk)
+        if qty > 20:
+            total += qty * product.price21     
+        else:
+            total += qty * product.price     
+    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+        qty = int(cus_qty.split("##")[0]) 
+        pk = int(cus_qty.split("##")[1])      
+        product = get_object_or_404(CustomContainerPricing, id=pk)
+        if qty > 20:
+            total += qty * product.custom_price21 
+        else:
+            total += qty * product.custom_price 
 
+    return JsonResponse(total, safe=False)
 
-def cart_remove(request, pk):
-    cart = OrderClass(request)
-    product = get_object_or_404(ContainerPricing, id=pk)
-    cart.remove(product)
-    return redirect('cart-detail')
  
-
 @require_POST
 def save_cart(request):
     """saving the container orders"""
-    cart = OrderClass(request)
+
+    print(request.POST)
+    quantities = request.POST.getlist('quantity')
+    dates = request.POST.getlist('date_')
+
+    no_of_floors = request.POST['no_of_floors']
+    width = request.POST['width']
+    depth = request.POST['depth']
+    cus_qty = request.POST['custom_quantity']
+    cus_date = request.POST['custom_date']
+    request.session['custom_id']=''
+    request.session['list_ids']=''
     order_ids = []
-    for item in cart:
+    for q,date in zip(quantities,dates):
+        if q == "" or date == "":
+            continue
+        qty = int(q.split("##")[0]) 
+        pk = int(q.split("##")[1]) 
+        product = get_object_or_404(ContainerPricing, id=pk)
+        
         current_order = CartOrder.objects.create(
         user_id=request.user.id,
-        order_items = item['product'],
-        quantity = item['quantity'], 
-        delivery_date = item['delivery_date'].replace('"',''),
+        order_items = product,
+        quantity = qty, 
+        delivery_date = date.replace('"',''),
         )
         order_ids.append(int(current_order.id))
-    cart.clear()
+
+    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+        qty = int(cus_qty.split("##")[0]) 
+        pk = int(cus_qty.split("##")[1])      
+        product = get_object_or_404(CustomContainerPricing, id=pk)
+        custom_order_obj = CartOrder.objects.create(
+        user_id=request.user.id,
+        custom_order = product,
+        custom_floors = no_of_floors,
+        custom_width = width,
+        custom_depth = depth,
+        quantity = qty, 
+        delivery_date = cus_date.replace('"',''),
+        )
+        request.session['custom_id'] = custom_order_obj.id
     request.session['list_ids'] = json.dumps(order_ids)
     return redirect("order-pdf")
 
@@ -192,6 +222,7 @@ def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = BytesIO()
+    # fetch_resources="/static/users/fonts/New folder/BrushScriptStd.ttf"__link_callback=fetch_resources
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
@@ -199,17 +230,33 @@ def render_to_pdf(template_src, context_dict={}):
 
 
 def create_order_pdf(request):
-    ids = json.loads(request.session['list_ids'])
     template = get_template('order/order_pdf.html')
-    cart = CartOrder.objects.filter(id__in=ids)
     total = 0
-    for data in cart:
-        if data.quantity >20:
-            total += data.quantity * data.order_items.price21 
+    try:
+        ids = json.loads(request.session['list_ids'])
+        cart = CartOrder.objects.filter(id__in=ids)
+        
+        for data in cart:
+            if data.quantity >20:
+                total += data.quantity * data.order_items.price21 
+            else:
+                total += data.quantity * data.order_items.price 
+    except Exception as e:
+        cart = ""
+        print("order Error", e)
+    ## custom order
+    try:
+        custom_id = request.session['custom_id']
+        custom_order_obj = CartOrder.objects.get(id=int(custom_id))
+        if custom_order_obj.quantity >20:
+            total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price21 
         else:
-            total += data.quantity * data.order_items.price 
+            total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price 
+    except:
+        custom_order_obj = ""
     date_ = date.today()
     context = {
+        "custom_order_obj":custom_order_obj,
         "cart": cart,
         "date":date_,
         "total":total
@@ -217,10 +264,14 @@ def create_order_pdf(request):
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     try:
-        user_mail = cart[0].user.email
+        try:
+            user_mail = cart[0].user.email
+        except:
+            user_mail = custom_order_obj.user.email
     except Exception as e:
+        print("====",e)
         return redirect("order-form")
-    # ###sending email with attachment(pdf)    
+    ###sending email with attachment(pdf)    
     # mail_subject = f"Shipping Container Homes Order Detail"
     # to_email = settings.DEFAULT_FROM_EMAIL
     # # to_email = "farhan71727@gmail.com"
@@ -306,8 +357,6 @@ def view_report_sap(request):
     return render(request, 'users/request_access_content.html')
 
 
-
-
 @login_required
 def vendor_quotations(request):
     try:
@@ -344,3 +393,6 @@ def interior_view(request):
 
 def exterior_view(request):
     return render(request, 'order/exterior.html')
+
+
+

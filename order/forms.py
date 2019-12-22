@@ -97,9 +97,9 @@ PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 200)]
 OTHER_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 50)]
 FLOOR_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 13)]
 # print(PRODUCT_QUANTITY_CHOICES.a)
-PRODUCT_QUANTITY_CHOICES[0]=(0,"-")
-FLOOR_QUANTITY_CHOICES[0]=(0,"-")
-OTHER_QUANTITY_CHOICES[0]=(0,"-")
+PRODUCT_QUANTITY_CHOICES[0]=("","-")
+FLOOR_QUANTITY_CHOICES[0]=("","-")
+OTHER_QUANTITY_CHOICES[0]=("","-")
 
 class AddProductForm(forms.Form):
     quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
@@ -109,16 +109,19 @@ class AddProductForm(forms.Form):
                     'type': 'date',
                     'class': 'form-group',
                 }))
+    id_fields = forms.CharField()
+    
+
 
 class AddCustomProductForm(forms.Form):
-    no_of_floors = forms.ChoiceField(choices=FLOOR_QUANTITY_CHOICES)
-    width = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES)
-    depth = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES)
-    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+    no_of_floors = forms.ChoiceField(choices=FLOOR_QUANTITY_CHOICES, required=False)
+    width = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
+    depth = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
+    quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int,required=False)
     delivery_date = forms.DateField(
             label ="Delivery Date:",
             widget=forms.DateInput(attrs={
                     'type': 'date',
                     'class': 'form-group',
-                }))
+                }),required=False)
     
