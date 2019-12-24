@@ -160,3 +160,4 @@ class CartOrder(models.Model):
     quantity = models.PositiveIntegerField("Quantity")
     delivery_date = models.DateField(default=None, blank=True, null=True)
     ordered_on = models.DateField(auto_now_add=True)
+    user_image = models.ImageField(upload_to="pdf-images" , blank=True, null=True, default="default.jpeg")

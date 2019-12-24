@@ -2,7 +2,7 @@ from .import utils
 from PIL import Image
 from decimal import Decimal
 from datetime import date
-import random, string, json
+import random, string, json, base64, os
 from django.db.models import F
 from django.conf import settings
 from django.utils import timezone
@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
 from django.contrib.sites.shortcuts import get_current_site
-from .forms import OrderForm, MaterialQuotationsForm, AddProductForm , AddCustomProductForm  
+from .forms import OrderForm, MaterialQuotationsForm, AddCustomProductForm  
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -31,6 +31,7 @@ from django.template.loader import get_template
 from django.template import Context
 from io import BytesIO
 from django.http import JsonResponse
+from django.core.files.base import ContentFile
 
 
 # Create your views here.
@@ -89,13 +90,11 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     view for showing orders for authenticated users
     """
-
     def test_func(self):
         if self.request.user.is_superuser:
             return True
         else:
             return False
-
     model = Order
     template_name = 'order/view_orders.html'
     context_object_name = 'orders'
@@ -117,13 +116,10 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
 @login_required
 def order_form(request):
     """ order form without permission"""
-    form = AddProductForm()
     form2 = AddCustomProductForm()
     pricing = ContainerPricing.objects.all().order_by('id')
     custom_pricing = CustomContainerPricing.objects.all()[0]
-
     context = {"pricing":pricing,
-     "form":form,
      "form2":form2,
      'title': 'Order',
      "quantity": range(50),
@@ -134,16 +130,13 @@ def order_form(request):
 
 def add_order(request, pk=None):
     """adding container order to session"""
-
     quantities = request.GET.getlist('quantity')
     dates = request.GET.getlist('date_')
-
     no_of_floors = request.GET['no_of_floors']
     width = request.GET['width']
     depth = request.GET['depth']
     cus_qty = request.GET['custom_quantity']
     cus_date = request.GET['custom_date']
-    print("custom",no_of_floors,width,depth, cus_date, cus_qty)
     total = 0
     for q,d in zip(quantities,dates):
         if q == "" or d == "":
@@ -164,18 +157,16 @@ def add_order(request, pk=None):
             total += qty * product.custom_price21 
         else:
             total += qty * product.custom_price 
-
     return JsonResponse(total, safe=False)
 
- 
+
 @require_POST
 def save_cart(request):
     """saving the container orders"""
-
-    print(request.POST)
     quantities = request.POST.getlist('quantity')
     dates = request.POST.getlist('date_')
 
+    request.session['print_name'] = request.POST['print_name']
     no_of_floors = request.POST['no_of_floors']
     width = request.POST['width']
     depth = request.POST['depth']
@@ -184,6 +175,15 @@ def save_cart(request):
     request.session['custom_id']=''
     request.session['list_ids']=''
     order_ids = []
+    image=None
+    try:
+        format, imgstr = request.POST['webcam'].split(';base64,') 
+        ext = format.split('/')[-1]
+        image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
+    except Exception as e:
+        pass
+        # print("}}}}}}}}}}}",e) 
+        
     for q,date in zip(quantities,dates):
         if q == "" or date == "":
             continue
@@ -191,19 +191,23 @@ def save_cart(request):
         pk = int(q.split("##")[1]) 
         product = get_object_or_404(ContainerPricing, id=pk)
         
-        current_order = CartOrder.objects.create(
+        current_order = CartOrder(
         user_id=request.user.id,
         order_items = product,
         quantity = qty, 
         delivery_date = date.replace('"',''),
         )
+        if image != None:
+
+            current_order.user_image = image
+        current_order.save()
         order_ids.append(int(current_order.id))
 
     if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
         qty = int(cus_qty.split("##")[0]) 
         pk = int(cus_qty.split("##")[1])      
         product = get_object_or_404(CustomContainerPricing, id=pk)
-        custom_order_obj = CartOrder.objects.create(
+        custom_order_obj = CartOrder(
         user_id=request.user.id,
         custom_order = product,
         custom_floors = no_of_floors,
@@ -212,17 +216,28 @@ def save_cart(request):
         quantity = qty, 
         delivery_date = cus_date.replace('"',''),
         )
+        if image != None:
+            custom_order_obj.user_image = image
+        custom_order_obj.save()
         request.session['custom_id'] = custom_order_obj.id
     request.session['list_ids'] = json.dumps(order_ids)
     return redirect("order-pdf")
 
+def fetch_resources(uri, rel):
+    """
+    Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
+    `uri` is the href attribute from the html link element.
+    `rel` gives a relative path, but it's not used here.
+
+    """
+    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    return path 
 
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = BytesIO()
-    # fetch_resources="/static/users/fonts/New folder/BrushScriptStd.ttf"__link_callback=fetch_resources
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
     return None
@@ -242,7 +257,7 @@ def create_order_pdf(request):
                 total += data.quantity * data.order_items.price 
     except Exception as e:
         cart = ""
-        print("order Error", e)
+
     ## custom order
     try:
         custom_id = request.session['custom_id']
@@ -254,27 +269,50 @@ def create_order_pdf(request):
     except:
         custom_order_obj = ""
     date_ = date.today()
+    try:
+        try:
+            user_mail = cart[0].user.email
+            user_image = cart[0].user_image.path
+        except:
+            user_image = custom_order_obj.user_image.path
+            user_mail = custom_order_obj.user.email
+    except Exception as e:
+        print("no user found",e)
+        return redirect("order-form")
     context = {
         "custom_order_obj":custom_order_obj,
         "cart": cart,
         "date":date_,
-        "total":total
+        "total":total,
+        "user_image": user_image,
+        "print_name" : request.session['print_name']
         }  
+    ##admin
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    try:
-        try:
-            user_mail = cart[0].user.email
-        except:
-            user_mail = custom_order_obj.user.email
-    except Exception as e:
-        print("====",e)
-        return redirect("order-form")
-    ###sending email with attachment(pdf)    
+    # # ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     to_email = settings.DEFAULT_FROM_EMAIL
     # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],user_mail,),)
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
+    email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    email.encoding = 'us-ascii'
+    email.send()
+
+    context = {
+        "custom_order_obj":custom_order_obj,
+        "cart": cart,
+        "date":date_,
+        "total":total,
+        "print_name" : request.session['print_name']
+        }  
+    ##user
+    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # ###sending email with attachment(pdf)    
+    mail_subject = f"Shipping Container Homes Order Detail"
+    to_email = settings.DEFAULT_FROM_EMAIL
+    # to_email = "farhan71727@gmail.com"
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
     email.attach('order_details.pdf', pdf2 , 'application/pdf')
     email.encoding = 'us-ascii'
     email.send()
@@ -392,6 +430,3 @@ def interior_view(request):
 
 def exterior_view(request):
     return render(request, 'order/exterior.html')
-
-
-

@@ -267,20 +267,41 @@
             $("#id_dealer_no").val('');
         }
     }
-    //register.html
-    // $("#myselect").on('change',function() {
-    //     ajax()
-    // });
-    // ajax()
-
-    // form submissions
-    $("#form_save").click(function() {
-        $("#order_form").submit();
+    // 
+    $("select").on('change',function() {
+        form_submissions()
     });
-    $("#form_submission").click(function() {
+    $("select").click(function() {
         form_submissions()
     });
 
+
+    // Capture Image
+    
+    $("#capture").click(function() {
+        capture_image()
+    });
+
+    // form submissions
+    // $("#form_save").click(function() {
+        // e.preventDefault(); 
+    
+    // Webcam.snap( function(image) {
+    //     $("#image-input_id").val(image);
+    // }); 
+
+    $("#order_form").submit(function () {
+        Webcam.snap( function(image) {
+            $("#image-input_id").val(image);
+        });
+    });
+
+    // });
+
+    // ajax
+    $("#form_submission").click(function() {
+        form_submissions()
+    });
 
 })(jQuery); // end jQuery
 function format(){
@@ -297,7 +318,6 @@ function ajax() {
 
 function form_submissions(){
     var frm = $("#order_form");
-    // frm.submit(function () {
         $.ajax({
          
             type: "GET",
@@ -318,8 +338,11 @@ function form_submissions(){
             }
         });
         return false;
-    // });
 }
+
+// function capture_image(){
+
+// }
 
 // function form_save(){
 //     var frm = $("#order_form");

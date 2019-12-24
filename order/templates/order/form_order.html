@@ -32,7 +32,7 @@
                         </tr >
                     </thead>
                     <tbody>
-                    <form autocomplete="off" id="order_form"method="POST" action="/save-order/" >
+                    <form autocomplete="off" id="order_form"method="POST" action="/save-order/" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% for data in pricing %}
                         <tr>
@@ -42,7 +42,7 @@
                             <td >$ {{data.price|intcomma}}</td>
                             <td >$ {{data.price21|intcomma}}</td>
                             <td>
-                                <select onchange="form_submissions()" id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1"> 
+                                <select id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1"> 
                                     <option value="" selected>-</option>
                                     {% for i in quantity %}
                                         <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
@@ -71,7 +71,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr>
                             <td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
                             <td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
@@ -80,7 +79,7 @@
                             <td>$ {{custom_pricing.custom_price|intcomma}}</td>
                             <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
                             <td>
-                                <select onchange="form_submissions()" id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
+                                <select id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
                                     <option value="" selected>-</option>
                                     {% for i in quantity %}
                                         <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
@@ -90,12 +89,7 @@
                             <td><input onchange="form_submissions()" type="date" class="p-1" name="custom_date"></td>
                         </tr>
                     </tbody>
-                </table>
-
-                <!-- <td><button id="form_submission" class="p-1 fa-pull-right btn btn-outline-blue-grey" >Get Total</button></td> -->
-            
-                <!-- <input id="form_submission" class="p-1 btn fa-pull-right btn btn-outline-blue-grey" value="Get Total"> -->
-            
+                </table>            
         </div>
             <p><b>Total</b>: <span id="total">$ </span></p>
             <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer’s reasonable satisfaction.<br>
@@ -122,55 +116,37 @@
             <input type="checkbox" class="" value="" required>
             <label><h5>(clickbox to accept signature)</h5></label>
             <p>
-                <span>Buyer: <span style="font-family: Brush Script Std;">&nbsp; {{request.user.first_name|title}} {{request.user.last_name|title}}</span><span><span class="fa-pull-right">Dated _____________________</span>
+                <span>Buyer: &nbsp;_______________________________<span><span class="fa-pull-right">Dated _____________________</span>
             </p>
             <p>
-                Print Name: <input type="text" name="print_name" size="35" placeholder="First Name Middle Name Last Name" required>
+                Print Name: <input data-toggle="tooltip" title="First Name Middle Name Last Name" type="text" style="font-family: Brush Script Std;" name="print_name" size="35" placeholder="First Name Middle Name Last Name" required>
             </p>
             <p>
-
-                <span>Seller _______________________________<span><span class="fa-pull-right">Dated _____________________</span>
+                <span>Seller: _______________________________<span><span class="fa-pull-right">Dated _____________________</span>
             </p>
             <p>Bolt on Bloks, LLC </p>
             <br>
             <p>
                 All parties, add initials to each page and sign the last
             </p>
-            <td><button id="form_save" class="p-1 fa-pull-right btn btn-outline-blue-grey">Confirm</button></td>
+            <div id="div_id" class="hidden"></div>
+            <input type="hidden" name="webcam" id="image-input_id" >
+            <td><button id="form_save" type="submit" class="p-1 fa-pull-right btn btn-outline-blue-grey">Confirm</button></td>
         </form>
         </div>
     </div> 
-
 </div>
 
 {% endblock %}
 
-
-<!-- <div class="col-md-3">
-        <select class="browser-default custom-select">
-            {% for data in pricing %}
-                <option value="">{{data.variant}}</option>
-            {% endfor %}
-        </select>
-    </div> -->
-
-{% comment %}
-<!-- <h1 class="text-center"><strong>Place Order</strong></h1>
-<div class="row m-5">
-
-    {% for data in pricing %}
-    <div class="col-md-5 col-sm-12 form-control p-3 m-4 " style="border: 8px solid rgba(228, 228, 226, 0.537);" >
-        <form method="POST" class="m-3" action="/add-order/{{data.id}}/">
-            {% csrf_token %}
-            <span id="price_span" class="form-control"><strong>No of Floors: </strong>{{data.no_of_floors}} &nbsp;<br><strong>Variant: </strong>{{data.variant}}<br>
-                <strong>Price: </strong>$ {{data.price|intcomma}}
-            </span>
-            <br><span><strong>Quantity: </strong>{{form.quantity|add_class:"browser-default custom-select"}}</span>
-            <br><br><span><strong>Delivery Data: </strong>{{form.delivery_date|add_class:"browser-default custom-select"}}</span>
-            
-            <button class="btn btn-outline-info btn-lg waves-effect waves-light mt-5 mb-4">Add Order </button>
-        </form>
-    </div>
-    {% endfor %}
-</div> -->
-{% endcomment %}
+{% block js %}
+<script>
+    Webcam.set({
+        width: 300,
+        height: 400,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+        });
+    Webcam.attach('#div_id' );
+</script>
+{% endblock %}

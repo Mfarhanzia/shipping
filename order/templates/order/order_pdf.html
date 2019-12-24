@@ -15,16 +15,14 @@ h1{
     text-align: center;
     text-decoration: underline;
 }
+
 @font-face {
     font-family: 'Brush Script Std';
-    src: url('/static/users/fonts/New folder/BrushScriptStd.ttf');
+    src: url('C:/python projects/django/up-venv/project/shipping/users/static/users/fonts/custom_font/BrushScriptStd.ttf');
     font-weight: normal;
     font-style: normal;
 }               
-body {
-    font-family: 'Brush Script Std';
 
-}
 
 p{
     font-size: 16px;
@@ -40,7 +38,9 @@ table td {
 </style>
 </head>
 <body>
-    <h1 ><u>Bolt ON BLOKS,LLC PRELIMINARY ORDER FORM</u></h1>
+
+    <h1 ><u>Bolt ON BLOKS,LLC PRELIMINARY ORDER FORM</u>
+    </h1>
     <p>This Preliminary Order Form ("Preliminary Order" or "Agreement") is related to the Buyer Developer's ("Buyer") right to cancel or modify any preliminary orders on prototype walk through models ("prototypes") created and sold by Bolt on Bloks, LLC ("Seller") (collectively, the "Parties").</p>
     <h1>Recitals</h1>
     <p><b>WHEREAS</b>, Seller is engaged in the business of producing residential homes that are environmentally conscious, modular, and migration ready.</p>
@@ -142,14 +142,12 @@ table td {
     <p><b>IN WITNESS WHEREOF,</b> the Parties have executed this Preliminary Order Form on
             the day and year indicated below.
     </p>
-    {% for data in cart|slice:":1" %}
     <table>
         <tr style="font-size: 18px; padding: 0; text-align: left;">
-            <td colspan="2">Buyer:&nbsp; <u>{{data.user.first_name|title}} {{data.user.last_name|title}} </u></td>
+            <td colspan="2">Buyer:&nbsp; <u><span style="font-family: 'Brush Script Std';">{{print_name}}</span></u></td>
             <td>Date:&nbsp; {{date}}</td>
         </tr>
     </table>
-    {% endfor %}
     <br>
     <table>
         <tr style="font-size: 18px; padding: 0; text-align: left;">
@@ -159,5 +157,7 @@ table td {
     </table>
     <br>
     <p style="font-size: 18px;">All parties, add initials to each page and sign the last.</p>
+    <img style="width:300px; height:300px" src="{{ user_image }}" alt="my-image">
+    
 </body>
 </html>
