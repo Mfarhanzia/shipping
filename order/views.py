@@ -291,34 +291,34 @@ def create_order_pdf(request):
     ##admin
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    # # # ###sending email with attachment(pdf)    
-    # mail_subject = f"Shipping Container Homes Order Detail"
-    # to_email = settings.DEFAULT_FROM_EMAIL
-    # # to_email = "farhan71727@gmail.com"
-    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
-    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    # email.encoding = 'us-ascii'
-    # email.send()
+    # # ###sending email with attachment(pdf)    
+    mail_subject = f"Shipping Container Homes Order Detail"
+    to_email = settings.DEFAULT_FROM_EMAIL
+    # to_email = "farhan71727@gmail.com"
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
+    email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    email.encoding = 'us-ascii'
+    email.send()
 
-    # context = {
-    #     "custom_order_obj":custom_order_obj,
-    #     "cart": cart,
-    #     "date":date_,
-    #     "total":total,
-    #     "print_name" : request.session['print_name'],
-    #     "user_image": None,
-    #     }  
+    context = {
+        "custom_order_obj":custom_order_obj,
+        "cart": cart,
+        "date":date_,
+        "total":total,
+        "print_name" : request.session['print_name'],
+        "user_image": None,
+        }  
     # ##user
-    # html = template.render(context)
-    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    # ###sending email with attachment(pdf)    
-    # mail_subject = f"Shipping Container Homes Order Detail"
-    # to_email = settings.DEFAULT_FROM_EMAIL
-    # # to_email = "farhan71727@gmail.com"
-    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
-    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    # email.encoding = 'us-ascii'
-    # email.send()
+    html = template.render(context)
+    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    ###sending email with attachment(pdf)    
+    mail_subject = f"Shipping Container Homes Order Detail"
+    to_email = settings.DEFAULT_FROM_EMAIL
+    # to_email = "farhan71727@gmail.com"
+    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
+    email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    email.encoding = 'us-ascii'
+    email.send()
     return pdf
 
 
