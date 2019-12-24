@@ -230,7 +230,7 @@ def fetch_resources(uri, rel):
     `rel` gives a relative path, but it's not used here.
 
     """
-    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
+    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
     print("path",path)
     return path 
 
@@ -238,7 +238,7 @@ def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources, encoding="UTF-8")
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
     return None
@@ -305,9 +305,11 @@ def create_order_pdf(request):
         "cart": cart,
         "date":date_,
         "total":total,
-        "print_name" : request.session['print_name']
+        "print_name" : request.session['print_name'],
+        "user_image": None,
         }  
-    ##user
+    # ##user
+    html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     # ###sending email with attachment(pdf)    
     # mail_subject = f"Shipping Container Homes Order Detail"

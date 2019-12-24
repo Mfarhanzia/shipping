@@ -157,7 +157,8 @@ table td {
     </table>
     <br>
     <p style="font-size: 18px;">All parties, add initials to each page and sign the last.</p>
-    <img style="width:300px; height:300px" src="{{ user_image }}" alt="my-image">
-    
+    {% if user_image %}
+        <img style="width:300px; height:300px" src="{{ user_image }}" alt="my-image">
+    {% endif %}
 </body>
 </html>
