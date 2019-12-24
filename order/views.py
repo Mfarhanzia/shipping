@@ -230,7 +230,8 @@ def fetch_resources(uri, rel):
     `rel` gives a relative path, but it's not used here.
 
     """
-    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
+    print("path",path)
     return path 
 
 def render_to_pdf(template_src, context_dict={}):
@@ -289,15 +290,15 @@ def create_order_pdf(request):
         }  
     ##admin
     html = template.render(context)
-    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    # # ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # # # ###sending email with attachment(pdf)    
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
 
     context = {
         "custom_order_obj":custom_order_obj,
@@ -309,13 +310,13 @@ def create_order_pdf(request):
     ##user
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     # ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
     return pdf
 
 
@@ -422,7 +423,6 @@ def vendor_quotations(request):
 def view_quotations(request):
     qs = MaterialQuotations.objects.all()
     return render(request, 'order/view_quotations.html', {"qs":qs, "title":"Quotations"})
-
 
 def interior_view(request):
     return render(request, 'order/interior.html')
