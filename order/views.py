@@ -308,7 +308,7 @@ def create_order_pdf(request):
         "print_name" : request.session['print_name'],
         "user_image": None,
         }  
-    # ##user
+    ##user
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     ###sending email with attachment(pdf)    
