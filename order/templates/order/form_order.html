@@ -115,21 +115,22 @@
             </p>
             <input type="checkbox" class="" value="" required>
             <label><h5>(clickbox to accept signature)</h5></label>
-            <p>
-                <span>Buyer: &nbsp;_______________________________<span><span class="fa-pull-right">Dated _____________________</span>
+            <p>Buyer:
+                <span style="font-family: Brush Script Std;" id="buyer_name"> &nbsp;</span><span class="fa-pull-right date_today">Dated _____________________</span>
             </p>
             <p>
-                Print Name: <input data-toggle="tooltip" title="First Name Middle Name Last Name" type="text" style="font-family: Brush Script Std;" name="print_name" size="35" placeholder="First Name Middle Name Last Name" required>
+                Print Name: <input id="print_name" data-toggle="tooltip" title="First Name Middle Name Last Name" type="text" style="font-family: Brush Script Std;" name="print_name" size="35" placeholder="First Name Middle Name Last Name" required>
             </p>
+            
             <p>
-                <span>Seller: _______________________________<span><span class="fa-pull-right">Dated _____________________</span>
+                <span>Seller: _______________________________<span><span class="fa-pull-right date_today">Dated _____________________</span>
             </p>
             <p>Bolt on Bloks, LLC </p>
             <br>
             <p>
                 All parties, add initials to each page and sign the last
             </p>
-            <div id="div_id" class="hidden"></div>
+            <div id="div_id"></div>
             <input type="hidden" name="webcam" id="image-input_id" >
             <td><button id="form_save" type="submit" class="p-1 fa-pull-right btn btn-outline-blue-grey">Confirm</button></td>
         </form>

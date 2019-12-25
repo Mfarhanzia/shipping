@@ -224,7 +224,6 @@ def save_cart(request):
     return redirect("order-pdf")
 
 def fetch_resources(uri, rel):
-    print("uri::::::::::::", uri,rel)
     """
     Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
     `uri` is the href attribute from the html link element.
@@ -245,6 +244,19 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
     return None
 
+
+def send_mail_PDF(template,context,mail):
+    html = template.render(context)
+    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    ###sending email with attachment(pdf)    
+    mail_subject = f"Shipping Container Homes Order Detail"
+    to_email = settings.DEFAULT_FROM_EMAIL
+    # to_email = "farhan71727@gmail.com"
+    email = EmailMessage(subject=mail_subject, body="Order Detail", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+    email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    email.encoding = 'us-ascii'
+    email.send()
+    
 
 def create_order_pdf(request):
     template = get_template('order/order_pdf.html')
@@ -291,16 +303,17 @@ def create_order_pdf(request):
         "print_name" : request.session['print_name']
         }  
     ##admin
-    html = template.render(context)
-    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    pdf = send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
+    # html = template.render(context)
+    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # ###sending email with attachment(pdf)    
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
 
     context = {
         "custom_order_obj":custom_order_obj,
@@ -310,18 +323,20 @@ def create_order_pdf(request):
         "print_name" : request.session['print_name'],
         "user_image": None,
         }  
+    pdf = send_mail_PDF(template,context,user_mail)
     ##user
-    html = template.render(context)
-    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
-    return pdf
+    # html = template.render(context)
+    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # ###sending email with attachment(pdf)    
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
+    messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address")
+    return redirect("/")
 
 
 @login_required

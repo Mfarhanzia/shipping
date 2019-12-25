@@ -275,30 +275,32 @@
         form_submissions()
     });
 
-
-    // Capture Image
-    
-    $("#capture").click(function() {
-        capture_image()
-    });
-
     // form submissions
-    // $("#form_save").click(function() {
-        // e.preventDefault(); 
-    
-    // Webcam.snap( function(image) {
-    //     $("#image-input_id").val(image);
+    // $("#show_name").click(function() {
+       
+    //     var d = new Date();
+    //     var month = d.getMonth()+1;
+    //     var day = d.getDate();
+    //     var output = d.getFullYear() + '/' +
+    //         ((''+month).length<2 ? '0' : '') + month + '/' +
+    //         ((''+day).length<2 ? '0' : '') + day;
+    //     $(".date_today").text(output) 
     // }); 
-
-    $("#order_form").submit(function () {
+    $("#order_form").submit(function (e) {
+        $("#buyer_name").text($("#print_name").val()) 
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var output = d.getFullYear() + '/' +
+            ((''+month).length<2 ? '0' : '') + month + '/' +
+            ((''+day).length<2 ? '0' : '') + day;
+        $(".date_today").text(output) 
         Webcam.snap( function(image) {
             $("#image-input_id").val(image);
         });
     });
 
-    // });
-
-    // ajax
+        // ajax
     $("#form_submission").click(function() {
         form_submissions()
     });
