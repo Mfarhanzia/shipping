@@ -245,14 +245,21 @@ def render_to_pdf(template_src, context_dict={}):
     return None
 
 
-def send_mail_PDF(template,context,mail):
+def send_mail_PDF(template,context,mail,print_name=None):
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Hi, Thanks for Ordering at BoltonBlocks. Your Recipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    user_msg = "Hi, \n Thanks for Ordering at BoltonBlocks.\n\n Your Recipt is attached."
+    if mail != settings.DEFAULT_FROM_EMAIL:
+        email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+        email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    else:
+        email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {print_name}. \n\n Order Recipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+        email.attach(f'{print_name}.pdf', pdf2 , 'application/pdf')
+
+
     email.encoding = 'us-ascii'
     email.send()
     
@@ -302,7 +309,7 @@ def create_order_pdf(request):
         "print_name" : request.session['print_name']
         }  
     ##admin
-    pdf = send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
+    pdf = send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL,print_name=request.session['print_name'])
     context = {
         "custom_order_obj":custom_order_obj,
         "cart": cart,
