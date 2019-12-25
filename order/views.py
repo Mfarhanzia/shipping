@@ -250,9 +250,8 @@ def send_mail_PDF(template,context,mail):
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
     # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order Detail", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+    email = EmailMessage(subject=mail_subject, body="Hi, Thanks for Ordering at BoltonBlocks. Your Recipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
     email.attach('order_details.pdf', pdf2 , 'application/pdf')
     email.encoding = 'us-ascii'
     email.send()
@@ -313,17 +312,7 @@ def create_order_pdf(request):
         "user_image": None,
         }  
     pdf = send_mail_PDF(template,context,user_mail)
-    ##user
-    # html = template.render(context)
-    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    # ###sending email with attachment(pdf)    
-    # mail_subject = f"Shipping Container Homes Order Detail"
-    # to_email = settings.DEFAULT_FROM_EMAIL
-    # # to_email = "farhan71727@gmail.com"
-    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
-    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    # email.encoding = 'us-ascii'
-    # email.send()
+
     messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address")
     return redirect("/")
 

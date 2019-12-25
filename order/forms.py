@@ -101,29 +101,8 @@ PRODUCT_QUANTITY_CHOICES[0]=("","-")
 FLOOR_QUANTITY_CHOICES[0]=("","-")
 OTHER_QUANTITY_CHOICES[0]=("","-")
 
-# class AddProductForm(forms.Form):
-#     quantity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
-#     delivery_date = forms.DateField(
-#             label ="Delivery Date:",
-#             widget=forms.DateInput(attrs={
-#                     'type': 'date',
-#                     'class': 'form-group',
-#                 }))
-#     id_fields = forms.CharField()
     
-
-
 class AddCustomProductForm(forms.Form):
     no_of_floors = forms.ChoiceField(choices=FLOOR_QUANTITY_CHOICES, required=False)
     width = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
     depth = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
-    
-    # qu    antity = forms.TypedChoiceField(label="Qty :",choices=PRODUCT_QUANTITY_CHOICES, coerce=int,required=False)
-    # delivery_date = forms.DateField(
-    #         label ="Delivery Date:",
-    #         widget=forms.DateInput(attrs={
-    #                 'type': 'date',
-    #                 'class': 'form-group',
-    #                 'onchange':'form_submissions()',
-    #             }),required=False)
-    

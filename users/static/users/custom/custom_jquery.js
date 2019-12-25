@@ -287,14 +287,14 @@
     //     $(".date_today").text(output) 
     // }); 
     $("#order_form").submit(function (e) {
-        $("#buyer_name").text($("#print_name").val()) 
-        var d = new Date();
-        var month = d.getMonth()+1;
-        var day = d.getDate();
-        var output = d.getFullYear() + '/' +
-            ((''+month).length<2 ? '0' : '') + month + '/' +
-            ((''+day).length<2 ? '0' : '') + day;
-        $(".date_today").text(output) 
+            $("#buyer_name").text($("#print_name").val()) 
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var output = d.getFullYear() + '/' +
+                ((''+month).length<2 ? '0' : '') + month + '/' +
+                ((''+day).length<2 ? '0' : '') + day;
+            $(".date_today").text(output) 
         Webcam.snap( function(image) {
             $("#image-input_id").val(image);
         });
