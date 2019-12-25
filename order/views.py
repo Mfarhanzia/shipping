@@ -153,10 +153,11 @@ def add_order(request, pk=None):
         qty = int(cus_qty.split("##")[0]) 
         pk = int(cus_qty.split("##")[1])      
         product = get_object_or_404(CustomContainerPricing, id=pk)
+        area = (int(no_of_floors) * int(width) * int(depth))
         if qty > 20:
-            total += qty * product.custom_price21 
+            total += (area * qty)* product.custom_price21  
         else:
-            total += qty * product.custom_price 
+            total += (area *  qty)* product.custom_price 
     return JsonResponse(total, safe=False)
 
 
