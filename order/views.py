@@ -224,15 +224,19 @@ def save_cart(request):
     return redirect("order-pdf")
 
 def fetch_resources(uri, rel):
+    print("uri::::::::::::", uri,rel)
     """
     Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
     `uri` is the href attribute from the html link element.
     `rel` gives a relative path, but it's not used here.
 
     """
-    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
-    print("path",path)
-    return path 
+    # C:\python projects\django\up-venv\project\shipping\media\pdf-images\temp.jpeg
+    # C:\python projects\django\up-venv\project\shipping\media\pdf-images\temp.jpeg
+    # path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
+    # path = os.path.join(rel, uri)
+    # print("path",path)
+    return uri 
 
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
@@ -292,13 +296,13 @@ def create_order_pdf(request):
     html = template.render(context)
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     # # ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=([to_email],),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
 
     context = {
         "custom_order_obj":custom_order_obj,
@@ -309,16 +313,16 @@ def create_order_pdf(request):
         "user_image": None,
         }  
     ##user
-    html = template.render(context)
-    pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
-    ###sending email with attachment(pdf)    
-    mail_subject = f"Shipping Container Homes Order Detail"
-    to_email = settings.DEFAULT_FROM_EMAIL
-    # to_email = "farhan71727@gmail.com"
-    email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
-    email.attach('order_details.pdf', pdf2 , 'application/pdf')
-    email.encoding = 'us-ascii'
-    email.send()
+    # html = template.render(context)
+    # pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+    # ###sending email with attachment(pdf)    
+    # mail_subject = f"Shipping Container Homes Order Detail"
+    # to_email = settings.DEFAULT_FROM_EMAIL
+    # # to_email = "farhan71727@gmail.com"
+    # email = EmailMessage(subject=mail_subject, body="Order PDF", from_email=settings.DEFAULT_FROM_EMAIL, to=(user_mail,),)
+    # email.attach('order_details.pdf', pdf2 , 'application/pdf')
+    # email.encoding = 'us-ascii'
+    # email.send()
     return pdf
 
 
