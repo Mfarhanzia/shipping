@@ -543,9 +543,9 @@ input[type="date"], focus {
     -moz-box-shadow: none;
 }
 
-#div_id{
+/* #div_id{
     visibility: hidden;
-}
+} */
 
 @font-face {
     font-family: 'Brush Script Std';

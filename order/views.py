@@ -163,6 +163,7 @@ def add_order(request, pk=None):
 @require_POST
 def save_cart(request):
     """saving the container orders"""
+    print(request.POST['webcam'])
     quantities = request.POST.getlist('quantity')
     dates = request.POST.getlist('date_')
 
