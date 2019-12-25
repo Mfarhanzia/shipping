@@ -29,7 +29,7 @@ if DEBUG == False:
     SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
-        'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'container-shipping.herokuapp.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
+        'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'container-shipping.herokuapp.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com',"*"]
 
 # Application definition
 INSTALLED_APPS = [

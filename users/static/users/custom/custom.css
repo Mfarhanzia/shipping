@@ -546,3 +546,11 @@ input[type="date"], focus {
 #div_id{
     visibility: hidden;
 }
+
+@font-face {
+    font-family: 'Brush Script Std';
+    src: url('/static/users/fonts/custom_font/BrushScriptStd.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
