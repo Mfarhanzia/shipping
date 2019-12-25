@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
 INSTALLED_APPS = [
     'phonenumber_field',
     'multiselectfield',
+    'users',
     'order',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-party
     'crispy_forms',  # render forms as bootstrap easily
-    'users',
     'django.contrib.humanize',
     'widget_tweaks',
 ]
