@@ -90,7 +90,6 @@ class Order(models.Model):
     
     other_type_of_climate_area =models.CharField(max_length=200, verbose_name="Other", null=True, blank=True)
    
-
     type_of_smart_home = MultiSelectField("What type of smart home functionality are you interested in learning more about? ",choices=Type_Of_Smart_Home, max_length=300, blank=True, null=True)
    
     type_of_electric_vehicle_function = MultiSelectField("An electric vehicle will be included with each housing unit. What type of electric vehicle function are you interested in?",choices=Type_Of_Electric_Vehicle_Function, max_length=300, blank=True, null=True)
