@@ -122,7 +122,7 @@ def order_form(request):
     context = {"pricing":pricing,
      "form2":form2,
      'title': 'Order',
-     "quantity": range(50),
+     "quantity": range(300),
      "custom_pricing":custom_pricing,
      }
     return render(request, "order/form_order.html", context)
@@ -154,7 +154,7 @@ def add_order(request, pk=None):
         pk = int(cus_qty.split("##")[1])      
         product = get_object_or_404(CustomContainerPricing, id=pk)
         area = (int(no_of_floors) * int(width) * int(depth))
-        if qty > 20:
+        if qty > 20 or area > 20:
             total += (area * qty)* product.custom_price21  
         else:
             total += (area *  qty)* product.custom_price 
