@@ -167,7 +167,6 @@ def save_cart(request):
     print(request.POST['webcam'])
     quantities = request.POST.getlist('quantity')
     dates = request.POST.getlist('date_')
-
     request.session['print_name'] = request.POST['print_name']
     no_of_floors = request.POST['no_of_floors']
     width = request.POST['width']
@@ -230,7 +229,6 @@ def fetch_resources(uri, rel):
     Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
     `uri` is the href attribute from the html link element.
     `rel` gives a relative path, but it's not used here.
-
     """
     # path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
     # path = os.path.join(rel, uri)
@@ -260,8 +258,6 @@ def send_mail_PDF(template,context,mail,print_name=None):
     else:
         email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {print_name}. \n\n Order Recipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
         email.attach(f'{print_name}.pdf', pdf2 , 'application/pdf')
-
-
     email.encoding = 'us-ascii'
     email.send()
     
@@ -322,7 +318,7 @@ def create_order_pdf(request):
         }  
     pdf = send_mail_PDF(template,context,user_mail)
 
-    messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address")
+    messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
     return redirect("/")
 
 
