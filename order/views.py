@@ -164,7 +164,7 @@ def add_order(request, pk=None):
 @require_POST
 def save_cart(request):
     """saving the container orders"""
-    print(request.POST['webcam'])
+    # print(request.POST['webcam'])
     quantities = request.POST.getlist('quantity')
     dates = request.POST.getlist('date_')
     request.session['print_name'] = request.POST['print_name']
@@ -278,13 +278,19 @@ def create_order_pdf(request):
         cart = ""
 
     ## custom order
+
     try:
         custom_id = request.session['custom_id']
         custom_order_obj = CartOrder.objects.get(id=int(custom_id))
-        if custom_order_obj.quantity >20:
-            total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price21 
+        # if custom_order_obj.quantity >20:
+        #     total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price21 
+        # else:
+        #     total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price 
+        area = (int(custom_order_obj.custom_floors) * int(custom_order_obj.custom_width) * int(custom_order_obj.custom_depth))
+        if custom_order_obj.quantity > 20 or area > 20:
+            total += (area * custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price21   
         else:
-            total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price 
+            total += (area *  custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price 
     except:
         custom_order_obj = ""
     date_ = date.today()
