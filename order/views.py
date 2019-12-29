@@ -251,12 +251,12 @@ def send_mail_PDF(template,context,mail,print_name=None):
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     # to_email = "farhan71727@gmail.com"
-    user_msg = "Hi, \n Thanks for Ordering at BoltonBlocks.\n\n Your Recipt is attached."
+    user_msg = "Hi, \n Thanks for Ordering at BoltonBlocks.\n\n Your Receipt is attached."
     if mail != settings.DEFAULT_FROM_EMAIL:
         email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
         email.attach('order_details.pdf', pdf2 , 'application/pdf')
     else:
-        email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {print_name}. \n\n Order Recipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+        email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {print_name}. \n\n Order Receipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
         email.attach(f'{print_name}.pdf', pdf2 , 'application/pdf')
     email.encoding = 'us-ascii'
     email.send()
