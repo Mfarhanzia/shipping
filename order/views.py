@@ -37,7 +37,7 @@ from django.core.files.base import ContentFile
 # Create your views here.
 
 
-class OrderCreateView(FormView):
+class OrderCreateView(LoginRequiredMixin,FormView):
     template_name = 'order/order.html'
     form_class = OrderForm
     success_url = '/'
@@ -119,12 +119,13 @@ def order_form(request):
     form2 = AddCustomProductForm()
     pricing = ContainerPricing.objects.all().order_by('id')
     custom_pricing = CustomContainerPricing.objects.all()[0]
-    context = {"pricing":pricing,
-     "form2":form2,
-     'title': 'Order',
-     "quantity": range(300),
-     "custom_pricing":custom_pricing,
-     }
+    context = {
+        "pricing":pricing,
+        "form2":form2,
+        'title': 'Order',
+        "quantity": range(300),
+        "custom_pricing":custom_pricing,
+    }
     return render(request, "order/form_order.html", context)
 
 
@@ -325,7 +326,7 @@ def create_order_pdf(request):
     pdf = send_mail_PDF(template,context,user_mail)
 
     messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
-    return redirect("/")
+    return redirect("order")
 
 
 @login_required
