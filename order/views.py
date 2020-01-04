@@ -66,7 +66,7 @@ class OrderCreateView(LoginRequiredMixin,FormView):
         # email.send(fail_silently=True)
         email.send()
         messages.success(
-            self.request, "Your inquiry has been successfully submitted. If you have any questions please email us at info@boltonblock.com.")
+            self.request, f"Your inquiry has been successfully submitted. If you have any questions please email us at {settings.DEFAULT_FROM_EMAIL}.")
         return redirect(self.get_success_url())
 
     def send_mail(self, form):
@@ -252,7 +252,7 @@ def send_mail_PDF(template,context,mail,print_name=None):
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
     # to_email = "farhan71727@gmail.com"
-    user_msg = "Hi, \n Thanks for Ordering at BoltonBlocks.\n\n Your Receipt is attached."
+    user_msg = "Hi, \n Thanks for Ordering at BoltonBloks.\n\n Your Receipt is attached."
     if mail != settings.DEFAULT_FROM_EMAIL:
         email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
         email.attach('order_details.pdf', pdf2 , 'application/pdf')
