@@ -3,7 +3,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from .views import (OrderCreateView, ViewOrder, view_struc_drawings,dealer_view, vendor_quotations,
                     view_quotations, exterior_view, interior_view, order_form, add_order,
-                    save_cart, view_container_orders,view_container_order_items, create_order_pdf,view_report_sap, view_arc_drawings)
+                    save_cart, view_container_orders,view_container_order_items, create_order_pdf,view_report_sap, view_arc_drawings, view_3d_model)
 
 
 urlpatterns = [
@@ -15,6 +15,8 @@ urlpatterns = [
     path('view/structural-drawings',view_struc_drawings, name="struc-drawings"),
     path('view/architectural-drawings',view_arc_drawings, name="arc-drawings"),
     path('view/reportsap', view_report_sap, name="report-sap"),
+    path('3d/model', view_3d_model, name='model-3d'),
+
 
     path('view-order/',ViewOrder.as_view(), name="view-order"),
 
@@ -34,7 +36,5 @@ urlpatterns = [
     path('save-order/', save_cart, name='save-cart'),
     path('container/orders', view_container_orders, name='view-container-orders'),
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
-    # path('remove/order/<int:pk>/', cart_remove, name='remove-cart'),
     path('order/pdf', create_order_pdf, name='order-pdf'),
-
 ]

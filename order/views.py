@@ -405,6 +405,12 @@ def view_report_sap(request):
 
 
 @login_required
+def view_3d_model(request):
+    """3d view of container home models"""
+    return render(request, "order/3story2w_3dmodel.html")
+
+
+@login_required
 def vendor_quotations(request):
     try:
         if request.user.specuser.user_type =="vendor":
