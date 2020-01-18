@@ -31,8 +31,8 @@ def home_view(request):
 
         return redirect('/')
     else:
-        form = EmailListForm()
-        return render(request, 'users/home.html', {'form': form})
+        # form = EmailListForm()
+        return render(request, 'users/home.html')
 
 
 def models(request):

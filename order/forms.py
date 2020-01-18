@@ -22,7 +22,6 @@ class OrderForm(forms.ModelForm):
     field_order = ('company_name','f_name','l_name','email','phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', "other_when_to_order", 'type_of_development','other_type_of_development','type_of_climate_area','other_type_of_climate_area','type_of_smart_home','type_of_electric_vehicle_function','learn_about_electric_drive','septic_infrastructure','installation_septic_infrastructure')
 
     def __init__(self, *args, **kwargs):
-        
         super(OrderForm, self).__init__(*args, **kwargs)
         self.fields['how_much_letter_of_credit'].widget.attrs.update({
             'autocomplete': 'off'
@@ -33,9 +32,7 @@ class OrderForm(forms.ModelForm):
 
 
     def clean_f_name(self):
-        
         f_name = self.cleaned_data.get("f_name")
-       
         f = re.findall("^[a-zA-Z]+$", f_name)
         if not f:
             raise forms.ValidationError(
@@ -57,7 +54,6 @@ class OrderForm(forms.ModelForm):
             letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit")
             letter_of_credit = '0'
             return letter_of_credit
-
         else:
             try:
                 letter_of_credit = self.cleaned_data.get("how_much_letter_of_credit").replace('$','').replace(',','')
@@ -70,7 +66,6 @@ class OrderForm(forms.ModelForm):
             
 
     def clean_how_much_line_of_credit(self):
-        
         if not self.cleaned_data.get("how_much_line_of_credit"):
             line_of_credit = self.cleaned_data.get("how_much_line_of_credit")
             line_of_credit = '0'

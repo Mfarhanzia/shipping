@@ -79,4 +79,5 @@ class WaterMark(models.Model):
 
 
 class EmailList(models.Model):
-    email = models.EmailField(("Email"), max_length=254, unique = True)
+    name = models.CharField("Name", max_length=60)
+    email = models.EmailField(("Email"), max_length=254, unique=True)

@@ -4,40 +4,49 @@
 {% block content %}
 <div class="sm-padding"></div>
 <div class="container">
-    <div class="row ">
-        <div class="col-md-12">
-            <div class="content-section">
-
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Log In</legend>
-                        
-                        <div class="md-form">
-                            <i class="fas fa-user prefix"></i>
-                            <label for="{{form.username.id_for_label}}" class="label" data-error="wrong" data-success="right">Email</label>
-                            <br>
-                            {{form.username}}
-                        </div>
-                        
-                        <div class="md-form">
-                            <i class="fas fa-lock prefix"></i>
-                            <label for="{{form.password.id_for_label}}" class="label" data-error="wrong" data-success="right">Your Password</label>
-                            <br>
-                            {{form.password}}
-                        </div>
-                    </fieldset>
-<br>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Login</button>
-                        <small> 
-                            <a style="text-decoration:none;" href="{% url 'password_reset' %}">Forgot Password? </a></small>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <form method="POST">
+                {% csrf_token %}
+                <legend class="border-bottom mb-4"><b>Log In</b></span> <span class="fa-pull-right small">*Required</span></legend>
+                <p class="small">If you are a registered user, please enter your email and password.</p>
+                <fieldset class="form-group">
+                    <div class="md-form">
+                        <i class="fas fa-user prefix"></i>
+                        <label for="{{form.username.id_for_label}}" class="label" data-error="wrong" data-success="right">Email</label>
+                        <br>
+                        {{form.username}}
                     </div>
-
-
-                </form>
-    
-            </div>
+                    
+                    <div class="md-form">
+                        <i class="fas fa-lock prefix"></i>
+                        <label for="{{form.password.id_for_label}}" class="label" data-error="wrong" data-success="right">Your Password</label>
+                        <br>
+                        {{form.password}}
+                    </div>
+                </fieldset>
+                <br>
+                <div class="form-group">
+                    <button class="btn login-btn btn-black" type="submit">Login</button>
+                    <br>
+                    <small> 
+                        <a class="forget-pass pl-2" href="{% url 'password_reset' %}"> Forgot Password? </a>
+                    </small>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 col-sm-12 log-register">
+            <h2>Register</h2>
+            <p class="pt-3 small">Creating an account is very easy. Just click below to get started.</p>
+            <a href="{% url 'register' %}">
+                <button class="btn btn-black">Create Account Now</button>
+            </a>
+            <p class="pt-3">Sign up form an account so you can place an order, manage your preferences, view design information includeing:</p>
+            <ol id="asd" class="asd">
+                <li>Structural Drawings</li>
+                <li>Architectural Drawings</li>
+                <li>Floor Plans</li>
+            </ol >
         </div>
     </div>
 </div>
