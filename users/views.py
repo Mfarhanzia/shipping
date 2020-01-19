@@ -9,7 +9,7 @@ from .models import User, SpecUser
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-from .forms import EmailListForm, SpecUserForm
+from .forms import EmailListForm, SpecUserForm, ContactUsForm
 from django.template.loader import render_to_string
 from django.contrib.auth import password_validation
 from django.utils.encoding import force_bytes, force_text
@@ -31,7 +31,6 @@ def home_view(request):
 
         return redirect('/')
     else:
-        # form = EmailListForm()
         return render(request, 'users/home.html')
 
 
@@ -259,3 +258,27 @@ def randomstring():
 
 def video_page(request):
     return render(request, "order/video.html", {"title":"Assembling"})
+
+
+def contact_view(request):
+    form = ContactUsForm()
+    if request.method=="POST":
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            messages.success(request,"Message Sent!")
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
+            subject = form.cleaned_data["subject"]
+            message = form.cleaned_data["message"]
+            message = render_to_string('users/user_message.html', {
+            'user_name': f"{first_name} {last_name}",
+            "message": message,
+            })
+            email =EmailMessage(subject,message, to=["farhan71727@gmail.com"], reply_to=(email,))
+        email.content_subtype = "html"
+        email.send()
+        messages.success(request,"Message Sent!")
+        return redirect('contact-us')
+
+    return render(request, "users/contact_us.html", {"form":form})

@@ -1,0 +1,29 @@
+{% extends "users/base.html" %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-12" >
+            <form method="POST">
+                {% csrf_token %}
+                <legend class="text-center"><b>Contact Us</b></legend>
+                {% for field in form %}
+                <div class="md-form">
+                    <i class="prefix"> </i>
+                    {% if "Message" not in field.label %}
+                    <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}{% if 'Phone' in field.label %}<span style="font-size: small;" class="text-muted ml-2">(format: XXX-XXX-XXXX) </span> {% endif %}</label><br>
+                    {% endif %}
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                    {% endfor %}
+                </div>
+                {% endfor%}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-black fa-pull-right">Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

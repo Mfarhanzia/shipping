@@ -81,4 +81,11 @@ class SpecUserForm(forms.ModelForm):
                 password_validation.validate_password(password, self.instance)
             except forms.ValidationError as error:
                 self.add_error('password2', error)
-        
+
+
+class ContactUsForm(forms.Form):
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=100)
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message','class':"p-1"}), required=True)
