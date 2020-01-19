@@ -275,10 +275,9 @@ def contact_view(request):
             'user_name': f"{first_name} {last_name}",
             "message": message,
             })
-            email =EmailMessage(subject,message, to=["farhan71727@gmail.com"], reply_to=(email,))
+            email =EmailMessage(subject,message, to=[settings.DEFAULT_FROM_EMAIL], reply_to=(email,))
         email.content_subtype = "html"
         email.send()
         messages.success(request,"Message Sent!")
         return redirect('contact-us')
-
     return render(request, "users/contact_us.html", {"form":form})
