@@ -162,7 +162,7 @@ def activate(request, uidb64, req_for, token):
     if user is not None and account_activation_token.check_token(token_arg, token):
         return redirect('admincheck', uidb64, req_for)
     else:
-        messages.warning(request, f'Activation link is Expired!')
+        messages.warning(request, f'Link is Expired!')
         return redirect('login')
 
 
@@ -174,7 +174,6 @@ def admincheck(request, uidb64, req_for):
     This function role: This func first renders a html page where there is a checkbox
     if admin clicks on it and submit, it gets uidb64(encrypted userid ) from url and decrypt it and set a activation time and set expiration time, the Special user will get access to the link which will be sent to user in the email(a new email will be sent to the user with link in this function)
     """
-
     try:
         if request.method == "POST":
             if request.POST.get('selector', '') == "True":

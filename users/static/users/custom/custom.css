@@ -363,6 +363,34 @@ form {
     color: #2F2E2E !important;
 }
 
+.feature_pro{
+    letter-spacing:0.15em;
+    font: normal normal normal 22px/1.4em futura_ltregular,sans-serif;
+}
+
+.font_7days{
+    /* font-size:70px; */
+    font: normal normal normal 4em/1.4em didot-w01-italic,serif;
+    font-style: italic;
+    color: #2F2E2E;
+}
+
+.row2-font{
+    font-family: didot-w01-italic,serif;
+    
+    font-style: italic;
+    color: #2F2E2E;
+    /* overflow: hidden; */
+    line-height: 1.4em;
+    font-size: 5vw;
+}
+@media only screen and (max-width: 768px) {
+    .row2-font{
+        font-size: 2.8rem;
+    }
+   
+}
+
 .l-hieght {
     line-height: 3px !important;
 }
@@ -501,12 +529,12 @@ input[type="radio"]:checked~label {
 
 .slider-content {
     position: absolute;
-    top: 1%;
-    right: 1%;
+    top: 80%;
+    left: 0%;
     font-size: 20px;
-    background-color: rgba(202, 196, 196, 0.534);
-    padding: 1%;
-    font-weight: bold;
+    background-color: rgba(202, 196, 196, 0.734);
+    padding: 1% 3% 1% 3%;
+    font-weight: 400;
 }
 
 
