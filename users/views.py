@@ -43,8 +43,10 @@ def models(request):
 def electric_cars_view(request):
     return render(request, 'users/electric_cars.html')
 
+
 def electric_cars_exterior_view(request):
     return render(request, 'users/car_exterior.html')
+
 
 def electric_cars_interior_view(request):
     return render(request, 'users/car_interior.html')

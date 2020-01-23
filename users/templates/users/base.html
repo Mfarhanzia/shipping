@@ -100,9 +100,7 @@
 									<a class="nav-link" href="{% url 'view-container-orders' %}">View Container Orders</a>
 								</li>
 							{% else %}
-							<li class="nav-item ">
-								<a class="nav-link" href="{% url 'order-form' %}">Place an Order</a>
-							</li>
+							
 							{% endif %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
@@ -163,6 +161,9 @@
 								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>
 								<a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a>
 							</div>
+						</li>
+						<li class="nav-item">
+								<a class="nav-link" href="{% url 'order-form' %}">Place an order</a>
 						</li>
 						{% if request.user.is_authenticated %}
 						<li class="nav-item">
