@@ -1,0 +1,75 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block homepage %}
+<div class="home-content">
+    <div class="container content-3" >
+        <div class="row">
+            <div class="col-sm-8" >
+                <p class="font_8" style="line-height:1.5em;">These are the main three guiding&nbsp;characteristics behind the design of your home.</p><br>
+                
+                <h1 class="font_0">Live well</h1>
+                <p class="font_8" style="line-height:1.5em;">Our build quality is second to none. Unlike other shipping container-based housing construction, our houses are aesthetically pleasing&nbsp;both inside and out and configured to maximize residential comfort and daily function. Our units are particularly&nbsp;ideal for assembly on scenic locations as our exterior walls are engineered to house large glass panes, exposing the home to the&nbsp;natural lighting and grandeur of the surrounding environs. Also&nbsp;included are balconies on every above-ground&nbsp;level&nbsp;and a roof terrace equally suited&nbsp;for quiet outdoor relaxation or social gatherings. Our windows are double-paned and vacuum-sealed, ensuring high visibility and good insulation.</p><br>
+                
+                <h1 class="font_0">Easy to repair</h1>
+                <p class="font_8" style="line-height:1.5em;">The modular design aspect of our units make them easy to repair and&nbsp;highly suited&nbsp;for use as an income-producing rental property.&nbsp;A damaged&nbsp;interior wall panel&nbsp;or ceiling panel&nbsp;can be removed and replaced within an hour. Our units can also thrive in&nbsp;mixed-use developments whereby&nbsp;the ground floor is for retail and the upper floors are for residential---there is ample&nbsp;spacing between each floor for the routing of ductwork and the sound insulation we offer provides&nbsp;superb isolation between&nbsp;spaces.&nbsp;Our houses combine industrial-grade I-beam support structures, steel platform framing, and metal alloy wall construction around core shipping container units for logistical&nbsp;ease, quick&nbsp;assembly, and structural resistance against severe weather, seismic events, and fire hazards.</p>
+                
+                <p class="font_8" style="line-height:1.5em;"><span class="wixGuard">​</span></p>
+                
+                <h1 class="font_0">Migration-ready</h1>
+                
+                <p class="font_8" style="line-height:1.5em;">One of the recurring frustrations in modern day living is the necessity of relocating, whether due to changing circumstances&nbsp;relating to employment, family, or for&nbsp;potentially millions ;of Americans in the not&nbsp;too&nbsp;distant&nbsp;future,&nbsp;environmental displacement. Our&nbsp;housing units&nbsp;are designed to be assembled bolt-on (<span style="font-style:italic;">patent pending</span>)&nbsp;with a relatively low level of technical specialization and have been engineered for upgradable use in a wide spectrum of environmental conditions. We believe that the vision for your future&nbsp;does not need to be financially constrained by the aligned conditions of your local and prospective housing market. That is why you have the added option to relocate your house and all of its trappings to any suitable empty lot if you so desire, or to sell your house as-is. The unique modular construction of your house makes it possible to migrate yet&nbsp;retain your sense of home and identity in any future destination.</p>
+                <p class="font_8" style="line-height:1.5em;"><span class="wixGuard">​</span></p>
+            </div>
+            <div class="col-sm-4" >
+                    <img class="image-fluid" style="width:100%" alt="3 story top view" data-type="image" itemprop="image" src="{% static 'users/imgs/isometric-min.jpg' %}">
+            </div>
+        </div>
+    </div>
+    <div class="container content-4" >
+        <div class="row">
+            <div class="col-md-4 col-sm-4" >
+                <h3 class="font_3" style="font-size:63px;">
+                    <span style="font-size:63px;">Perks</span>
+                </h3>
+            </div>
+            <div class="col-md-4 col-sm-4" >
+                <ul class="font_8 perks">
+                    <li>Elevator</li>
+                    <li>Dumb waiter</li>
+                    <li>Spiral staircase</li>
+                    <li>Balconies</li>
+                    <li>Roof terrace</li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                    <ul class="font_8 perks">
+                        <li>Smart home technology</li>
+                        <li>Electric car included</li>
+                        <li>Solar panel electric power</li>
+                        <li>LEED certified environmental design</li>
+                        <li>Recycled gray water system*</li>
+                        <li class="fa-pull-right">*For certain units</li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="c-banner">
+                    <img style="max-height: 50vh; width: 100%;" class="img-fluid"  alt="View-16.jpg" data-type="image" itemprop="image" src="{% static 'users/imgs/View-16.jpg' %}">   
+                </div>
+            </div>
+            <div class="col-md-6 fa-pull-right">
+                <div class="c-banner">
+                    <img style="max-height: 50vh; width: 100%;" class="img-fluid" src="{% static 'users/imgs/exterior-2nd-floor.jpg' %}" alt="First slide">
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}

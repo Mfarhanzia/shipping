@@ -57,10 +57,10 @@ html {
 }
 
 .nav-item { 
-    
-    font: normal normal normal 14px/1.4em didot-w01-italic, serif;
-    font-style: italic;
-    padding-right: 40px;
+    font: normal normal normal 14px/1.4em serif;
+    padding: 0 5px 0 5px;
+    border-left: 2px solid; 
+    line-height: 7px;
 }
 /*  */
 
@@ -175,7 +175,6 @@ form {
 }
 
 
-
 @media only screen and (max-width: 991px) {
     .dropdown-menu {
         margin: 0 45% !important; 
@@ -188,6 +187,7 @@ form {
     }
     .nav-item {
         background-color: #2f2e2e;
+        line-height: 1rem;
     }
     .nav-link {
         text-align: center !important;
@@ -204,9 +204,6 @@ form {
     }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1500px) {
-    
-}
 
 #div_id_how_much_letter_of_credit,
 #div_id_how_much_line_of_credit,
@@ -615,3 +612,8 @@ input[type="date"], focus {
     list-style: disc !important;
 }
 
+.perks {
+    font-size:16px;
+    /* line-height:1rem; */
+    color:#000000;
+}
