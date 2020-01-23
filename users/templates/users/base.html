@@ -87,11 +87,11 @@
 						
 						{% if user.is_superuser %}	
 						<li class="nav-item">
-							<a class="nav-link" href="/view-order">View Buyer<br>Applications</a>
+							<a class="nav-link" href="{%url 'buyer-app' %}">View Buyer<br>Applications</a>
 						</li>
 						{% else %}
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'order' %}">Buyer Application</a>
+							<a class="nav-link" href="{% url 'create-buyerapp' %}">Buyer Application</a>
 						</li>
 						{% endif %}
 							

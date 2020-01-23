@@ -3,7 +3,7 @@ from django import forms
 from .models import Order, MaterialQuotations
 
 
-class OrderForm(forms.ModelForm):
+class BuyerAppForm(forms.ModelForm):
  
     other_when_to_order = forms.ChoiceField(choices = Order.STATUS_CHOICES, label="", initial='', widget=forms.Select(), required=False)
 
@@ -22,7 +22,7 @@ class OrderForm(forms.ModelForm):
     field_order = ('company_name','f_name','l_name','email','phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', "other_when_to_order", 'type_of_development','other_type_of_development','type_of_climate_area','other_type_of_climate_area','type_of_smart_home','type_of_electric_vehicle_function','learn_about_electric_drive','septic_infrastructure','installation_septic_infrastructure')
 
     def __init__(self, *args, **kwargs):
-        super(OrderForm, self).__init__(*args, **kwargs)
+        super(BuyerAppForm, self).__init__(*args, **kwargs)
         self.fields['how_much_letter_of_credit'].widget.attrs.update({
             'autocomplete': 'off'
         })

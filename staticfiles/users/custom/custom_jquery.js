@@ -150,16 +150,17 @@
         $("input[name=price]").inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left' })
 
         var path = window.location.pathname;
-        if (path == '/order') {
-            $('[href="/order"]').addClass('active1');
+        console.log(path)
+        if (path == '/create/buyer/application') {
+            $('[href="/create/buyer/application"]').addClass('active1');
         }else if (path == '/order-form/') {
             $('[href="/order-form/"]').addClass('active1');
         }
          
         else if (path == '/login/') {
             $('[href*="/login"]').addClass('active1');
-        } else if (path == '/view-order/') {
-            $('[href="/view-order"]').addClass('active1');
+        } else if (path == '/buyer/applications/') {
+            $('[href="/buyer/applications/"]').addClass('active1');
         } 
         else if (path == '/floor-plan') {
             $('.plans').addClass('active1');
@@ -275,30 +276,40 @@
         form_submissions()
     });
 
-
-    // Capture Image
-    
-    $("#capture").click(function() {
-        capture_image()
-    });
-
     // form submissions
-    // $("#form_save").click(function() {
-        // e.preventDefault(); 
-    
-    // Webcam.snap( function(image) {
-    //     $("#image-input_id").val(image);
-    // }); 
-
-    $("#order_form").submit(function () {
-        Webcam.snap( function(image) {
-            $("#image-input_id").val(image);
-        });
+    $("#print_name").on("focusout",function() {
+        $("#buyer_name").text($("#print_name").val()) 
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var output = d.getFullYear() + '/' +
+            ((''+month).length<2 ? '0' : '') + month + '/' +
+            ((''+day).length<2 ? '0' : '') + day;
+        $(".date_today").text(output) 
+       
     });
+    // on form submission
+    $("#order_form").submit(function (e) {
+            $("#buyer_name").text($("#print_name").val()) 
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var output = d.getFullYear() + '/' +
+                ((''+month).length<2 ? '0' : '') + month + '/' +
+                ((''+day).length<2 ? '0' : '') + day;
+            $(".date_today").text(output) 
+            Webcam.snap( function(image) {
+                $("#image-input_id").val(image);
+            });
+            // while (true){
+            //     if ($("#image-input_id").val()!=""){
+            //         console.log("==",$("#image-input_id").val())
+            //         break;
+            //     }
+            //     console.log("==",$("#image-input_id").val())
+            // }
+        });
 
-    // });
-
-    // ajax
     $("#form_submission").click(function() {
         form_submissions()
     });
@@ -319,7 +330,6 @@ function ajax() {
 function form_submissions(){
     var frm = $("#order_form");
         $.ajax({
-         
             type: "GET",
             url: "/add-order/",
             data: frm.serialize(),
@@ -339,10 +349,6 @@ function form_submissions(){
         });
         return false;
 }
-
-// function capture_image(){
-
-// }
 
 // function form_save(){
 //     var frm = $("#order_form");

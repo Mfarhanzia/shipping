@@ -101,9 +101,9 @@ class Order(models.Model):
     installation_septic_infrastructure  = models.CharField("Does it require the installation of septic infrastructure? (There will be a charge for initial infrastructure installation and periodic maintenance service charges.) ",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True, default=None)
 
 
-    # class Meta:
-    #     ordering = ('-when_to_order', '-how_much_letter_of_credit', '-how_much_line_of_credit') 
-
+    class Meta:
+        verbose_name = "Buyer Application"
+        verbose_name_plural = "Buyer Applications"
 
 class Material(models.Model):
     """Material Required showing this data to vendors for quotations"""

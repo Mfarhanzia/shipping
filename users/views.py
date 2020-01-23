@@ -47,13 +47,13 @@ def electric_cars_exterior_view(request):
 def electric_cars_interior_view(request):
     return render(request, 'users/car_interior.html')
 
-# @login_required
+@login_required
 def floor_plan(request):
     return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
     
 def specialuser_signup(request):
     """
-    this function role: get form data saves it and and sending a link to admin through email 
+    this function role: get form data saves it and sending a link to admin through email 
     """
     if request.user.is_authenticated == False:
         if request.method == 'POST':
@@ -99,6 +99,7 @@ def specialuser_signup(request):
                 return redirect('login')
         else:
             form = SpecUserForm()
+            form2 = BuyerAppForm()
         return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
     else:
         return redirect('/')
@@ -255,6 +256,8 @@ def randomstring():
         range(6)))
     return int(abc)
 
+
+@login_required
 def video_page(request):
     return render(request, "order/video.html", {"title":"Assembling"})
 

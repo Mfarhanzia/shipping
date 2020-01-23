@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
 from django.contrib.sites.shortcuts import get_current_site
-from .forms import OrderForm, MaterialQuotationsForm, AddCustomProductForm  
+from .forms import BuyerAppForm, MaterialQuotationsForm, AddCustomProductForm  
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -36,14 +36,13 @@ from django.core.files.base import ContentFile
 
 # Create your views here.
 
-
-class OrderCreateView(LoginRequiredMixin,FormView):
-    template_name = 'order/order.html'
-    form_class = OrderForm
+class BuyerAppCreateView(LoginRequiredMixin,FormView):
+    template_name = 'order/buyer_app_form.html'
+    form_class = BuyerAppForm
     success_url = '/'
 
     def get_context_data(self, **kwargs):
-        context = super(OrderCreateView, self).get_context_data(**kwargs)
+        context = super(BuyerAppCreateView, self).get_context_data(**kwargs)
         context.update({'title': 'Create Order'})
         return context
 
@@ -86,7 +85,7 @@ class OrderCreateView(LoginRequiredMixin,FormView):
         email.send()
 
 
-class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     view for showing orders for authenticated users
     """
@@ -100,7 +99,7 @@ class ViewOrder(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'orders'
 
     def get_context_data(self, **kwargs):
-        context = super(ViewOrder, self).get_context_data(**kwargs)
+        context = super(ViewBuyerApp, self).get_context_data(**kwargs)
         context.update({'title': 'Orders'})
         return context
 
@@ -432,6 +431,7 @@ def vendor_quotations(request):
             return redirect('/')
     except:
         return redirect('/')
+
 
 @login_required
 @user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
