@@ -150,7 +150,6 @@
         $("input[name=price]").inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left' })
 
         var path = window.location.pathname;
-        console.log(path)
         if (path == '/create/buyer/application') {
             $('[href="/create/buyer/application"]').addClass('active1');
         }else if (path == '/order-form/') {
@@ -159,8 +158,8 @@
          
         else if (path == '/login/') {
             $('[href*="/login"]').addClass('active1');
-        } else if (path == '/buyer/applications/') {
-            $('[href="/buyer/applications/"]').addClass('active1');
+        } else if (path == '/buyer/applications') {
+            $('[href="/buyer/applications"]').addClass('active1');
         } 
         else if (path == '/floor-plan') {
             $('.plans').addClass('active1');
@@ -316,7 +315,6 @@
 
 })(jQuery); // end jQuery
 function format(){
-    console.log("sadasd");
     $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
 }
 function total(){
@@ -338,7 +336,6 @@ function form_submissions(){
                 var parts = data.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 parts.join(".")
-                console.log("========",parts.join("."))
                 $("#total").html("$ " + parts.join("."));
               
             },
