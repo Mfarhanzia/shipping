@@ -661,12 +661,14 @@ input[type="date"], focus {
     right: -15px;
     width: 2%;
 }
+
 .carousel-control-prev-icon{
     position: absolute;
     left: -7px;
     width: 30px !important;
     height: 30px !important;
 }
+
 .carousel-control-next-icon{
     position: absolute;
     right: -7px;
