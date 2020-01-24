@@ -631,7 +631,7 @@ input[type="date"], focus {
     font-size: .88em;
     height: 50px;
 }
-@media only screen and (max-width: 820px) {
+@media only screen and (max-width: 825px) {
     .add-bar{
         height: 50px;
         font-size: 12px;
@@ -653,25 +653,25 @@ input[type="date"], focus {
 .carousel-control-prev{
     position: absolute;
     left: -15px;
-    width: 2%;
+    width: 0%;
 }
 
 .carousel-control-next{
     position: absolute;
     right: -15px;
-    width: 2%;
+    width: 0%;
 }
 
 .carousel-control-prev-icon{
     position: absolute;
-    left: -7px;
+    left: 0px;
     width: 30px !important;
     height: 30px !important;
 }
 
 .carousel-control-next-icon{
     position: absolute;
-    right: -7px;
+    right: 0px;
     width: 30px !important;
     height: 30px !important;
 }
