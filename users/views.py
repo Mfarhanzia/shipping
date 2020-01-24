@@ -103,7 +103,6 @@ def specialuser_signup(request):
                 return redirect('login')
         else:
             form = SpecUserForm()
-            form2 = BuyerAppForm()
         return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
     else:
         return redirect('/')
