@@ -186,7 +186,9 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
 						</li>
-						
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'order-form' %}">Place an order</a>
+						</li>
 						{% if request.user.is_authenticated %}
 						<li class="nav-item" style="border-left:none;">
 								<a class="nav-link" href="/logout">LogOut</a>
