@@ -64,9 +64,9 @@
 		</div>
 	</div>
 	<!--Navbar-->
-	<div class="container-fluid white-background fixed-nav">
+	<div class="container-fluid nav-bg-color fixed-nav remove-slider">
 		<div class="container-fluid" >
-			<nav class="navbar navbar-expand-lg white-background navbar-dark">
+			<nav class="navbar navbar-expand-lg nav-bg-color navbar-dark">
 				<!-- Navbar brand -->
 				<div class="logo">
 					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
@@ -102,7 +102,7 @@
 				<div class="collapse navbar-collapse" id="basicExampleNav">
 
 					<!-- Links -->
-					<ul class="navbar-nav ml-auto ">
+					<ul class="navbar-nav nav-margin ">
 						<li class="nav-item" style="border-left:none;">
 							<a class="nav-link" href="{% url 'home' %}">Home
 								<span class="sr-only">(current)</span>
@@ -186,21 +186,18 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'order-form' %}">Place an order</a>
-						</li>
-						{% if request.user.is_authenticated %}
-						<li class="nav-item" style="border-left:none;">
-								<a class="nav-link" href="/logout">LogOut</a>
-						</li>
-						{% else %}
-						<li class="nav-item" style="border-left:none;">
-							<a class="nav-link" href="/login">Log in/Register</a>
-						</li>
 						
-						{% endif %}
 					</ul>
-					
+					<div class="nav-margin">
+						<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						
+					</div>
+					<div class="nav-margin">
+						{% if request.user.is_authenticated %}
+							<a class="nav-link" href="/logout">LogOut</a>
+						{% else %}
+							<a class="nav-link" href="/login">Log in/Register</a>
+						{% endif %}
+					</div>
 				</div>
 				<!-- Collapsible content -->
 			</nav>

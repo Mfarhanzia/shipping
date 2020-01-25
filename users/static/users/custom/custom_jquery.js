@@ -16,9 +16,10 @@
         //     $('nav ul').slideToggle();
         // });
         // // Hamburger to X toggle
-        // $('#nav-toggle').on('click', function() {
-        //     this.classList.toggle('active');
-        // });
+        $('.navbar-toggler').on('click', function() {
+            $("body").css("background","white");
+            $("body").css("z-index","200");
+        });
 
         //remove blank options
         $("ul[id=id_letter_of_credit] > li:first").remove();
