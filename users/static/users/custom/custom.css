@@ -60,7 +60,7 @@ html {
     font: normal normal normal 14px/1.4em serif;
     padding: 0 5px 0 5px;
     border-left: 2px solid; 
-    line-height: 7px;
+    line-height: 16px;
 }
 /*  */
 
@@ -603,6 +603,11 @@ input[type="date"], focus {
 .log-register {
     font-weight: 400;
 }
+
+.button-font{
+    font-weight: 500;
+}
+
 .log-register h2 {
     text-transform: uppercase;
     font-weight: bolder;
@@ -650,26 +655,26 @@ input[type="date"], focus {
     text-decoration: underline;
 }
 
-.carousel-control-prev{
+.add-bar carousel-control-prev{
     position: absolute;
     left: -15px;
     width: 0%;
 }
 
-.carousel-control-next{
+.add-bar carousel-control-next{
     position: absolute;
     right: -15px;
     width: 0%;
 }
 
-.carousel-control-prev-icon{
+.add-bar carousel-control-prev-icon{
     position: absolute;
     left: 0px;
     width: 30px !important;
     height: 30px !important;
 }
 
-.carousel-control-next-icon{
+.add-bar carousel-control-next-icon{
     position: absolute;
     right: 0px;
     width: 30px !important;

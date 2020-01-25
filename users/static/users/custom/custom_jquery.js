@@ -162,10 +162,11 @@
             $('[href="/buyer/applications"]').addClass('active1');
         } 
         else if (path == '/floor-plan') {
-            $('.plans').addClass('active1');
+            $('.about').addClass('active1');
             $('[href*="/floor-plan"]').addClass('active1');
         }
          else if (path == '/assembling/') {
+            $('.about').addClass('active1');
             $('[href*="/assembling/"]').addClass('active1');
         }
          else if (path == '/quotation/') {
@@ -199,15 +200,19 @@
         // else if (path == '/view-content'){  
         else if (path.indexOf('/view/structural-drawings') != -1) {
             $('[href="/view/structural-drawings"]').addClass('active1');
-            $('.designs').addClass('active1');
+            $('.about').addClass('active1');
         }
         else if (path.indexOf('/view/architectural-drawings') != -1) {
             $('[href="/view/architectural-drawings"]').addClass('active1');
-            $('.designs').addClass('active1');
+            $('.about').addClass('active1');
+        }
+        else if (path == '/concept') {
+            $('[href*="/concept"]').addClass('active1');
+            $('.about').addClass('active1');
         }
         else if (path.indexOf('/view/reportsap') != -1) {
             $('[href="/view/reportsap"]').addClass('active1');
-            $('.designs').addClass('active1');
+            $('.about').addClass('active1');
         }
          else {
             $('[href="/"]').addClass('active1');

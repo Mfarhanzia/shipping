@@ -9,10 +9,10 @@
 	<meta name="google-site-verification" content="LnQoPAVXbIP5uOPneg1Ct-Uwr-ZAnR7LU1ULgdDot_U" />
 
 	{% if title %}
-	<title class="text-capitalize">Shipping - {{ title }}</title>
+	<title class="text-capitalize">Shipping Container Home - Bolt on Bloks - {{ title }}</title>
 
 	{% else %}
-	<title>Shipping</title>
+	<title>Shipping Container Home - Bolt on Bloks</title>
 	{% endif %}
 
 	<!-- font awesome -->
@@ -30,7 +30,7 @@
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
 	<!-- animation -->
 	<!-- <link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" /> -->
-	<!-- <link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" /> -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />
 	 
 
 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
@@ -45,10 +45,10 @@
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 					<div class="carousel-inner">
 						  <div class="carousel-item active">
-								<p class="top-add">Coming soon at 12345 Beach Blvd. <a href="{% url 'register' %}">Sign Up</a> now for more details. </p>
+								<p class="top-add">Coming soon at 12345 Beach Blvd. <a href="#id_subscribe">Sign Up</a> now for more details. </p>
 						  </div>
 						  <div class="carousel-item">
-								<p class="top-add">California passed ADU reform to expand housing choices and ease the statewide home shortages. Read more.</p>
+								<p class="top-add">California passed ADU reform to expand housing choices and ease the statewide home shortages. <a target="" href="https://www.sightline.org/2019/04/05/la-adu-story-how-a-state-law-sent-granny-flats-off-the-charts/">Read more.</a></p>
 						  </div>
 					</div>
 						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -103,11 +103,28 @@
 
 					<!-- Links -->
 					<ul class="navbar-nav ml-auto ">
-						<li class="nav-item">
+						<li class="nav-item" style="border-left:none;">
 							<a class="nav-link" href="{% url 'home' %}">Home
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle about" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About our Units</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>
+								<a class="dropdown-item" href="#">Amenities</a>
+								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>
+							{% if user.is_authenticated %}
+								{% if request.user.specuser.user_type != "vendor" %}	
+									<a class="dropdown-item" href="{% url 'struc-drawings' %}">Structural drawings</a>
+									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>
+									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>
+									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
+								{% endif %}
+							{% endif %}
+							</div>
+						</li>
+						
 						{% if request.user.specuser.user_type != "vendor" %}
 						
 						{% if user.is_superuser %}	
@@ -146,20 +163,7 @@
 							</li>
 						{% endif %}
 						{% if user.is_authenticated %}
-							{% if request.user.specuser.user_type != "vendor" %}	
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle designs"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Designs Info
-									</a>
-									<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-										<a class="nav-link" href="{% url 'struc-drawings' %}">Structural drawings</a>
-									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>
-									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>
-
-									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
-									</div>
-								</li>
-							{% endif %}
+							
 							{% if user.specuser.user_type == 'dealer' %}
 								<li class="nav-item">
 									<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
@@ -172,38 +176,29 @@
 							</li>
 						{% endif %}
 
-
 						{% endif %}
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								More
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								{% if user.is_superuser %}
-									<a class="dropdown-item" href="{% url 'view-quotation' %}">View Quotation</a>
-								{% endif %}
-								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>
-								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>
-								<a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a>
-							</div>
-						</li>
+						
+						{% if user.is_superuser %}
 						<li class="nav-item">
-								<a class="nav-link" href="{% url 'order-form' %}">Place an order</a>
+							<a class="nav-link" href="{% url 'view-quotation' %}">View Quotations</a>
 						</li>
+						{% endif %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
+						</li>
+						
 						{% if request.user.is_authenticated %}
-						<li class="nav-item">
+						<li class="nav-item" style="border-left:none;">
 								<a class="nav-link" href="/logout">LogOut</a>
 						</li>
 						{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="/login">Login</a>
+						<li class="nav-item" style="border-left:none;">
+							<a class="nav-link" href="/login">Log in/Register</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'register' %}">Register</a>
-						</li>
+						
 						{% endif %}
 					</ul>
-
+					
 				</div>
 				<!-- Collapsible content -->
 			</nav>
@@ -264,7 +259,7 @@
 				<br>
 				<span>Tel 714-363-1287</span>
 				<br><br>
-				<span>Email: info@boltonbloks.com</span><br><br>
+				<span>Email: <a href="mailto:info@boltonbloks.com">info@boltonbloks.com</a></span><br><br>
 				<h5>PATENT PENDING USTPO PATENT PENDING.</h5>
 				<h6>All rights reserved.</h6>
 			</div>

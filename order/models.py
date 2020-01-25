@@ -49,11 +49,11 @@ class Order(models.Model):
         ('Capability to Load Handicapped Person Without Human Assistance','Capability to Load Handicapped Person Without Human Assistance'),
     )
 
-    company_name = models.CharField('Name of Company',max_length=100)
     f_name = models.CharField('First Name',max_length=100)
     l_name = models.CharField('Last Name',max_length=100)
     email = models.EmailField('Email',max_length=100)
-    phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="XXX-XXX-XXXX")
+    company_name = models.CharField('Name of Company',max_length=100, help_text="Optional", blank=True, null=True)
+    phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
     
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
