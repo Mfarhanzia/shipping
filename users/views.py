@@ -9,7 +9,7 @@ from .models import User, SpecUser
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-from .forms import EmailListForm, SpecUserForm, ContactUsForm
+from .forms import EmailListForm, SpecUserForm, ContactUsForm, RegistrationForm1, RegistrationForm2
 from django.template.loader import render_to_string
 from django.contrib.auth import password_validation
 from django.utils.encoding import force_bytes, force_text
@@ -17,9 +17,39 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
+from formtools.wizard.views import CookieWizardView, SessionWizardView
 # views
 # @login_required()
+
+class RegistrationForm(CookieWizardView):
+    # template_name = 'users/register.html'
+    form_list = [RegistrationForm1, RegistrationForm2]
+    def get_template_names(self):
+        """
+        Return the template name for the current step
+        """
+        templates = {
+        0: 'users/signup.html',
+        1: 'users/signup.html',
+       }
+        return [templates[int(self.steps.current)]]
+
+    
+
+    def done(self, form_list, **kwargs):
+        user = SpecUser()
+        for form in form_list:
+            for field_name, value in form.cleaned_data.items():
+                if "password1" in field_name:
+                    user.set_password(value)
+                setattr(user, field_name, value)
+        user.content_permission = False
+        user.home_permission = False
+        user.save()
+        messages.success(self.request, f'Sign Up Successful!')
+        return redirect('login')
+
+
 def home_view(request):
     if request.method == "POST":
         form = EmailListForm(request.POST)

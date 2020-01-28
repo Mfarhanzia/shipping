@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third-party
+    'formtools',
     'crispy_forms',  # render forms as bootstrap easily
     'django.contrib.humanize',
     'widget_tweaks',
@@ -164,8 +165,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonbloks.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW" 
-DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
-# DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
+# DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
 
 # Activate Django heroku
 django_heroku.settings(locals())

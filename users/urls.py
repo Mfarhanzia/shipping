@@ -2,9 +2,10 @@ from django.urls import path
 from django.conf.urls import url
 from .views import (concept_page, specialuser_signup, activate, admincheck, home_view, floor_plan,
         home_access, models, video_page, electric_cars_view,electric_cars_exterior_view,
-        electric_cars_interior_view, contact_view)
+        electric_cars_interior_view, contact_view, RegistrationForm)
 from django.contrib.auth import views as auth_views
-    
+from .forms import RegistrationForm1, RegistrationForm2  
+
 urlpatterns = [
     path('electric-cars/exterior', electric_cars_exterior_view ,name='cars-exterior'),
     path('electric-cars/interior', electric_cars_interior_view ,name='cars-interior'),
@@ -45,5 +46,8 @@ urlpatterns = [
     path('home-access', home_access, name="home-access" ),
     path('models', models, name="models"),
     path('concept', concept_page, name="concept"),
-    path('contactus', contact_view, name="contact-us")
+    path('contactus', contact_view, name="contact-us"),
+
+    # path('signup/', RegistrationForm.as_view([RegistrationForm1, RegistrationForm2]), name="sign-up"),
+    path('signup/', RegistrationForm.as_view(), name="sign-up"),
 ]

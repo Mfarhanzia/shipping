@@ -215,6 +215,10 @@
             $('[href="/view/reportsap"]').addClass('active1');
             $('.about').addClass('active1');
         }
+        else if (path.indexOf('/contactus') != -1) {
+            $('[href="/contactus"]').addClass('active1');
+            
+        }
          else {
             $('[href="/"]').addClass('active1');
         }
@@ -369,9 +373,10 @@ function form_submissions(){
 //             },
 //             error: function(data) {
 //                 console.log("success",data)
-//                 // $("#MESSAGE-DIV").html("Something went wrong!");
+//                 $("#MESSAGE-DIV").html("Something went wrong!");
 //             }
 //         });
 //         return false;
 //     });
 // }
+

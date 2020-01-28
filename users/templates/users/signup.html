@@ -1,4 +1,7 @@
 {% extends "users/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block content%}
 <div class="container">
     <div class="row">
@@ -10,14 +13,13 @@
                 {% csrf_token %}
                 <h1 class="text-center">Registration</h1>
                 <hr class="ml-4">
-                {% for field in form %}
-
+                {{ wizard.management_form }}
+                {% for field in wizard.form  %}
                     {% if field == form.user_type %}
                     <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
                         <label class="label" for="{{field.id_for_label}}">{{field.label}}:</label>
                         {{field}}
                     </div>
-
                 {%else%}
                     <div id="id_register_{{forloop.counter}}" class="md-form">
                         <i class="prefix"> </i>
@@ -34,8 +36,25 @@
                     </div>
                     {% endif %}
                 {% endfor %}
+              
+                {% if wizard.steps.prev %}
+                <div class="form-group fa-pull-left">
+                    <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
+                    
+                </div>
+                {% endif %}
                 <div class="form-group fa-pull-right">
-                    <button class="btn btn-black btn-lg" type="submit">Register</button>
+                    {% if wizard.steps.next %}
+                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-black btn-lg">
+                    {%if next_button%}
+                        as{{next_button}}
+                        {%else%}
+                        Submit
+                        {%endif%}
+                    </button>
+                    {% endif %}
                 </div>
             </form>
         </div>

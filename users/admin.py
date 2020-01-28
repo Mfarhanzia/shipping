@@ -38,9 +38,9 @@ admin.site.register(User, UserAdmin)
 
 
 class SpecUserAdmin(admin.ModelAdmin):
-    list_display = ['email','user_type']
+    list_display = ['email','user_type','content_permission','home_permission']
     readonly_fields = ('password',)
-    list_filter = ['user_type']
+    list_filter = ['user_type','content_permission','home_permission']
     list_per_page = 50
     # inlines = [CartOrderAdmin]
 admin.site.register(SpecUser,SpecUserAdmin)
