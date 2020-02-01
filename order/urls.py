@@ -34,5 +34,6 @@ urlpatterns = [
     path('save-order/', save_cart, name='save-cart'),
     path('container/orders', view_container_orders, name='view-container-orders'),
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
+    path('my/orders', view_container_order_items, name='my-orders'),
     path('order/pdf', create_order_pdf, name='order-pdf'),
 ]

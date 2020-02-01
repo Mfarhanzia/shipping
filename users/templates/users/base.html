@@ -38,7 +38,7 @@
 </head>
 
 <body>
-
+ <div id="overlay"></div> 
 	<div class="container-fluid bg-dark">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 add-bar">
@@ -48,15 +48,15 @@
 								<p class="top-add">Coming soon at 12345 Beach Blvd. <a href="#id_subscribe">Sign Up</a> now for more details. </p>
 						  </div>
 						  <div class="carousel-item">
-								<p class="top-add">California passed ADU reform to expand housing choices and ease the statewide home shortages. <a target="" href="https://www.sightline.org/2019/04/05/la-adu-story-how-a-state-law-sent-granny-flats-off-the-charts/">Read more.</a></p>
+								<p class="top-add">California passed ADU reform to expand housing choices and ease the statewide home shortages. <a target="_blank" href="https://www.sightline.org/2019/04/05/la-adu-story-how-a-state-law-sent-granny-flats-off-the-charts/">Read more.</a></p>
 						  </div>
 					</div>
-						<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-						  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<a id="add-bar-control-prev" class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+						  <span id="#add-bar-control-prev-icon" class="carousel-control-prev-icon" aria-hidden="true"></span>
 						  <span class="sr-only">Previous</span>
 						</a>
-						<a class="carousel-control-next " href="#carouselExampleControls" role="button" data-slide="next">
-						  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<a id="add-bar-control-next" class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+						  <span id="#add-bar-control-next-icon" class="carousel-control-next-icon" aria-hidden="true"></span>
 						  <span class="sr-only">Next</span>
 						</a>
 				</div>
@@ -64,24 +64,24 @@
 		</div>
 	</div>
 	<!--Navbar-->
-	<div class="container-fluid nav-bg-color fixed-nav remove-slider">
+	<div class="container-fluid nav-bg-color fixed-nav">
 		<div class="container-fluid" >
-			<nav class="navbar navbar-expand-lg nav-bg-color navbar-dark">
+			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">
 				<!-- Navbar brand -->
-				<div class="logo">
+				<div id="b-color" class="logo">
 					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
 						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">
-							<div data-packed="true" style="width: 101px; pointer-events: none;" class="txtNew"
+							<div data-packed="true" style="width: 80px; pointer-events: none;" class="txtNew"
 								id="comp-ir1r4w4s">
 								<h1 class="font_0" style="line-height:0.3em;">
 									<a href="/" target="_self">
-										<span style="letter-spacing:7px;">
+										<span style="letter-spacing:2px;">
 											<span class="color_15">BOLT</span>
 										</span>
-										<span style="letter-spacing:3px;">
+										<span style="letter-spacing:1px;">
 											<span class="color_15">ON</span>
 										</span>
-										<span style="letter-spacing:3px;">
+										<span style="letter-spacing:2px;">
 											<span class="color_15">BLOKS</span>
 										</span>
 									</a>
@@ -100,9 +100,8 @@
 
 				<!-- Collapsible content -->
 				<div class="collapse navbar-collapse" id="basicExampleNav">
-
 					<!-- Links -->
-					<ul class="navbar-nav nav-margin ">
+					<ul class="navbar-nav nav-margin">
 						<li class="nav-item" style="border-left:none;">
 							<a class="nav-link" href="{% url 'home' %}">Home
 								<span class="sr-only">(current)</span>
@@ -127,30 +126,30 @@
 						
 						{% if request.user.specuser.user_type != "vendor" %}
 						
-						{% if user.is_superuser %}	
-						<li class="nav-item">
-							<a class="nav-link" href="{%url 'buyer-app' %}">View Buyer<br>Applications</a>
-						</li>
-						{% else %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'create-buyerapp' %}">Buyer Application</a>
-						</li>
+						{% if not user.is_superuser %}	
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'create-buyerapp' %}">Buyer Application</a>
+							</li>
 						{% endif %}
 							
 							{% if user.is_superuser %}
-								<li class="nav-item ">
-									<a class="nav-link" href="{% url 'view-container-orders' %}">View Container Orders</a>
-								</li>
-							{% else %}
-							
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Controls</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<a class="dropdown-item" href="{% url 'view-container-orders' %}">Container Orders</a>
+									<a class="dropdown-item"href="{%url 'buyer-app' %}">Buyer Applications</a>
+									<a class="dropdown-item" href="{% url 'view-quotation' %}">Quotations</a>
+									<a class="dropdown-item" href="/admin">Admin Panel</a>
+								</div>
+							</li>
 							{% endif %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-										<a class="dropdown-item" href="{% url 'models' %}">View Models</a>
-										<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>
-										<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>
-										<a class="dropdown-item" href="{% url 'model-3d' %}">3d Model</a>
+									<a class="dropdown-item" href="{% url 'models' %}">View Models</a>
+									<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>
+									<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>
+									<a class="dropdown-item" href="{% url 'model-3d' %}">3d Model</a>
 								</div>
 							</li>
 							<li class="nav-item dropdown">
@@ -177,23 +176,26 @@
 						{% endif %}
 
 						{% endif %}
-						
-						{% if user.is_superuser %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'view-quotation' %}">View Quotations</a>
-						</li>
-						{% endif %}
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
 						</li>
-						
 					</ul>
 					<div class="nav-margin">
 						<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						
 					</div>
 					<div class="nav-margin">
 						{% if request.user.is_authenticated %}
-							<a class="nav-link" href="/logout">LogOut</a>
+						<ul class="navbar-nav nav-margin">
+							<li class="nav-item dropdown" style="border-left:none;">
+								<a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<a class="dropdown-item" href="/logout">LogOut</a>
+									{% if not request.user.is_superuser %}
+									<a class="dropdown-item" href="{% url 'my-orders' %}">Order History</a>
+									{% endif %}
+								</div>
+							</li>
+						</ul>
 						{% else %}
 							<a class="nav-link" href="/login">Log in/Register</a>
 						{% endif %}
@@ -256,7 +258,7 @@
 			<div class="col-md-4 col-sm-6 col-xs-6 footer-address pl-4 pt-4">
 				<span>12345 Beach Blvd., Stanton, CA 90680</span>
 				<br>
-				<span>Tel 714-363-1287</span>
+				<span>Tel:<a href="tel:7143631287"> 714-363-1287</a></span>
 				<br><br>
 				<span>Email: <a href="mailto:info@boltonbloks.com">info@boltonbloks.com</a></span><br><br>
 				<h5>PATENT PENDING USTPO PATENT PENDING.</h5>

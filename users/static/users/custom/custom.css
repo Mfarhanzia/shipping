@@ -26,20 +26,20 @@ html {
 }
 
 .logo {
-    width: 120px !important;
-    height: 100px !important;
-    border: 1px solid #2F2E2E !important;
+    width: 105px !important;
+    height: 90px !important;
+    border: 2px solid rgb(47, 46, 46) !important;
 }
 
 .color_15 {
-    font: normal normal normal 16px/1.4em futura-lt-w01-light, sans-serif;
+    font: normal normal normal 16px/1.4em futura-lt-w01-light, Rosarivo;
     color: #AFAEAE;
 }
 
 #comp-ir1r4w4s {
     position: relative;
-    margin: 10px 0px 5px 0;
-    left: 18px;
+    margin: 5px 0px 5px 0;
+    left: 10px;
     grid-area: 1 / 1 / 2 / 2;
     justify-self: start;
     align-self: start;
@@ -62,41 +62,10 @@ html {
     border-left: 2px solid; 
     line-height: 16px;
 }
-/*  */
-
- 
-/* .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none !important;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-   */
-
-/*  */
 
 .nav-link {
     color: #2F2E2E !important;
 }
-
 
 .active1 {
     color: #A4A4A3!important;
@@ -179,17 +148,30 @@ form {
 }
 
 @media only screen and (max-width: 991px) {
-    .remove-slider{
-        background-image: url('/static/users/imgs/front-min.jpg');
-        z-index: 100;
+    /* .remove-slider{
+        position: absolute;
+        top: 50px;
+        width: 100%;
         height: 80vh;
+        background-image: url('/static/users/imgs/front-min.jpg');
         background-repeat: no-repeat;
-        background-position: bottom;
+        background-position: center;
         background-size: cover;
+        z-index: -1;
+    }
+    .static-slider{
+        width: 100%;
+        height: 80vh;
     }
     #mobile-hide{
         display: none;
     }
+    .color_15{
+        color: whitesmoke;
+    }
+    .logo{
+        border-color: whitesmoke !important;
+    } */
     .nav-bg-color{
         background-color: transparent;
         -webkit-box-shadow: none !important;
@@ -204,7 +186,7 @@ form {
         margin-top: 20px !important;
     }
     .nav-item {
-        background-color: white;
+        /* background-color: white; */
         line-height: 1rem;
         border: none;
         
@@ -404,6 +386,30 @@ form {
 @media only screen and (max-width: 768px) {
     .row2-font{
         font-size: 2.8rem;
+    }
+    .remove-slider{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        height: 80vh;
+        background-image: url('/static/users/imgs/front-min.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .static-slider{
+        width: 100%;
+        height: 80vh;
+    }
+    #mobile-hide{
+        display: none;
+    }
+    .color_15{
+        color: whitesmoke;
+    }
+    .logo{
+        border-color: whitesmoke !important;
     }
    
 }
@@ -666,6 +672,9 @@ input[type="date"], focus {
     .add-bar{
         height: 65px;
         font-size: 12px;
+    }
+    .remove-slider{
+        top: 65px;
     }   
 }
 
@@ -675,35 +684,59 @@ input[type="date"], focus {
     text-decoration: underline;
 }
 
-.add-bar carousel-control-prev{
+#add-bar-control-prev {
     position: absolute;
     left: -15px;
-    width: 0%;
+    width: 10%;
 }
 
-.add-bar carousel-control-next{
+#add-bar-control-next{
     position: absolute;
     right: -15px;
-    width: 0%;
+    width: 10%;
 }
 
-.add-bar carousel-control-prev-icon{
+#add-bar-control-prev-icon{
     position: absolute;
     left: 0px;
     width: 30px !important;
     height: 30px !important;
 }
 
-.add-bar carousel-control-next-icon{
+#add-bar-control-next-icon{
     position: absolute;
     right: 0px;
     width: 30px !important;
     height: 30px !important;
 }
-
+@media only screen and (max-width:685px) {
+    #add-bar-control-prev {
+        display: none;
+    }
+    #add-bar-control-next{
+        display: none;
+    } 
+}
 .nav-margin{
     margin-left: 20px;
 }
 .place-order-btn{
     padding: 3px 12px 3px 12px;
 }
+
+#nav_{
+    z-index: 5;
+}
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255); /* Black background with opacity */
+    z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }

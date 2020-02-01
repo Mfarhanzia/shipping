@@ -336,9 +336,12 @@ def view_container_orders(request):
 
 
 @login_required
-@user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
-def view_container_order_items(request, pk):
-    items = CartOrder.objects.filter(user=pk)
+# @user_passes_test(lambda user: user.is_superuser == True, redirect_field_name="/")
+def view_container_order_items(request, pk=None):
+    if request.user.is_superuser:
+        items = CartOrder.objects.filter(user=pk)
+    else:
+        items = CartOrder.objects.filter(user=request.user)
     return render(request, "order/view_container_order_items.html", {"items":items})
 
 

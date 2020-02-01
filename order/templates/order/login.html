@@ -8,7 +8,7 @@
         <div class="col-md-6 col-sm-12">
             <form method="POST">
                 {% csrf_token %}
-                <legend class="border-bottom mb-4"><b>Log In</b></span> <span class="fa-pull-right small">*Required</span></legend>
+                <legend class="border-bottom mb-4"><b>Log In</b></span> <span class="fa-pull-right font-small">*Required</span></legend>
                 <p class="small">If you are a registered user, please enter your email and password.</p>
                 <fieldset class="form-group">
                     <div class="md-form">
@@ -36,7 +36,7 @@
             </form>
         </div>
         <div class="col-md-6 col-sm-12 log-register">
-            <h2>Register</h2>
+            <legend class="border-bottom mb-4">Register</legend>
             <p class="pt-3 small">Creating an account is very easy. Just click below to get started.</p>
             <a href="{% url 'register' %}">
                 <button class="btn btn-black button-font">Create Account Now</button>

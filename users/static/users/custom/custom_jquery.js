@@ -17,8 +17,8 @@
         // });
         // // Hamburger to X toggle
         $('.navbar-toggler').on('click', function() {
-            $("body").css("background","white");
-            $("body").css("z-index","200");
+            $('#overlay').slideToggle();
+            // $('#b-color').slideToggle();
         });
 
         //remove blank options
@@ -351,7 +351,10 @@ function show_hide_fields(){
         $("#div_id_2-other_type_of_development").hide();
     }
 }
-
+function myFunction(){
+    alert();
+    $('#b-color').css("color","black");
+}
 // function form_save(){
 //     var frm = $("#order_form");
 //     console.log("data",frm)
