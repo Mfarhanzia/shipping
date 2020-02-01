@@ -57,39 +57,39 @@
             </div>
             <p><b>Multi-unit complex</b>: apartment buildings, mixed-use, hotel, motel, boutique hotel, condominium, town homes, hospitals, student housing, and other </p>
         <div class="col-md-12 table-responsive">
-                <table class="table view_order_table table-bordered  text-center table-striped">
-                    <thead>
-                        <tr valign="top">  
-                            <th> No. of Floors (max12)</th>
-                            <th>Width (apt. units)</th>
-                            <th>Depth (apt. units)</th>
-                            <th>Approx. <br>Square Feet per room</th>
-                            <th>Price per 290s.f. room(for 20units or less)</th>
-                            <th>Price per 290s.f. room(for 21units or more)</th>
-                            <th>Qty</th>
-                            <th>Date Delivered<br> (to site)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
-                            <td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
-                            <td>{{form2.depth|add_class:"p-1"}} deep</td>
-                            <td>{{custom_pricing.sqfeet_per_room|intcomma}}</td>
-                            <td>$ {{custom_pricing.custom_price|intcomma}}</td>
-                            <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
-                            <td>
-                                <select id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
-                                    <option value="" selected>-</option>
-                                    {% for i in quantity %}
-                                        <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
-                                    {% endfor %}
-                                </select>
-                            </td>
-                            <td><input onchange="form_submissions()" type="date" class="p-1" name="custom_date"></td>
-                        </tr>
-                    </tbody>
-                </table>            
+            <table class="table view_order_table table-bordered  text-center table-striped">
+                <thead>
+                    <tr valign="top">  
+                        <th> No. of Floors (max12)</th>
+                        <th>Width (apt. units)</th>
+                        <th>Depth (apt. units)</th>
+                        <th>Approx. <br>Square Feet per room</th>
+                        <th>Price per 290s.f. room(for 20units or less)</th>
+                        <th>Price per 290s.f. room(for 21units or more)</th>
+                        <th>Qty</th>
+                        <th>Date Delivered<br> (to site)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
+                        <td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
+                        <td>{{form2.depth|add_class:"p-1"}} deep</td>
+                        <td>{{custom_pricing.sqfeet_per_room|intcomma}}</td>
+                        <td>$ {{custom_pricing.custom_price|intcomma}}</td>
+                        <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
+                        <td>
+                            <select id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
+                                <option value="" selected>-</option>
+                                {% for i in quantity %}
+                                    <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><input onchange="form_submissions()" type="date" class="p-1" name="custom_date"></td>
+                    </tr>
+                </tbody>
+            </table>            
         </div>
             <p><b>Total</b>: <span id="total">$ </span></p>
             <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer’s reasonable satisfaction.<br>

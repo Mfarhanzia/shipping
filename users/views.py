@@ -5,11 +5,11 @@ from django import forms
 from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
-from .models import User, SpecUser
+from .models import User, SpecUser, UserPreferences
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-from .forms import EmailListForm, SpecUserForm, ContactUsForm, RegistrationForm1, RegistrationForm2
+from .forms import EmailListForm, SpecUserForm, ContactUsForm, RegistrationForm1, RegistrationForm2, UserPreferencesForm
 from django.template.loader import render_to_string
 from django.contrib.auth import password_validation
 from django.utils.encoding import force_bytes, force_text
@@ -19,11 +19,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from formtools.wizard.views import CookieWizardView, SessionWizardView
 # views
-# @login_required()
+
 
 class RegistrationForm(CookieWizardView):
-    # template_name = 'users/register.html'
-    form_list = [RegistrationForm1, RegistrationForm2]
+    form_list = [RegistrationForm1, RegistrationForm2, UserPreferencesForm]
     def get_template_names(self):
         """
         Return the template name for the current step
@@ -31,22 +30,54 @@ class RegistrationForm(CookieWizardView):
         templates = {
         0: 'users/signup.html',
         1: 'users/signup.html',
+        2: 'users/user_preference.html',
        }
         return [templates[int(self.steps.current)]]
-
     
+    def send_mail(self,user):
+        print("user_id", user.pk)
+        current_site = get_current_site(self.request)
+        if user.user_type == "dealer":
+            last_obj = SpecUser.objects.all().last()
+            last_id = last_obj.pk
+            dealer_no = ''.join((random.SystemRandom().choice(string.digits) for _ in range(5)))
+            user.dealer_no = dealer_no+str(last_id)
+            user.save()
+        current_site = get_current_site(self.request)
+        mail_subject = f"Sign Up Successful"
+        message = render_to_string('users/sign_up_mail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                })
+        to_email = user.email
+        email = EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(settings.DEFAULT_FROM_EMAIL,))
+        email.content_subtype = "html"
+        try:
+            email.send()
+        except:
+            messages.error(self.request, f'Something went Wrong!. Please Try again.')
+            return redirect(self.request.path_info)
+        
+        if user.user_type == "dealer":
+            messages.success(self.request, f'Sign Up Successful! Your Dealer Number is sent to your provided email.')
+        else:
+            messages.success(self.request, f'Sign Up Successful!')
 
     def done(self, form_list, **kwargs):
         user = SpecUser()
+        user_pref = UserPreferences()
         for form in form_list:
             for field_name, value in form.cleaned_data.items():
                 if "password1" in field_name:
                     user.set_password(value)
                 setattr(user, field_name, value)
+                setattr(user_pref, field_name, value)
         user.content_permission = False
         user.home_permission = False
         user.save()
-        messages.success(self.request, f'Sign Up Successful!')
+        user_pref.user_obj = user
+        user_pref.save()
+        self.send_mail(user)
         return redirect('login')
 
 
@@ -85,59 +116,6 @@ def electric_cars_interior_view(request):
 def floor_plan(request):
     return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
     
-def specialuser_signup(request):
-    """
-    this function role: get form data saves it and sending a link to admin through email 
-    """
-    if request.user.is_authenticated == False:
-        if request.method == 'POST':
-            form = SpecUserForm(request.POST)
-            if form.is_valid():
-                user = form.save(commit=False)
-                if form.cleaned_data['user_type'] == "dealer":
-                    # making dealer number if user_type id dealer
-                    all_users = SpecUser.objects.filter(
-                        user_type="dealer").values_list('dealer_no', flat=True)
-                    while True:
-                        random_number = randomstring()
-                        if random_number not in all_users:
-                            user.dealer_no = random_number
-                            break
-                    mail_subject = f"Sign Up Successful'"
-                    current_site = get_current_site(request)
-                    message = render_to_string('users/sign_up_mail.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                    })
-                    to_email = form.cleaned_data['email']
-
-                    email = EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[
-                                         to_email], reply_to=(settings.DEFAULT_FROM_EMAIL,))
-                    email.content_subtype = "html"
-                    try:
-                        email.send()
-                    except:
-                        messages.error(
-                            request, f'Something went Wrong!. Please Try again.')
-                        return redirect(request.path_info)
-                password = request.POST['password1']
-                user.set_password(password)
-                user.content_permission = False
-                user.home_permission = False
-                user.save()
-                if form.cleaned_data['user_type'] == "dealer":
-                    messages.success(
-                        request, f'Sign Up Successful! Your Dealer Number is sent to your provided email.')
-                else:
-                    messages.success(request, f'Sign Up Successful!')
-                return redirect('login')
-        else:
-            form = SpecUserForm()
-        return render(request, 'users/register.html', {'form': form, 'title': 'Registration'})
-    else:
-        return redirect('/')
-
-
 @login_required
 @user_passes_test(lambda user: user.is_superuser != True, redirect_field_name="/")
 def home_access(request):
@@ -282,12 +260,12 @@ def admincheck(request, uidb64, req_for):
         return redirect(request.path_info)
 
 
-def randomstring():
-    """making random dealer number"""
-    abc = ''.join((random.SystemRandom().choice(
-        string.digits) for _ in
-        range(6)))
-    return int(abc)
+# def randomstring():
+#     """making random dealer number"""
+#     abc = ''.join((random.SystemRandom().choice(
+#         string.digits) for _ in
+#         range(6)))
+#     return int(abc)
 
 
 @login_required

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Photo, WaterMark, EmailList, SpecUser
+from .models import User, Photo, WaterMark, EmailList, SpecUser, UserPreferences
 # from order.models import CartOrder
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField,FloatField
 # Register your models here.
@@ -44,4 +44,9 @@ class SpecUserAdmin(admin.ModelAdmin):
     list_per_page = 50
     # inlines = [CartOrderAdmin]
 admin.site.register(SpecUser,SpecUserAdmin)
+
+class UserPreferencesAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(UserPreferences,UserPreferencesAdmin)
 

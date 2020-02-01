@@ -2,9 +2,10 @@ from PIL import Image
 from django.db import models
 from datetime import datetime
 from django.utils import timezone
-from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import AbstractUser
+from multiselectfield import MultiSelectField
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
 # Create Models
 
 class User(AbstractUser):
@@ -40,16 +41,15 @@ class SpecUser(User):
     phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
     dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
 
-    home_permission = models.BooleanField('Home Access', default=None)
-    content_permission = models.BooleanField('Content Access', default=None)
+    home_permission = models.BooleanField('Home Access', default=False)
+    content_permission = models.BooleanField('Content Access', default=False)
     activation_time_home = models.DateTimeField('Activation Time (Home)',blank=True, null=True)
     expire_time_home = models.DateTimeField('Expire Time (Home)', blank=True, null=True) 
     activation_time_spec_content = models.DateTimeField('Activation Time (Content)',blank=True, null=True)
     expire_time_spec_content = models.DateTimeField('Expire Time (Content)', blank=True, null=True) 
     
     def __str__(self):
-        return f"{self.user_type} {self.first_name}"
-
+        return f"{self.user_type} - {self.first_name}"
 
     class Meta:
         verbose_name = 'Spec_User'
@@ -70,6 +70,7 @@ class Photo(models.Model):
             img.thumbnail(output_size)
             img.save(self.original_image.path)  
 
+
 class WaterMark(models.Model):
     water_mark_image = models.ImageField(upload_to='water_mark', default=None, help_text="You can add atmost one WaterMark image")
     
@@ -81,3 +82,48 @@ class WaterMark(models.Model):
 class EmailList(models.Model):
     name = models.CharField("Name", max_length=60, blank=True, null=True)
     email = models.EmailField(("Email"), max_length=254, unique=True)
+
+
+class UserPreferences(models.Model):
+    YES_NO_CHOICES = (
+        ('yes', 'Yes'),
+        ('no', 'No')
+    )
+    Type_Of_Development = (
+        ('select all','Select All'),
+        ('Commercial','Commercial'),
+        ('Mixed-use','Mixed-use'),
+        ('Multi-tenant','Multi-tenant'),
+        ('Condominium','Condominium'),
+        ('Townhome','Townhome'),
+        ('Man Camp','Man Camp'),
+        ('Mobile Home Park','Mobile Home Park'),
+        ('RV Park','RV Park'),
+        ('Park Home (as defined by Housing and Urban Development)','Park Home (as defined by Housing and Urban Development)'),
+        ('Other','Other'),
+    )
+   
+    Type_Of_Smart_Home = (
+    ('Automated Home Shopping and Delivery','Automated Home Shopping and Delivery'),
+    ('Self-Driving Transport to Local Shopping Centers','Self-Driving Transport to Local Shopping Centers'),
+    ('Self-Driving Transport to Local Medical Facilities','Self-Driving Transport to Local Medical Facilities'),
+    )
+    Type_Of_Electric_Vehicle_Function = (
+        ('Standard','Standard'),
+        ('Capability to Load Handicapped Person Without Human Assistance','Capability to Load Handicapped Person Without Human Assistance'),
+    )
+
+    user_obj = models.ForeignKey(SpecUser, on_delete=models.CASCADE)
+    type_of_development = MultiSelectField("What type of development(s) are you seeking?",choices=Type_Of_Development, max_length=300)
+
+    other_type_of_development = models.CharField(max_length=300, verbose_name="Other", blank=True, null=True)
+   
+    type_of_smart_home = MultiSelectField("What type of smart home functionality are you interested in learning more about? ",choices=Type_Of_Smart_Home, max_length=300)
+   
+    type_of_electric_vehicle_function = MultiSelectField("An electric vehicle will be included with each housing unit. What type of electric vehicle function are you interested in?",choices=Type_Of_Electric_Vehicle_Function, max_length=300)
+
+    learn_about_electric_drive = models.CharField("Do you wish to learn more about an optional electric-drive community transport vehicle?",choices=YES_NO_CHOICES, max_length=100)
+
+    class Meta:
+        verbose_name = 'UserPreference'
+        verbose_name_plural = 'UserPreferences'

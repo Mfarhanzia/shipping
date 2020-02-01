@@ -17,11 +17,9 @@ urlpatterns = [
     path('view/reportsap', view_report_sap, name="report-sap"),
     path('3d/model', view_3d_model, name='model-3d'),
 
-
     path('buyer/applications',ViewBuyerApp.as_view(), name="buyer-app"),
 
     path('dealer/',dealer_view, name="dealer-view"),
-
     path('quotation/',vendor_quotations, name="vendor-quotation"),
     path('view/quotation/',view_quotations, name="view-quotation"),
     

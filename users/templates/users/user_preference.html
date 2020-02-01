@@ -1,0 +1,67 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for errors in form.non_field.errors %}
+            <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+            {% endfor%}
+            <form method="POST"  class="boxshadow2">
+                <h1 class="text-center">User Preferences</h1>
+                <p class="text-center"><span class="text-muted">Step {{wizard.steps.step1}} of {{wizard.steps.count}}</span></p>
+                <hr class="ml-4">
+                {{ wizard.management_form }}
+                {% csrf_token %}
+                {% for field in wizard.form %}
+                {% if field == form.learn_about_electric_drive %}
+                <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
+                    <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+                    {{field}}
+                </div>
+
+                {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
+                <div id="div_id_{{field.name}}" class="ml-4 check_ul" style="display: block;">
+                    {{field.label}}
+                    <h1></h1>
+                    {{field}}
+                </div>
+
+                {% else %}
+                <div id="div_{{field.id_for_label}}" class="md-form">
+                    
+                    <i class="prefix"> </i>
+                    <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}
+                    </label><br>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                {% if wizard.steps.prev %}
+                <div class="form-group fa-pull-left">
+                    <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
+                </div>
+                {% endif %}
+                <div class="form-group fa-pull-right">
+                    {% if wizard.steps.next %}
+                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-black btn-lg">
+                    {%if next_button%}
+                        as{{next_button}}
+                        {%else%}
+                        Submit
+                        {%endif%}
+                    </button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,6 +1,6 @@
 import re
 from django import forms
-from .models import EmailList, User, SpecUser
+from .models import EmailList, User, SpecUser, UserPreferences
 from django.contrib.auth import password_validation
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.forms import UserCreationForm
@@ -147,8 +147,14 @@ class RegistrationForm2(forms.ModelForm):
                 )
         return l_name
 
+class UserPreferencesForm(forms.ModelForm):
+    class Meta:
+        model = UserPreferences
+        fields = ("type_of_development","other_type_of_development","type_of_smart_home","type_of_electric_vehicle_function","learn_about_electric_drive",)
 
-
+        widgets = {
+            'learn_about_electric_drive' : forms.RadioSelect(),}
+            
 class ContactUsForm(forms.Form):
     first_name = forms.CharField(max_length=100, required=True)
     last_name = forms.CharField(max_length=100)

@@ -24,14 +24,14 @@
         //remove blank options
         $("ul[id=id_letter_of_credit] > li:first").remove();
         $("ul[id=id_line_of_credit] > li:first").remove();
-        $("ul[id=id_learn_about_electric_drive] > li:first").remove();
+        $("ul[id=id_2-learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_septic_infrastructure] > li:first").remove();
         $("ul[id=id_installation_septic_infrastructure] > li:first").remove();
 
 
         // add dashes to phone number
-        $('#id_phone_number').keyup(function() {
-            $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/, '$1-$2-$3'))
+        $('#id_1-phone_number').keyup(function() {
+            $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{3})/, '$1-$2-$3'))
         });
 
         $('#id_phone_number_8').keyup(function() {
@@ -74,32 +74,24 @@
         });
 
         $("#id_when_to_order_1").click(function() {
-
             $("#id_12").show();
             $('#id_other_when_to_order').attr('required', 'required');
         });
-
+        show_hide_fields()
         // other1
-        $("#id_type_of_development_10").click(function() {
-            if ($('#id_type_of_development_10').is(":checked")) {
-                $("#id_14").show();
-                $('#id_other_type_of_development').attr('required', 'required');
-            } else {
-                $('#id_other_type_of_development').removeAttr('required');
-                $('#id_other_type_of_development').val('');
-                $("#id_14").hide();
-            }
+        $("#id_2-type_of_development_10").click(function() {
+            show_hide_fields()
         });
 
         // other2
         $("#id_type_of_climate_area_6").click(function() {
             if ($('#id_type_of_climate_area_6').is(":checked")) {
-
                 $('#id_other_type_of_climate_area').attr('required', 'required');
+                $('#id_14').show();
             } else {
                 $('#id_other_type_of_climate_area').removeAttr('required');
                 $('#id_other_type_of_climate_area').val('');
-                $("#id_16").hide();
+                $("#id_14").hide();
             }
         });
 
@@ -110,7 +102,7 @@
         access_time_admin()
 
         //register.html
-        $("#id_user_type").click(function() {
+        $("#id_1-user_type").click(function() {
             register_Validation()
         });
         register_Validation()
@@ -123,16 +115,16 @@
         });
 
         //select all
-        $("#id_type_of_development_0").click(function() {
-            $("#id_type_of_development_1").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_2").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_3").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_4").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_5").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_6").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_7").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_8").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_development_9").prop('checked', $(this).prop('checked'));
+        $("#id_2-type_of_development_0").click(function() {
+            $("#id_2-type_of_development_1").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_2").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_3").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_4").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_5").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_6").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_7").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_8").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_development_9").prop('checked', $(this).prop('checked'));
         });
 
         //select all
@@ -238,43 +230,42 @@
         }
     }
 
-    /// register.html validation
+    /// signup/register.html validation
     function register_Validation() {
+        if ($('#id_1-user_type_4').is(":checked")) {
+            $("#div_id_dealer_no").show();
+            $("#div_id_company_name").hide();
+            $("#id_1-company_name").val('');
+            $("#div_id_title").hide();
+            $("#id_1-title").val('');
 
-        if ($('#id_user_type_4').is(":checked")) {
-            $("#id_register_9").show();
-            $("#id_register_7").hide();
-            $("#id_company_name").val('');
-            $("#id_register_8").hide();
-            $("#id_title").val('');
+        } else if ($('#id_1-user_type_3').is(":checked")) {
+            $("#div_id_company_name").hide();
+            $("#id_1-company_name").val('');
+            $("#div_id_title").hide();
+            $("#id_1-title").val('');
+            $("#div_id_dealer_no").hide();
+            $("#id_1-dealer_no").val('');
 
-        } else if ($('#id_user_type_3').is(":checked")) {
-            $("#id_register_7").hide();
-            $("#id_company_name").val('');
-            $("#id_register_8").hide();
-            $("#id_title").val('');
-            $("#id_register_9").hide();
-            $("#id_dealer_no").val('');
-
-        } else if ($('#id_user_type_5').is(":checked")) {
-            $("#id_register_7").hide();
-            $("#id_company_name").val('');
-            $("#id_register_8").hide();
-            $("#id_title").val('');
-            $("#id_register_9").hide();
-            $("#id_dealer_no").val('');
-        } else if ($('#id_user_type_0').is(":checked") || $('#id_user_type_1').is(":checked") ||
-            $('#id_user_type_2').is(":checked")) {
-            $("#id_register_7").show();
-            $("#id_register_8").show();
-            $("#id_register_9").hide();
-            $("#id_dealer_no").val('');
-        } else if ($('#id_user_type_6').is(":checked")) {
-            $("#id_register_7").show();
-            $("#id_register_8").hide();
-            $("#id_title").val('');
-            $("#id_register_9").hide();
-            $("#id_dealer_no").val('');
+        } else if ($('#id_1-user_type_5').is(":checked")) {
+            $("#div_id_company_name").hide();
+            $("#id_1-company_name").val('');
+            $("#div_id_title").hide();
+            $("#id_1-title").val('');
+            $("#div_id_dealer_no").hide();
+            $("#id_1-dealer_no").val('');
+        } else if ($('#id_1-user_type_0').is(":checked") || $('#id_1-user_type_1').is(":checked") ||
+            $('#id_1-user_type_2').is(":checked")) {
+            $("#div_id_company_name").show();
+            $("#div_id_title").show();
+            $("#div_id_dealer_no").hide();
+            $("#id_1-dealer_no").val('');
+        } else if ($('#id_1-user_type_6').is(":checked")) {
+            $("#div_id_company_name").show();
+            $("#div_id_title").hide();
+            $("#id_1-title").val('');
+            $("#div_id_dealer_no").hide();
+            $("#id_1-dealer_no").val('');
         }
     }
     // 
@@ -310,13 +301,7 @@
             Webcam.snap( function(image) {
                 $("#image-input_id").val(image);
             });
-            // while (true){
-            //     if ($("#image-input_id").val()!=""){
-            //         console.log("==",$("#image-input_id").val())
-            //         break;
-            //     }
-            //     console.log("==",$("#image-input_id").val())
-            // }
+           
         });
 
     $("#form_submission").click(function() {
@@ -347,14 +332,24 @@ function form_submissions(){
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 parts.join(".")
                 $("#total").html("$ " + parts.join("."));
-              
             },
             error: function(data) {
-                // console.log("success",data)
+                // console.log("error",data)
                 // $("#MESSAGE-DIV").html("Something went wrong!");
             }
         });
         return false;
+}
+
+function show_hide_fields(){
+    if ($('#id_2-type_of_development_10').is(":checked")) {
+        $("#div_id_2-other_type_of_development").show();
+        $('#id_2-other_type_of_development').attr('required', 'required');
+    } else {
+        $('#id_2-other_type_of_development').removeAttr('required');
+        $('#id_2-other_type_of_development').val('');
+        $("#div_id_2-other_type_of_development").hide();
+    }
 }
 
 // function form_save(){

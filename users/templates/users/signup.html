@@ -12,16 +12,17 @@
             <form method="POST" class="boxshadow2">
                 {% csrf_token %}
                 <h1 class="text-center">Registration</h1>
+                <p class="text-center"><span class="text-muted">Step {{wizard.steps.step1}} of {{wizard.steps.count}}</span></p>
                 <hr class="ml-4">
                 {{ wizard.management_form }}
                 {% for field in wizard.form  %}
                     {% if field == form.user_type %}
-                    <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
+                    <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
                         <label class="label" for="{{field.id_for_label}}">{{field.label}}:</label>
                         {{field}}
                     </div>
                 {%else%}
-                    <div id="id_register_{{forloop.counter}}" class="md-form">
+                    <div id="div_id_{{field.name}}" class="md-form">
                         <i class="prefix"> </i>
                         <label for="{{field.id_for_label}}" class="label" data-error="wrong"
                             data-success="right">{{field.label}}
@@ -40,7 +41,6 @@
                 {% if wizard.steps.prev %}
                 <div class="form-group fa-pull-left">
                     <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
-                    
                 </div>
                 {% endif %}
                 <div class="form-group fa-pull-right">
