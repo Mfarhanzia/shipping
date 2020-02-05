@@ -20,6 +20,7 @@ class Order(models.Model):
         ('yes', 'Yes'),
         ('no', 'No')
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
     f_name = models.CharField('First Name',max_length=100)
     l_name = models.CharField('Last Name',max_length=100)
     email = models.EmailField('Email',max_length=100)
@@ -65,6 +66,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Buyer Application"
         verbose_name_plural = "Buyer Applications"
+
 
 class Material(models.Model):
     """Material Required showing this data to vendors for quotations"""

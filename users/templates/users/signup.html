@@ -16,7 +16,7 @@
                 <hr class="ml-4">
                 {{ wizard.management_form }}
                 {% for field in wizard.form  %}
-                    {% if field == form.user_type %}
+                    {% if field == wizard.form.user_type %}
                     <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
                         <label class="label" for="{{field.id_for_label}}">{{field.label}}:</label>
                         {{field}}

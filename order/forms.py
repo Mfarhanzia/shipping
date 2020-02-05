@@ -97,3 +97,11 @@ class AddCustomProductForm(forms.Form):
     no_of_floors = forms.ChoiceField(choices=FLOOR_QUANTITY_CHOICES, required=False)
     width = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
     depth = forms.ChoiceField(choices=OTHER_QUANTITY_CHOICES,required=False)
+
+class UserTermsForm(forms.Form):
+    CHOICES = (
+        ("agree","Agree"),
+        ("decline","Decline Agreement"),
+    )
+    accept = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    # accept2 = forms.CharField()

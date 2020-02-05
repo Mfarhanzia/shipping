@@ -7,11 +7,12 @@
             {% for errors in form.non_field.errors %}
             <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
             {% endfor%}
-            <form method="POST"  class="boxshadow2">
-                <h1 class="text-center">Buyer Profile</h1>
+            <form method="POST" class="boxshadow2">
+                {{ wizard.management_form }}
+                <h1 class="text-center">Buyer Application</h1>
                 <hr class="ml-4">
                 {% csrf_token %}
-                {% for field in form %}
+                {% for field in wizard.form %}
                 {% if field == form.letter_of_credit or field == form.line_of_credit or field == form.learn_about_electric_drive or field == form.septic_infrastructure or field == form.installation_septic_infrastructure or field == form.when_to_order %}
                 <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
                     <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
@@ -42,9 +43,10 @@
                 </div>
                 {% endif %}
                 {% endfor %}
-                <div class="form-group fa-pull-right">
+                {% comment %} <div class="form-group fa-pull-right">
                     <button class="btn btn-outline-info btn-lg" type="submit">SUBMIT INQUIRY</button>
-                </div>
+                </div> {% endcomment %}
+                {% include "users/formwizard_btns.html" %}
             </form>
         </div>
     </div>

@@ -2,8 +2,8 @@ from django.urls import path
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from .views import (BuyerAppCreateView, ViewBuyerApp, view_struc_drawings,dealer_view, vendor_quotations,
-                    view_quotations, exterior_view, interior_view, order_form, add_order,
-                    save_cart, view_container_orders,view_container_order_items, create_order_pdf,view_report_sap, view_arc_drawings, view_3d_model)
+                    view_quotations, exterior_view, interior_view, rder_form, add_order,
+                    save_cart, view_container_orders,view_container_order_items, create_order_pdf,view_report_sap, view_arc_drawings, view_3d_model, OrderForm)
 
 
 urlpatterns = [
@@ -25,13 +25,14 @@ urlpatterns = [
     
     path('interior-view/', interior_view, name='interior-view'),
     path('exterior-view/', exterior_view, name='exterior-view'),
-    path('order-form/', order_form, name='order-form'),
 
     path('add-order/', add_order, name='add-order'),
     # path('add-order/<int:pk>/', add_order, name='add-order'),
 
     # path('order-detail/', cart_detail, name='cart-detail'),
-    path('save-order/', save_cart, name='save-cart'),
+    # path('order-form/', order_form, name='order-form'),
+    path('order-form/', OrderForm.as_view(), name='order-form'),
+    # path('save-order/', save_cart, name='save-cart'),
     path('container/orders', view_container_orders, name='view-container-orders'),
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
     path('my/orders', view_container_order_items, name='my-orders'),

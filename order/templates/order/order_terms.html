@@ -1,0 +1,44 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <form method="POST" class="agreement-form">
+                {%csrf_token%}
+                {{ wizard.management_form }}
+                <div class="agreement-terms p-4">
+                    <legend >PRE-INSPRCTION SCOPE & AGREEMENT </legend>
+                    <p>
+                    Agreement Terms.
+                    </p>
+
+                </div>
+                <div class="terms-btn mt-3 p-4 mb-4">
+                    {% for field in wizard.form %}
+                        {{field}}
+                    {% endfor%}
+                </div>
+                {% comment %} <input type="hidden" name="webcam" id="image-input_id" value=""> {% endcomment %}
+                {% include "users/formwizard_btns.html" %}
+            </form>
+        </div>
+        <div class="col-md-4 col-sm-6 img-div">
+            <div id="div_id"></div>
+        </div>
+    </div>
+</div>
+{% endblock%}
+{% block js %}
+<script>
+    
+    Webcam.set({
+        width: 300,
+        height: 400,
+        image_format: 'jpeg',
+        jpeg_quality: 90,
+       
+        });
+    Webcam.attach('#div_id' );
+</script>
+{% endblock %}

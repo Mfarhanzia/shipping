@@ -301,7 +301,6 @@
             Webcam.snap( function(image) {
                 $("#image-input_id").val(image);
             });
-           
         });
 
     $("#form_submission").click(function() {
@@ -354,7 +353,7 @@ function show_hide_fields(){
 function myFunction(){
     alert();
     $('#b-color').css("color","black");
-}
+}   
 // function form_save(){
 //     var frm = $("#order_form");
 //     console.log("data",frm)

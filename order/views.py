@@ -8,8 +8,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
 from django.db.models import FloatField
-from django.core.mail import EmailMessage
 from django.views.generic import ListView
+from django.core.mail import EmailMessage
 from django.db.models.functions import Cast
 from django.utils.encoding import force_text
 from django.views.generic.edit import FormView
@@ -17,22 +17,22 @@ from users.token import account_activation_token
 from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from users .models import Photo, WaterMark, SpecUser
-from django.contrib.sites.shortcuts import get_current_site
-from .forms import BuyerAppForm, MaterialQuotationsForm, AddCustomProductForm  
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
 from django.views.decorators.http import require_POST
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .forms import BuyerAppForm, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
 
 from xhtml2pdf import pisa
 from django_xhtml2pdf.utils import generate_pdf
 from django.template.loader import get_template
-from django.template import Context
 from io import BytesIO
+from django.template import Context
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
-
+from formtools.wizard.views import CookieWizardView
 
 # Create your views here.
 
@@ -112,8 +112,122 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
+class OrderForm(LoginRequiredMixin, CookieWizardView):
+    form_list = [AddCustomProductForm, BuyerAppForm,UserTermsForm]
+    def get_template_names(self):
+        """
+        Return the template name for the current step
+        """
+        templates = {
+        0: 'order/form_order.html',
+        1: 'order/buyer_app_form.html',
+        2: 'order/order_terms.html',
+       }
+        return [templates[int(self.steps.current)]]
+        
+    def save_cart(self):
+        """saving the container orders"""
+        print("==========", self.request.session["form_1_data"])
+        form1_data = self.request.session["form_1_data"]
+        quantities = form1_data['quantity'] # list
+        dates = form1_data['date_'] # list
+        self.request.session['print_name'] = form1_data["custom_order"]['print_name']
+        no_of_floors = form1_data["custom_order"]['no_of_floors']
+        width = form1_data["custom_order"]['width']
+        depth = form1_data["custom_order"]['depth']
+        cus_qty = form1_data["custom_order"]['custom_quantity']
+        cus_date = form1_data["custom_order"]['custom_date']
+        self.request.session['custom_id']=''
+        self.request.session['list_ids']=''
+        order_ids = []
+        image=None
+        try:
+            format, imgstr = form1_data["custom_order"]['webcam'].split(';base64,') 
+            ext = format.split('/')[-1]
+            image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
+        except Exception as e:
+            pass
+            
+        for q,date in zip(quantities,dates):
+            if q == "" or date == "":
+                continue
+            qty = int(q.split("##")[0]) 
+            pk = int(q.split("##")[1]) 
+            product = get_object_or_404(ContainerPricing, id=pk)
+            
+            current_order = CartOrder(
+            user_id=self.request.user.id,
+            order_items = product,
+            quantity = qty, 
+            delivery_date = date.replace('"',''),
+            )
+            if image != None:
+                current_order.user_image = image
+            current_order.save()
+            order_ids.append(int(current_order.id))
+
+        if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+            qty = int(cus_qty.split("##")[0]) 
+            pk = int(cus_qty.split("##")[1])      
+            product = get_object_or_404(CustomContainerPricing, id=pk)
+            custom_order_obj = CartOrder(
+            user_id=self.request.user.id,
+            custom_order = product,
+            custom_floors = no_of_floors,
+            custom_width = width,
+            custom_depth = depth,
+            quantity = qty, 
+            delivery_date = cus_date.replace('"',''),
+            )
+            if image != None:
+                custom_order_obj.user_image = image
+            custom_order_obj.save()
+            self.request.session['custom_id'] = custom_order_obj.id
+        self.request.session['list_ids'] = json.dumps(order_ids)
+
+    def get_form_step_data(self, form):
+        data = super().get_form_step_data(form)
+        if self.steps.step1 == 1:  
+            self.form1_data = self.request.session["form_1_data"] ={}
+            self.form1_data["quantity"] = self.request.POST.getlist('quantity')
+            self.form1_data["date_"] = self.request.POST.getlist('date_')
+            self.form1_data["custom_order"] = self.request.POST
+            # print("/////////////",self.request.session["form_1_data"])
+            # self.request.session.clear()
+        elif self.steps.step1 == 3:
+            pass
+            # self.check = form.cleaned_data["accept"]
+        return data
+
+    def get_context_data(self, form, **kwargs):
+        context = super(OrderForm, self).get_context_data(form=form, **kwargs)
+        if self.steps.step1 == 1:
+            form2 = AddCustomProductForm()
+            pricing = ContainerPricing.objects.all().order_by('id')
+            custom_pricing = CustomContainerPricing.objects.all()[0]
+            context.update({
+                "pricing":pricing,
+                "form2":form2,
+                'title': 'Order',
+                "quantity": range(300),
+                "custom_pricing":custom_pricing,
+                })
+        elif self.steps.step1 == 2:
+            pass
+        return context 
+
+    def done(self, form_list, **kwargs):
+        self.save_cart()
+        forms = list(form_list)
+        buyer_form = forms[1]
+        buyer_app = buyer_form.save(commit=False)
+        buyer_app.user=self.request.user
+        buyer_app.save()
+        self.request.session["form_1_data"] = ""
+        return redirect("/")
+
 @login_required
-def order_form(request):
+def rder_form(request):
     """ order form without permission"""
     form2 = AddCustomProductForm()
     pricing = ContainerPricing.objects.all().order_by('id')
@@ -250,7 +364,6 @@ def send_mail_PDF(template,context,mail,print_name=None):
     pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
     ###sending email with attachment(pdf)    
     mail_subject = f"Shipping Container Homes Order Detail"
-    # to_email = "farhan71727@gmail.com"
     user_msg = "Hi, \n Thanks for Ordering at BoltonBloks.\n\n Your Receipt is attached."
     if mail != settings.DEFAULT_FROM_EMAIL:
         email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
@@ -278,14 +391,10 @@ def create_order_pdf(request):
         cart = ""
 
     ## custom order
-
     try:
         custom_id = request.session['custom_id']
         custom_order_obj = CartOrder.objects.get(id=int(custom_id))
-        # if custom_order_obj.quantity >20:
-        #     total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price21 
-        # else:
-        #     total += custom_order_obj.quantity * custom_order_obj.custom_order.custom_price 
+  
         area = (int(custom_order_obj.custom_floors) * int(custom_order_obj.custom_width) * int(custom_order_obj.custom_depth))
         if custom_order_obj.quantity > 20 or area > 20:
             total += (area * custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price21   
@@ -323,7 +432,6 @@ def create_order_pdf(request):
         "user_image": None,
         }  
     pdf = send_mail_PDF(template,context,user_mail)
-
     messages.success(request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
     return redirect("order")
 
@@ -441,6 +549,7 @@ def vendor_quotations(request):
 def view_quotations(request):
     qs = MaterialQuotations.objects.all()
     return render(request, 'order/view_quotations.html', {"qs":qs, "title":"Quotations"})
+
 
 def interior_view(request):
     return render(request, 'order/interior.html')

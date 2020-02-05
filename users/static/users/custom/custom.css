@@ -1,6 +1,9 @@
 html {
     scroll-behavior: smooth;
 }
+body{
+
+}
 
 .pdf{
     margin-left: 180px; 
@@ -605,9 +608,6 @@ input[type="date"], focus {
     -moz-box-shadow: none;
 }
 
-#div_id{
-    visibility: hidden;
-}
 
 @font-face {
     font-family: 'Brush Script Std';
@@ -740,3 +740,36 @@ input[type="date"], focus {
     z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
   }
+.agreement-form{
+    font-weight: 400;
+}
+
+.agreement-form ul{
+    list-style: none;
+}
+.agreement-form ul li{
+    display: inline;
+}
+
+.agreement-form legend{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+  
+.agreement-terms{
+    height: 50vh;
+    border: 5px solid #555;
+    border-radius: 2px;
+    border-bottom: none;
+    overflow-y: auto;
+}
+
+.terms-btn{
+    background-color: #e2f0cd;
+    border-radius: 2px;
+}
+
+.img-div{
+    overflow: auto;
+}

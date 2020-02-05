@@ -17,7 +17,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from formtools.wizard.views import CookieWizardView, SessionWizardView
+from formtools.wizard.views import CookieWizardView
 # views
 
 
