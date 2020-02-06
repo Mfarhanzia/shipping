@@ -33,7 +33,7 @@ from django.template import Context
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from formtools.wizard.views import CookieWizardView
-
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 class BuyerAppCreateView(LoginRequiredMixin,FormView):
@@ -113,7 +113,8 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 
 class OrderForm(LoginRequiredMixin, CookieWizardView):
-    form_list = [AddCustomProductForm, BuyerAppForm,UserTermsForm]
+    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
+    form_list = [AddCustomProductForm, BuyerAppForm, UserTermsForm,AddCustomProductForm]
     def get_template_names(self):
         """
         Return the template name for the current step
@@ -122,7 +123,9 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         0: 'order/form_order.html',
         1: 'order/buyer_app_form.html',
         2: 'order/order_terms.html',
+        3: 'order/review_order.html',
        }
+        
         return [templates[int(self.steps.current)]]
         
     def save_cart(self):
@@ -131,14 +134,14 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
         dates = form1_data['date_'] # list
-        self.request.session['print_name'] = form1_data["custom_order"]['print_name']
+        # self.request.session['print_name'] = form1_data['print_name']
         no_of_floors = form1_data["custom_order"]['no_of_floors']
         width = form1_data["custom_order"]['width']
         depth = form1_data["custom_order"]['depth']
         cus_qty = form1_data["custom_order"]['custom_quantity']
         cus_date = form1_data["custom_order"]['custom_date']
-        self.request.session['custom_id']=''
-        self.request.session['list_ids']=''
+        self.request.session["form_1_data"]['custom_id']=''
+        self.request.session["form_1_data"]['list_ids']=''
         order_ids = []
         image=None
         try:
@@ -182,10 +185,11 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             if image != None:
                 custom_order_obj.user_image = image
             custom_order_obj.save()
-            self.request.session['custom_id'] = custom_order_obj.id
-        self.request.session['list_ids'] = json.dumps(order_ids)
+            self.request.session["form_1_data"]['custom_id'] = custom_order_obj.id
+        self.request.session["form_1_data"]['list_ids'] = json.dumps(order_ids)
 
     def get_form_step_data(self, form):
+        print("====++++++++++++++++++++++++++++++++++=")
         data = super().get_form_step_data(form)
         if self.steps.step1 == 1:  
             self.form1_data = self.request.session["form_1_data"] ={}
@@ -195,8 +199,10 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             # print("/////////////",self.request.session["form_1_data"])
             # self.request.session.clear()
         elif self.steps.step1 == 3:
-            pass
             # self.check = form.cleaned_data["accept"]
+            self.request.session["form_1_data"]["print_name"] = form.cleaned_data["print_name"]
+            print("::::::::::;",self.request.session["form_1_data"])
+            # self.request.session["form_1_data"]["image_field"] = form.cleaned_data["image_field"]
         return data
 
     def get_context_data(self, form, **kwargs):
@@ -287,8 +293,8 @@ def save_cart(request):
     depth = request.POST['depth']
     cus_qty = request.POST['custom_quantity']
     cus_date = request.POST['custom_date']
-    request.session['custom_id']=''
-    request.session['list_ids']=''
+    request.session["form_1_data"]['custom_id']=''
+    request.session["form_1_data"]['list_ids']=''
     order_ids = []
     image=None
     try:
@@ -334,8 +340,8 @@ def save_cart(request):
         if image != None:
             custom_order_obj.user_image = image
         custom_order_obj.save()
-        request.session['custom_id'] = custom_order_obj.id
-    request.session['list_ids'] = json.dumps(order_ids)
+        request.session["form_1_data"]['custom_id'] = custom_order_obj.id
+    request.session["form_1_data"]['list_ids'] = json.dumps(order_ids)
     return redirect("order-pdf")
 
 def fetch_resources(uri, rel):
@@ -379,7 +385,7 @@ def create_order_pdf(request):
     template = get_template('order/order_pdf.html')
     total = 0
     try:
-        ids = json.loads(request.session['list_ids'])
+        ids = json.loads(request.session["form_1_data"]['list_ids'])
         cart = CartOrder.objects.filter(id__in=ids)
         
         for data in cart:
@@ -392,7 +398,7 @@ def create_order_pdf(request):
 
     ## custom order
     try:
-        custom_id = request.session['custom_id']
+        custom_id = request.session["form_1_data"]['custom_id']
         custom_order_obj = CartOrder.objects.get(id=int(custom_id))
   
         area = (int(custom_order_obj.custom_floors) * int(custom_order_obj.custom_width) * int(custom_order_obj.custom_depth))

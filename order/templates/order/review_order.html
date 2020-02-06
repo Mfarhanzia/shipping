@@ -1,0 +1,76 @@
+
+{% extends 'users/base.html' %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+            <table class="table view_order_table table-bordered  text-center table-striped">
+                <thead>
+                    <tr>  
+                        <th> No. of Floors</th>
+                        <th>Variant</th>
+                        <th>Approx. <br>Square Feet</th>
+                        <th>Delivered Price <br>(Delivered to site for <br>20 units or less)</th>
+                        <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
+                        <th>Qty</th>
+                        <th>Date Delivered<br> (to site)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in pricing %}
+                    <tr>
+                        <td>{{data.no_of_floors}}</td>
+                        <td>{{data.variant}}</td>
+                        <td>{{data.square_feet}}</td>
+                        <td >$ {{data.price|intcomma}}</td>
+                        <td >$ {{data.price21|intcomma}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <table class="table view_order_table table-bordered  text-center table-striped">
+                <thead>
+                    <tr valign="top">  
+                        <th> No. of Floors (max12)</th>
+                        <th>Width (apt. units)</th>
+                        <th>Depth (apt. units)</th>
+                        <th>Approx. <br>Square Feet per room</th>
+                        <th>Price per 290s.f. room(for 20units or less)</th>
+                        <th>Price per 290s.f. room(for 21units or more)</th>
+                        <th>Qty</th>
+                        <th>Date Delivered<br> (to site)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
+                        <td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
+                        <td>{{form2.depth|add_class:"p-1"}} deep</td>
+                        <td>{{custom_pricing.sqfeet_per_room|intcomma}}</td>
+                        <td>$ {{custom_pricing.custom_price|intcomma}}</td>
+                        <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
+                        <td>qty</td>
+                        <td>date</td>
+                    </tr>
+                </tbody>
+            </table> 
+            <form method="POST" >
+                {%csrf_token%}
+                        {{ wizard.management_form }}
+            {% include "users/formwizard_btns.html" %}
+            </form>
+        </div>
+    </div> 
+</div>
+
+{% endblock %}
+
+
+          

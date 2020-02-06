@@ -100,8 +100,9 @@ class AddCustomProductForm(forms.Form):
 
 class UserTermsForm(forms.Form):
     CHOICES = (
+        ("decline","Decline"),
         ("agree","Agree"),
-        ("decline","Decline Agreement"),
     )
-    accept = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
-    # accept2 = forms.CharField()
+    accept = forms.ChoiceField(label="",choices=CHOICES, widget=forms.RadioSelect)
+    image_field = forms.CharField(label="",widget=forms.TextInput(attrs={"name":"webcam",                                                            "id":"image-input_id", "type":"hidden"}), required=False)
+    print_name = forms.CharField(label="Signature",widget=forms.TextInput())

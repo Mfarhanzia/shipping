@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8 col-sm-12">
-            <form method="POST" class="agreement-form">
+            <form method="POST" class="agreement-form" enctype="multipart/form-data">
                 {%csrf_token%}
                 {{ wizard.management_form }}
                 <div class="agreement-terms p-4">
@@ -12,15 +12,17 @@
                     <p>
                     Agreement Terms.
                     </p>
-
                 </div>
                 <div class="terms-btn mt-3 p-4 mb-4">
+                <div style="display:inline;">      
                     {% for field in wizard.form %}
-                        {{field}}
-                    {% endfor%}
+                       {{field.label}} {{field}}
+                    {% endfor%}</div>
+
                 </div>
                 {% comment %} <input type="hidden" name="webcam" id="image-input_id" value=""> {% endcomment %}
                 {% include "users/formwizard_btns.html" %}
+                
             </form>
         </div>
         <div class="col-md-4 col-sm-6 img-div">
@@ -31,7 +33,6 @@
 {% endblock%}
 {% block js %}
 <script>
-    
     Webcam.set({
         width: 300,
         height: 400,

@@ -751,6 +751,14 @@ input[type="date"], focus {
     display: inline;
 }
 
+.agreement-form ul li:nth-child(2){
+    float: right;
+}
+
+.agreement-form input{
+    font-family: Brush Script Std;
+}
+
 .agreement-form legend{
     text-align: center;
     font-size: 14px;

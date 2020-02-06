@@ -290,7 +290,7 @@
     });
     // on form submission
     $("#order_form").submit(function (e) {
-            $("#buyer_name").text($("#print_name").val()) 
+            // $("#buyer_name").text($("#print_name").val()) 
             var d = new Date();
             var month = d.getMonth()+1;
             var day = d.getDate();
@@ -298,9 +298,14 @@
                 ((''+month).length<2 ? '0' : '') + month + '/' +
                 ((''+day).length<2 ? '0' : '') + day;
             $(".date_today").text(output) 
-            Webcam.snap( function(image) {
-                $("#image-input_id").val(image);
-            });
+            
+        });
+    // on form submission
+    $("#id_2-accept_1").click(function()
+        {
+            // Webcam.snap( function(image) {
+            //     $("#image-input_id").val(image);
+            // });
         });
 
     $("#form_submission").click(function() {
