@@ -113,9 +113,11 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 
 class OrderForm(LoginRequiredMixin, CookieWizardView):
+   
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     form_list = [AddCustomProductForm, BuyerAppForm, UserTermsForm,AddCustomProductForm]
     def get_template_names(self):
+        # self.request.session.clear()
         """
         Return the template name for the current step
         """
@@ -125,16 +127,17 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         2: 'order/order_terms.html',
         3: 'order/review_order.html',
        }
-        
         return [templates[int(self.steps.current)]]
         
-    def save_cart(self):
+    def save_cart(self, form2):
         """saving the container orders"""
-        print("==========", self.request.session["form_1_data"])
+        print("===saving=======", self.request.session["form_1_data"])
+
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
         dates = form1_data['date_'] # list
-        # self.request.session['print_name'] = form1_data['print_name']
+        print("SAVE2::",quantities,dates)
+        form1_data['print_name'] = form2.cleaned_data["print_name"]
         no_of_floors = form1_data["custom_order"]['no_of_floors']
         width = form1_data["custom_order"]['width']
         depth = form1_data["custom_order"]['depth']
@@ -187,23 +190,121 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             custom_order_obj.save()
             self.request.session["form_1_data"]['custom_id'] = custom_order_obj.id
         self.request.session["form_1_data"]['list_ids'] = json.dumps(order_ids)
+        return self.create_order_pdf()
+
+    def fetch_resources(self,uri, rel):
+        """
+        Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
+        `uri` is the href attribute from the html link element.
+        `rel` gives a relative path, but it's not used here.
+        """
+        # path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_ROOT, "/"))
+        # path = os.path.join(rel, uri)
+        # print("path",path)
+        return uri 
+
+    def render_to_pdf(self,template_src, context_dict={}):
+        template = get_template(template_src)
+        html  = template.render(context_dict)
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=fetch_resources, encoding="UTF-8")
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf'), result.getvalue()
+        return None
+
+    def send_mail_PDF(self,template,context,mail):
+        html = template.render(context)
+        pdf,pdf2 = render_to_pdf('order/order_pdf.html', context)
+        ###sending email with attachment(pdf)    
+        mail_subject = f"Shipping Container Homes Order Detail"
+        user_msg = "Hi, \n Thanks for Ordering at BoltonBloks.\n\n Your Receipt is attached."
+        if mail == settings.DEFAULT_FROM_EMAIL:
+            email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+            email.attach('order_details.pdf', pdf2 , 'application/pdf')
+        else:
+            email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {context['print_name']}. \n\n Order Receipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+            email.attach(f"{context['print_name']}.pdf", pdf2 , 'application/pdf')
+        email.encoding = 'us-ascii'
+        email.send()
+    
+    def create_order_pdf(self):
+        template = get_template('order/order_pdf.html')
+        total = 0
+        try:
+            ids = json.loads(self.request.session["form_1_data"]['list_ids'])
+            cart = CartOrder.objects.filter(id__in=ids)
+            for data in cart:
+                if data.quantity >20:
+                    total += data.quantity * data.order_items.price21 
+                else:
+                    total += data.quantity * data.order_items.price 
+        except Exception as e:
+            cart = ""
+
+        ## custom order
+        try:
+            custom_id = self.request.session["form_1_data"]['custom_id']
+            custom_order_obj = CartOrder.objects.get(id=int(custom_id))
+            area = (int(custom_order_obj.custom_floors) * int(custom_order_obj.custom_width) * int(custom_order_obj.custom_depth))
+            if custom_order_obj.quantity > 20 or area > 20:
+                total += (area * custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price21   
+            else:
+                total += (area *  custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price 
+        except:
+            custom_order_obj = ""
+        date_ = date.today()
+        try:
+            try:
+                user_mail = cart[0].user.email
+                user_image = cart[0].user_image.path
+            except:
+                user_image = custom_order_obj.user_image.path
+                user_mail = custom_order_obj.user.email
+        except Exception as e:
+            print("no user found",e)
+            return "no order"
+        
+        print_name = self.request.session["form_1_data"]['print_name']
+        context = {
+            "custom_order_obj":custom_order_obj,
+            "cart": cart,
+            "date":date_,
+            "total":total,
+            "user_image": user_image,
+            "print_name" : print_name,
+            }  
+        ##admin
+        pdf = self.send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
+        context = {
+            "custom_order_obj":custom_order_obj,
+            "cart": cart,
+            "date":date_,
+            "total":total,
+            "print_name" : print_name,
+            "user_image": None,
+            }  
+        pdf = send_mail_PDF(template,context,user_mail)
+        messages.success(self.request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
 
     def get_form_step_data(self, form):
-        print("====++++++++++++++++++++++++++++++++++=")
         data = super().get_form_step_data(form)
-        if self.steps.step1 == 1:  
+        if self.steps.step1 == 1:
             self.form1_data = self.request.session["form_1_data"] ={}
             self.form1_data["quantity"] = self.request.POST.getlist('quantity')
             self.form1_data["date_"] = self.request.POST.getlist('date_')
             self.form1_data["custom_order"] = self.request.POST
-            # print("/////////////",self.request.session["form_1_data"])
-            # self.request.session.clear()
         elif self.steps.step1 == 3:
+            pass
             # self.check = form.cleaned_data["accept"]
-            self.request.session["form_1_data"]["print_name"] = form.cleaned_data["print_name"]
-            print("::::::::::;",self.request.session["form_1_data"])
-            # self.request.session["form_1_data"]["image_field"] = form.cleaned_data["image_field"]
         return data
+
+    # def process_step(self, form):
+    #     print("process_stepprocess_step::::",self.request.session.items())
+    #     form = super().get_form_step_data(form)
+    #     if self.steps.step1 == 3:
+    #         form["2-image_field"]=''
+    #         print("form3    ::::",form)
+    #     return form
 
     def get_context_data(self, form, **kwargs):
         context = super(OrderForm, self).get_context_data(form=form, **kwargs)
@@ -223,14 +324,19 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         return context 
 
     def done(self, form_list, **kwargs):
-        self.save_cart()
         forms = list(form_list)
-        buyer_form = forms[1]
-        buyer_app = buyer_form.save(commit=False)
-        buyer_app.user=self.request.user
-        buyer_app.save()
+        order_status = self.save_cart(forms[2])
         self.request.session["form_1_data"] = ""
-        return redirect("/")
+        if order_status != "no order":
+            buyer_form = forms[1]
+            buyer_app = buyer_form.save(commit=False)
+            buyer_app.user=self.request.user
+            buyer_app.save()
+            return redirect("/")
+        else:
+            messages.warning(self.request, "You must select atleast one home to place an order!")
+            return redirect("order-form")
+
 
 @login_required
 def rder_form(request):
