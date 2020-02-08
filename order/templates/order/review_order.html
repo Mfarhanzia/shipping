@@ -75,9 +75,15 @@
             <form method="POST">
                 {%csrf_token%}
                 {{ wizard.management_form }}
+                {% if wizard.steps.prev %}
+                    <div class="form-group fa-pull-left">
+                        <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
+                    </div>
+                {% endif %}
+
                 <div class="form-group fa-pull-right">
                     {% if wizard.steps.next %}
-                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
+                        <button type="submit" class="btn btn-black btn-lg">Continue</button>
                     {% else %}
                     <button type="submit" class="btn btn-black btn-lg">
                     {%if next_button%}
