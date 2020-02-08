@@ -136,7 +136,6 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
         dates = form1_data['date_'] # list
-        print("SAVE2::",quantities,dates)
         form1_data['print_name'] = form2.cleaned_data["print_name"]
         no_of_floors = form1_data["custom_order"]['no_of_floors']
         width = form1_data["custom_order"]['width']
@@ -160,7 +159,6 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             qty = int(q.split("##")[0]) 
             pk = int(q.split("##")[1]) 
             product = get_object_or_404(ContainerPricing, id=pk)
-            
             current_order = CartOrder(
             user_id=self.request.user.id,
             order_items = product,
@@ -293,18 +291,28 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             self.form1_data["quantity"] = self.request.POST.getlist('quantity')
             self.form1_data["date_"] = self.request.POST.getlist('date_')
             self.form1_data["custom_order"] = self.request.POST
-        elif self.steps.step1 == 3:
-            pass
-            # self.check = form.cleaned_data["accept"]
         return data
+
+    def render(self, form=None, **kwargs):
+        print("render:::",self.request.session["form_1_data"])
+        if self.steps.step1 == 4:
+            if self.request.POST.get("2-accept") == "decline":
+                self.storage.reset()
+                self.request.session["form_1_data"] = ""
+                return redirect("order-form")
+        if self.steps.step1 > 1 and self.request.session["form_1_data"] == "":
+            return redirect("order-form")
+        return super(OrderForm, self).render(form, **kwargs)
 
     # def process_step(self, form):
     #     print("process_stepprocess_step::::",self.request.session.items())
     #     form = super().get_form_step_data(form)
     #     if self.steps.step1 == 3:
-    #         form["2-image_field"]=''
-    #         print("form3    ::::",form)
-    #     return form
+    #         print(form)
+    #         # form["2-image_field"]=''
+    #         if form["2-accept"] == "decline":
+    #             return False 
+        # return form
 
     def get_context_data(self, form, **kwargs):
         context = super(OrderForm, self).get_context_data(form=form, **kwargs)
@@ -327,6 +335,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         forms = list(form_list)
         order_status = self.save_cart(forms[2])
         self.request.session["form_1_data"] = ""
+        print("done===",self.request.session["form_1_data"])
         if order_status != "no order":
             buyer_form = forms[1]
             buyer_app = buyer_form.save(commit=False)
@@ -334,7 +343,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             buyer_app.save()
             return redirect("/")
         else:
-            messages.warning(self.request, "You must select atleast one home to place an order!")
+            messages.warning(self.request, "You must select something to place an order!")
             return redirect("order-form")
 
 
