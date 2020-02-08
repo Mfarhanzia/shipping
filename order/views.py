@@ -117,10 +117,10 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     form_list = [AddCustomProductForm, BuyerAppForm, UserTermsForm,AddCustomProductForm]
     def get_template_names(self):
-        # self.request.session.clear()
         """
         Return the template name for the current step
         """
+        # self.request.session.clear()
         templates = {
         0: 'order/form_order.html',
         1: 'order/buyer_app_form.html',
@@ -294,7 +294,6 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         return data
 
     def render(self, form=None, **kwargs):
-        print("render:::",self.request.session["form_1_data"])
         if self.steps.step1 == 4:
             if self.request.POST.get("2-accept") == "decline":
                 self.storage.reset()
@@ -327,15 +326,52 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
                 "quantity": range(300),
                 "custom_pricing":custom_pricing,
                 })
-        elif self.steps.step1 == 2:
-            pass
+        elif self.steps.step1 == 4:
+            form1_data = self.request.session["form_1_data"]
+            quantities = form1_data['quantity'] # list
+            dates = form1_data['date_'] # list
+            order = []
+            for q,date in zip(quantities,dates):
+                if q == "" or date == "":
+                    continue
+                qty = int(q.split("##")[0]) 
+                pk = int(q.split("##")[1]) 
+                product = get_object_or_404(ContainerPricing, id=pk)
+                dictn = {
+                    "product": product,
+                    "qty":qty,
+                    "date":date,
+                }
+                order.append(dictn)
+                no_of_floors = form1_data["custom_order"]['no_of_floors']
+                width = form1_data["custom_order"]['width']
+                depth = form1_data["custom_order"]['depth']
+                cus_qty = form1_data["custom_order"]['custom_quantity']
+                cus_date = form1_data["custom_order"]['custom_date']
+                custom_order = None
+                if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+                    qty = int(cus_qty.split("##")[0]) 
+                    pk = int(cus_qty.split("##")[1])      
+                    cus_product = get_object_or_404(CustomContainerPricing, id=pk)
+                    custom_order = {
+                        "product":cus_product,
+                        "qty": qty,
+                        "date": cus_date,
+                        "no_of_floors":no_of_floors,
+                        "width":width,
+                        "depth":depth,
+                    }
+            context.update({
+                "order":order,
+                "custom_order":custom_order,
+                })        
         return context 
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)
         order_status = self.save_cart(forms[2])
         self.request.session["form_1_data"] = ""
-        print("done===",self.request.session["form_1_data"])
+        print("done===",self.request.session.items())
         if order_status != "no order":
             buyer_form = forms[1]
             buyer_app = buyer_form.save(commit=False)
