@@ -6,6 +6,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <h2 class="text-center"><strong>Order Summary</strong></h2>
         <div class="col-md-12 col-sm-12 table-responsive">
             <table class="table view_order_table table-bordered  text-center table-striped">
                 <thead>
@@ -69,15 +70,27 @@
         </div>
         {% endif %} 
 
-        <div class="row">
-            <div class="col-md-12 col-sm-12 mt-4 mb-5">
-                <form method="POST">
-                    {%csrf_token%}
-                    {{ wizard.management_form }}
-                    {% include "users/formwizard_btns.html" %}
-                </form>
-            </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 mt-4 mb-5">
+            <form method="POST">
+                {%csrf_token%}
+                {{ wizard.management_form }}
+                <div class="form-group fa-pull-right">
+                    {% if wizard.steps.next %}
+                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-black btn-lg">
+                    {%if next_button%}
+                        as{{next_button}}
+                        {%else%}
+                        Place Order
+                        {%endif%}
+                    </button>
+                    {% endif %}
+                </div>
+            </form>
         </div>
+    </div>
 </div>
 
 {% endblock %}
