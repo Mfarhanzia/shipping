@@ -30,22 +30,7 @@
                 </table>
         </div>
     </div>
-    <!-- <h1 >Content</h1> -->
-    <div class="row md-padding">
-        {% for img in image %}
-            {% if img.watermarked_image  %}
+ </div>
 
-            <div class="col-md-6 border-bottom">
-                <img class="img-fluid" style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
-            </div>
-            {% endif %}
-        {% endfor %}  
-    </div>
-
-
-</div>
-<script>
-
-</script>
 {% endblock%}
 

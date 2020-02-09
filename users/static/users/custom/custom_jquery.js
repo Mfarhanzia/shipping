@@ -18,7 +18,7 @@
         // // Hamburger to X toggle
         $('.navbar-toggler').on('click', function() {
             $('#overlay').slideToggle();
-            // $('#b-color').slideToggle();
+            $('.color_15').css({"color":"black"});
         });
 
         //remove blank options
@@ -143,12 +143,9 @@
         $("input[name=price]").inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left' })
 
         var path = window.location.pathname;
-        if (path == '/create/buyer/application') {
-            $('[href="/create/buyer/application"]').addClass('active1');
-        }else if (path == '/order-form/') {
+        if (path == '/order-form/') {
             $('[href="/order-form/"]').addClass('active1');
         }
-         
         else if (path == '/login/') {
             $('[href*="/login"]').addClass('active1');
         } else if (path == '/buyer/applications') {
@@ -190,7 +187,6 @@
             $('.electric_car').addClass('active1');
             $('[href*="/electric-cars/exterior"]').addClass('active1');
         }
-        // else if (path == '/view-content'){  
         else if (path.indexOf('/view/structural-drawings') != -1) {
             $('[href="/view/structural-drawings"]').addClass('active1');
             $('.about').addClass('active1');
@@ -201,6 +197,10 @@
         }
         else if (path == '/concept') {
             $('[href*="/concept"]').addClass('active1');
+            $('.about').addClass('active1');
+        }
+        else if (path == '/amenities') {
+            $('[href*="/amenities"]').addClass('active1');
             $('.about').addClass('active1');
         }
         else if (path.indexOf('/view/reportsap') != -1) {
@@ -214,8 +214,6 @@
          else {
             $('[href="/"]').addClass('active1');
         }
-
-
 
     }); // end DOM ready
 

@@ -32,7 +32,6 @@
 	<!-- animation -->
 	<!-- <link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" /> -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />
-	 
 </head>
 
 <body>
@@ -66,12 +65,12 @@
 		<div class="container-fluid" >
 			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">
 				<!-- Navbar brand -->
-				<div id="b-color" class="logo">
+				<div class="logo">
 					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
 						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">
 							<div data-packed="true" style="width: 80px; pointer-events: none;" class="txtNew"
 								id="comp-ir1r4w4s">
-								<h1 class="font_0" style="line-height:0.3em;">
+								<h1 class="font_0" id="b-color"  style="line-height:0.3em;">
 									<a href="/" target="_self">
 										<span style="letter-spacing:2px;">
 											<span class="color_15">BOLT</span>
@@ -109,7 +108,7 @@
 							<a class="nav-link dropdown-toggle about" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About our Units</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>
-								<a class="dropdown-item" href="#">Amenities</a>
+								<a class="dropdown-item" href="{% url 'amenities' %}">Amenities</a>
 								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>
 							{% if user.is_authenticated %}
 								{% if request.user.specuser.user_type != "vendor" %}	
@@ -121,15 +120,7 @@
 							{% endif %}
 							</div>
 						</li>
-						
 						{% if request.user.specuser.user_type != "vendor" %}
-						
-						{% comment %} {% if not user.is_superuser %}	
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'create-buyerapp' %}">Buyer Application</a>
-							</li>
-						{% endif %} {% endcomment %}
-							
 							{% if user.is_superuser %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Controls</a>

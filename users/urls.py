@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import url
-from .views import (concept_page, activate, admincheck, home_view, floor_plan,
+from .views import (amenities,concept_page, activate, admincheck, home_view, floor_plan,
         home_access, models, video_page, electric_cars_view,electric_cars_exterior_view,
         electric_cars_interior_view, contact_view, RegistrationForm)
 from django.contrib.auth import views as auth_views
@@ -46,6 +46,7 @@ urlpatterns = [
     path('home-access', home_access, name="home-access" ),
     path('models', models, name="models"),
     path('concept', concept_page, name="concept"),
+    path('amenities', amenities, name="amenities"),
     path('contactus', contact_view, name="contact-us"),
 
 ]

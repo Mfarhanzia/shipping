@@ -94,8 +94,14 @@ def home_view(request):
     else:
         return render(request, 'users/home.html')
 
+
 def concept_page(request):
     return render(request, "users/concept.html")
+
+
+def amenities(request):
+    return render(request, "users/amenities.html")
+
 
 def models(request):
     return render(request, 'users/models.html')
@@ -294,3 +300,4 @@ def contact_view(request):
         messages.success(request,"Message Sent!")
         return redirect('contact-us')
     return render(request, "users/contact_us.html", {"form":form})
+
