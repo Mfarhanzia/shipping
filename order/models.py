@@ -4,6 +4,7 @@ from localflavor.us.models import USZipCodeField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import MinValueValidator
 from users.models import User
+
 # Create your models here.
 
 class Order(models.Model):
@@ -32,13 +33,11 @@ class Order(models.Model):
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
 
     how_much_letter_of_credit= models.CharField("What is the value of your Letter of Credit (in USD)?",max_length=50, help_text="in USD$", blank=True, null=True)
-    # how_much_letter_of_credit= models.DecimalField("What is the value of your Letter of Credit (in USD)?", max_digits=20, decimal_places=2, help_text="in USD$", blank=True, null=True)
 
     line_of_credit = models.CharField("Do you have a Line of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
 
     how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, help_text="in USD$",blank=True, null=True)
 
-    # how_much_line_of_credit= models.DecimalField("What is the currently unused       amount in your Line of Credit?",max_digits=20, decimal_places=2, help_text="in USD$", blank=True, null=True)
     STATUS_CHOICES = (("3-6 Months","3-6 Months"),
         ("6-9 Months", "6-9 Months"),
         ("1 Year or More", "1 Year or More"),
@@ -51,7 +50,6 @@ class Order(models.Model):
 
     when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None)
     
-    # other_when_to_order = models.PositiveIntegerField('Other (days)', validators=[MinValueValidator(31)], blank=True, null=True) 
     other_when_to_order = models.CharField("When To Order",choices=STATUS_CHOICES ,max_length=50, default=None, null=True, blank=True)
     
     type_of_climate_area = MultiSelectField("On which type of climate area(s) will the development(s) be sited? ",choices=Type_Of_Climate_Area, max_length=300, blank=True, null=True)
@@ -110,6 +108,7 @@ class CustomContainerPricing(models.Model):
     def __str__(self):
         return f"Custom Container Pricing"
 
+
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
@@ -122,3 +121,7 @@ class CartOrder(models.Model):
     delivery_date = models.DateField(default=None, blank=True, null=True)
     ordered_on = models.DateField(auto_now_add=True)
     user_image = models.ImageField(upload_to="pdf-images" , blank=True, null=True, default="default.jpeg")
+
+        class Meta:
+        verbose_name = "Shipping Home Order"
+        verbose_name_plural = "Shipping Home Orders"
