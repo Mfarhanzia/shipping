@@ -160,4 +160,4 @@ class ContactUsForm(forms.Form):
     last_name = forms.CharField(max_length=100)
     email = forms.EmailField(max_length=100)
     subject = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message','class':"p-1"}), required=True)
+    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message','class':"p-1", "rows":"4"}), required=True)

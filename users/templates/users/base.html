@@ -18,6 +18,7 @@
 	<!-- font awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
 	<!-- boostrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -32,9 +33,6 @@
 	<!-- <link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" /> -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />
 	 
-
-	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-    <script src="http://malsup.github.com/jquery.form.js"></script> -->
 </head>
 
 <body>
@@ -43,7 +41,7 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 add-bar">
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-					<div class="carousel-inner">
+					<div class="carousel-inner quicksand-font">
 						  <div class="carousel-item active">
 								<p class="top-add">Coming soon at 12345 Beach Blvd. <a href="#id_subscribe">Sign Up</a> now for more details. </p>
 						  </div>
@@ -64,7 +62,7 @@
 		</div>
 	</div>
 	<!--Navbar-->
-	<div class="container-fluid nav-bg-color fixed-nav">
+	<div class="container-fluid nav-bg-color fixed-nav quicksand-font">
 		<div class="container-fluid" >
 			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">
 				<!-- Navbar brand -->
@@ -102,7 +100,7 @@
 				<div class="collapse navbar-collapse" id="basicExampleNav">
 					<!-- Links -->
 					<ul class="navbar-nav nav-margin">
-						<li class="nav-item" style="border-left:none;">
+						<li class="nav-item" >
 							<a class="nav-link" href="{% url 'home' %}">Home
 								<span class="sr-only">(current)</span>
 							</a>
@@ -186,7 +184,7 @@
 					<div class="nav-margin">
 						{% if request.user.is_authenticated %}
 						<ul class="navbar-nav nav-margin">
-							<li class="nav-item dropdown" style="border-left:none;">
+							<li class="nav-item dropdown" >
 								<a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<a class="dropdown-item" href="/logout">LogOut</a>
@@ -266,9 +264,10 @@
 				<h6>All rights reserved.</h6>
 			</div>
 			<div id="id_subscribe" class="col-md-4 col-sm-12 pt-4 text-center">
-				<h3 class=" text-white">Subscribe to us</h3>
-				<form method="POST" action="{% url 'home' %}">
+				
+				<form  class="no-margin" method="POST" action="{% url 'home' %}">
 					{%csrf_token%}
+					<legend><h3 class="no-margin text-center text-white">Subscribe to us</h3></legend>
 					<div class="md-form">
 						{{subscribe_form.email}}
 						{% for error in field.errors %}

@@ -6,8 +6,8 @@
 
 <div class="home-content">
 
-    <div id="mobile-hide" style="max-width: 80%; max-height: 100vh;" class="container mb-5" data-interval="3000">
-        <div id="carouselExampleIndicators" class="carousel slide mb-5" data-ride="carousel">
+    <div id="mobile-hide" style="max-width: 80%; max-height: 100vh;" class="container mb-4" data-interval="3000">
+        <div id="carouselExampleIndicators" class="carousel slide mb-4" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -19,7 +19,8 @@
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="carousel-img1 img-fluid d-block" src="{% static 'users/imgs/front-min.jpg' %}" alt="First slide">
+                {% comment %} <img class="carousel-img1 img-fluid d-block" src="{% static 'users/imgs/front-min.jpg' %}" alt="First slide"> {% endcomment %}
+                <img class="carousel-img1 img-fluid d-block" src="{% static 'users/imgs/exterior-2nd-floor.jpg' %}" alt="First slide">
                 <div class="slider-content">New Castle Model</div>
               </div>
               <div class="carousel-item">
@@ -68,21 +69,23 @@
             <div class="col-md-12 col-sm-12">
                 <span class="feature_pro mb-5">FEATURED PROJECTS</span><br><br>
                 <div class="row mb-4">
-                    <div class="col-md-5 col-sm-4 font_7days">7 days to complete</div>
-                    <div class="col-md-3 col-sm-4">
+                    <div class="col-md-4 col-sm-4 font_7days">7 days to complete</div>
+                    <div class="col-md-4 col-sm-4">
                         <p class="font_8">Assembly of the house on concrete footing&nbsp;can be completed within a week after obtaining your building permit. After your very first call with us, you can typically expect to move in to your new home within 3 months.</p>
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <img class="img-fluid" alt="2 story home side view" data-type="image" itemprop="image"  src="{% static 'users/imgs/front-view.jpg' %}">
+                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-7 col-sm-8">
-                <img class="row2-img" alt="" src="{% static 'users/imgs/bb851b_6a2590487b894b44becba8c6286e6275_mv2.jpg' %}">
+                {% comment %} <img class="row2-img" alt="" src="{% static 'users/imgs/bb851b_6a2590487b894b44becba8c6286e6275_mv2.jpg' %}"> {% endcomment %}
+                <img style="max-height: 50vh; width: 100%;" class="img-fluid" src="{% static 'users/imgs/View-16.jpg' %}" alt="First slide">
             </div>
-            <div class="col-md-4 col-sm-4 row2-font">COME SEE OUR <br> HOMES</div>
+            <div class="col-md-4 col-sm-4 row2-font"><p>COME<br>SEE<br>OUR<br>HOMES<br></p><span class="text-muted font_8" style="margin-top:-30px !important;">(comming soon)</span></div>
         </div>
         <div class="row mb-4 mt-4">
             <div class="col-md-12 col-sm-12">

@@ -376,11 +376,9 @@ form {
 }
 
 .row2-font{
-    font-family: didot-w01-italic,serif;
-    
+    font-family: 'Quicksand', sans-serif;
     font-style: italic;
     color: #2F2E2E;
-    /* overflow: hidden; */
     line-height: 1.4em;
     font-size: 5vw;
 }

@@ -1,8 +1,10 @@
 html {
     scroll-behavior: smooth;
+    font-family: 'Quicksand', sans-serif !important;
 }
-body{
 
+.quicksand-font{
+    font-family: 'Quicksand', sans-serif !important;
 }
 
 .pdf{
@@ -60,10 +62,12 @@ body{
 }
 
 .nav-item { 
-    font: normal normal normal 14px/1.4em serif;
+    font-family: 'Quicksand', sans-serif;
+    /* font: normal normal normal 14px/1.4em serif; */
+    font-size: 14px;
     padding: 0 5px 0 5px;
-    border-left: 2px solid; 
-    line-height: 16px;
+    /* border-left: 2px solid;  */
+    /* line-height: 16px; */
 }
 
 .nav-link {
@@ -356,8 +360,11 @@ form {
 }
 
 .font_8 {
-    font: normal normal normal 17px futura_ltregular, sans-serif;
-    color: #2F2E2E;
+    /* font: normal normal normal 17px futura_ltregular, sans-serif;
+    color: #2F2E2E; */
+    font-family: 'Quicksand', sans-serif;
+    font-size: 17px;
+    text-align: justify;
 }
 
 .font_3 {
@@ -371,25 +378,34 @@ form {
 }
 
 .font_7days{
-    /* font-size:70px; */
-    font: normal normal normal 4em/1.4em didot-w01-italic,serif;
+    font-size:50px;
+    font-family: 'Quicksand', sans-serif;
+    /* font: normal normal normal 4em/1.4em didot-w01-italic,serif; */
     font-style: italic;
     color: #2F2E2E;
 }
 
 .row2-font{
-    font-family: didot-w01-italic,serif;
-    
+    font-family: 'Quicksand', sans-serif;
     font-style: italic;
     color: #2F2E2E;
-    /* overflow: hidden; */
-    line-height: 1.4em;
     font-size: 5vw;
+    text-align: center;
 }
-@media only screen and (max-width: 768px) {
+.row2-font p{
+    line-height: 1.2em;
+}
+
+@media only screen and (max-width: 767px) {
+    .font_7days{
+        font-size: 36px;
+    }
+}
+    @media only screen and (max-width: 768px) {
     .row2-font{
         font-size: 2.8rem;
     }
+
     .remove-slider{
         position: absolute;
         top: 50px;
@@ -650,7 +666,6 @@ input[type="date"], focus {
 }
 
 .top-add{
-    font-family: Quicksand;
     padding-top: 10px;
     text-align: center;
     color: white;
@@ -780,4 +795,13 @@ input[type="date"], focus {
 
 .img-div{
     overflow: auto;
+}
+
+.no-margin{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.map-border{
+    border: 3px solid rgb(31, 31, 31);
 }
