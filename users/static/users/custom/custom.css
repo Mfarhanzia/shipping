@@ -145,6 +145,37 @@ form {
     width: 50%;
 }
 
+.subs-btn {
+    border-radius: unset;
+    font-weight: 600;
+}
+
+.subs-btn:hover {
+    color: white;
+    background: black;
+}
+
+.subs-field {
+    color: #fff!important;
+    border: 1px solid #000000 !important;
+    padding-left: 10px;
+}
+
+.subs-field:hover{
+    color: #000!important;
+    background-color: #ffffff !important;
+}
+
+.btn-black:hover {
+    background-color: #0d0d0ddb !important;
+    color: #fff;
+}
+
+.subs-field:active {
+    color: #000!important;
+    background-color: #ffffff !important;
+}
+
 .md-padding {
     margin-top: 5% !important;
     margin-bottom: 5% !important;

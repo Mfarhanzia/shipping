@@ -14,11 +14,11 @@ class EmailListForm(forms.ModelForm):
         super(EmailListForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({
             'placeholder': ' Email:',
-            "class":"pt-2 pb-2 pr-4 text-white",
+            "class":"pt-2 pb-2 pr-4 subs-field",
         })
         self.fields['name'].widget.attrs.update({
             'placeholder': ' Name:',
-            "class":"pt-2 pb-2 pr-4 text-white",
+            "class":"pt-2 pb-2 pr-4 subs-field",
         })
 
 

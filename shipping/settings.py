@@ -22,12 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
-# DEBUG = False
-
+DEBUG = False
 
 if DEBUG == False:
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
         'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'container-shipping.herokuapp.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
 
