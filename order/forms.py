@@ -29,7 +29,6 @@ class BuyerAppForm(forms.ModelForm):
             'class': 'form-control'
         })
 
-
     def clean_f_name(self):
         f_name = self.cleaned_data.get("f_name")
         f = re.findall("^[a-zA-Z]+$", f_name)
@@ -61,7 +60,6 @@ class BuyerAppForm(forms.ModelForm):
                 pass
             # return letter_of_credit
             
-
     def clean_how_much_line_of_credit(self):
         if not self.cleaned_data.get("how_much_line_of_credit"):
             line_of_credit = self.cleaned_data.get("how_much_line_of_credit")
