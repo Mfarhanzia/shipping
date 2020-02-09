@@ -124,11 +124,11 @@
 						
 						{% if request.user.specuser.user_type != "vendor" %}
 						
-						{% if not user.is_superuser %}	
+						{% comment %} {% if not user.is_superuser %}	
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'create-buyerapp' %}">Buyer Application</a>
 							</li>
-						{% endif %}
+						{% endif %} {% endcomment %}
 							
 							{% if user.is_superuser %}
 							<li class="nav-item dropdown">
