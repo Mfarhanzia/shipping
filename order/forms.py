@@ -29,7 +29,6 @@ class BuyerAppForm(forms.ModelForm):
             'class': 'form-control'
         })
 
-
     def clean_f_name(self):
         f_name = self.cleaned_data.get("f_name")
         f = re.findall("^[a-zA-Z]+$", f_name)

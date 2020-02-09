@@ -3,9 +3,9 @@ from .models import Order, Material, MaterialQuotations, ContainerPricing, CartO
 # Register your models here.
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('f_name','when_to_order','how_much_letter_of_credit','how_much_line_of_credit')
+    list_display = ("user",'f_name','when_to_order')
     list_filter = ('when_to_order',)
-    list_display_links = ('f_name','when_to_order',)
+    list_display_links = ("user",'f_name','when_to_order',)
     list_per_page = 50
     class Media:
         js = ('users/custom/custom_jquery.js',)
@@ -37,7 +37,6 @@ admin.site.register(CustomContainerPricing, CustomContainerPricingAdmin)
 
 
 class MaterialQuotationsAdmin(admin.ModelAdmin):
-    
     list_display = ('company_name',)
     list_display_links = ('company_name',)
     list_filter = ('company_name',)
