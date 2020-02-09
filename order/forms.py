@@ -9,14 +9,16 @@ class BuyerAppForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('f_name','l_name','email', 'company_name', 'phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order','other_when_to_order')
+        fields = ('f_name','l_name','email', 'company_name', 'phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order','other_when_to_order','type_of_climate_area','other_type_of_climate_area', 'septic_infrastructure','installation_septic_infrastructure')
     
         widgets = {
             'when_to_order' : forms.RadioSelect(),
             'letter_of_credit' : forms.RadioSelect(),
             'line_of_credit' : forms.RadioSelect(),
+            'septic_infrastructure' : forms.RadioSelect(),
+            'installation_septic_infrastructure' : forms.RadioSelect(),    
             }
-    field_order = ('f_name','l_name','email', 'company_name', 'phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', "other_when_to_order")
+    field_order = ('f_name','l_name','email', 'company_name', 'phone_number','zipcode','letter_of_credit','how_much_letter_of_credit','line_of_credit','how_much_line_of_credit','when_to_order', "other_when_to_order",'type_of_climate_area','other_type_of_climate_area', 'septic_infrastructure','installation_septic_infrastructure')
 
     def __init__(self, *args, **kwargs):
         super(BuyerAppForm, self).__init__(*args, **kwargs)
@@ -59,7 +61,6 @@ class BuyerAppForm(forms.ModelForm):
                 pass
             # return letter_of_credit
             
-
     def clean_how_much_line_of_credit(self):
         if not self.cleaned_data.get("how_much_line_of_credit"):
             line_of_credit = self.cleaned_data.get("how_much_line_of_credit")
