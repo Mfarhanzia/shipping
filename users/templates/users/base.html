@@ -169,9 +169,11 @@
 							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
 						</li>
 					</ul>
-					<div class="nav-margin">
-						<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						
-					</div>
+					{% if not request.user.is_superuser}
+						<div class="nav-margin">
+							<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						
+						</div>
+					{% endif %}
 					<div class="nav-margin">
 						{% if request.user.is_authenticated %}
 						<ul class="navbar-nav nav-margin">
