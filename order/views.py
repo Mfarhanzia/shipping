@@ -269,7 +269,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         if self.steps.step1 == 1:
             form2 = AddCustomProductForm()
             pricing = ContainerPricing.objects.all().order_by('id')
-            custom_pricing = CustomContainerPricing.objects.all()[0]
+            custom_pricing = CustomContainerPricing.objects.all().first()
             context.update({
                 "pricing":pricing,
                 "form2":form2,
