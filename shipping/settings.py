@@ -25,6 +25,7 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 DEBUG = True
 # DEBUG = False
 DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+
 # DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
 if DEBUG == False:
     SECURE_SSL_REDIRECT = True
