@@ -122,6 +122,6 @@ class CartOrder(models.Model):
     ordered_on = models.DateField(auto_now_add=True)
     user_image = models.ImageField(upload_to="pdf-images" , blank=True, null=True, default="default.jpeg")
 
-        class Meta:
+    class Meta:
         verbose_name = "Shipping Home Order"
         verbose_name_plural = "Shipping Home Orders"
