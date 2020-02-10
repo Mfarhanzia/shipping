@@ -27,7 +27,7 @@ class RegistrationForm(CookieWizardView):
         if request.user.is_authenticated:
             return redirect('/')
         return super(RegistrationForm, self).get(request, *args, **kwargs)
-        
+
     def get_template_names(self):
         """
         Return the template name for the current step
@@ -49,7 +49,7 @@ class RegistrationForm(CookieWizardView):
             user.dealer_no = dealer_no+str(last_id)
             user.save()
         current_site = get_current_site(self.request)
-        mail_subject = f"Sign Up Successful"
+        mail_subject = f"Sign Up Successful."
         message = render_to_string('users/sign_up_mail.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -217,7 +217,7 @@ def admincheck(request, uidb64, req_for):
                     time = request.POST.get("time")
                     user.expire_time_spec_content = timezone.now() + timedelta(hours=int(time))
 
-                mail_subject = 'Account Activated.'
+                mail_subject = 'Access Granted.'
                 message = render_to_string('users/specialuseremail.html', {
                     'user': user,
                     'domain': current_site.domain,
