@@ -40,7 +40,7 @@
 								{% if 'content' in req_for %}
 								<span>
 									<b>To visit page</b> , Please <a
-										href="http://{{ domain }}{% url 'specialuser_ViewOrder' %}"
+										href="http://{{ domain }}"
 										target="_blank">Click here</a>.
 								</span>
 								<br>
@@ -57,7 +57,7 @@
 								{% if 'content' in req_for %}
 								<span>
 									If Link does not work then open this Url in your browser.<br>
-									http://{{ domain }}{% url 'specialuser_ViewOrder' %}
+									http://{{ domain }}
 								</span>
 								{% elif 'home' in req_for %}
 								<span>

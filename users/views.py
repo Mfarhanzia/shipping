@@ -154,7 +154,7 @@ def home_access(request):
         try:
             email.send()
         except Exception as e:
-            messages.error(request, f'Something went Wrong!. Please Try again.{e}')
+            messages.error(request, f'Something went Wrong!. Please Try again.')
             return redirect(request.path_info)
         messages.success(
             request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')

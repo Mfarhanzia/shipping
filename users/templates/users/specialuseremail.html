@@ -40,13 +40,13 @@
 							</td>
 						</tr>
 						<tr
-							style='    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
+							style='font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";'>
 							<td style="padding-left: 60px;padding-right: 60px;text-align: justify;">
 								<br />
 								{% if 'content' in req_for %}
 								<span>
 									<b>To visit page</b> , Please <a
-										href="http://{{ domain }}{% url 'specialuser_ViewOrder' %}"
+										href="http://{{ domain }}"
 										target="_blank">Click here</a>.
 								</span>
 								<br>
@@ -63,7 +63,7 @@
 								{% if 'content' in req_for %}
 								<span>
 									If Link does not work then open this Url in your browser.<br>
-									http://{{ domain }}{% url 'specialuser_ViewOrder' %}
+									http://{{ domain }}
 								</span>
 								{% elif 'home' in req_for %}
 								<span>
