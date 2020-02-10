@@ -149,14 +149,12 @@ def home_access(request):
         })
         to_email = settings.DEFAULT_FROM_EMAIL
 
-        email = EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[
-                             to_email], reply_to=(user.email,))
+        email = EmailMessage(subject=mail_subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email], reply_to=(user.email,))
         email.content_subtype = "html"
         try:
             email.send()
-        except:
-            messages.error(
-                request, f'Something went Wrong!. Please Try again.')
+        except Exception as e:
+            messages.error(request, f'Something went Wrong!. Please Try again.{e}')
             return redirect(request.path_info)
         messages.success(
             request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
@@ -262,7 +260,7 @@ def admincheck(request, uidb64, req_for):
             return render(request, 'users/admincheckuser.html', {'user': user, 'title': 'Admin Check', 'req_for': req_for})
     except Exception as e:
         print(e)
-        messages.error(request, f'Something went Wrong!')
+        messages.error(request, f'Something went Wrong!{e}')
         return redirect(request.path_info)
 
 
