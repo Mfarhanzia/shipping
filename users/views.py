@@ -23,6 +23,11 @@ from formtools.wizard.views import CookieWizardView
 
 class RegistrationForm(CookieWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, UserPreferencesForm]
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super(RegistrationForm, self).get(request, *args, **kwargs)
+        
     def get_template_names(self):
         """
         Return the template name for the current step
@@ -262,14 +267,6 @@ def admincheck(request, uidb64, req_for):
         print(e)
         messages.error(request, f'Something went Wrong!{e}')
         return redirect(request.path_info)
-
-
-# def randomstring():
-#     """making random dealer number"""
-#     abc = ''.join((random.SystemRandom().choice(
-#         string.digits) for _ in
-#         range(6)))
-#     return int(abc)
 
 
 @login_required
