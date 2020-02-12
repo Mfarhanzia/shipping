@@ -22,11 +22,11 @@
         });
 
         //remove blank options
-        $("ul[id=id_letter_of_credit] > li:first").remove();
-        $("ul[id=id_line_of_credit] > li:first").remove();
+        $("ul[id=id_1-letter_of_credit] > li:first").remove();
+        $("ul[id=id_1-line_of_credit] > li:first").remove();
         $("ul[id=id_2-learn_about_electric_drive] > li:first").remove();
-        $("ul[id=id_septic_infrastructure] > li:first").remove();
-        $("ul[id=id_installation_septic_infrastructure] > li:first").remove();
+        $("ul[id=id_1-septic_infrastructure] > li:first").remove();
+        $("ul[id=id_1-installation_septic_infrastructure] > li:first").remove();
 
 
         // add dashes to phone number
@@ -67,30 +67,30 @@
 
 
         //When are u looking to order
-        $("#id_when_to_order_0").click(function() {
-            $('#id_other_when_to_order').removeAttr('required');
-            $('#id_other_when_to_order').val('');
+        $("#id_1-when_to_order_0").click(function() {
+            $('#id_1-other_when_to_order').removeAttr('required');
+            $('#id_1-other_when_to_order').val('');
             $("#id_12").hide();
         });
 
-        $("#id_when_to_order_1").click(function() {
+        $("#id_1-when_to_order_1").click(function() {
             $("#id_12").show();
-            $('#id_other_when_to_order').attr('required', 'required');
+            $('#id_1-other_when_to_order').attr('required', 'required');
         });
         show_hide_fields()
-        // other1
+        // other1_in registration_step_3
         $("#id_2-type_of_development_10").click(function() {
             show_hide_fields()
         });
 
-        // other2
-        $("#id_type_of_climate_area_6").click(function() {
-            if ($('#id_type_of_climate_area_6').is(":checked")) {
-                $('#id_other_type_of_climate_area').attr('required', 'required');
+        // other2_climate_area
+        $("#id_1-type_of_climate_area_6").click(function() {
+            if ($('#id_1-type_of_climate_area_6').is(":checked")) {
+                $('#id_1-other_type_of_climate_area').attr('required', 'required');
                 $('#id_14').show();
             } else {
-                $('#id_other_type_of_climate_area').removeAttr('required');
-                $('#id_other_type_of_climate_area').val('');
+                $('#id_1-other_type_of_climate_area').removeAttr('required');
+                $('#id_1-other_type_of_climate_area').val('');
                 $("#id_14").hide();
             }
         });
@@ -128,12 +128,12 @@
         });
 
         //select all
-        $("#id_type_of_climate_area_0").click(function() {
-            $("#id_type_of_climate_area_1").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_climate_area_2").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_climate_area_3").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_climate_area_4").prop('checked', $(this).prop('checked'));
-            $("#id_type_of_climate_area_5").prop('checked', $(this).prop('checked'));
+        $("#id_1-type_of_climate_area_0").click(function() {
+            $("#id_1-type_of_climate_area_1").prop('checked', $(this).prop('checked'));
+            $("#id_1-type_of_climate_area_2").prop('checked', $(this).prop('checked'));
+            $("#id_1-type_of_climate_area_3").prop('checked', $(this).prop('checked'));
+            $("#id_1-type_of_climate_area_4").prop('checked', $(this).prop('checked'));
+            $("#id_1-type_of_climate_area_5").prop('checked', $(this).prop('checked'));
         });
 
         $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
