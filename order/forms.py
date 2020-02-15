@@ -102,5 +102,5 @@ class UserTermsForm(forms.Form):
         ("agree","Agree"),
     )
     accept = forms.ChoiceField(label="",choices=CHOICES, widget=forms.RadioSelect)
-    image_field = forms.CharField(label="",widget=forms.TextInput(attrs={"name":"webcam",                                                            "id":"image-input_id", "type":"hidden"}), required=False)
-    print_name = forms.CharField(label="Signature",widget=forms.TextInput())
+    image_field = forms.CharField(label="",widget=forms.TextInput(attrs={"name":"webcam","id":"image-input_id", "type":"hidden"}), required=False)
+    print_name = forms.CharField(label="Signature",widget=forms.TextInput(attrs={"id":"print_name","class":" pl-1"}))

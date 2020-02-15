@@ -301,16 +301,26 @@
     // on form submission
     $("#id_2-accept_1").click(function()
         {
-            // Webcam.snap( function(image) {
-            //     $("#image-input_id").val(image);
-            // });
+            Webcam.snap( function(image) {
+                $("#image-input_id").val(image);
+            });
         });
+    
+    $("#multi-step-continue").click(function()
+        {
+            if($("#image-input_id").val() == ""){
+                Webcam.snap( function(image) {
+                    $("#image-input_id").val(image);
+                });
+            }
+    });
 
     $("#form_submission").click(function() {
         form_submissions()
     });
 
 })(jQuery); // end jQuery
+
 function format(){
     $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
 }

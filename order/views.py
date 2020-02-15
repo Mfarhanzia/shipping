@@ -82,7 +82,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         
     def save_cart(self, form2):
         """saving the container orders"""
-        print("===saving=======", self.request.session["form_1_data"])
+        # print("===saving=======", self.request.session["form_1_data"])
 
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
@@ -277,7 +277,11 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
                 "quantity": range(300),
                 "custom_pricing":custom_pricing,
                 })
+        # elif self.steps.step1 == 3:
+        #     print("===============",self.request.POST)
         elif self.steps.step1 == 4:
+            # self.request.POST['2-image_field'] = ''
+
             form1_data = self.request.session["form_1_data"]
             quantities = form1_data['quantity'] # list
             dates = form1_data['date_'] # list
@@ -316,6 +320,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
                 "order":order,
                 "custom_order":custom_order,
                 })        
+        
         return context 
 
     def done(self, form_list, **kwargs):
@@ -332,6 +337,40 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         else:
             messages.warning(self.request, "You must select something to place an order!")
             return redirect("order-form")
+
+
+def add_order(request, pk=None):
+    """adding container order to session"""
+    quantities = request.GET.getlist('quantity')
+    dates = request.GET.getlist('date_')
+    no_of_floors = request.GET['no_of_floors']
+    width = request.GET['width']
+    depth = request.GET['depth']
+    cus_qty = request.GET['custom_quantity']
+    cus_date = request.GET['custom_date']
+    total = 0
+    for q,d in zip(quantities,dates):
+        if q == "" or d == "":
+            continue
+        qty = int(q.split("##")[0]) 
+        pk = int(q.split("##")[1]) 
+        
+        product = get_object_or_404(ContainerPricing, id=pk)
+        if qty > 20:
+            total += qty * product.price21     
+        else:
+            total += qty * product.price     
+    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+        qty = int(cus_qty.split("##")[0]) 
+        pk = int(cus_qty.split("##")[1])      
+        product = get_object_or_404(CustomContainerPricing, id=pk)
+        area = (int(no_of_floors) * int(width) * int(depth))
+        if qty > 20 or area > 20:
+            total += (area * qty)* product.custom_price21  
+        else:
+            total += (area *  qty)* product.custom_price 
+    return JsonResponse(total, safe=False)
+
 
 
 @login_required
