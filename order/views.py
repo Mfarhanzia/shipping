@@ -32,7 +32,7 @@ from io import BytesIO
 from django.template import Context
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
-from formtools.wizard.views import CookieWizardView
+from formtools.wizard.views import CookieWizardView, SessionWizardView
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
@@ -63,9 +63,9 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
-class OrderForm(LoginRequiredMixin, CookieWizardView):
+class OrderForm(LoginRequiredMixin, SessionWizardView):
    
-    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
+    # file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
     form_list = [AddCustomProductForm, BuyerAppForm, UserTermsForm,AddCustomProductForm]
     def get_template_names(self):
         """
@@ -82,7 +82,7 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         
     def save_cart(self, form2):
         """saving the container orders"""
-        # print("===saving=======", self.request.session["form_1_data"])
+        # print("===saving=======", form2.cleaned_data)
 
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
@@ -98,7 +98,8 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
         order_ids = []
         image=None
         try:
-            format, imgstr = form1_data["custom_order"]['webcam'].split(';base64,') 
+            print("===saving=======", form2.cleaned_data["image_field"])
+            format, imgstr = form2.cleaned_data["image_field"].split(';base64,') 
             ext = format.split('/')[-1]
             image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
         except Exception as e:
@@ -254,16 +255,6 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
             return redirect("order-form")
         return super(OrderForm, self).render(form, **kwargs)
 
-    # def process_step(self, form):
-    #     print("process_stepprocess_step::::",self.request.session.items())
-    #     form = super().get_form_step_data(form)
-    #     if self.steps.step1 == 3:
-    #         print(form)
-    #         # form["2-image_field"]=''
-    #         if form["2-accept"] == "decline":
-    #             return False 
-        # return form
-
     def get_context_data(self, form, **kwargs):
         context = super(OrderForm, self).get_context_data(form=form, **kwargs)
         if self.steps.step1 == 1:
@@ -277,11 +268,8 @@ class OrderForm(LoginRequiredMixin, CookieWizardView):
                 "quantity": range(300),
                 "custom_pricing":custom_pricing,
                 })
-        # elif self.steps.step1 == 3:
-        #     print("===============",self.request.POST)
-        elif self.steps.step1 == 4:
-            # self.request.POST['2-image_field'] = ''
 
+        elif self.steps.step1 == 4:
             form1_data = self.request.session["form_1_data"]
             quantities = form1_data['quantity'] # list
             dates = form1_data['date_'] # list
