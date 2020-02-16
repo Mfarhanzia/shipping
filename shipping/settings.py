@@ -22,16 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
-# DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
-DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
+# DEBUG = True
+DEBUG = False
+DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+# DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
 
 if DEBUG == False:
     SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
-        'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'container-shipping.herokuapp.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
+        'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -168,7 +168,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonbloks.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW" 
-DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+# DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
 # DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
 
 # Activate Django heroku

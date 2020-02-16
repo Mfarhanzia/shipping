@@ -94,7 +94,6 @@ def home_view(request):
             messages.success(request, f'Thanks for Subscribing us')
         else:
             messages.warning(request, f'You have already Subscribed!')
-
         return redirect('/')
     else:
         return render(request, 'users/home.html')
@@ -133,7 +132,6 @@ def home_access(request):
     """
     this function role: get form data saves it and set user.is_active = False, encrypting user id creating token and sending a link to admin through email 
     """
-
     if request.method == 'POST':
         req_for = request.POST['req-access']
         req_for = utils.encrypt(req_for)

@@ -83,7 +83,6 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
     def save_cart(self, form2):
         """saving the container orders"""
         # print("===saving=======", form2.cleaned_data)
-
         form1_data = self.request.session["form_1_data"]
         quantities = form1_data['quantity'] # list
         dates = form1_data['date_'] # list
@@ -98,13 +97,13 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         order_ids = []
         image=None
         try:
-            print("===saving=======", form2.cleaned_data["image_field"])
             format, imgstr = form2.cleaned_data["image_field"].split(';base64,') 
             ext = format.split('/')[-1]
             image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
         except Exception as e:
+            print(";;;;;;;;;;;  ERROR  ;;;;",e)
             pass
-            
+
         for q,date in zip(quantities,dates):
             if q == "" or date == "":
                 continue
@@ -167,12 +166,13 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         pdf,pdf2 = self.render_to_pdf('order/order_pdf.html', context)
         ###sending email with attachment(pdf)    
         mail_subject = f"Shipping Container Homes Order Detail"
-        user_msg = "Hi, \n Thanks for Ordering at BoltonBloks.\n\n Your Receipt is attached."
         if mail == settings.DEFAULT_FROM_EMAIL:
-            email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+            msg = f"Hi Admin,\n A new order is Placed by {context['print_name']}. \n\n Order Receipt is attached."
+            email = EmailMessage(subject=mail_subject, body=msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
             email.attach('order_details.pdf', pdf2 , 'application/pdf')
         else:
-            email = EmailMessage(subject=mail_subject, body=f"Hi Admin,\n A new order is Placed by {context['print_name']}. \n\n Order Receipt is attached.", from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
+            user_msg = f"Hi {context['print_name']},\n Thanks for Ordering at BoltonBloks.\n\n Your Receipt is attached."
+            email = EmailMessage(subject=mail_subject, body=user_msg, from_email=settings.DEFAULT_FROM_EMAIL, to=(mail,),)
             email.attach(f"{context['print_name']}.pdf", pdf2 , 'application/pdf')
         email.encoding = 'us-ascii'
         email.send()
@@ -213,7 +213,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         except Exception as e:
             print("no user found",e)
             return "no order"
-        
+        print(":::::user_image:::::",user_image)
         print_name = self.request.session["form_1_data"]['print_name']
         context = {
             "custom_order_obj":custom_order_obj,
@@ -225,6 +225,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             }  
         ##admin
         pdf = self.send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
+        
         context = {
             "custom_order_obj":custom_order_obj,
             "cart": cart,
@@ -308,14 +309,13 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                 "order":order,
                 "custom_order":custom_order,
                 })        
-        
         return context 
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)
         order_status = self.save_cart(forms[2])
         self.request.session["form_1_data"] = ""
-        print("done===",self.request.session.items())
+        # print("done===",self.request.session.items())
         if order_status != "no order":
             buyer_form = forms[1]
             buyer_app = buyer_form.save(commit=False)
@@ -358,7 +358,6 @@ def add_order(request, pk=None):
         else:
             total += (area *  qty)* product.custom_price 
     return JsonResponse(total, safe=False)
-
 
 
 @login_required
