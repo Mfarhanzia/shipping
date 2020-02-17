@@ -38,7 +38,7 @@
                     {% endif %}
                 {% endfor %}
               
-                {% if wizard.steps.prev %}
+                {% comment %} {% if wizard.steps.prev %}
                 <div class="form-group fa-pull-left">
                     <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
                 </div>
@@ -55,7 +55,8 @@
                         {%endif%}
                     </button>
                     {% endif %}
-                </div>
+                </div> {% endcomment %}
+                 {% include "users/formwizard_btns.html" %}
             </form>
         </div>
     </div>

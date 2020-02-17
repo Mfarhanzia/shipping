@@ -1,9 +1,9 @@
 {% if wizard.steps.prev %}
-<div class="form-group fa-pull-left">
+<div class="float-unset form-group fa-pull-left">
     <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
 </div>
 {% endif %}
-<div class="form-group fa-pull-right">
+<div class="float-unset form-group fa-pull-right">
     {% if wizard.steps.next %}
     <button id="multi-step-continue" type="submit" class="btn btn-black btn-lg">Continue</button>
     {% else %}
@@ -11,7 +11,7 @@
     {%if next_button%}
         as{{next_button}}
         {%else%}
-        Submit-
+        Submit
         {%endif%}
     </button>
     {% endif %}

@@ -697,17 +697,24 @@ input[type="date"], focus {
 }
 
 .top-add{
-    padding-top: 10px;
+    padding-top: 14px;
     text-align: center;
     color: white;
     font-weight: 400;
-    
 }
 
 .add-bar{
     font-size: .88em;
     height: 50px;
 }
+
+@media only screen and (max-width: 345px) {
+    .top-add{
+        padding-top: 10px;
+        font-size:11px;
+    }
+}
+
 @media only screen and (max-width: 825px) {
     .add-bar{
         height: 50px;
@@ -840,3 +847,15 @@ input[type="date"], focus {
 canvas{
     width: 100% !important;
 }
+
+@media only screen and (max-width: 430px) {
+    .float-unset{
+        float: right;
+    }
+    .float-unset button{
+        width: 130px !important;
+        font-size: 12px !important;
+        padding: 12px 5px !important;
+    }
+}
+
