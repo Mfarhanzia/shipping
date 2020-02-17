@@ -287,24 +287,24 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                     "date":date,
                 }
                 order.append(dictn)
-                no_of_floors = form1_data["custom_order"]['no_of_floors']
-                width = form1_data["custom_order"]['width']
-                depth = form1_data["custom_order"]['depth']
-                cus_qty = form1_data["custom_order"]['custom_quantity']
-                cus_date = form1_data["custom_order"]['custom_date']
-                custom_order = None
-                if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
-                    qty = int(cus_qty.split("##")[0]) 
-                    pk = int(cus_qty.split("##")[1])      
-                    cus_product = get_object_or_404(CustomContainerPricing, id=pk)
-                    custom_order = {
-                        "product":cus_product,
-                        "qty": qty,
-                        "date": cus_date,
-                        "no_of_floors":no_of_floors,
-                        "width":width,
-                        "depth":depth,
-                    }
+            no_of_floors = form1_data["custom_order"]['no_of_floors']
+            width = form1_data["custom_order"]['width']
+            depth = form1_data["custom_order"]['depth']
+            cus_qty = form1_data["custom_order"]['custom_quantity']
+            cus_date = form1_data["custom_order"]['custom_date']
+            custom_order = None
+            if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+                qty = int(cus_qty.split("##")[0]) 
+                pk = int(cus_qty.split("##")[1])      
+                cus_product = get_object_or_404(CustomContainerPricing, id=pk)
+                custom_order = {
+                    "product":cus_product,
+                    "qty": qty,
+                    "date": cus_date,
+                    "no_of_floors":no_of_floors,
+                    "width":width,
+                    "depth":depth,
+                }
             context.update({
                 "order":order,
                 "custom_order":custom_order,
