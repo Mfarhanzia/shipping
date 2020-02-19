@@ -859,3 +859,44 @@ canvas{
     }
 }
 
+.buyer_app_form_label{
+    font-weight: 400;
+}
+
+.buyer_app_form_label div{
+    margin-bottom: 18px;
+}
+
+.buyer_app_form_label li{
+    font-size: 15px;
+    display: inline;
+    margin: 16px 0 16px 8px;
+}
+
+.buyer_app_form_label li label{
+    padding: 7px 15px 7px 10px;
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+}
+
+.buyer_app_form_label li label:hover{
+    /* padding: 10px 20px 10px 15px; */
+    border: 2px solid #007bff;
+    border-radius: 5px;
+}
+
+.buyer_app_form_label input:checked ~ .buyer_app_form_label > li {
+    border: 2px solid;
+    border-color: #1A78F2 !important;
+    color: #1A78F2;
+}
+
+.checkbox_checked{
+    border-color: #1A78F2 !important;
+    color: #1A78F2;
+}
+
+input[type=checkbox]:checked  {
+    color: #f00 !important;
+    font-style: normal !important;
+  }

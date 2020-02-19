@@ -3,7 +3,7 @@
 {% block content%}
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 buyer_app_form_label">
             {% for errors in form.non_field.errors %}
             <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
             {% endfor%}
@@ -46,6 +46,7 @@
                 {% comment %} <div class="form-group fa-pull-right">
                     <button class="btn btn-outline-info btn-lg" type="submit">SUBMIT INQUIRY</button>
                 </div> {% endcomment %}
+                <p class="mb-5"></p>
                 {% include "users/formwizard_btns.html" %}
             </form>
         </div>

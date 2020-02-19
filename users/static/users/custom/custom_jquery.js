@@ -315,11 +315,57 @@
             }
     });
 
+    // $(":checkbox").on("change",function(){
+    //     if($(":checkbox").is(":checked")){
+    //         $(":checkbox").parent().addClass("checkbox_checked"); 
+    //     }else{
+    //         $(":checkbox").parent().removeClass("checkbox_checked");  
+    //     }
+    // });
+
+    // $(":checkbox").on("change",function(){
+    //     if($(":checkbox").is(":checked")){
+    //         $("input[type='checkbox']:checked").parent().addClass("checkbox_checked"); 
+    //     }else{
+    //         $("input[type='checkbox']").parent().removeClass("checkbox_checked");  
+    //     }
+    // });
+    checkbox_checked()
+    $(":checkbox").on("change",function(){
+        checkbox_checked()
+    });
+
+    radio_checked()
+    $(":radio").on("change",function(){
+        radio_checked()
+    });
+
+
     $("#form_submission").click(function() {
         form_submissions()
     });
 
 })(jQuery); // end jQuery
+
+function radio_checked(){
+    $(":radio").each(function(){
+        if($(this).is(":checked")){
+            $(this).parent().addClass("checkbox_checked"); 
+        }else{
+            $(this).parent().removeClass("checkbox_checked");  
+        }
+    });
+}
+
+function checkbox_checked(){
+    $(":checkbox").each(function(){
+        if($(this).is(":checked")){
+            $(this).parent().addClass("checkbox_checked"); 
+        }else{
+            $(this).parent().removeClass("checkbox_checked");  
+        }
+    });
+}
 
 function format(){
     $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
