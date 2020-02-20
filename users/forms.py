@@ -71,16 +71,20 @@ class RegistrationForm2(forms.ModelForm):
     class Meta:
         model = SpecUser
         fields = ('user_type', 'first_name','last_name','company_name','title','dealer_no','phone_number')
-        widgets = {
-            'user_type': forms.RadioSelect(),
-        }
+        # widgets = {
+        #     'user_type': forms.RadioSelect(),
+        # }
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm2, self).__init__(*args, **kwargs)
+        self.fields['user_type'].widget.attrs.update({
+            "class":"md-form",
+        })
+    
     def clean_first_name(self):
         f_name = self.cleaned_data.get("first_name")
         f = re.findall("^[a-zA-Z]+$", f_name)
         if not f:
-            raise forms.ValidationError(
-                'Incorrect First Name'
-                )
+            raise forms.ValidationError('Incorrect First Name')
         return f_name
 
     def clean_last_name(self):

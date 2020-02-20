@@ -36,7 +36,7 @@
                             <td >$ {{data.price|intcomma}}</td>
                             <td >$ {{data.price21|intcomma}}</td>
                             <td>
-                                <select id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1"> 
+                                <select onchange="form_submissions()" id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1"> 
                                     <option value="" selected>-</option>
                                     {% for i in quantity %}
                                         <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
@@ -73,7 +73,7 @@
                         <td>$ {{custom_pricing.custom_price|intcomma}}</td>
                         <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
                         <td>
-                            <select id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
+                            <select onchange="form_submissions()" id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
                                 <option value="" selected>-</option>
                                 {% for i in quantity %}
                                     <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>

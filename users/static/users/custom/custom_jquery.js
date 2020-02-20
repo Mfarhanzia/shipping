@@ -220,14 +220,14 @@
 
     /// signup/register.html validation
     function register_Validation() {
-        if ($('#id_1-user_type_4').is(":checked")) {
+        if ($('#id_1-user_type').val() == "homeowner") {
             $("#div_id_dealer_no").show();
             $("#div_id_company_name").hide();
             $("#id_1-company_name").val('');
             $("#div_id_title").hide();
             $("#id_1-title").val('');
 
-        } else if ($('#id_1-user_type_3').is(":checked")) {
+        } else if ($('#id_1-user_type').val() == "dealer") {
             $("#div_id_company_name").hide();
             $("#id_1-company_name").val('');
             $("#div_id_title").hide();
@@ -235,20 +235,19 @@
             $("#div_id_dealer_no").hide();
             $("#id_1-dealer_no").val('');
 
-        } else if ($('#id_1-user_type_5').is(":checked")) {
+        } else if ($('#id_1-user_type').val() == "Municipality/Government Official") {
             $("#div_id_company_name").hide();
             $("#id_1-company_name").val('');
             $("#div_id_title").hide();
             $("#id_1-title").val('');
             $("#div_id_dealer_no").hide();
             $("#id_1-dealer_no").val('');
-        } else if ($('#id_1-user_type_0').is(":checked") || $('#id_1-user_type_1').is(":checked") ||
-            $('#id_1-user_type_2').is(":checked")) {
+        } else if ($('#id_1-user_type').val() == "developer" || $('#id_1-user_type').val() == "lender" || $('#id_1-user_type').val() == "dealer" ) {
             $("#div_id_company_name").show();
             $("#div_id_title").show();
             $("#div_id_dealer_no").hide();
             $("#id_1-dealer_no").val('');
-        } else if ($('#id_1-user_type_6').is(":checked")) {
+        } else if ($('#id_1-user_type').val() == "vendor") {
             $("#div_id_company_name").show();
             $("#div_id_title").hide();
             $("#id_1-title").val('');
@@ -256,13 +255,6 @@
             $("#id_1-dealer_no").val('');
         }
     }
-    // 
-    $("select").on('change',function() {
-        form_submissions()
-    });
-    $("select").click(function() {
-        form_submissions()
-    });
 
     // form submissions
     $("#print_name").on("focusout",function() {
@@ -274,8 +266,8 @@
             ((''+month).length<2 ? '0' : '') + month + '/' +
             ((''+day).length<2 ? '0' : '') + day;
         $(".date_today").text(output) 
-       
     });
+
     // on form submission
     $("#order_form").submit(function (e) {
             // $("#buyer_name").text($("#print_name").val()) 
@@ -305,21 +297,7 @@
             }
     });
 
-    // $(":checkbox").on("change",function(){
-    //     if($(":checkbox").is(":checked")){
-    //         $(":checkbox").parent().addClass("checkbox_checked"); 
-    //     }else{
-    //         $(":checkbox").parent().removeClass("checkbox_checked");  
-    //     }
-    // });
 
-    // $(":checkbox").on("change",function(){
-    //     if($(":checkbox").is(":checked")){
-    //         $("input[type='checkbox']:checked").parent().addClass("checkbox_checked"); 
-    //     }else{
-    //         $("input[type='checkbox']").parent().removeClass("checkbox_checked");  
-    //     }
-    // });
     checkbox_checked()
     $(":checkbox").on("change",function(){
         checkbox_checked()
@@ -329,7 +307,6 @@
     $(":radio").on("change",function(){
         radio_checked()
     });
-
 
     $("#form_submission").click(function() {
         form_submissions()
@@ -424,28 +401,4 @@ function line_of_credit_input(){
         $("#id_10").hide();
     }
 }
-
-
-// function form_save(){
-//     var frm = $("#order_form");
-//     console.log("data",frm)
-//     frm.submit(function () {
-//         $.ajax({
-//             type: frm.attr('method'),
-//             url: "/add-order/",
-//             data: frm.serialize(),
-//             // data:json,
-//             dataType: "json",
-//             success: function (data) {
-//                 $("#total").html("$ " + data.total);
-//                 console.log("abc",data.total)
-//             },
-//             error: function(data) {
-//                 console.log("success",data)
-//                 $("#MESSAGE-DIV").html("Something went wrong!");
-//             }
-//         });
-//         return false;
-//     });
-// }
 
