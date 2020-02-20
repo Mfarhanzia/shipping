@@ -26,8 +26,9 @@ class Order(models.Model):
     l_name = models.CharField('Last Name',max_length=100)
     email = models.EmailField('Email',max_length=100)
     company_name = models.CharField('Name of Company',max_length=100, help_text="Optional", blank=True, null=True)
-    phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
-    
+    # phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
+    phone_number = models.CharField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
+  
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)

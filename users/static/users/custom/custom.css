@@ -765,8 +765,6 @@ canvas{
 }
 
 
-
-
 /* media queries */
 @media only screen and (max-width: 991px) {
 
@@ -855,7 +853,6 @@ canvas{
     } 
 }
 
-
 @media only screen and (max-width: 430px) {
     .float-unset{
         float: right;
@@ -868,8 +865,6 @@ canvas{
     .buyer_app_form_label{
         font-size: 15px;
     }
-
-   
 
     .buyer_app_form_label li{
         font-size: 13px;
@@ -889,9 +884,7 @@ canvas{
     .remove-slider{
         top: 65px;
     }   
-
 }
-
 
 @media only screen and (max-width: 345px) {
     .top-add{

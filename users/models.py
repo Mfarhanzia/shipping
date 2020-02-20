@@ -38,7 +38,8 @@ class SpecUser(User):
     user_type = models.CharField('Sign up as', max_length=32, choices = USER_TYPE, default = None)
     company_name = models.CharField('Name of Company',max_length=100, blank=True, null=True)
     title = models.CharField('Title',max_length=100, blank=True, null=True)
-    phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
+    # phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
+    phone_number = models.CharField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
     dealer_no = models.CharField('Dealer Number',max_length=6, validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
 
     home_permission = models.BooleanField('Home Access', default=False)
