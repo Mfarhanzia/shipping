@@ -855,11 +855,9 @@ canvas{
 }
 
 @media only screen and (max-width: 430px) {
-    .float-unset{
-        float: right;
-    }
+    
     .float-unset button{
-        width: 130px !important;
+        width: 90px !important;
         font-size: 12px !important;
         padding: 12px 5px !important;
     }
@@ -874,6 +872,9 @@ canvas{
     
     .buyer_app_form_label li label{
         padding: 5px 13px 5px 8px;
+    }
+    .boxshadow2 {
+        padding: 40px 0px
     }
 }
 
@@ -891,5 +892,20 @@ canvas{
     .top-add{
         padding-top: 10px;
         font-size:11px;
+    }
+    .app_form_h2{
+        font-size: 8.6vw;
+    }
+}
+
+@media only screen and (max-width: 254px) {
+    .float-unset button{
+        width: 80px !important;
+    }
+}
+
+@media only screen and (max-width: 234px) {
+    .float-unset {
+        float: right;
     }
 }

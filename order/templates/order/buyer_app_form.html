@@ -9,7 +9,7 @@
             {% endfor%}
             <form method="POST" class="boxshadow2">
                 {{ wizard.management_form }}
-                <h1 class="text-center">Buyer Application</h1>
+                <h2 class="text-center app_form_h2">Buyer Application</h2>
                 <hr class="ml-4">
                 {% csrf_token %}
                 {% for field in wizard.form %}
