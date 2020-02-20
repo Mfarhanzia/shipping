@@ -16,14 +16,15 @@
                 {% for field in wizard.form %}
                 {% if field == form.learn_about_electric_drive %}
                 <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
-                    <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+                    <label class="label" style="margin-left: -10px;" for="{{field.id_for_label}}">{{field.label}}</label>
                     {{field}}
                 </div>
 
                 {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
                 <div id="div_id_{{field.name}}" class="ml-4 check_ul" style="display: block;">
-                    {{field.label}}
-                    <h1></h1>
+                    
+                    <label style="margin-left: -10px;" for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}</label>
                     {{field}}
                 </div>
 
@@ -31,7 +32,7 @@
                 <div id="div_{{field.id_for_label}}" class="md-form">
                     
                     <i class="prefix"> </i>
-                    <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                    <label  for="{{field.id_for_label}}" class="label" data-error="wrong"
                         data-success="right">{{field.label}}
                     </label><br>
                     {{field}}

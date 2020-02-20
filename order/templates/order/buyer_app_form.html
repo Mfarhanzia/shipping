@@ -15,13 +15,13 @@
                 {% for field in wizard.form %}
                 {% if field == form.letter_of_credit or field == form.line_of_credit or field == form.learn_about_electric_drive or field == form.septic_infrastructure or field == form.installation_septic_infrastructure or field == form.when_to_order %}
                 <div id="id_radio_field_{{forloop.counter}}" class="ml-4 radio_ul" style="display: block;">
-                    <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+                    <label style="margin-left: -10px;" class="label" for="{{field.id_for_label}}">{{field.label}}</label>
                     {{field}}
                 </div>
 
                 {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_climate_area or field == form.type_of_development%}
                 <div id="id_checkbox_field_{{forloop.counter}}" class="ml-4 check_ul" style="display: block;">
-                    {{field.label}}
+                    <label style="margin-left: -10px;">{{field.label}}</label>
                     <h1></h1>
                     {{field}}
                 </div>
