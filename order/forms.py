@@ -22,9 +22,6 @@ class BuyerAppForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BuyerAppForm, self).__init__(*args, **kwargs)
-        self.fields['how_much_letter_of_credit'].widget.attrs.update({
-            'autocomplete': 'off'
-        })
         self.fields['other_when_to_order'].widget.attrs.update({
             'class': 'form-control'
         })
@@ -33,18 +30,14 @@ class BuyerAppForm(forms.ModelForm):
         f_name = self.cleaned_data.get("f_name")
         f = re.findall("^[a-zA-Z]+$", f_name)
         if not f:
-            raise forms.ValidationError(
-                'Incorrect First Name'
-                )
+            raise forms.ValidationError('Incorrect First Name')
         return f_name
 
     def clean_l_name(self):
         l_name = self.cleaned_data.get("l_name")
         l =re.findall("^[a-zA-Z]+$", l_name)
         if not l:
-            raise forms.ValidationError(
-                'Incorrect Last Name'
-                )
+            raise forms.ValidationError('Incorrect Last Name')
         return l_name     
 
     def clean_how_much_letter_of_credit(self):

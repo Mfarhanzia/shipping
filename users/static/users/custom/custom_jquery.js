@@ -38,31 +38,17 @@
             $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/, '$1-$2-$3'))
         });
 
-
-        // id_letter_of_credit
-        $("#id_letter_of_credit_1").click(function() {
-            $("#id_8").show();
-            $('#id_how_much_letter_of_credit').attr('required', 'required');
+        
+        // letter_of_credit show/hide
+        letter_of_credit_input()
+        $("#id_radio_field_7").on("click",function() {
+            letter_of_credit_input()
         });
 
-        // letter_credit2_hides
-        $("#id_letter_of_credit_2").click(function() {
-            $('#id_how_much_letter_of_credit').removeAttr('required');
-            $('#id_how_much_letter_of_credit').val('');
-            $("#id_8").hide();
-        });
-
-        // line_of_credit show
-        $("#id_line_of_credit_1").click(function() {
-            $("#id_10").show();
-            $('#id_how_much_line_of_credit').attr('required', 'required');
-        });
-
-        // linecredit2 hide
-        $("#id_line_of_credit_2").click(function() {
-            $('#id_how_much_line_of_credit').removeAttr('required');
-            $('#id_how_much_line_of_credit').val('');
-            $("#id_10").hide();
+        // line_of_credit show/hide
+        line_of_credit_input()
+        $("#id_radio_field_9").on("click",function() {
+            line_of_credit_input()
         });
 
 
@@ -72,6 +58,10 @@
             $('#id_1-other_when_to_order').val('');
             $("#id_12").hide();
         });
+        if ($("#id_1-when_to_order_1").is(":checked")){
+            $("#id_12").show();
+            $('#id_1-other_when_to_order').attr('required', 'required');
+        }
 
         $("#id_1-when_to_order_1").click(function() {
             $("#id_12").show();
@@ -136,9 +126,9 @@
             $("#id_1-type_of_climate_area_5").prop('checked', $(this).prop('checked'));
         });
 
-        $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+        $('#id_1-how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$'})
 
-        $('#id_how_much_line_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+        $('#id_1-how_much_line_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
 
         $("input[name=price]").inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left' })
 
@@ -368,7 +358,7 @@ function checkbox_checked(){
 }
 
 function format(){
-    $('#id_how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
+    $('#id_1-how_much_letter_of_credit').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
 }
 function total(){
     $('#total').inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$' })
@@ -410,9 +400,32 @@ function show_hide_fields(){
     }
 }
 function myFunction(){
-    alert();
     $('#b-color').css("color","black");
 }   
+function letter_of_credit_input(){
+    if ($("#id_1-letter_of_credit_1").is(":checked")){
+        $("#id_8").show();
+        $('#id_1-how_much_letter_of_credit').attr('required', 'required');
+    }
+    else{
+        $('#id_1-how_much_letter_of_credit').removeAttr('required');
+        $('#id_1-how_much_letter_of_credit').val('');
+        $("#id_8").hide();
+    }
+}
+function line_of_credit_input(){
+    if ($('#id_1-line_of_credit_1').is(":checked")) {
+        $("#id_10").show();
+        $('#id_1-how_much_line_of_credit').attr('required', 'required');
+    }
+    else{
+        $('#id_1-how_much_line_of_credit').removeAttr('required');
+        $('#id_1-how_much_line_of_credit').val('');
+        $("#id_10").hide();
+    }
+}
+
+
 // function form_save(){
 //     var frm = $("#order_form");
 //     console.log("data",frm)

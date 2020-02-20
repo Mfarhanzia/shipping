@@ -134,9 +134,10 @@ form {
     font-weight: bold;
 }
 
-#id_how_much_letter_of_credit,
-#id_how_much_line_of_credit {
+#id_1-how_much_letter_of_credit,
+#id_1-how_much_line_of_credit {
     text-align: left !important;
+    autocomplete: on;
 }
 
 #id_12{
