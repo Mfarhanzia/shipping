@@ -1,5 +1,10 @@
 html {
     scroll-behavior: smooth;
+    font-family: 'Quicksand', sans-serif !important;
+}
+
+.quicksand-font{
+    font-family: 'Quicksand', sans-serif !important;
 }
 
 .pdf{
@@ -26,20 +31,20 @@ html {
 }
 
 .logo {
-    width: 120px !important;
-    height: 100px !important;
-    border: 1px solid #2F2E2E !important;
+    width: 105px !important;
+    height: 90px !important;
+    border: 2px solid rgb(47, 46, 46) !important;
 }
 
 .color_15 {
-    font: normal normal normal 16px/1.4em futura-lt-w01-light, sans-serif;
+    font: normal normal normal 16px/1.4em futura-lt-w01-light, Rosarivo;
     color: #AFAEAE;
 }
 
 #comp-ir1r4w4s {
     position: relative;
-    margin: 10px 0px 5px 0;
-    left: 18px;
+    margin: 5px 0px 5px 0;
+    left: 10px;
     grid-area: 1 / 1 / 2 / 2;
     justify-self: start;
     align-self: start;
@@ -57,46 +62,17 @@ html {
 }
 
 .nav-item { 
-    
-    font: normal normal normal 14px/1.4em didot-w01-italic, serif;
-    font-style: italic;
-    padding-right: 40px;
+    font-family: 'Quicksand', sans-serif;
+    /* font: normal normal normal 14px/1.4em serif; */
+    font-size: 14px;
+    padding: 0 5px 0 5px;
+    /* border-left: 2px solid;  */
+    /* line-height: 16px; */
 }
-/*  */
-
- 
-/* .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none !important;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-   */
-
-/*  */
 
 .nav-link {
     color: #2F2E2E !important;
 }
-
 
 .active1 {
     color: #A4A4A3!important;
@@ -158,9 +134,10 @@ form {
     font-weight: bold;
 }
 
-#id_how_much_letter_of_credit,
-#id_how_much_line_of_credit {
+#id_1-how_much_letter_of_credit,
+#id_1-how_much_line_of_credit {
     text-align: left !important;
+    autocomplete: on;
 }
 
 #id_12{
@@ -169,48 +146,52 @@ form {
     width: 50%;
 }
 
+.subs-btn {
+    border-radius: unset;
+    font-weight: 600;
+}
+
+.subs-btn:hover {
+    color: white;
+    background: black;
+}
+
+.subs-field {
+    color: #fff!important;
+    border: 1px solid #000000 !important;
+    padding-left: 10px;
+}
+
+.subs-field:hover{
+    color: #000!important;
+    background-color: #ffffff !important;
+}
+
+.btn-black:hover {
+    background-color: #0d0d0ddb !important;
+    color: #fff;
+}
+
+.subs-field:active {
+    color: #000!important;
+    background-color: #ffffff !important;
+}
+
 .md-padding {
     margin-top: 5% !important;
     margin-bottom: 5% !important;
 }
-
-
-
-@media only screen and (max-width: 991px) {
-    .dropdown-menu {
-        margin: 0 45% !important; 
-        }
-    .navbar-toggler {
-        background: black !important;
-    }
-    #basicExampleNav {
-        margin-top: 20px !important;
-    }
-    .nav-item {
-        background-color: #2f2e2e;
-    }
-    .nav-link {
-        text-align: center !important;
-        color: whitesmoke !important;
-        /* padding-left: 20px !important; */
-    }
-    .nav-item:active {
-        /* width:100%; */
-        background-color: #2f2e2e !important;
-    }
-    form {
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-    }
+.nav-bg-color{
+    background-color: white;
+    -webkit-box-shadow: none !important;
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1500px) {
-    
-}
+
+
 
 #div_id_how_much_letter_of_credit,
 #div_id_how_much_line_of_credit,
-#div_id_other_type_of_development,
+#div_id_2-other_type_of_development,
 #div_id_other_type_of_climate_area,
 #div_id_other_when_to_order,
 #access_time_div {
@@ -218,7 +199,7 @@ form {
 }
 
 .boxshadow2 {
-    padding: 40px 40px;
+    padding: 40px 20px;
     border-color: 0 15px 20px rgb(209, 209, 209);
     -webkit-box-shadow: 0 15px 20px rgba(209, 209, 209);
     -moz-box-shadow: 0 15px 20px rgba(209, 209, 209);
@@ -354,8 +335,11 @@ form {
 }
 
 .font_8 {
-    font: normal normal normal 17px futura_ltregular, sans-serif;
-    color: #2F2E2E;
+    /* font: normal normal normal 17px futura_ltregular, sans-serif;
+    color: #2F2E2E; */
+    font-family: 'Quicksand', sans-serif;
+    font-size: 17px;
+    text-align: justify;
 }
 
 .font_3 {
@@ -369,26 +353,22 @@ form {
 }
 
 .font_7days{
-    /* font-size:70px; */
-    font: normal normal normal 4em/1.4em didot-w01-italic,serif;
+    font-size:50px;
+    font-family: 'Quicksand', sans-serif;
+    /* font: normal normal normal 4em/1.4em didot-w01-italic,serif; */
     font-style: italic;
     color: #2F2E2E;
 }
 
 .row2-font{
-    font-family: didot-w01-italic,serif;
-    
+    font-family: 'Quicksand', sans-serif;
     font-style: italic;
     color: #2F2E2E;
-    /* overflow: hidden; */
-    line-height: 1.4em;
     font-size: 5vw;
+    text-align: center;
 }
-@media only screen and (max-width: 768px) {
-    .row2-font{
-        font-size: 2.8rem;
-    }
-   
+.row2-font p{
+    line-height: 1.2em;
 }
 
 .l-hieght {
@@ -582,9 +562,6 @@ input[type="date"], focus {
     -moz-box-shadow: none;
 }
 
-#div_id{
-    visibility: hidden;
-}
 
 @font-face {
     font-family: 'Brush Script Std';
@@ -606,6 +583,11 @@ input[type="date"], focus {
 .log-register {
     font-weight: 400;
 }
+
+.button-font{
+    font-weight: 500;
+}
+
 .log-register h2 {
     text-transform: uppercase;
     font-weight: bolder;
@@ -615,3 +597,319 @@ input[type="date"], focus {
     list-style: disc !important;
 }
 
+.perks {
+    font-size:16px;
+    /* line-height:1rem; */
+    color:#000000;
+}
+
+.top-add{
+    padding-top: 14px;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+}
+
+.add-bar{
+    font-size: .88em;
+    height: 50px;
+}
+
+
+
+.top-add a{
+    color: white !important;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+#add-bar-control-prev {
+    position: absolute;
+    left: -15px;
+    width: 10%;
+}
+
+#add-bar-control-next{
+    position: absolute;
+    right: -15px;
+    width: 10%;
+}
+
+#add-bar-control-prev-icon{
+    position: absolute;
+    left: 0px;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+#add-bar-control-next-icon{
+    position: absolute;
+    right: 0px;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.nav-margin{
+    margin-left: 20px;
+}
+.place-order-btn{
+    padding: 3px 12px 3px 12px;
+}
+
+#nav_{
+    z-index: 5;
+}
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 255, 255); /* Black background with opacity */
+    z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+.agreement-form{
+    font-weight: 400;
+}
+
+.agreement-form ul{
+    list-style: none;
+}
+.agreement-form ul li{
+    display: inline;
+}
+
+.agreement-form ul li:nth-child(2){
+    float: right;
+}
+
+.agreement-form input{
+    font-family: Brush Script Std;
+}
+
+.agreement-form legend{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+  
+.agreement-terms{
+    height: 70vh;
+    border: 5px solid #555;
+    border-radius: 2px;
+    border-bottom: none;
+    overflow-y: auto;
+}
+
+.terms-btn{
+    background-color: #e2f0cd;
+    border-radius: 2px;
+}
+
+.img-div{
+    overflow: auto;
+}
+
+.no-margin{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.map-border{
+    border: 3px solid rgb(31, 31, 31);
+}
+
+canvas{
+    width: 100% !important;
+}
+
+
+.buyer_app_form_label{
+    font-weight: 400;
+}
+
+.buyer_app_form_label div{
+    margin-bottom: 18px;
+   
+
+}
+.buyer_app_form_label ul{
+    overflow: visible;
+
+}
+
+.buyer_app_form_label li{
+    font-size: 15px;
+    display: inline;
+    padding: 16px 13px 16px 0px;
+}
+
+.buyer_app_form_label li label{
+    padding: 7px 15px 7px 8px;
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+}
+
+.buyer_app_form_label li label:hover{
+    border: 2px solid #007bff;
+    border-radius: 5px;
+}
+
+
+.checkbox_checked{
+    border-color: #1A78F2 !important;
+    color: #1A78F2;
+}
+
+#_3d_render{
+    height: 100vh;
+    width:  100%;
+}
+
+/* media queries */
+@media only screen and (max-width: 991px) {
+
+    .nav-bg-color{
+        background-color: transparent;
+        -webkit-box-shadow: none !important;
+    }
+    .dropdown-menu {
+        margin: 0 45% !important; 
+        }
+    .navbar-toggler {
+        background: black !important;
+    }
+    #basicExampleNav {
+        margin-top: 20px !important;
+    }
+    .nav-item {
+        /* background-color: white; */
+        line-height: 1rem;
+        border: none;
+    }
+    .nav-link {
+        text-align: center !important;
+        color: black ;
+        /* padding-left: 20px !important; */
+    }
+    .nav-item:active {
+        /* width:100%; */
+        /* background-color: #2f2e2e !important; */
+    }
+    form {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+}
+
+@media only screen and (max-width: 825px) {
+    .add-bar{
+        height: 50px;
+        font-size: 12px;
+    }   
+}
+
+@media only screen and (max-width: 768px) {
+    .row2-font{
+        font-size: 2.8rem;
+    }
+    .remove-slider{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        height: 80vh;
+        background-image: url('/static/users/imgs/2-story-front-view.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .static-slider{
+        width: 100%;
+        height: 80vh;
+    }
+    #mobile-hide{
+        display: none;
+    }
+    .color_15{
+        color: whitesmoke;
+    }
+    .logo{
+        border-color: whitesmoke !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .font_7days{
+        font-size: 36px;
+    }
+}
+
+@media only screen and (max-width:685px) {
+    #add-bar-control-prev {
+        display: none;
+    }
+    #add-bar-control-next{
+        display: none;
+    } 
+}
+
+@media only screen and (max-width: 430px) {
+    
+    .float-unset button{
+        width: 90px !important;
+        font-size: 12px !important;
+        padding: 12px 5px !important;
+    }
+    .buyer_app_form_label{
+        font-size: 15px;
+    }
+
+    .buyer_app_form_label li{
+        font-size: 13px;
+        padding: 16px 0px 16px 5px;
+    }
+    
+    .buyer_app_form_label li label{
+        padding: 5px 13px 5px 8px;
+    }
+    .boxshadow2 {
+        padding: 40px 0px
+    }
+}
+
+@media only screen and (max-width: 427px) {
+    .add-bar{
+        height: 65px;
+        font-size: 12px;
+    }
+    .remove-slider{
+        top: 65px;
+    }   
+}
+
+@media only screen and (max-width: 345px) {
+    .top-add{
+        padding-top: 10px;
+        font-size:11px;
+    }
+    .app_form_h2{
+        font-size: 8.6vw;
+    }
+}
+
+@media only screen and (max-width: 254px) {
+    .float-unset button{
+        width: 80px !important;
+    }
+}
+
+@media only screen and (max-width: 234px) {
+    .float-unset {
+        float: right;
+    }
+}
