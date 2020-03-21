@@ -769,7 +769,16 @@ canvas{
     height: 100vh;
     width:  100%;
 }
-
+.card-img-top {
+    height: 250px !important;
+}
+.card-footer {
+    text-align: center;
+}
+.home-anchor {
+    color: #000000 !important;
+    text-decoration: underline;
+}
 /* media queries */
 @media only screen and (max-width: 991px) {
 
@@ -913,3 +922,9 @@ canvas{
         float: right;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .mobile-hide {
+      display: none;
+    }
+  }
