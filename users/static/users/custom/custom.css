@@ -765,6 +765,10 @@ canvas{
     color: #1A78F2;
 }
 
+#_3d_render{
+    height: 100vh;
+    width:  100%;
+}
 
 /* media queries */
 @media only screen and (max-width: 991px) {
