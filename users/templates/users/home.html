@@ -141,7 +141,7 @@
   <div class="container mb-5">
     <div class="row">
       <div class="col-md-12">
-        <h1>What's We Offer</h1>
+        <h1>What We Offer</h1>
       </div>
       <div class="col-md-4 mb-5">
           <div class="card">
@@ -155,7 +155,7 @@
                 </p>
               </div>
               <div class="card-footer">
-                  <button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button>
+                  <a href="{% url 'order-form' %}"><button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button></a>
               </div>
             </div>
       </div>
@@ -172,7 +172,7 @@
                 </p>
               </div>
               <div class="card-footer">
-                  <button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button>
+                  <a href="{% url 'order-form' %}"><button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button></a>
               </div>
             </div>
       </div>
@@ -188,12 +188,12 @@
                 </p>
               </div>
               <div class="card-footer center">
-                <button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button>
+                <a href="{% url 'order-form' %}"><button class="btn login-btn btn-black button-font waves-effect waves-light">Buy Now</button></a>
               </div>
             </div>
       </div>
       <div class="col-md-12" style="text-align: end">
-        <a href="#" class="home-anchor">See more</a>
+        <a href="{% url 'models' %}" class="home-anchor">See more</a>
       </div>
     </div>
   </div>
