@@ -130,6 +130,7 @@
 	margin-top: 40px;
 	margin-bottom: 40px;
 	padding-left: 15px;
+	min-height: 102px;
 }
 
 .concept-text {
@@ -234,12 +235,12 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	line-height: 32px !important;
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 	font-family: Montserrat !important;
 }
 
 .icon-div {
-	    height: 100px;
+	height: 100px;
     width: 100px;
     border-radius: 50px;
     border: 1px solid #FFFFFF;
@@ -410,4 +411,9 @@
 		font-size: 26px !important;
 	}
 
+}
+@media only screen and (max-width: 1000px) and (min-width: 768px) {
+	.concept-text {
+		font-size: 52px !important;
+	}
 }
