@@ -3,6 +3,11 @@ html {
     font-family: 'Quicksand', sans-serif !important;
 }
 
+
+.no-t-border {
+    border-top: none !important;
+}
+
 .quicksand-font{
     font-family: 'Quicksand', sans-serif !important;
 }
@@ -1102,6 +1107,11 @@ border-bottom: 1px white solid;
     }
     .boxshadow2 {
         padding: 40px 0px
+    }
+
+    .top-header-fixed {
+        position: fixed;
+        z-index: 5;
     }
 }
 
