@@ -412,8 +412,25 @@
 	}
 
 }
+
 @media only screen and (max-width: 1000px) and (min-width: 768px) {
 	.concept-text {
 		font-size: 52px !important;
+	}
+}
+@media only screen and (min-width: 768px) {
+	.top-header-fixed {
+		position: fixed;
+		z-index: 5;
+	}
+}
+@media only screen and (max-width: 480px) and (min-width: 1px) {
+	.hide-sm {
+		display: none !important;
+	}
+}
+@media only screen and (max-width: 3200px) and (min-width: 481px) {
+	.hide-lg {
+		display: none !important;
 	}
 }
