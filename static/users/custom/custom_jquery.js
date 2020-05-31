@@ -15,11 +15,12 @@
         // $('#nav-toggle').click(function() {
         //     $('nav ul').slideToggle();
         // });
+
         // // Hamburger to X toggle
-        $('.navbar-toggler').on('click', function() {
-            $('#overlay').slideToggle();
-            $('.color_15').css({"color":"black"});
-        });
+        // $('.navbar-toggler').on('click', function() {
+        //     $('#overlay').slideToggle();
+        //     $('.color_15').css({"color":"black"});
+        // });
 
         //remove blank options
         $("ul[id=id_1-letter_of_credit] > li:first").remove();

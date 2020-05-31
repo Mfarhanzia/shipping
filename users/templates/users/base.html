@@ -19,18 +19,23 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<!-- boostrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{#	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"#}
+{#	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+
+	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/vendor/bootstrap/css/bootstrap.min.css' %}" />
+	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/slick.css' %}" />
+	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/slick-theme.css' %}" />
 
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
+	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/custom.css' %}" />
 	<!-- fonts -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
-	<!-- animation -->
-	<!-- <link type="text/css" rel="stylesheet" href="{% static 'users/animations.min.css' %}" /> -->
+
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />
 </head>
 
@@ -61,141 +66,173 @@
 		</div>
 	</div>
 	<!--Navbar-->
-	<div class="container-fluid nav-bg-color fixed-nav quicksand-font">
-		<div class="container-fluid" >
-			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">
-				<!-- Navbar brand -->
-				<div class="logo">
-					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">
-						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">
-							<div data-packed="true" style="width: 80px; pointer-events: none;" class="txtNew"
-								id="comp-ir1r4w4s">
-								<h1 class="font_0" id="b-color"  style="line-height:0.3em;">
-									<a href="/" target="_self">
-										<span style="letter-spacing:2px;">
-											<span class="color_15">BOLT</span>
-										</span>
-										<span style="letter-spacing:1px;">
-											<span class="color_15">ON</span>
-										</span>
-										<span style="letter-spacing:2px;">
-											<span class="color_15">BLOKS</span>
-										</span>
-									</a>
-								</h1>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+{#	<div class="container-fluid nav-bg-color fixed-nav quicksand-font">#}
+{#		<div class="container-fluid" >#}
+{#			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">#}
+{#				<!-- Navbar brand -->#}
+{#				<div class="logo">#}
+{#					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">#}
+{#						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">#}
+{#							<div data-packed="true" style="width: 80px; pointer-events: none;" class="txtNew"#}
+{#								id="comp-ir1r4w4s">#}
+{#								<h1 class="font_0" id="b-color"  style="line-height:0.3em;">#}
+{#									<a href="/" target="_self">#}
+{#										<span style="letter-spacing:2px;">#}
+{#											<span class="color_15">BOLT</span>#}
+{#										</span>#}
+{#										<span style="letter-spacing:1px;">#}
+{#											<span class="color_15">ON</span>#}
+{#										</span>#}
+{#										<span style="letter-spacing:2px;">#}
+{#											<span class="color_15">BLOKS</span>#}
+{#										</span>#}
+{#									</a>#}
+{#								</h1>#}
+{#							</div>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+{#				<!-- <a class="navbar-brand" href="#">Navbar</a> -->#}
+{##}
+{#				<!-- Collapse button -->#}
+{#				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"#}
+{#					aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">#}
+{#					<span class="navbar-toggler-icon"></span>#}
+{#				</button>#}
+{##}
+{#				<!-- Collapsible content -->#}
+{#				<div class="collapse navbar-collapse" id="basicExampleNav">#}
+{#					<!-- Links -->#}
+{#					<ul class="navbar-nav nav-margin  ml-auto">#}
+{#						<li class="nav-item" >#}
+{#							<a class="nav-link" href="{% url 'home' %}">Home#}
+{#								<span class="sr-only">(current)</span>#}
+{#							</a>#}
+{#						</li>#}
+{#						<li class="nav-item dropdown">#}
+{#							<a class="nav-link dropdown-toggle about" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About our Units</a>#}
+{#							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+{#								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>#}
+{#								<a class="dropdown-item" href="{% url 'amenities' %}">Amenities</a>#}
+{#								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>#}
+{#							{% if user.is_authenticated %}#}
+{#								{% if request.user.specuser.user_type != "vendor" %}	#}
+{#									<a class="dropdown-item" href="{% url 'struc-drawings' %}">Structural drawings</a>#}
+{#									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>#}
+{#									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>#}
+{#									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>#}
+{#								{% endif %}#}
+{#							{% endif %}#}
+{#							</div>#}
+{#						</li>#}
+{#						{% if request.user.specuser.user_type != "vendor" %}#}
+{#							{% if user.is_superuser %}#}
+{#							<li class="nav-item dropdown">#}
+{#								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Controls</a>#}
+{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+{#									<a class="dropdown-item" href="{% url 'view-container-orders' %}">Container Orders</a>#}
+{#									<a class="dropdown-item"href="{%url 'buyer-app' %}">Buyer Applications</a>#}
+{#									<a class="dropdown-item" href="{% url 'view-quotation' %}">Quotations</a>#}
+{#									<a class="dropdown-item" href="/admin">Admin Panel</a>#}
+{#								</div>#}
+{#							</li>#}
+{#							{% endif %}#}
+{#							<li class="nav-item dropdown">#}
+{#								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>#}
+{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+{#									<a class="dropdown-item" href="{% url 'models' %}">View Models</a>#}
+{#									<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>#}
+{#									<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>#}
+{#									<a class="dropdown-item" href="{% url 'model-3d' %}">3d Model</a>#}
+{#								</div>#}
+{#							</li>#}
+{#							<li class="nav-item dropdown">#}
+{#								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Electric Car</a>#}
+{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+{#								  <a class="dropdown-item" href="{% url 'electric-cars' %}">Cars</a>#}
+{#								  <a class="dropdown-item" href="{% url 'cars-interior' %}">Car Interior</a>#}
+{#								  <a class="dropdown-item" href="{% url 'cars-exterior' %}">Car Exterior</a>#}
+{#								</div>#}
+{#							</li>#}
+{#						{% endif %}#}
+{#						{% if user.is_authenticated %}#}
+{#							#}
+{#							{% if user.specuser.user_type == 'dealer' %}#}
+{#								<li class="nav-item">#}
+{#									<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>#}
+{#								</li>#}
+{#							{% endif %}#}
+{#						#}
+{#						{% if user.specuser.user_type == "vendor" %}#}
+{#							<li class="nav-item">#}
+{#								<a class="nav-link" href="{% url 'vendor-quotation' %}">Give Quotation</a>#}
+{#							</li>#}
+{#						{% endif %}#}
+{##}
+{#						{% endif %}#}
+{#						<li class="nav-item">#}
+{#							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>#}
+{#						</li>#}
+{#					</ul>#}
+{#					{% if not request.user.is_superuser%}#}
+{#						<div class="nav-margin">#}
+{#							<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						#}
+{#						</div>#}
+{#					{% endif %}#}
+{#					<div class="nav-margin">#}
+{#						{% if request.user.is_authenticated %}#}
+{#						<ul class="navbar-nav nav-margin">#}
+{#							<li class="nav-item dropdown" >#}
+{#								<a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>#}
+{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+{#									<a class="dropdown-item" href="/logout">LogOut</a>#}
+{#									{% if not request.user.is_superuser %}#}
+{#									<a class="dropdown-item" href="{% url 'my-orders' %}">Order History</a>#}
+{#									{% endif %}#}
+{#								</div>#}
+{#							</li>#}
+{#						</ul>#}
+{#						{% else %}#}
+{#							<a class="nav-link" href="/login">Log in/Register</a>#}
+{#						{% endif %}#}
+{#					</div>#}
+{#				</div>#}
+{#				<!-- Collapsible content -->#}
+{#			</nav>#}
+{#		</div>#}
+{#	</div>#}
+   <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">BOLT ON BLOKS</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home' %}">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'models' %}">MODELS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">ABOUT US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact-us' %}">CONTACT</a>
+          </li>
 
-				<!-- Collapse button -->
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-					aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 
-				<!-- Collapsible content -->
-				<div class="collapse navbar-collapse" id="basicExampleNav">
-					<!-- Links -->
-					<ul class="navbar-nav nav-margin  ml-auto">
-						<li class="nav-item" >
-							<a class="nav-link" href="{% url 'home' %}">Home
-								<span class="sr-only">(current)</span>
-							</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle about" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About our Units</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>
-								<a class="dropdown-item" href="{% url 'amenities' %}">Amenities</a>
-								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>
-							{% if user.is_authenticated %}
-								{% if request.user.specuser.user_type != "vendor" %}	
-									<a class="dropdown-item" href="{% url 'struc-drawings' %}">Structural drawings</a>
-									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>
-									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>
-									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>
-								{% endif %}
-							{% endif %}
-							</div>
-						</li>
-						{% if request.user.specuser.user_type != "vendor" %}
-							{% if user.is_superuser %}
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Controls</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="{% url 'view-container-orders' %}">Container Orders</a>
-									<a class="dropdown-item"href="{%url 'buyer-app' %}">Buyer Applications</a>
-									<a class="dropdown-item" href="{% url 'view-quotation' %}">Quotations</a>
-									<a class="dropdown-item" href="/admin">Admin Panel</a>
-								</div>
-							</li>
-							{% endif %}
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="{% url 'models' %}">View Models</a>
-									<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>
-									<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>
-									<a class="dropdown-item" href="{% url 'model-3d' %}">3d Model</a>
-								</div>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Electric Car</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								  <a class="dropdown-item" href="{% url 'electric-cars' %}">Cars</a>
-								  <a class="dropdown-item" href="{% url 'cars-interior' %}">Car Interior</a>
-								  <a class="dropdown-item" href="{% url 'cars-exterior' %}">Car Exterior</a>
-								</div>
-							</li>
-						{% endif %}
-						{% if user.is_authenticated %}
-							
-							{% if user.specuser.user_type == 'dealer' %}
-								<li class="nav-item">
-									<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>
-								</li>
-							{% endif %}
-						
-						{% if user.specuser.user_type == "vendor" %}
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'vendor-quotation' %}">Give Quotation</a>
-							</li>
-						{% endif %}
-
-						{% endif %}
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>
-						</li>
-					</ul>
-					{% if not request.user.is_superuser%}
-						<div class="nav-margin">
-							<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						
-						</div>
-					{% endif %}
-					<div class="nav-margin">
-						{% if request.user.is_authenticated %}
-						<ul class="navbar-nav nav-margin">
-							<li class="nav-item dropdown" >
-								<a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="/logout">LogOut</a>
-									{% if not request.user.is_superuser %}
-									<a class="dropdown-item" href="{% url 'my-orders' %}">Order History</a>
-									{% endif %}
-								</div>
-							</li>
-						</ul>
-						{% else %}
-							<a class="nav-link" href="/login">Log in/Register</a>
-						{% endif %}
-					</div>
-				</div>
-				<!-- Collapsible content -->
-			</nav>
-		</div>
-	</div>
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+            <a class="no-btn mr-3" href="/login">LOGIN</a>
+            <a class="btn1" href="{% url 'order-form' %}">PLACE AN ORDER</a>
+        </div>
+      </div>
+    </nav>
+    </div>
+  </nav>
 	<div class="container text-center">
 		<div class="col-md-12">
 			{% if messages %}
@@ -281,19 +318,22 @@
 		</div>
 	</div>
 	
-	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>
+{#	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>#}
+	<script type="text/javascript" src="{% static 'users/new_custom/vendor/jquery/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'users/new_custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'users/new_custom/vendor/slick/slick.js' %}"></script>
 	<script src="{% static 'users/webcam/webcam.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/dist/jquery.inputmask.js' %}"></script>
 	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/custom/flipdown.js' %}"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+{#	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"#}
+{#		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"#}
+{#		crossorigin="anonymous"></script>#}
 
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="{% static 'MBD/js/mdb.min.js' %}"></script>
-	
+
 	{% block  js %}
 	{% endblock %}
 </body>
