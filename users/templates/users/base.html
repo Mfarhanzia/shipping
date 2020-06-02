@@ -31,6 +31,7 @@
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
 	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/custom.css' %}" />
+	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/style.css' %}" />
 	<!-- fonts -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
@@ -226,8 +227,13 @@
 
         </ul>
         <div class="form-inline my-2 my-lg-0">
-            <a class="no-btn mr-3" href="/login">LOGIN</a>
+           {% if not request.user.is_authenticated %}
+               <a class="no-btn mr-3" href="/login">LOGIN</a>
+           {% endif %}
             <a class="btn1" href="{% url 'order-form' %}">PLACE AN ORDER</a>
+           {% if request.user.is_authenticated %}
+               <a class="no-btn ml-3" href="/logout">Log Out</a>
+           {% endif %}
         </div>
       </div>
     </nav>
@@ -279,44 +285,41 @@
 	{% endblock %}
 	<!-- jquery -->
 
-	<div class="container-fluid footer-color">
-		<div class="row pt-4 pb-5">
-			<div class="col-md-4 col-sm-6 col-xs-6 f-header pt-4 pl-4 quicksand-font">
-				<h1>BE IN <br>TOUCH</h1>
-			</div>
-			<div class="col-md-4 col-sm-6 col-xs-6 footer-address pl-4 pt-4">
-				<span>12345 Beach Blvd., Stanton, CA 90680</span>
-				<br>
-				<span>Tel:<a href="tel:7143631287"> 714-363-1287</a></span>
-				<br><br>
-				<span>Email: <a href="mailto:info@boltonbloks.com">info@boltonbloks.com</a></span><br><br>
-				<h5>PATENT PENDING USTPO PATENT PENDING.</h5>
-				<h6>All rights reserved.</h6>
-			</div>
-			<div id="id_subscribe" class="col-md-4 col-sm-12 pt-4 text-center">
-				
-				<form  class="no-margin" method="POST" action="{% url 'home' %}">
-					{%csrf_token%}
-					<legend><h3 class="no-margin text-center text-white">Subscribe to us</h3></legend>
-					<div class="md-form">
-						{{subscribe_form.email}}
-						{% for error in field.errors %}
-						<p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
-						{% endfor %}
-					</div>
-					<div class="md-form">
-						{{subscribe_form.name}}
-						{% for error in field.errors %}
-						<p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
-						{% endfor %}
-					</div>
-					<div class="col text-center quicksand-font">
-						<button  class="btn subs-btn">Subscribe</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+
+
+   <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+         <form  class="no-margin" method="POST" action="{% url 'home' %}">
+            {%csrf_token%}
+            <div class="row news-letter txt-center">
+            <div class="icon-div">
+              <i class="far fa-envelope icon-env"></i>
+            </div>
+            <div class="col-md-12">
+              <p class="subsribe-us-txt">SUBSCRIBE TO OUR NEWSLETTER</p>
+              <p class="sign-up-txt">Sign up with your email address to receive news and updates.</p>
+            </div>
+            <div class="col-md-8 sub-input-parent">
+               {{subscribe_form.email}}
+            </div>
+            <div class="col-md-4 sub-btn-parent">
+              <button class="subsribe-btn">SUBSCRIBE</button>
+            </div>
+            </div>
+         </form>
+        </div>
+      </div>
+   </div>
+   <footer>
+      <div class="container-fluid">
+         <div class="row">
+             <div class="col-lg-4"><p class="m-0 text-left small">&copy; Bolt on Bloks. All rights reserved.</p></div>
+             <div class="col-lg-4"><p class="m-0 text-center small">12345 Beach Blvd., Stanton, CA 90680 USA</p></div>
+             <div class="col-lg-4"><p class="m-0 text-right small">PATENT PENDING USTPO PATENT PENDING.</p></div>
+         </div>
+      </div>
+   </footer>
 	
 {#	<script type="text/javascript" src="{% static 'users/js/jquery-3.4.1.min.js' %}"></script>#}
 	<script type="text/javascript" src="{% static 'users/new_custom/vendor/jquery/jquery.min.js' %}"></script>

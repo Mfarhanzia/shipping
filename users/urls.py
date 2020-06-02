@@ -1,10 +1,12 @@
 from django.urls import path
 from django.conf.urls import url
-from .views import (amenities,concept_page, activate, admincheck, home_view, floor_plan,
-        home_access, models, video_page, electric_cars_view,electric_cars_exterior_view,
-        electric_cars_interior_view, contact_view, RegistrationForm)
 from django.contrib.auth import views as auth_views
-from .forms import RegistrationForm1, RegistrationForm2  
+from .views import (amenities, concept_page,
+                    activate, admincheck,
+                    home_view, home_access, models,
+                    video_page, electric_cars_view,
+                    electric_cars_exterior_view, contact_view,
+                    electric_cars_interior_view,  RegistrationForm)
 
 urlpatterns = [
     path('electric-cars/exterior', electric_cars_exterior_view ,name='cars-exterior'),
@@ -34,8 +36,6 @@ urlpatterns = [
          
     path('', home_view, name="home"),
     
-    path('floor-plan', floor_plan, name="floor_plan"),
-
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', activate, name='activate'),
 
     url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),

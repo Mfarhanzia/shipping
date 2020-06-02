@@ -10,16 +10,12 @@ class EmailListForm(forms.ModelForm):
 
     class Meta:
         model = EmailList
-        fields = ('name','email',)
+        fields = ['email']
     def __init__(self, *args, **kwargs):
         super(EmailListForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({
-            'placeholder': ' Email:',
-            "class":"pt-2 pb-2 pr-4 subs-field",
-        })
-        self.fields['name'].widget.attrs.update({
-            'placeholder': ' Name:',
-            "class":"pt-2 pb-2 pr-4 subs-field",
+            'placeholder': 'email@email.com',
+            "class":"news-input",
         })
 
 

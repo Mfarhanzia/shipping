@@ -83,7 +83,8 @@ class RegistrationForm(CookieWizardView):
         user_pref.user_obj = user
         user_pref.save()
         self.send_mail(user)
-        return redirect('login')
+        return render("users/thanks-page.html")
+        # return redirect('login')
 
 
 def home_view(request):
@@ -122,10 +123,7 @@ def electric_cars_exterior_view(request):
 def electric_cars_interior_view(request):
     return render(request, 'users/car_interior.html')
 
-@login_required
-def floor_plan(request):
-    return render(request, 'users/floor_plan.html', {'title': 'Floor Plan'})
-    
+
 @login_required
 @user_passes_test(lambda user: user.is_superuser != True, redirect_field_name="/")
 def home_access(request):
