@@ -1,0 +1,84 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="tabs" class="container-fluid project-tab">
+    <div class="row">
+    <div class="md-3">
+       <h4 class="text-muted ml-2">My Account</h4>
+       <ul class="text-muted">
+          <li><a href="#">My Order Histroy</a></li>
+          <li><a href="#">My Preferences</a></li>
+          <li><a href="{% url 'user-profile' %}">Settings</a></li>
+          <li><a href="/logout" >Logout</a></li>
+       </ul>
+    </div>
+          <div class="col-md-9 m-auto p-0 pb-5 bottom_border">
+            <div class="row">
+               <div class="col-md-12 fa-pull-left w-100">
+                  <nav class="fa-pull-left">
+                    <h2 class="text-muted mb-4">Settings</h2>
+                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active mr-5" id="nav-home-tab" data-toggle="tab"
+                        href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">My
+                        Profile</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                        href="#nav-profile" role="tab" aria-controls="nav-profile"
+                        aria-selected="false">Security</a>
+                     </div>
+                  </nav>
+               </div>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+               <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <form method="POST" class="custom_input">
+                     {% csrf_token %}
+                     {{ form1 }}
+                     {% for field in form2 %}
+                        {% if field == form.state %}
+                           <div class="w-100" style="width: 100%; display:flex;">
+                              <label for="id_state">{{ form2.state.label }}</label>
+                              <div style=" margin-top: 60px; margin-left: -65px;">
+                                 {{ form2.state }}
+                              </div>
+                              <label for="id_postal" style="position: relative; left: 18px;"
+                              >{{ form2.postal.label }}</label>
+                              <div style="margin-top: 60px; margin-left:-53px;">
+                                 {{ form2.postal }}
+                              </div>
+                           </div>
+
+                        {% elif field == form.postal %}
+                        {% else %}
+                           <label>{{ field.label }}</label>
+                           {{ field }}
+                        {% endif %}
+                     {% endfor %}
+                     <br/><br/>
+                     <button type="submit" class="btn btn-outline-info fa-pull-right rounded-top"> Save
+                     </button><br/><br/>
+                  </form>
+               </div>
+                <div class="tab-pane fade sign_up_font" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                   <div class="col-md-10 m-auto p-0">
+                      <div class="row">
+                         <div class="col-md-6 col-sm-12">
+                           <p class="mt-5">Click the change password Button and we will email you a link to change
+                              your
+                              password.
+                           </p>
+                            <a href="{% url 'contact-us' %}" style="color: #33b5e7; text-decoration: underline">Contact
+                               us</a>
+                         </div>
+                         <div class="col-md-6 col-sm-12">
+                            <a class="btn mt-5 btn-outline-info rounded fa-pull-right">Change Password</a>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,9 +1,5 @@
-from .import utils
-from PIL import Image
-from decimal import Decimal
 from datetime import date
-import random, string, json, base64, os
-from django.db.models import F
+import json, base64
 from django.conf import settings
 from django.utils import timezone
 from django.contrib import messages
@@ -11,29 +7,18 @@ from django.db.models import FloatField
 from django.views.generic import ListView
 from django.core.mail import EmailMessage
 from django.db.models.functions import Cast
-from django.utils.encoding import force_text
-from django.views.generic.edit import FormView
-from users.token import account_activation_token
-from django.utils.http import urlsafe_base64_decode
-from django.template.loader import render_to_string
-from users .models import Photo, WaterMark, SpecUser
-from django.views.decorators.http import require_POST
-from django.contrib.sites.shortcuts import get_current_site
+from users .models import SpecUser
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BuyerAppForm, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm
 from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect, reverse
-
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from xhtml2pdf import pisa
-from django_xhtml2pdf.utils import generate_pdf
 from django.template.loader import get_template
 from io import BytesIO
-from django.template import Context
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
-from formtools.wizard.views import CookieWizardView, SessionWizardView
-from django.core.files.storage import FileSystemStorage
+from formtools.wizard.views import SessionWizardView
 # Create your views here.
 
 class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):

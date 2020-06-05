@@ -98,3 +98,39 @@ class ContactUsForm(forms.Form):
     email = forms.EmailField(max_length=100)
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message','class':"p-1", "rows":"4"}), required=True)
+
+
+class UserProfileForm(forms.ModelForm):
+    # first_name = forms.CharField(max_length=100, required=True)
+    # last_name = forms.CharField(max_length=100)
+    # email = forms.EmailField(max_length=100)
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email',)
+
+    def clean_first_name(self):
+        f_name = self.cleaned_data.get("first_name")
+        f = re.findall("^[a-zA-Z]+$", f_name)
+        if not f:
+            raise forms.ValidationError('Incorrect First Name')
+        return f_name
+
+    def clean_last_name(self):
+        l_name = self.cleaned_data.get("last_name")
+        l =re.findall("^[a-zA-Z]+$", l_name)
+        if not l:
+            raise forms.ValidationError(
+                'Incorrect Last Name'
+                )
+        return l_name
+
+
+class UserProfileForm2(forms.ModelForm):
+    class Meta:
+        model = SpecUser
+        fields = ('address', 'city', 'state', 'postal', 'country',)
+
+    def save(self):
+        print("im running",self.cleaned_data)
+        # SpecUser.objects.get(request.user).update(address=self.cleaned_data.get("address"))
+        # SpecUser

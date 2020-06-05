@@ -37,17 +37,7 @@
             <embed src="{% static 'users/files/structural_drawings/3-story-2-wide-structural-plans.pdf' %}" type="application/pdf" height="500px" width="100%">
         </div>
     </div>
-    <div class="row md-padding justify-content-center">
-        
-        {% for img in image %}
-            {% if img.watermarked_image  %}
 
-            <div class="col-md-6 border-bottom">
-                <img class="img-fluid" style="width:400px;height:400px" src='{{img.watermarked_image.url}}' >
-            </div>
-            {% endif %}
-        {% endfor %}  
-    </div>
     {% comment %}
     <div  style="min-width:500px; min-height: 400px ">
     <div id ='hide' class= "img-fluid" style="min-width:500px; min-height: 400px; background: url('/static/users/imgs/sample.gif') no-repeat;">     

@@ -1,4 +1,4 @@
-<div >
+<div>
    <div class="form-group mt-5">
       {% if wizard.steps.prev %}
        <button  name="wizard_goto_step" class="btn btn-custom btn-lg"  value="{{ wizard.steps.prev }}"
@@ -6,7 +6,7 @@
       {% endif %}
        {% if wizard.steps.next %}
          <button id="multi-step-continue" type="submit" class="btn btn-custom btn-lg "
-         >{% if wizard.steps.step1 == 1 %}
+         >{% if wizard.steps.step1 == 1 and not request.user %}
             Create an Account{% else %}Continue{% endif %}</button>
        {% else %}
        <button type="submit" class="btn btn-custom btn-lg" >

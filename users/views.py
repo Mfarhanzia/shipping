@@ -1,23 +1,19 @@
-import random
-import string
+import random, string
 from order import utils
-from django import forms
 from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
-from .models import User, SpecUser, UserPreferences
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-from .forms import EmailListForm, SpecUserForm, ContactUsForm, RegistrationForm1, RegistrationForm2, UserPreferencesForm
 from django.template.loader import render_to_string
-from django.contrib.auth import password_validation
-from django.utils.encoding import force_bytes, force_text
+from .models import User, SpecUser, UserPreferences
+from formtools.wizard.views import CookieWizardView
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from formtools.wizard.views import CookieWizardView
+from .forms import EmailListForm, ContactUsForm, RegistrationForm1, RegistrationForm2, UserPreferencesForm, \
+    UserProfileForm, UserProfileForm2
 # views
 
 
@@ -83,7 +79,7 @@ class RegistrationForm(CookieWizardView):
         user_pref.user_obj = user
         user_pref.save()
         self.send_mail(user)
-        return render("users/thanks-page.html")
+        return render(self.request,"users/thanks-page.html")
         # return redirect('login')
 
 
@@ -292,3 +288,13 @@ def contact_view(request):
         return redirect('contact-us')
     return render(request, "users/contact_us.html", {"form":form})
 
+
+def update_userprofile(request):
+    if request.method == "POST":
+        form2 = UserProfileForm2(request.POST)
+        if form2.is_valid():
+            form2.save()
+            return redirect('/')
+    form1 = UserProfileForm(instance=request.user)
+    form2 = UserProfileForm2(instance=request.user.specuser)
+    return render(request, "users/user_profile.html", {"form1":form1,"form2":form2})

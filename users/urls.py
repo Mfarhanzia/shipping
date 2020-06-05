@@ -6,7 +6,8 @@ from .views import (amenities, concept_page,
                     home_view, home_access, models,
                     video_page, electric_cars_view,
                     electric_cars_exterior_view, contact_view,
-                    electric_cars_interior_view,  RegistrationForm)
+                    electric_cars_interior_view,  RegistrationForm,
+                    update_userprofile)
 
 urlpatterns = [
     path('electric-cars/exterior', electric_cars_exterior_view ,name='cars-exterior'),
@@ -44,5 +45,6 @@ urlpatterns = [
     path('concept', concept_page, name="concept"),
     path('amenities', amenities, name="amenities"),
     path('contactus', contact_view, name="contact-us"),
+    path('update/profile',update_userprofile, name="user-profile"),
 
 ]

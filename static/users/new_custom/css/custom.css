@@ -94,7 +94,9 @@ h6 {
     line-height: 22px;
     text-align: center;
     letter-spacing: 0.1em;
-    padding: 7px 20px;color: white;border:1px solid #FFFFFF;
+    padding: 7px 20px;
+    color: white !important;
+    border:1px solid #FFFFFF;
 }
 .btn1:hover{background:#fff; border:1px solid #5CA6CF; color: #5CA6CF;}
 .no-btn{	text-transform: uppercase;

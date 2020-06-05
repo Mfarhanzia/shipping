@@ -38,17 +38,22 @@ class SpecUser(User):
     user_type = models.CharField('Sign up as', max_length=32, choices = USER_TYPE, default = None)
     company_name = models.CharField('Name of Company',max_length=100, blank=True, null=True)
     title = models.CharField('Title',max_length=100, blank=True, null=True)
-    # phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
     phone_number = models.CharField(("Phone Number"), max_length = 18, help_text="optional", blank=True, null=True)
     dealer_no = models.CharField('Dealer Number',max_length=6, help_text="optional", validators=[RegexValidator(r"^[0-9]*$")] ,blank=True, null=True)
-
     home_permission = models.BooleanField('Home Access', default=False)
     content_permission = models.BooleanField('Content Access', default=False)
     activation_time_home = models.DateTimeField('Activation Time (Home)',blank=True, null=True)
     expire_time_home = models.DateTimeField('Expire Time (Home)', blank=True, null=True) 
     activation_time_spec_content = models.DateTimeField('Activation Time (Content)',blank=True, null=True)
     expire_time_spec_content = models.DateTimeField('Expire Time (Content)', blank=True, null=True) 
-    
+
+    city = models.CharField('City',max_length=60, default='', blank=True, null=True)
+    postal = models.CharField('Postal',max_length=60, default='', blank=True, null=True)
+    state = models.CharField('State',max_length=60, default='', blank=True, null=True)
+    country = models.CharField('Country',max_length=60, default='', blank=True, null=True)
+    address = models.CharField('Address', max_length=1000, default='', blank=True, null=True)
+
+
     def __str__(self):
         return f"{self.user_type} - {self.first_name}"
 
@@ -57,27 +62,7 @@ class SpecUser(User):
         verbose_name_plural = 'Spec User'
 
 
-class Photo(models.Model):
-    original_image = models.ImageField(upload_to='photos' , default=None)
-    watermarked_image = models.ImageField(upload_to='wartermarked_photos', default=None, blank=True, null=True)
-
-    def save(self, force_insert=False, force_update=False, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(self.original_image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (640, 500)
-            img.thumbnail(output_size)
-            img.save(self.original_image.path)  
-
-
-class WaterMark(models.Model):
-    water_mark_image = models.ImageField(upload_to='water_mark', default=None, help_text="You can add atmost one WaterMark image")
-    
-    @staticmethod
-    def __str__():
-        return f'Water Marker'
+# class UserProfile
 
 
 class EmailList(models.Model):
