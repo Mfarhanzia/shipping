@@ -3,26 +3,34 @@
 {% load crispy_forms_tags %}
 
 {% block content%}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12" >
+<div class="container ">
+   <h1 class="text-center">Registration</h1>
+   <p class="text-center"><span class="text-muted">Step {{wizard.steps.step1}} of {{wizard.steps.count}}</span></p>
+    <div class="row bg-grey">
+       <div class="col-md-4">
+          <div class="text-center" style="vertical-align: bottom">
+             <p>Need help?</p>
+             <a href="#" class="">Contact us</a>
+          </div>
+
+       </div>
+        <div class="col-md-8 registration_form_input">
             {% for errors in form.non_field.errors %}
             <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
             {% endfor%}
-            <form method="POST" class="boxshadow2">
+            <form method="POST">
                 {% csrf_token %}
-                <h1 class="text-center">Registration</h1>
-                <p class="text-center"><span class="text-muted">Step {{wizard.steps.step1}} of {{wizard.steps.count}}</span></p>
+
                 <hr class="ml-4">
                 {{ wizard.management_form }}
                 {% for field in wizard.form  %}
-                    {% if field == wizard.form.user_type %}
+                       {% if field == wizard.form.user_type %}
                     <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
                         <label class="label" for="{{field.id_for_label}}">{{field.label}}:</label>
                         {{field}}
                     </div>
                 {%else%}
-                    <div style="margin-left: -20px;" id="div_id_{{field.name}}" class="md-form">
+                    <div style="margin-left: -20px;" id="div_id_{{field.name}}" class="">
                         <i class="prefix"> </i>
                         <label for="{{field.id_for_label}}" class="label" data-error="wrong"
                             data-success="right">{{field.label}}
@@ -38,24 +46,6 @@
                     {% endif %}
                 {% endfor %}
               
-                {% comment %} {% if wizard.steps.prev %}
-                <div class="form-group fa-pull-left">
-                    <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
-                </div>
-                {% endif %}
-                <div class="form-group fa-pull-right">
-                    {% if wizard.steps.next %}
-                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
-                    {% else %}
-                    <button type="submit" class="btn btn-black btn-lg">
-                    {%if next_button%}
-                        as{{next_button}}
-                        {%else%}
-                        Submit
-                        {%endif%}
-                    </button>
-                    {% endif %}
-                </div> {% endcomment %}
                  {% include "users/formwizard_btns.html" %}
             </form>
         </div>

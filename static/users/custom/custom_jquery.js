@@ -158,6 +158,7 @@
         }
          else if (path == '/register/') {
             $('[href*="/register"]').addClass('active1');
+
         }
          else if (path == '/dealer/') {
             $('[href*="/dealer/"]').addClass('active1');

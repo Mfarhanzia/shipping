@@ -33,9 +33,9 @@ class RegistrationForm(CookieWizardView):
         Return the template name for the current step
         """
         templates = {
-        0: 'users/signup.html',
-        1: 'users/signup.html',
-        2: 'users/user_preference.html',
+        0: 'signup/signup.html',
+        1: 'signup/signup2.html',
+        2: 'signup/user_preference.html',
        }
         return [templates[int(self.steps.current)]]
     

@@ -38,7 +38,7 @@ class RegistrationForm1(forms.ModelForm):
     )
     class Meta:
         model = SpecUser
-        fields = ('email','password1','password2')
+        fields = ('first_name','last_name', 'email','password1','password2')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -49,7 +49,22 @@ class RegistrationForm1(forms.ModelForm):
                 code='password_mismatch',
             )
         return password2
-    
+
+    def clean_first_name(self):
+        f_name = self.cleaned_data.get("first_name")
+        f = re.findall("^[a-zA-Z]+$", f_name)
+        if not f:
+            raise forms.ValidationError('Incorrect First Name')
+        return f_name
+
+    def clean_last_name(self):
+        l_name = self.cleaned_data.get("last_name")
+        l =re.findall("^[a-zA-Z]+$", l_name)
+        if not l:
+            raise forms.ValidationError(
+                'Incorrect Last Name'
+                )
+        return l_name
     
     def _post_clean(self):
         super()._post_clean()
@@ -66,31 +81,12 @@ class RegistrationForm1(forms.ModelForm):
 class RegistrationForm2(forms.ModelForm):
     class Meta:
         model = SpecUser
-        fields = ('user_type', 'first_name','last_name','company_name','title','dealer_no','phone_number')
+        fields = ('user_type', 'company_name','title','dealer_no','phone_number')
         # widgets = {
         #     'user_type': forms.RadioSelect(),
         # }
-    def __init__(self, *args, **kwargs):
-        super(RegistrationForm2, self).__init__(*args, **kwargs)
-        self.fields['user_type'].widget.attrs.update({
-            "class":"md-form",
-        })
-    
-    def clean_first_name(self):
-        f_name = self.cleaned_data.get("first_name")
-        f = re.findall("^[a-zA-Z]+$", f_name)
-        if not f:
-            raise forms.ValidationError('Incorrect First Name')
-        return f_name
 
-    def clean_last_name(self):
-        l_name = self.cleaned_data.get("last_name")
-        l =re.findall("^[a-zA-Z]+$", l_name)
-        if not l:
-            raise forms.ValidationError(
-                'Incorrect Last Name'
-                )
-        return l_name
+
 
 
 class UserPreferencesForm(forms.ModelForm):
@@ -100,6 +96,18 @@ class UserPreferencesForm(forms.ModelForm):
 
         widgets = {
             'learn_about_electric_drive' : forms.RadioSelect(),}
+
+    # def __init__(self, *args, **kwargs):
+    #     super(UserPreferencesForm, self).__init__(*args, **kwargs)
+    #     self.fields['type_of_development'].widget.attrs.update({
+    #         "class":"checkbox-container",})
+    #     self.fields['type_of_smart_home'].widget.attrs.update({
+    #         "class":"",})
+    #     self.fields['type_of_electric_vehicle_function'].widget.attrs.update({
+    #         "class": "", })
+    #     self.fields['learn_about_electric_drive'].widget.attrs.update({
+
+    #         "class":"",})
 
 
 class ContactUsForm(forms.Form):

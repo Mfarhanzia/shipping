@@ -779,6 +779,107 @@ canvas{
     color: #000000 !important;
     text-decoration: underline;
 }
+
+.registration_form_input{
+    background-color: #555555;
+}
+
+.registration_form_input .navbar-custom .navbar-brand {
+text-transform: uppercase;
+font-size: 1rem;
+letter-spacing: .1rem;
+font-weight: 700;
+font-family: Hoefler Text;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 14px;
+color: white;
+width: 55px;
+height: 55px;
+border: 1px solid #999;
+white-space: initial;
+padding: 6px 4px;
+}
+.registration_form_input nav {
+padding: 25px;
+border-bottom: 1px white solid;
+}
+
+.custom_input input, select{
+    padding: 10px;
+    border-radius: 12px;
+    width: 100%;
+    background-color: #f2f2f2;
+    border: 2px solid #c4c2c2;
+    margin-left: 10px;
+}
+
+
+.custom_input label {
+    margin: 6px;
+    padding: 5px;
+    margin-top: 20px;
+    font-family: Franklin Gothic Book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.12em;
+    color: #555555;
+    }
+
+.sign_up_font{
+    font-family: Franklin Gothic Book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.12em;
+}
+
+.btn-custom{
+    background-color: #5ca6cf;
+    color: whitesmoke !important;
+    font-size: 18px !important;
+    line-height: 20px;
+    letter-spacing: 0.12em;
+}
+
+.margin-auto{
+    margin: auto !important;
+    /*padding: auto;*/
+}
+
+.create_acct_h1{
+    font-family: Playfair Display;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 32px;
+    /* identical to box height */
+    letter-spacing: 0.12em;
+    color: #FFFFFF;
+}
+
+.adjust-spacing{
+    padding: 3rem;
+    margin: 3rem;
+}
+
+.loading_bar{
+    padding-top: 1px;
+    background-color: #555555;
+    height: 22px;
+    color: white;
+    font-size: 17px;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 3rem;
+}
+
+
+
 /* media queries */
 @media only screen and (max-width: 991px) {
 
@@ -820,6 +921,10 @@ canvas{
 }
 
 @media only screen and (max-width: 768px) {
+    .adjust-spacing{
+        padding: 1rem;
+        margin: 1rem;
+    }
     .row2-font{
         font-size: 2.8rem;
     }
@@ -852,6 +957,10 @@ canvas{
 @media only screen and (max-width: 767px) {
     .font_7days{
         font-size: 36px;
+    }
+    .loading_bar{
+    font-size: 14px;
+    width: 100%;
     }
 }
 

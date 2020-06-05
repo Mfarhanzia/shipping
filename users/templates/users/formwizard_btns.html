@@ -1,18 +1,22 @@
-{% if wizard.steps.prev %}
-<div class="float-unset form-group fa-pull-left">
-    <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
-</div>
-{% endif %}
-<div class="float-unset form-group fa-pull-right">
-    {% if wizard.steps.next %}
-    <button id="multi-step-continue" type="submit" class="btn btn-black btn-lg">Continue</button>
-    {% else %}
-    <button type="submit" class="btn btn-black btn-lg">
-    {%if next_button%}
-        as{{next_button}}
-        {%else%}
-        Submit
-        {%endif%}
-    </button>
-    {% endif %}
+<div >
+   <div class="form-group mt-5">
+      {% if wizard.steps.prev %}
+       <button  name="wizard_goto_step" class="btn btn-custom btn-lg"  value="{{ wizard.steps.prev }}"
+                formnovalidate="formnovalidate">Previous</button>
+      {% endif %}
+       {% if wizard.steps.next %}
+         <button id="multi-step-continue" type="submit" class="btn btn-custom btn-lg "
+         >{% if wizard.steps.step1 == 1 %}
+            Create an Account{% else %}Continue{% endif %}</button>
+       {% else %}
+       <button type="submit" class="btn btn-custom btn-lg" >
+       {%if next_button %}
+           as{{next_button}}
+           {%else%}
+           Submit
+           {%endif%}
+       </button>
+       {% endif %}
+
+   </div>
 </div>

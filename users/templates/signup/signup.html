@@ -1,0 +1,136 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="google-site-verification" content="LnQoPAVXbIP5uOPneg1Ct-Uwr-ZAnR7LU1ULgdDot_U" />
+
+	{% if title %}
+	<title class="text-capitalize">Shipping Container Home - Bolt on Bloks - {{ title }}</title>
+
+	{% else %}
+	<title>Shipping Container Home - Bolt on Bloks</title>
+	{% endif %}
+
+	<!-- font awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<!-- boostrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <link type="text/css" rel="stylesheet" href="{% static 'users/custom/sign_up.css' %}" />
+	<!-- custom css -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/custom.css' %}" />
+	<!-- fonts -->
+	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
+   <link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
+<style>
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+    mso-border-shadow: yes;
+}
+</style>
+</head>
+
+<body class="sign_up_font registration_form_input">
+   <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">BOLT ON BLOKS</a>
+      <a class="pull-right" href="/">Back to Homepage</a>
+    </div>
+  </nav>
+	<div class="container text-center">
+		<div class="col-md-12">
+			{% if messages %}
+				{% for message in messages %}
+					{% ifchanged message %}
+						<div class="text-center alert {% if 'error' in message.tags %} alert-danger {% else %} alert-{{ message.tags }} {% endif %}">
+							{{ message }}
+						</div>
+					{% endifchanged %}
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+
+
+	<!-- Error messaging -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-sm-12 m-auto p-auto">
+				{% if form.errors %}
+
+				<div id="errors" class="mt-2 text-center" >
+					<div class="inner font-weight-bold" style="background-color: #d9534f; padding: 10px; border-radius:20px; color:white">
+						<p>There were some errors in the information you entered. Please correct the following:</p>
+						{{ form.non_field_errors }}
+						<ul class="text-capitalize">
+							{% for field in form %}
+							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
+
+
+<div class="container  md-padding">
+   <h1 class="text-center create_acct_h1 mb-5">Create Your Accounts</h1>
+    <div class="row">
+        <div class="col-md-7 margin-auto col-sm-10 bg-white pt-4 pb-5" style="border-radius:
+        20px;">
+            {% for errors in form.non_field.errors %}
+            <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+            {% endfor%}
+            <form method="POST">
+                {% csrf_token %}
+                {{ wizard.management_form }}
+                {% for field in wizard.form  %}
+                    <div style="margin-left: -20px;" id="div_id_{{field.name}}" class="custom_input">
+                        <i class="prefix"> </i>
+                        <label for="{{field.id_for_label}}" class="label" data-error="wrong"
+                            data-success="right">{{field.label}}
+                            {% if 'Phone' in field.label or "Company" in field.label or "Title" in field.label or "Dealer" in field.label %}
+                            <span style="font-size: small;" class="text-muted ml-2">(optional) </span>
+                            {% endif %}
+                        </label><br>
+                        {{field}}
+                        {% for error in field.errors %}
+                        <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+               <label class="mt-4" style="display: inline-flex;">
+                  <label class="checkbox-container">
+                     <input id="check_all" type="checkbox" required>
+                     <span class="checkmark"></span>
+                  </label>
+                  Click here to indicate that you have read and agree to the terms presented in the
+                  <a href="#" style="display: contents"><span style="display: contents" class="text-muted">Terms and Conditions
+                  agreement</span></a>
+               </label>
+               {% include "users/formwizard_btns.html" %}
+            </form>
+        </div>
+    </div>
+    <h6 class="text-center mt-5 mb-5" style="color: #999999">Already have an account? <a href="/login"
+                      class="text-white">Signin</a></h6>
+</div>
+<script type="text/javascript" src="{% static 'users/new_custom/vendor/jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'users/new_custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>
+</body>
+</html>
