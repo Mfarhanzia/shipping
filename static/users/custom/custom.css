@@ -879,33 +879,8 @@ border-bottom: 1px white solid;
 }
 
 
-
 /* media queries */
 @media only screen and (max-width: 991px) {
-
-    /*.nav-bg-color{*/
-    /*    background-color: transparent;*/
-    /*    -webkit-box-shadow: none !important;*/
-    /*}*/
-    /*.dropdown-menu {*/
-    /*    margin: 0 45% !important; */
-    /*    }*/
-    /*.navbar-toggler {*/
-    /*    background: black !important;*/
-    /*}*/
-    /*#basicExampleNav {*/
-    /*    margin-top: 20px !important;*/
-    /*}*/
-    /*.nav-item {*/
-    /*    !* background-color: white; *!*/
-    /*    line-height: 1rem;*/
-    /*    border: none;*/
-    /*}*/
-    /*.nav-link {*/
-    /*    text-align: center !important;*/
-    /*    color: black ;*/
-    /*    !* padding-left: 20px !important; *!*/
-    /*}*/
 
     form {
         margin-left: 0px !important;

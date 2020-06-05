@@ -2,15 +2,14 @@ import re
 from django import forms
 from .models import EmailList, User, SpecUser, UserPreferences
 from django.contrib.auth import password_validation
-from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.forms import UserCreationForm
-   
+
    
 class EmailListForm(forms.ModelForm):
 
     class Meta:
         model = EmailList
         fields = ['email']
+
     def __init__(self, *args, **kwargs):
         super(EmailListForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({
@@ -34,8 +33,8 @@ class RegistrationForm1(forms.ModelForm):
         label="Password confirmation",
         widget=forms.PasswordInput(render_value=True,),
         strip=False,
-        help_text="Enter the same password as before, for verification.",
-    )
+        help_text="Enter the same password as before, for verification.",)
+
     class Meta:
         model = SpecUser
         fields = ('first_name','last_name', 'email','password1','password2')
@@ -82,11 +81,6 @@ class RegistrationForm2(forms.ModelForm):
     class Meta:
         model = SpecUser
         fields = ('user_type', 'company_name','title','dealer_no','phone_number')
-        # widgets = {
-        #     'user_type': forms.RadioSelect(),
-        # }
-
-
 
 
 class UserPreferencesForm(forms.ModelForm):
@@ -96,18 +90,6 @@ class UserPreferencesForm(forms.ModelForm):
 
         widgets = {
             'learn_about_electric_drive' : forms.RadioSelect(),}
-
-    # def __init__(self, *args, **kwargs):
-    #     super(UserPreferencesForm, self).__init__(*args, **kwargs)
-    #     self.fields['type_of_development'].widget.attrs.update({
-    #         "class":"checkbox-container",})
-    #     self.fields['type_of_smart_home'].widget.attrs.update({
-    #         "class":"",})
-    #     self.fields['type_of_electric_vehicle_function'].widget.attrs.update({
-    #         "class": "", })
-    #     self.fields['learn_about_electric_drive'].widget.attrs.update({
-
-    #         "class":"",})
 
 
 class ContactUsForm(forms.Form):

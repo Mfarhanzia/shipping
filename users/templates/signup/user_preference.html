@@ -33,7 +33,7 @@
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
 {#	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">#}
-   <style>
+   <style type="text/css">
       .registration_form_input{
           background-color: #f2f2f2;
       }
@@ -80,6 +80,7 @@
         height: 0;
         width: 0;
       }
+
       /* Style the checkmark/indicator */
       .checkbox-container .checkmark:after {
           top:1px;
@@ -89,6 +90,15 @@
          background-color: #ccc;
          mso-border-shadow: yes;
          border: 2px solid;
+      }
+      .align_li li{
+         display: inline-flex;
+         width: 150px !important;
+         margin: 0px 50px 0px 62px;
+      }
+      .align_li li label{
+         margin: 0;
+         margin-top: 2px;
       }
    </style>
 
@@ -272,6 +282,8 @@
 <script type="text/javascript">
    chk='<span class="checkmark"></span>'
    $(chk).appendTo('ul li label')
+   $('#div_id_2-other_type_of_development').removeClass('checkbox-container')
+   $('#div_id_type_of_development').addClass('align_li')
 </script>
 </body>
 
