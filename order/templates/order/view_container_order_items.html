@@ -4,19 +4,20 @@
 {% load humanize %}
 {% block content%}
 
-<div class="container sign_up_font">
+<div class="container custom_font2">
     <div class="row">
       {% if not request.user.is_superuser %}
          {% include 'signup/side_nav.html' %}
       {% endif %}
-        <div class="{% if not request.user.is_superuser %}col-md-9{% else %}col-md-8{% endif %} m-auto
+        <div class="{% if not request.user.is_superuser %}col-md-9{% else %}col-md-12{% endif %} m-auto
         table-responsive p-0">
-            <table class="table table-striped view_order_table table-bordered text-center">
+            <table class="table view_order_table text-center">
                 {% for data in items|slice:":1" %}
                    {% if request.user.is_superuser %}
-                    <legend class="text-center mb-5"><h2 class="text-capitalize"><b>Order by: </b> {{data.user.first_name}} {{data.user.last_name}}</h2><br><b>Email:</b> {{data.user.email}}</legend>
+                    <legend class="mb-5"><h2 class="text-capitalize"><b>Order by: </b> {{data.user.first_name}} {{data.user.last_name}}</h2><br><b>Email:</b> {{data.user.email}}</legend>
                   {% else %}
-                      <legend class="text-center mb-5"><h2 class="text-capitalize"><b>Order History</b></h2></legend>
+                      <legend class="text-muted mb-5"><h2 class="text-capitalize" style="font-weight: 500 !important;
+                           ">Order History</h2></legend>
                   {% endif %}
                 {% endfor %}
                 <thead>
@@ -25,7 +26,7 @@
                         <th>Variant</th>
                         <th>Area</th>
                         <th>Quantity</th>
-                        <th>Price</th>
+                        <th>Price (per unit)</th>
                         <th>Ordered on</th>
                         <th>Delivery Date</th>
                     </tr>
@@ -38,7 +39,7 @@
                             <td>{{i.order_items.variant}}</td>
                             <td>{{i.order_items.square_feet}}</td>
                             <td>{{i.quantity}}</td>
-                            <td class="text-capitalize">$ {{i.order_items.price|intcomma}} (per unit)</td>
+                            <td class="text-capitalize">$ {{i.order_items.price|intcomma}}</td>
                             <td>{{i.ordered_on}}</td>
                             <td>{{i.delivery_date}}</td>
                         </tr>
@@ -46,7 +47,7 @@
                     {% endfor %}
                 </tbody>
             </table><br>
-            <table class="table view_order_table table-bordered text-center table-striped">
+            <table class="table view_order_table text-center">
                 {% for data in items|slice:":1" %}
                     <legend class="text-center mb-5"><h2 class="text-capitalize"><b>Custom Orders </b></h2></legend>
                 {% endfor %}

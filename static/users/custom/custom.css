@@ -376,11 +376,34 @@ form {
 }
 
 .view_order_table {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 20px !important;
+    font-family: Montserrat;
+    border-bottom: 2px solid;
+}
+
+.view_order_table {
+    border-bottom: 2px solid;
+}
+
+.view_order_table thead{
+    border-bottom: 2px solid;
+}
+
+.view_order_table tbody tr{
+    border-bottom: 1px solid;
+}
+
+.view_order_table tbody tr td{
+    vertical-align: middle;
+    border: none;
+}
+
+.view_order_table thead th {
+    vertical-align: bottom;
+    border-bottom: none;
 }
 
 .view_order_table th {
+    color: #5CA6CF;
     font-size: 1rem;
     font-weight: 600;
     vertical-align: middle !important;
@@ -388,7 +411,7 @@ form {
 
 .view_order_table td {
     font-size: 1rem;
-    padding: 4px 3px 2px 3px !important;
+    padding: 2rem 3px 2rem 3px !important;
     /* content: ''; */
     /* display: block;  */
     width: 5em;
