@@ -218,6 +218,18 @@
             $('[href="/contactus"]').addClass('active1');
             
         }
+        else if (path.indexOf('/my/orders') != -1) {
+            $('[href="/my/orders"]').addClass('active1');
+        }
+        else if (path.indexOf('/preferences/') != -1) {
+            $('[href="/preferences/"]').addClass('active1');
+        }
+        else if (path.indexOf('/update/profile') != -1) {
+            $('[href="/update/profile"]').addClass('active1');
+        }
+        else if (path.indexOf('/logout') != -1) {
+            $('[href="/logout"]').addClass('active1');
+        }
          else {
             $('[href="/"]').addClass('active1');
         }
