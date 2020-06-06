@@ -1,69 +1,127 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+{% block custom_css %}
+      <link type="text/css" rel="stylesheet" href="{% static 'users/custom/sign_up.css' %}" />
+      <style type="text/css">
+
+      .registration_form_input nav {
+         border: none;
+      }
+
+      .checkbox-container ul li label{
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .checkmark {
+        position: absolute;
+        top: 3px;
+        left: -3px;
+        height: 22px;
+        width: 22px;
+        background-color: #f0f0f0;
+         border: 1px solid;
+        border-radius: 4px;
+      }
+
+      /*/* Hide the browser's default checkbox */*/
+      .checkbox-container ul li label input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      /* Style the checkmark/indicator */
+      .checkbox-container .checkmark:after {
+          top:1px;
+      }
+      /* On mouse-over, add a grey background color */
+      .checkbox-container ul li:hover input ~ .checkmark {
+         background-color: #ccc;
+         mso-border-shadow: yes;
+         border: 2px solid;
+      }
+      .align_li li{
+         display: inline-flex;
+         width: 150px !important;
+         margin: 0px 50px 0px 62px;
+      }
+      .align_li li label{
+         margin: 0;
+         margin-top: 2px;
+      }
+   </style>
+{% endblock %}
 {% block content%}
 <div class="container">
     <div class="row">
-        <div class="col-md-12 buyer_app_form_label">
-            {% for errors in form.non_field.errors %}
-            <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
-            {% endfor%}
-            <form method="POST"  class="boxshadow2">
-                <h1 class="text-center">User Preferences</h1>
-                <p class="text-center"><span class="text-muted">Step {{wizard.steps.step1}} of {{wizard.steps.count}}</span></p>
-                <hr class="ml-4">
-                {{ wizard.management_form }}
-                {% csrf_token %}
-                {% for field in wizard.form %}
-                {% if field == form.learn_about_electric_drive %}
-                <div id="div_id_{{field.name}}" class="ml-4 radio_ul" style="display: block;">
-                    <label class="label" style="margin-left: -10px;" for="{{field.id_for_label}}">{{field.label}}</label>
-                    {{field}}
-                </div>
+      <div class="md-3">
+         <h4 class="text-muted ml-2">My Account</h4>
+         <ul class="text-muted">
+             <li><a href="{% url 'my-orders' %}">My Order Histroy</a></li>
+             <li><a href="{% url 'my-pref' %}">My Preferences</a></li>
+             <li><a href="{% url 'user-profile' %}">Settings</a></li>
+             <li><a href="/logout" >Logout</a></li>
+         </ul>
+      </div>
+       <div class="col-md-9 col-sm-12 bg-white  m-auto">
+         <form method="POST" class="checkbox-containers custom_input" >
+          <hr class="ml-4">
+          {% csrf_token %}
+          {% for field in form %}
+          {% if field == form.learn_about_electric_drive %}
+             <div id="div_id_{{field.name}}" class="ml-4 radio_ul checkbox-container" style="display: block;">
+                 <label class="label" style="margin-left: -10px;" for="{{field.id_for_label}}">{{field.label}}</label>
+                 {{field}}
+             </div>
 
-                {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
-                <div id="div_id_{{field.name}}" class="ml-4 check_ul" style="display: block;">
-                    
-                    <label style="margin-left: -10px;" for="{{field.id_for_label}}" class="label" data-error="wrong"
-                        data-success="right">{{field.label}}</label>
-                    {{field}}
-                </div>
+          {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
+             <div id="div_id_{{field.name}}" class="ml-4 check_ul checkbox-container" style="display: block;">
 
-                {% else %}
-                <div id="div_{{field.id_for_label}}" class="md-form">
-                    
-                    <i class="prefix"> </i>
-                    <label  for="{{field.id_for_label}}" class="label" data-error="wrong"
-                        data-success="right">{{field.label}}
-                    </label><br>
-                    {{field}}
-                    {% for error in field.errors %}
-                    <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% endfor %}
+                 <label style="margin-left: -10px;" for="{{field.id_for_label}}" class="label" data-error="wrong"
+                     data-success="right">{{field.label}}
+                 </label>
+                 {{field}}
+             </div>
 
-                {% comment %} {% if wizard.steps.prev %}
-                <div class="form-group fa-pull-left">
-                    <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
-                </div>
-                {% endif %}
-                <div class="form-group fa-pull-right">
-                    {% if wizard.steps.next %}
-                    <button type="submit" class="btn btn-black btn-lg">Continue</button>
-                    {% else %}
-                    <button type="submit" class="btn btn-black btn-lg">
-                    {%if next_button%}
-                        as{{next_button}}
-                        {%else%}
-                        Submit
-                        {%endif%}
-                    </button>
-                    {% endif %}
-                </div> {% endcomment %}
-                 {% include "users/formwizard_btns.html" %}
-            </form>
-        </div>
+          {% else %}
+             <div id="div_{{field.id_for_label}}" class="checkbox-container">
+
+                 <i class="prefix"> </i>
+                 <label  for="{{field.id_for_label}}" class="label" data-error="wrong"
+                     data-success="right">{{field.label}}
+                 </label><br>
+                 {{field}}
+                 {% for error in field.errors %}
+                 <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+                 {% endfor %}
+             </div>
+          {% endif %}
+          {% endfor %}
+            <div class="text-center">
+              {% include "users/formwizard_btns.html" %}
+            </div>
+         </form>
+      </div>
     </div>
 </div>
+
+   {% block js %}
+   <script type="text/javascript">
+      chk='<span class="checkmark"></span>'
+      $(chk).appendTo('ul li label')
+      $('#div_id_2-other_type_of_development').removeClass('checkbox-container')
+      $('#div_id_type_of_development').addClass('align_li')
+   </script>
+   {% endblock%}
 {% endblock%}

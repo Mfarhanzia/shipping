@@ -14,6 +14,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import EmailListForm, ContactUsForm, RegistrationForm1, RegistrationForm2, UserPreferencesForm, \
     UserProfileForm, UserProfileForm2
+from django.contrib.auth.forms import PasswordResetForm
 # views
 
 
@@ -289,12 +290,44 @@ def contact_view(request):
     return render(request, "users/contact_us.html", {"form":form})
 
 
+@login_required()
 def update_userprofile(request):
+
     if request.method == "POST":
+        form1 = UserProfileForm(request.POST)
         form2 = UserProfileForm2(request.POST)
+        if form1.is_valid():
+
+            messages.success(request, "Updated")
+        else:
+            return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
         if form2.is_valid():
-            form2.save()
-            return redirect('/')
+            messages.success(request, "Updated")
+        else:
+            return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
     form1 = UserProfileForm(instance=request.user)
     form2 = UserProfileForm2(instance=request.user.specuser)
-    return render(request, "users/user_profile.html", {"form1":form1,"form2":form2})
+    return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+
+
+@login_required()
+def update_password(request):
+    form = PasswordResetForm({'email': request.user.email})
+    if form.is_valid():
+        request.META['SERVER_NAME'] = 'www.mydomain.com'
+        request.META['SERVER_PORT'] = '443'
+        form.save(
+            request=request,
+            use_https=True,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            email_template_name='users/password_reset_email.html')
+        messages.success(request, "Password Update Link is sent to your email address")
+    else:
+        messages.error(request, form.errors)
+    return redirect('user-profile')
+
+
+@login_required()
+def update_preferences(request):
+    form =UserPreferencesForm(instance=UserPreferences.objects.get(user_obj=request.user))
+    return render(request, "users/user_preference.html", {"form": form})

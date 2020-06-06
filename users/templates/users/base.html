@@ -35,8 +35,9 @@
 	<!-- fonts -->
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
 	<!-- Material Design Bootstrap -->
+   {% block custom_css %}
+   {% endblock %}
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
-
 {#	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />#}
 </head>
 
@@ -223,14 +224,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'contact-us' %}">CONTACT</a>
           </li>
-
-
         </ul>
         <div class="form-inline my-2 my-lg-0">
            {% if not request.user.is_authenticated %}
                <a class="no-btn mr-3" href="/login">LOGIN</a>
            {% endif %}
-            <a class="btn1" href="{% url 'order-form' %}">PLACE AN ORDER</a>
+            <a class="no-btn" href="{% url 'order-form' %}">PLACE AN ORDER</a>
            {% if request.user.is_authenticated %}
                <a class="no-btn ml-3" href="{% url 'user-profile' %}">
                   {% if request.user.first_name %}
@@ -265,7 +264,6 @@
 		<div class="row">
 			<div class="col-md-8 col-sm-12 m-auto p-auto">
 				{% if form.errors %}
-				
 				<div id="errors" class="mt-2 text-center" >
 					<div class="inner font-weight-bold" style="background-color: #d9534f; padding: 10px; border-radius:20px; color:white">
 						<p>There were some errors in the information you entered. Please correct the following:</p>
@@ -279,7 +277,6 @@
 				</div>
 				{% endif %}
 			</div>
-
 		</div>
 	</div>
 	<div class="md-padding">
@@ -289,10 +286,8 @@
 	<!-- homepage -->
 	{% block  homepage %}
 	{% endblock %}
+
 	<!-- jquery -->
-
-
-
    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">

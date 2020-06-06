@@ -937,8 +937,19 @@ border-bottom: 1px white solid;
     margin-top: 3rem;
     border-top: 3px solid #555555;
 }
+
+#nav-tabContent ul li{
+    color: #dd614c !important;
+}
+
 .bottom_border{
     border-bottom: 3px solid #555555;
+}
+
+.update_pref ul li{
+    display: inline-flex;
+    width: 150px !important;
+    margin: 0px 50px 0px 62px;
 }
 
 /* media queries */

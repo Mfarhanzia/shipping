@@ -119,10 +119,18 @@ class UserProfileForm(forms.ModelForm):
         l_name = self.cleaned_data.get("last_name")
         l =re.findall("^[a-zA-Z]+$", l_name)
         if not l:
-            raise forms.ValidationError(
-                'Incorrect Last Name'
-                )
+            raise forms.ValidationError('Incorrect Last Name')
         return l_name
+
+    def clean_email(self):
+        print("runing")
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            print("runing")
+            raise forms.ValidationError('Email already in use')
+        return email
+
+
 
 
 class UserProfileForm2(forms.ModelForm):
@@ -130,7 +138,3 @@ class UserProfileForm2(forms.ModelForm):
         model = SpecUser
         fields = ('address', 'city', 'state', 'postal', 'country',)
 
-    def save(self):
-        print("im running",self.cleaned_data)
-        # SpecUser.objects.get(request.user).update(address=self.cleaned_data.get("address"))
-        # SpecUser

@@ -34,8 +34,14 @@
 	opacity: 0.95;
 }
 
-.bg-img {
-	background: url("https://images.unsplash.com/photo-1563052081-e410dc7b0b09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+
+.bg-img{
+	padding: 0;
+}
+
+.bg-img img{
+	height: 100%;
+	width: 100%;
 	background-size: cover;
 }
 
@@ -77,15 +83,15 @@
 	padding-bottom: 50px;
 }	
 
-/*.banner {*/
-/*	background: url("../img/Bedroom-FINAL.jpg");*/
-/*	background-size: cover;*/
-/*	background-position: center center;*/
-/*	background-repeat: no-repeat;*/
-/*	!*background-attachment: fixed;*!*/
-/*	height: 720px; */
-/*	width: 100%;*/
-/*}*/
+.banner {
+	background: url("../img/Bedroom-FINAL.jpg");
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	/*background-attachment: fixed;*/
+	height: 720px;
+	width: 100%;
+}
 
 .inner-banner {
 	/*background: linear-gradient(0deg, #555555, #555555), #FFFFFF;*/

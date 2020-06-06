@@ -7,7 +7,8 @@ from .views import (amenities, concept_page,
                     video_page, electric_cars_view,
                     electric_cars_exterior_view, contact_view,
                     electric_cars_interior_view,  RegistrationForm,
-                    update_userprofile)
+                    update_userprofile,update_password,
+                    update_preferences,)
 
 urlpatterns = [
     path('electric-cars/exterior', electric_cars_exterior_view ,name='cars-exterior'),
@@ -46,5 +47,7 @@ urlpatterns = [
     path('amenities', amenities, name="amenities"),
     path('contactus', contact_view, name="contact-us"),
     path('update/profile',update_userprofile, name="user-profile"),
+    path('update/password/',update_password, name="update-password"),
+    path('preferences/', update_preferences, name="my-pref"),
 
 ]
