@@ -32,8 +32,8 @@
         border-radius: 4px;
       }
 
-      /*/* Hide the browser's default checkbox */*/
-      .checkbox-container ul li label input {
+      /*/* Hide the browser's default checkbox */
+      .checkbox-container ul li label input[type="checkbox"] {
         position: absolute;
         opacity: 0;
         cursor: pointer;
@@ -46,15 +46,15 @@
           top:1px;
       }
       /* On mouse-over, add a grey background color */
-      .checkbox-container ul li:hover input ~ .checkmark {
+      .checkbox-container ul li:hover input[type="checkbox"] ~ .checkmark {
          background-color: #ccc;
          mso-border-shadow: yes;
          border: 2px solid;
       }
       .align_li li{
          display: inline-flex;
-         width: 150px !important;
-         margin: 0px 50px 0px 62px;
+         width: 180px !important;
+         margin: 0px 20px 0px 0px;
       }
       .align_li li label{
          margin: 0;
@@ -63,7 +63,7 @@
    </style>
 {% endblock %}
 {% block content%}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
       <div class="md-3">
          <h4 class="text-muted ml-2">My Account</h4>
@@ -74,42 +74,41 @@
              <li><a href="/logout" >Logout</a></li>
          </ul>
       </div>
-       <div class="col-md-9 col-sm-12 bg-white  m-auto">
+       <div class="col-md-9 col-sm-12 bg-white top_border bottom_border m-auto">
          <form method="POST" class="checkbox-containers custom_input" >
-          <hr class="ml-4">
           {% csrf_token %}
           {% for field in form %}
-          {% if field == form.learn_about_electric_drive %}
-             <div id="div_id_{{field.name}}" class="ml-4 radio_ul checkbox-container" style="display: block;">
-                 <label class="label" style="margin-left: -10px;" for="{{field.id_for_label}}">{{field.label}}</label>
-                 {{field}}
-             </div>
+             {% if field == form.learn_about_electric_drive %}
+                <div id="div_id_{{field.name}}" class="ml-4 radio_ul checkbox-container" style="display: block;">
+                    <label class="label" style="margin-left: -10px;" for="{{field.id_for_label}}">{{field.label}}</label>
+                    {{field}}
+                </div>
 
-          {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
-             <div id="div_id_{{field.name}}" class="ml-4 check_ul checkbox-container" style="display: block;">
+             {% elif field == form.type_of_electric_vehicle_function or field == form.type_of_smart_home or field == form.type_of_development%}
+                <div id="div_id_{{field.name}}" class="ml-4 check_ul checkbox-container" style="display: block;">
 
-                 <label style="margin-left: -10px;" for="{{field.id_for_label}}" class="label" data-error="wrong"
-                     data-success="right">{{field.label}}
-                 </label>
-                 {{field}}
-             </div>
+                    <label style="margin-left: -10px;" for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}
+                    </label>
+                    {{field}}
+                </div>
 
-          {% else %}
-             <div id="div_{{field.id_for_label}}" class="checkbox-container">
+             {% else %}
+                <div id="div_{{field.id_for_label}}" class="checkbox-container">
 
-                 <i class="prefix"> </i>
-                 <label  for="{{field.id_for_label}}" class="label" data-error="wrong"
-                     data-success="right">{{field.label}}
-                 </label><br>
-                 {{field}}
-                 {% for error in field.errors %}
-                 <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
-                 {% endfor %}
-             </div>
-          {% endif %}
+                    <i class="prefix"> </i>
+                    <label  for="{{field.id_for_label}}" class="label" data-error="wrong"
+                        data-success="right">{{field.label}}
+                    </label><br>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+                    {% endfor %}
+                </div>
+             {% endif %}
           {% endfor %}
-            <div class="text-center">
-              {% include "users/formwizard_btns.html" %}
+            <div class="text-center mb-4">
+              <button type="submit" class="btn btn-outline-info rounded">Update Preferences</button>
             </div>
          </form>
       </div>

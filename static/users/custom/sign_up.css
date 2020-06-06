@@ -29,7 +29,14 @@
 
 
 /*!* Hide the browser's default checkbox *!*/
-.checkbox-container input {
+.checkbox-container input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+ .checkbox-container input[type="radio"] {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -50,7 +57,10 @@
 
 
 /* When the checkbox is checked, add a background */
-.checkbox-container input:checked ~ .checkmark {
+.checkbox-container input:checked[type="checkbox"] ~ .checkmark {
+  background-color: #5ca6cf;
+}
+.checkbox-container input:checked[type="radio"] ~ .checkmark {
   background-color: #5ca6cf;
 }
 
@@ -62,7 +72,11 @@
 }
 
 /* Show the checkmark when checked */
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+  content: "\2714";
+}
+.checkbox-container input[type="radio"]:checked ~ .checkmark:after {
   display: block;
   content: "\2714";
 }

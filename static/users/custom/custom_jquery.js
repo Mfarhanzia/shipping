@@ -26,6 +26,7 @@
         $("ul[id=id_1-letter_of_credit] > li:first").remove();
         $("ul[id=id_1-line_of_credit] > li:first").remove();
         $("ul[id=id_2-learn_about_electric_drive] > li:first").remove();
+        $("ul[id=id_learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_1-septic_infrastructure] > li:first").remove();
         $("ul[id=id_1-installation_septic_infrastructure] > li:first").remove();
 
@@ -73,6 +74,9 @@
         $("#id_2-type_of_development_10").click(function() {
             show_hide_fields()
         });
+        $("#id_type_of_development_10").click(function() {
+            show_hide_fields()
+        });
 
         // other2_climate_area
         $("#id_1-type_of_climate_area_6").click(function() {
@@ -116,6 +120,17 @@
             $("#id_2-type_of_development_7").prop('checked', $(this).prop('checked'));
             $("#id_2-type_of_development_8").prop('checked', $(this).prop('checked'));
             $("#id_2-type_of_development_9").prop('checked', $(this).prop('checked'));
+        });
+        $("#id_type_of_development_0").click(function() {
+            $("#id_type_of_development_1").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_2").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_3").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_4").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_5").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_6").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_7").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_8").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_development_9").prop('checked', $(this).prop('checked'));
         });
 
         //select all
@@ -375,6 +390,14 @@ function show_hide_fields(){
         $('#id_2-other_type_of_development').removeAttr('required');
         $('#id_2-other_type_of_development').val('');
         $("#div_id_2-other_type_of_development").hide();
+    }
+    if ($('#id_type_of_development_10').is(":checked")) {
+        $("#div_id_other_type_of_development").show();
+        $('#id_other_type_of_development').attr('required', 'required');
+    } else {
+        $('#id_other_type_of_development').removeAttr('required');
+        $('#id_other_type_of_development').val('');
+        $("#div_id_other_type_of_development").hide();
     }
 }
 function myFunction(){
