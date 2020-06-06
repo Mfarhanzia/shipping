@@ -21,13 +21,13 @@
                   {% endif %}
                 {% endfor %}
                 <thead>
-                    <tr>
+                    <tr class="text-uppercase">
+                        <th>Order Date</th>
                         <th>No of Floors</th>
                         <th>Variant</th>
                         <th>Area</th>
                         <th>Quantity</th>
-                        <th>Price (per unit)</th>
-                        <th>Ordered on</th>
+                       <th>Price/<span class="text-muted small">unit</span></th>
                         <th>Delivery Date</th>
                     </tr>
                 </thead>
@@ -35,12 +35,12 @@
                     {% for i in items %}
                     {% if i.order_items.no_of_floors %}
                         <tr>
+                            <td>{{i.ordered_on}}</td>
                             <td>{{i.order_items.no_of_floors}}</td>
                             <td>{{i.order_items.variant}}</td>
                             <td>{{i.order_items.square_feet}}</td>
                             <td>{{i.quantity}}</td>
                             <td class="text-capitalize">$ {{i.order_items.price|intcomma}}</td>
-                            <td>{{i.ordered_on}}</td>
                             <td>{{i.delivery_date}}</td>
                         </tr>
                         {% endif %}

@@ -358,7 +358,8 @@ def view_container_order_items(request, pk=None):
         items = CartOrder.objects.filter(user=pk)
     else:
         items = CartOrder.objects.filter(user=request.user)
-    return render(request, "order/view_container_order_items.html", {"items":items})
+    # return render(request, "order/view_container_order_items.html", {"items":items})
+    return render(request, "order/order-history.html", {"items":items})
 
 
 @login_required

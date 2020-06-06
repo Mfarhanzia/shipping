@@ -1,0 +1,259 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load humanize %}
+{% block custom_css %}
+   <style>
+      .order-heading {
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 44px;
+      color: #999999;
+      }
+      .white-bg {
+         background: #FFFFFF;
+         padding: 40px;
+         min-height: 400px;
+      }
+
+      .border {
+         border: 1px solid #000000;
+      }
+      #order-list {
+         margin-top: 30px;
+      }
+      .main-th {
+         font-family: Montserrat;
+         font-style: normal;
+         font-weight: bold;
+         font-size: 16px;
+         line-height: 20px;
+         /* identical to box height */
+         text-align: center;
+         color: #5CA6CF;
+      }
+      .table thead th {
+         border-bottom: 2px solid #ffffff !important;
+         vertical-align: middle !important;
+         border: 2px solid #ffffff !important;
+      }
+      .table td, .table th {
+         border-top: 0px solid #ffffff;
+      }
+      .fw-500 {
+         font-weight: 500 !important;
+         text-align: left;
+      }
+      .address-div {
+         word-wrap: break-word;
+         width: 150px;
+      }
+      .secondary-th {
+         font-family: Montserrat;
+         font-style: normal !important;
+         font-weight: 500 !important;
+         font-size: 16px;
+         line-height: 20px;
+         /* identical to box height */
+
+         letter-spacing: 0.1em;
+         /* identical to box height */
+         text-align: center;
+         color: #5CA6CF;
+      }
+      .sec-tbody {
+         font-size: 14px;
+      }
+      .sec-tbody-td {
+         line-height: 0.1;
+      }
+      .table-td-img {
+         width: 100%;
+      }
+      .custom-tr {
+         line-height: 0 !important;
+          padding: 0;
+          height: 10px;
+      }
+      u {
+         color: #5CA6CF;
+      }
+
+      .pt-2 {
+         padding-top: 30px !important;
+      }
+      .pb-2 {
+         padding-bottom: 30px !important;
+      }
+      .tr-border {
+         border-top: 2px solid #999999;
+      }
+      .tr-bottom-border {
+         border-bottom: 2px solid #999999;
+      }
+      .black-border {
+         border-top: 3px solid #000000 !important;
+         border-bottom: 2px solid;
+      }
+   </style>
+{% endblock %}
+{% block content %}
+ <div class="container">
+     <div class="row">
+         {% include 'signup/side_nav.html' %}
+         <div class="col-lg-9 col-md-9 m-auto mt-2">
+             <p class="order-heading">ORDER HISTORY</p>
+
+             <div class="tab-content table-responsive" id="order-list">
+                 <table class="table  parent">
+                     <thead style="">
+                     <tr height="70" class="main-th">
+                         <th>Order Date</th>
+                         <th>Order Number  </th>
+                         <th> Location</th>
+                         <th>Status </th>
+                         <th>Details</th>
+                     </tr>
+                     </thead>
+
+                     <tbody>
+                     <tr height="45" bgcolor="FFFFFF" class="detail_anchor_container black-border">
+                         <td>
+                             <a>
+                                 3/30/2020
+                             </a>
+                         </td>
+                         <td>
+                             <a>
+                                 000123
+                             </a>
+                         </td>
+                         <td>
+                             <a>
+                               Los Angeles, CA USA
+                             </a>
+                         </td>
+                         <td>
+                             <a>
+                                 Complete
+                             </a>
+                         </td>
+                         <td>
+                             <a>
+                                 <u>
+                                     See your order details
+                                 </u>
+                                 <span class="fas fa-pencil"></span>
+                             </a>
+                         </td>
+                     </tr>
+                     <tr style="display:none;">
+                         <td class="" colspan="5">
+                             <table class="table">
+                               <colgroup width="50"></colgroup>
+                               <colgroup width="50"></colgroup>
+                               <colgroup width="50"></colgroup>
+                               <colgroup width="50"></colgroup>
+                                 <thead>
+                                     <tr class="secondary-th">
+                                         <th class="fw-500">PAYMENT METHOD</th>
+                                         <th class="fw-500">SHIPPING ADDRESS </th>
+                                         <th class="fw-500" colspan="2"> ORDER SUMMARY</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody class="sec-tbody">
+                                     <tr height="10">
+                                         <td rowspan="5">
+                                           <div class="address-div">
+                                             Wire Account 2412 James Property, LLC.
+                                           </div>
+                                         </td>
+                                         <td rowspan="5">
+                                           <div  class="address-div">
+                                             12345 University Los Angeles, CA USA
+                                           </div>
+                                         </td>
+                                         <td>Subtotal</td>
+                                         <td>$125,000.00</td>
+                                     </tr>
+                                     <tr class="sec-tbody-td">
+                                         <td>Discount</td>
+                                         <td>$</td>
+                                     </tr>
+                                     <tr  class="sec-tbody-td">
+                                         <td>
+                                         <div  class="address-div">
+                                           Shipping Fees
+                                         </div>
+                                       </td>
+                                         <td>$3,500.00</td>
+                                     </tr>
+                                     <tr  class="sec-tbody-td">
+                                         <td>
+                                           <div  class="address-div">
+                                           Sales Taxes
+                                           </div>
+                                         </td>
+                                         <td>$4,500,00</td>
+                                     </tr>
+                                     <tr  class="sec-tbody-td">
+                                         <td class="pb-2">TOTAL</td>
+                                         <td class="pb-2">$205,000.00</td>
+                                     </tr>
+
+
+                                     <tr height="30" class="tr-border">
+                                         <td class="pt-2 tr-bottom-border" rowspan="3">
+                                             <img class="table-td-img" src="https://images.unsplash.com/photo-1515669097368-22e68427d265?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+                                         </td>
+                                         <td class="pt-2">
+                                             <u>
+                                               New Castle
+                                             </u>
+                                         </td>
+                                         <td class="pt-2" colspan="2">
+                                             DELIVERY ON 12/20/2020
+                                         </td>
+                                     </tr>
+                                     <tr class="custom-tr">
+                                         <td>3 Story 2 wide</td>
+                                         <td colspan="2" rowspan="2" class="tr-bottom-border">
+                                           <u>
+                                           View Purchase Agreement
+                                           </u>
+                                         </td>
+                                     </tr>
+                                     <tr class="tr-bottom-border">
+                                         <td colspan="2" class="pb-2">3 Floors, 1240 sq.ft.</td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </td>
+                     </tr>
+
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+
+     </div>
+ </div>
+
+   {% block js %}
+      <script type="text/javascript">
+          $(document).ready(function(){
+              $('#order-list').on('click','.detail_anchor_container a',function(){
+                  $(this).closest('tr').next('tr').slideToggle();
+                  if($(this).closest('tr')[0].style.backgroundColor == 'rgb(242, 242, 242)') {
+                      $(this).closest('tr').css({'background': '#FFFFFF', 'border-bottom': '2px solid'});
+                  }
+                  else {
+                      $(this).closest('tr').css({'background': '#F2F2F2', 'border-bottom': 'none'})
+                  }
+              });
+          });
+      </script>
+   {% endblock %}
+{% endblock %}
