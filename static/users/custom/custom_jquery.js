@@ -299,7 +299,6 @@
             }
     });
 
-    alert();
     checkbox_checked()
     $(":checkbox").on("change",function(){
         checkbox_checked()
