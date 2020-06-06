@@ -914,7 +914,7 @@ border-bottom: 1px white solid;
 .project-tab a{
     text-decoration: none;
     color: #333;
-    font-weight: 600;
+    font-weight: 500;
 }
 .project-tab ul li a{
     color: #999999 !important;
@@ -932,6 +932,37 @@ border-bottom: 1px white solid;
     padding-left: 2rem;
 }
 
+.side-nav {
+    font-weight: 500;
+}
+
+.side-nav li{
+    padding: 4px 0 3px 0;
+}
+
+.side-nav li a{
+    color: #999999 !important;
+    padding: 3px 0 3px 0;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.custom_font2{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.side-nav li a:hover{
+    color: #5ca6cf !important;
+    font-weight: 500;
+}
 
 .top_border{
     border-top: 3px solid #555555;

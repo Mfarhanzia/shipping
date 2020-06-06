@@ -8,7 +8,15 @@
       .registration_form_input nav {
          border: none;
       }
-
+      ul{
+         padding-left: 3px !important;
+      }
+      ul li {
+         list-style-type: none;
+      }
+      ul li a{
+         color: #999999;
+      }
       .checkbox-container ul li label{
         display: block;
         position: relative;
@@ -63,19 +71,11 @@
    </style>
 {% endblock %}
 {% block content%}
-<div class="container-fluid">
+<div class="container custom_font2">
     <div class="row">
-      <div class="md-3">
-         <h4 class="text-muted ml-2">My Account</h4>
-         <ul class="text-muted">
-             <li><a href="{% url 'my-orders' %}">My Order Histroy</a></li>
-             <li><a href="{% url 'my-pref' %}">My Preferences</a></li>
-             <li><a href="{% url 'user-profile' %}">Settings</a></li>
-             <li><a href="/logout" >Logout</a></li>
-         </ul>
-      </div>
-       <div class="col-md-9 col-sm-12 bg-white top_border bottom_border m-auto">
-         <form method="POST" class="checkbox-containers custom_input" >
+      {% include 'signup/side_nav.html' %}
+       <div class="col-md-9 col-sm-12 bg-white top_border bottom_border m-auto p-0">
+         <form method="POST" class="checkbox-containers custom_input ml-0 mr-0" >
           {% csrf_token %}
           {% for field in form %}
              {% if field == form.learn_about_electric_drive %}

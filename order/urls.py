@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('add-order/', add_order, name='add-order'),
     path('order-form/', OrderForm.as_view(), name='order-form'),
-    path('container/orders', view_container_orders, name='view-container-orders'),
+    path('container/orders', view_container_orders, name='view-container-orders'), #for admin
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
-    path('my/orders', view_container_order_items, name='my-orders'),
+    path('my/orders', view_container_order_items, name='my-orders'),# for users history
 ]

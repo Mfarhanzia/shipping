@@ -2,17 +2,9 @@
 {% load static %}
 {% block content %}
 
-<div id="tabs" class="container project-tab">
+<div id="tabs" class="container project-tab custom_font2">
     <div class="row">
-    <div class="md-3">
-       <h4 class="text-muted ml-2">My Account</h4>
-       <ul class="text-muted">
-          <li><a href="{% url 'my-orders' %}">My Order Histroy</a></li>
-          <li><a href="{% url 'my-pref' %}">My Preferences</a></li>
-          <li><a href="{% url 'user-profile' %}">Settings</a></li>
-          <li><a href="/logout" >Logout</a></li>
-       </ul>
-    </div>
+      {% include 'signup/side_nav.html' %}
           <div class="col-md-6 m-auto p-0 pb-5 bottom_border">
             <div class="row">
                <div class="col-md-12 fa-pull-left w-100">
