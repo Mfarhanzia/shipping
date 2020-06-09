@@ -108,8 +108,44 @@
             'border': 'none',
             'box-shadow': 'none'
         });
+// $("ul[id=id_1-letter_of_credit] > li:first").remove();
+        //add select all box
+        function create_select_box(id){
+            var select_box = '<li><label for="'+id+'"><input type="checkbox"' +
+            ' name="select_all"' +
+            ' value="select all" id="'+id+'">\n' +
+            ' Select All<span class="checkmark"></span></label>\n' +
+            '</li>'
+            return select_box
+        }
+
+        $("ul[id=id_2-type_of_smart_home]").prepend(create_select_box("type_of_smart_home_select_all"))
+        $("ul[id=id_type_of_smart_home]").prepend(create_select_box("type_of_smart_home_select_all"))
+        $("ul[id=id_2-type_of_electric_vehicle_function]").prepend(create_select_box("type_of_electric_vehicle_select_all"))
+        $("ul[id=id_type_of_electric_vehicle_function]").prepend(create_select_box("type_of_electric_vehicle_select_all"))
+
 
         //select all
+        $("#type_of_smart_home_select_all").click(function() {
+            $("#id_2-type_of_smart_home_0").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_smart_home_1").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_smart_home_2").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_smart_home_3").prop('checked', $(this).prop('checked'));
+
+            $("#id_type_of_smart_home_0").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_smart_home_1").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_smart_home_2").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_smart_home_3").prop('checked', $(this).prop('checked'));
+        });
+
+         $("#type_of_electric_vehicle_select_all").click(function() {
+            $("#id_2-type_of_electric_vehicle_function_0").prop('checked', $(this).prop('checked'));
+            $("#id_2-type_of_electric_vehicle_function_1").prop('checked', $(this).prop('checked'));
+
+            $("#id_type_of_electric_vehicle_function_0").prop('checked', $(this).prop('checked'));
+            $("#id_type_of_electric_vehicle_function_1").prop('checked', $(this).prop('checked'));
+        });
+
         $("#id_2-type_of_development_0").click(function() {
             $("#id_2-type_of_development_1").prop('checked', $(this).prop('checked'));
             $("#id_2-type_of_development_2").prop('checked', $(this).prop('checked'));
@@ -246,6 +282,17 @@
             $("#access_time_div").hide();
         }
     }
+    change_class()
+    function change_class(){
+          var isNarrow = $(window).width() < 1200;
+          console.log("isNarrow",isNarrow)
+          $(".change_class")
+              .toggleClass("col-md-3", !isNarrow)
+              .toggleClass("col-md-5 m-auto pt-3 pb-3", isNarrow);
+    }
+    $(window).resize(function() {
+        change_class()
+    });
 
     /// signup/register.html validation
     function register_Validation() {
