@@ -20,7 +20,19 @@
         // $('.navbar-toggler').on('click', function() {
         //     $('#overlay').slideToggle();
         //     $('.color_15').css({"color":"black"});
-        // });
+        // }
+        function fixed_nav(){
+            var nav = $(".navbar-custom ");
+            console.log("nav: ",nav)
+            if (window.pageYOffset > 204 && window.location.pathname != "/register/") {
+            nav.addClass("fixed-top");
+            } else {
+              nav.removeClass("fixed-top");
+            }
+        }
+        fixed_nav()
+        window.onscroll = function() {fixed_nav()};
+
 
         //remove blank options
         $("ul[id=id_1-letter_of_credit] > li:first").remove();
@@ -186,7 +198,7 @@
 
         var path = window.location.pathname;
         if (path == '/order-form/') {
-            $('[href="/order-form/"]').addClass('active1');
+            $('[href="/order-form/"]').css({'color':"white"});
         }
         else if (path == '/login/') {
             $('[href*="/login"]').addClass('active1');
@@ -285,7 +297,6 @@
     change_class()
     function change_class(){
           var isNarrow = $(window).width() < 1200;
-          console.log("isNarrow",isNarrow)
           $(".change_class")
               .toggleClass("col-md-3", !isNarrow)
               .toggleClass("col-md-5 m-auto pt-3 pb-3", isNarrow);

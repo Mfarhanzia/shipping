@@ -60,6 +60,7 @@ h6 {
     color: #999;
 }
 .navbar-custom {
+    z-index: 4;
 	padding-top: 1.8rem;
 	padding-bottom: 1.8rem;
 	background-color: rgba(255, 255, 255, 1)
@@ -99,8 +100,12 @@ h6 {
     border:1px solid #FFFFFF;
 }
 .btn1:hover{background:#fff; border:1px solid #5CA6CF; color: #5CA6CF;}
-.no-btn{	text-transform: uppercase;
-    background-color:#fff; border:1px solid #5CA6CF; color: #5CA6CF;border-radius: 25px;
+.no-btn{
+    text-transform: uppercase;
+    background-color:#fff;
+    border:1px solid #5CA6CF;
+    color: #5CA6CF;
+    border-radius: 25px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
