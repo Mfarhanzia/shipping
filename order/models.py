@@ -89,7 +89,9 @@ class ContainerPricing(models.Model):
     variant = models.CharField("Variant", max_length=100)
     square_feet = models.CharField("Approximate Square Feet", max_length=100)
     price = models.DecimalField("Price", max_digits=20, decimal_places=2)
-    price21 = models.DecimalField("Delivered Price Delivered to site for 21 or more units", max_digits=20, decimal_places=2, blank=True, null=True) 
+    price21 = models.DecimalField("Delivered Price Delivered to site for 21 or more units", max_digits=20, decimal_places=2, blank=True, null=True)
+    model_image = models.CharField("Model Image", max_length=1000, blank=True, null=True)
+    model_name = models.CharField("Model Name", max_length=100, blank=True, null=True, default='')
     class Meta:
         verbose_name = "Containers Pricing"
         verbose_name_plural = "Containers Pricing"
@@ -113,7 +115,6 @@ class CustomContainerPricing(models.Model):
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
-    
     custom_order = models.ForeignKey(CustomContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
     custom_floors = models.CharField("No. of Floors", max_length=100, blank=True, null=True)
     custom_width = models.CharField("Width", max_length=100, blank=True, null=True)
@@ -121,7 +122,7 @@ class CartOrder(models.Model):
     quantity = models.PositiveIntegerField("Quantity")
     delivery_date = models.DateField(default=None, blank=True, null=True)
     ordered_on = models.DateField(auto_now_add=True)
-    user_image = models.ImageField(upload_to="pdf-images" , blank=True, null=True, default="default.jpeg")
+    user_image = models.ImageField(upload_to="pdf-images", blank=True, null=True, default="default.jpeg")
 
     class Meta:
         verbose_name = "Shipping Home Order"

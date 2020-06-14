@@ -4,6 +4,14 @@
 {% load humanize %}
 {% block custom_css %}
    <style>
+   table{
+      font-family: Franklin Gothic Book;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 18px;
+      letter-spacing: 0.1em;
+   }
       .order-heading {
       font-family: Montserrat;
       font-style: normal;
@@ -112,42 +120,20 @@
                      <tr height="70" class="main-th">
                          <th>Order Date</th>
                          <th>Order Number  </th>
-                         <th> Location</th>
+                         <th>Location</th>
                          <th>Status </th>
                          <th>Details</th>
                      </tr>
                      </thead>
 
                      <tbody>
+                     {% for order in items %}
                      <tr height="45" bgcolor="FFFFFF" class="detail_anchor_container black-border">
-                         <td>
-                             <a>
-                                 3/30/2020
-                             </a>
-                         </td>
-                         <td>
-                             <a>
-                                 000123
-                             </a>
-                         </td>
-                         <td>
-                             <a>
-                               Los Angeles, CA USA
-                             </a>
-                         </td>
-                         <td>
-                             <a>
-                                 Complete
-                             </a>
-                         </td>
-                         <td>
-                             <a>
-                                 <u>
-                                     See your order details
-                                 </u>
-                                 <span class="fas fa-pencil"></span>
-                             </a>
-                         </td>
+                         <td><a>{{ order.ordered_on }}</a></td>
+                         <td><a>{{ order.id }}</a></td>
+                         <td><a>{{ order.user.specuser.address }}</a></td>
+                         <td><a>Complete</a></td>
+                         <td><a><u>See your order details</u><span class="fas fa-pencil"></span></a></td>
                      </tr>
                      <tr style="display:none;">
                          <td class="" colspan="5">
@@ -166,72 +152,104 @@
                                  <tbody class="sec-tbody">
                                      <tr height="10">
                                          <td rowspan="5">
-                                           <div class="address-div">
-                                             Wire Account 2412 James Property, LLC.
+                                           <div class="address-div payment">
+
                                            </div>
                                          </td>
                                          <td rowspan="5">
-                                           <div  class="address-div">
-                                             12345 University Los Angeles, CA USA
-                                           </div>
+                                           <div  class="address-div">{{ order.user.specuser.address }}</div>
                                          </td>
                                          <td>Subtotal</td>
-                                         <td>$125,000.00</td>
+                                     {% if order.custom_order %}
+                                        {% if order.quantity < 21 %}
+                                          <td>${{ order.custom_order.custom_price|intcomma }}</td>
+                                        {% else %}
+                                          <td>${{ order.custom_order.custom_price21|intcomma }}</td>
+                                        {% endif %}
+                                     {% else %}
+                                         {% if order.quantity < 21 %}
+                                          <td>${{ order.order_items.price|intcomma }}</td>
+                                        {% else %}
+                                          <td>${{ order.order_items.price21|intcomma }}</td>
+                                        {% endif %}
+                                     {% endif %}
                                      </tr>
                                      <tr class="sec-tbody-td">
                                          <td>Discount</td>
-                                         <td>$</td>
+                                         <td></td>
                                      </tr>
-                                     <tr  class="sec-tbody-td">
+                                     <tr class="sec-tbody-td">
                                          <td>
                                          <div  class="address-div">
                                            Shipping Fees
                                          </div>
                                        </td>
-                                         <td>$3,500.00</td>
+                                         <td></td>
                                      </tr>
                                      <tr  class="sec-tbody-td">
                                          <td>
-                                           <div  class="address-div">
+                                           <div class="address-div">
                                            Sales Taxes
                                            </div>
                                          </td>
-                                         <td>$4,500,00</td>
+                                         <td></td>
                                      </tr>
-                                     <tr  class="sec-tbody-td">
+                                     <tr class="sec-tbody-td">
                                          <td class="pb-2">TOTAL</td>
-                                         <td class="pb-2">$205,000.00</td>
+                                        {% if order.custom_order %}
+                                           {% if order.quantity < 21 %}
+                                             <td class="pb-2">${{ order.custom_order.custom_price|intcomma }}</td>
+                                           {% else %}
+                                             <td class="pb-2">${{ order.custom_order.custom_price21|intcomma }}</td>
+                                           {% endif %}
+                                        {% else %}
+                                            {% if order.quantity < 21 %}
+                                             <td class="pb-2">${{ order.order_items.price|intcomma }}</td>
+                                           {% else %}
+                                             <td class="pb-2">${{ order.order_items.price21|intcomma }}</td>
+                                           {% endif %}
+                                        {% endif %}
                                      </tr>
-
 
                                      <tr height="30" class="tr-border">
                                          <td class="pt-2 tr-bottom-border" rowspan="3">
-                                             <img class="table-td-img" src="https://images.unsplash.com/photo-1515669097368-22e68427d265?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+                                             <img class="table-td-img" src="{{ order.order_items.model_image }}">
                                          </td>
-                                         <td class="pt-2">
-                                             <u>
-                                               New Castle
-                                             </u>
-                                         </td>
+                                        {% if not order.custom_order %}
+                                          <td class="pt-2"><u>{{ order.order_items.model_name }} </u></td>
+                                        {% else %}
+                                          <td class="pt-2"><u>Custom Order </u></td>
+                                        {% endif %}
                                          <td class="pt-2" colspan="2">
-                                             DELIVERY ON 12/20/2020
+                                             DELIVERY ON {{ order.delivery_date }}
                                          </td>
                                      </tr>
                                      <tr class="custom-tr">
-                                         <td>3 Story 2 wide</td>
-                                         <td colspan="2" rowspan="2" class="tr-bottom-border">
+                                        {% if order.custom_floors %}
+                                        <td>{{ order.custom_floors }} story {{ order.custom_width }} wide</td>
+                                        {% else %}
+                                         <td>{{ order.order_items.no_of_floors }} {{ order.order_items.variant }}</td>
+                                        {% endif %}
+                                        <td colspan="2" rowspan="2" class="tr-bottom-border">
                                            <u>
                                            View Purchase Agreement
                                            </u>
                                          </td>
                                      </tr>
                                      <tr class="tr-bottom-border">
-                                         <td colspan="2" class="pb-2">3 Floors, 1240 sq.ft.</td>
+                                        {% if order.custom_floors %}
+                                        <td colspan="2" class="pb-2">{{ order.custom_floors }} story approx 290 sq.ft
+                                           .per room</td>
+                                        {% else %}
+                                         <td colspan="2" class="pb-2">{{ order.order_items.no_of_floors }}
+                                            {{ order.order_items.square_feet }} sq.ft.</td>
+                                        {% endif %}
                                      </tr>
                                  </tbody>
                              </table>
                          </td>
                      </tr>
+                     {% endfor %}
 
                      </tbody>
                  </table>

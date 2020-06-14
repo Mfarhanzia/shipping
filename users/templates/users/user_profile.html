@@ -26,6 +26,12 @@
                   <form method="POST" class="custom_input">
                      {% csrf_token %}
                      {{ form }}
+                     <label>Email</label>
+                     {% if email %}
+                        <p class="text-danger ml-2"> Email Already in use</p>
+                     {% endif %}
+                     <input type="email" name="email" value="{% if email %} {{ email }} {% else %}
+                                             {{ request.user.email }}{% endif %}" required>
                      {% for field in form2 %}
                         {% if field == form2.state %}
                            <div class="w-100" style="width: 100%; display:flex;">

@@ -102,12 +102,9 @@ class ContactUsForm(forms.Form):
 
 
 class UserProfileForm(forms.ModelForm):
-    # first_name = forms.CharField(max_length=100, required=True)
-    # last_name = forms.CharField(max_length=100)
-    # email = forms.EmailField(max_length=100)
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email',)
+        fields = ('first_name', 'last_name',)
 
     def clean_first_name(self):
         f_name = self.cleaned_data.get("first_name")
@@ -123,15 +120,13 @@ class UserProfileForm(forms.ModelForm):
             raise forms.ValidationError('Incorrect Last Name')
         return l_name
 
-    def clean_email(self):
-        print("runing")
-        email = self.cleaned_data.get("email")
-        if User.objects.filter(email=email).exists():
-            print("runing")
-            raise forms.ValidationError('Email already in use')
-        return email
-
-
+    # def clean_email(self):
+    #     print("running")
+    #     email = self.cleaned_data.get("email")
+    #     if User.objects.filter(email=email).exists():
+    #         print("running")
+    #         raise forms.ValidationError('Email already in use')
+    #     return email
 
 
 class UserProfileForm2(forms.ModelForm):

@@ -292,19 +292,38 @@ def contact_view(request):
 
 @login_required()
 def update_userprofile(request):
-
+    print("here")
     if request.method == "POST":
         form1 = UserProfileForm(request.POST)
         form2 = UserProfileForm2(request.POST)
-        if form1.is_valid():
+        email = request.POST.get('email')
+        if request.user.email == email.strip():
+            pass
+        elif User.objects.filter(email=email).exists():
+            messages.error(request,"Email Already Exists")
+            return render(request, "users/user_profile.html", {"form": form1, "form2": form2, "email":email})
+        elif not User.objects.filter(email=email).exists():
+            request.user.email = email
+            request.user.save()
 
+        if form1.is_valid():
+            request.user.first_name = form1.cleaned_data['first_name']
+            request.user.last_name = form1.cleaned_data['last_name']
+            request.user.save()
             messages.success(request, "Updated")
         else:
             return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
         if form2.is_valid():
+            request.user.specuser.country = form2.cleaned_data['country']
+            request.user.specuser.state = form2.cleaned_data['state']
+            request.user.specuser.city = form2.cleaned_data['city']
+            request.user.specuser.address = form2.cleaned_data['address']
+            request.user.specuser.postal = form2.cleaned_data['postal']
+            request.user.specuser.save()
             messages.success(request, "Updated")
         else:
-            return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
+            return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+        return redirect('user-profile')
     form1 = UserProfileForm(instance=request.user)
     form2 = UserProfileForm2(instance=request.user.specuser)
     return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
