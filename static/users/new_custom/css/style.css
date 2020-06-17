@@ -450,6 +450,13 @@
 	.news-input {
 		width: 70%;
 	}
+	.home-table {
+		margin: 0 auto; /* or margin: 0 auto 0 auto */
+		margin-top: 18px !important;
+	}
+	.home-model {
+		height: 320px !important;
+	}
 }
 @media only screen and (max-width: 3200px) and (min-width: 481px) {
 	.hide-lg {
