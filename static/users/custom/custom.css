@@ -518,7 +518,7 @@ input[type="radio"]:checked~label {
     cursor: pointer;
 }
 
-.overlay {
+/* .overlay {
     position: relative;
     height: 100%;
     width: 110%;
@@ -530,7 +530,7 @@ input[type="radio"]:checked~label {
     z-index: 3;
     background-color: #1b1e21;
 
-}
+} */
 .overlay h1{
     opacity: 1;
 }
@@ -1081,6 +1081,9 @@ border-bottom: 1px white solid;
     .loading_bar{
     font-size: 14px;
     width: 100%;
+    }
+    .md-padding {
+        display: none;
     }
 }
 
