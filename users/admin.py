@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,  EmailList, SpecUser, UserPreferences
+from .models import User,  EmailList, SpecUser, UserPreferences, ModelImages, ModelsInfo
 # Register your models here.
 
 
@@ -37,4 +37,16 @@ class UserPreferencesAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(UserPreferences,UserPreferencesAdmin)
+
+
+class ModelImagesAdmin(admin.TabularInline):
+    model = ModelImages
+
+
+class ModelsInfoAdmin(admin.ModelAdmin):
+    list_display = ['model_name']
+    inlines = [ModelImagesAdmin]
+
+
+admin.site.register(ModelsInfo, ModelsInfoAdmin)
 

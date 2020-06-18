@@ -53,16 +53,12 @@ class SpecUser(User):
     country = models.CharField('Country',max_length=60, default='', blank=True, null=True)
     address = models.CharField('Address', max_length=1000, default='', blank=True, null=True)
 
-
     def __str__(self):
         return f"{self.user_type} - {self.first_name}"
 
     class Meta:
         verbose_name = 'Spec_User'
         verbose_name_plural = 'Spec User'
-
-
-# class UserProfile
 
 
 class EmailList(models.Model):
@@ -113,3 +109,34 @@ class UserPreferences(models.Model):
     class Meta:
         verbose_name = 'UserPreference'
         verbose_name_plural = 'UserPreferences'
+
+
+class ModelsInfo(models.Model):
+    model_name = models.CharField('Model name',max_length=60, default='', blank=True, null=True)
+    model_dimension = models.CharField('Model Dimensions',max_length=60, default='', blank=True, null=True)
+    model_header = models.CharField('Model Header',max_length=60, default='', blank=True, null=True)
+    model_text = models.TextField('Text', default='', blank=True, null=True)
+    beds = models.CharField('Beds',max_length=60, default='', blank=True, null=True)
+    baths = models.CharField('Baths',max_length=60, default='', blank=True, null=True)
+    sq_ft = models.CharField('SQ.ft',max_length=60, default='', blank=True, null=True)
+    parking_spaces = models.CharField('Parking Spaces',max_length=60, default='', blank=True, null=True)
+    no_of_kitchen = models.CharField('Number of Kitchen',max_length=60, default='', blank=True, null=True)
+    kitchen = models.CharField('Kitchen',max_length=60, default='', blank=True, null=True)
+    bathroom = models.CharField('Bathroom',max_length=60, default='', blank=True, null=True)
+    frame_material = models.CharField('Frame Material',max_length=60, default='', blank=True, null=True)
+    price = models.CharField('Price',max_length=60, default='', blank=True, null=True)
+    amenities = models.CharField('Amenities',max_length=60, default='', blank=True, null=True)
+    floor = models.CharField('floor',max_length=60, default='', blank=True, null=True)
+    garage = models.CharField('Garage',max_length=60, default='', blank=True, null=True)
+    fireplace = models.CharField('Fireplace',max_length=60, default='', blank=True, null=True)
+    laundry = models.CharField('Laundry',max_length=60, default='', blank=True, null=True)
+    interior_features = models.CharField('Interior Features',max_length=60, default='', blank=True, null=True)
+    construction_material = models.CharField('Construction Materials',max_length=60, default='', blank=True, null=True)
+
+
+class ModelImages(models.Model):
+    modelsinfo_obj = models.ForeignKey(ModelsInfo, on_delete=models.CASCADE)
+    path = models.CharField('Beds',max_length=900, default='', blank=True, null=True)
+
+
+

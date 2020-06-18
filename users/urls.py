@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^admincheck/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<req_for>[0-9A-Za-z_\-]+)/$', admincheck ,name='admincheck'),
     path('home-access', home_access, name="home-access" ),
     path('models', models, name="models"),
+    path('models/<str:name>', models, name="models-info"),
     path('concept', concept_page, name="concept"),
     path('amenities', amenities, name="amenities"),
     path('contactus', contact_view, name="contact-us"),

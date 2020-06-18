@@ -226,7 +226,7 @@
          else if (path == '/dealer/') {
             $('[href*="/dealer/"]').addClass('active1');
         }
-         else if (path == '/models') {
+         else if (path.startsWith('/models') ) {
             $('.models').addClass('active1');
             $('[href*="/models"]').addClass('active1');
         }

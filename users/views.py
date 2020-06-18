@@ -7,11 +7,11 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from .token import account_activation_token
 from django.template.loader import render_to_string
-from .models import User, SpecUser, UserPreferences
 from formtools.wizard.views import CookieWizardView
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import User, SpecUser, UserPreferences, ModelsInfo, ModelImages
 from .forms import EmailListForm, ContactUsForm, RegistrationForm1, RegistrationForm2, UserPreferencesForm, \
     UserProfileForm, UserProfileForm2
 from django.contrib.auth.forms import PasswordResetForm
@@ -105,8 +105,12 @@ def amenities(request):
     return render(request, "users/amenities.html")
 
 
-def models(request):
-    return render(request, 'users/models.html')
+def models(request, name=None):
+    if not name:
+        name = '3S-2W'
+    model_data = get_object_or_404(ModelsInfo, model_name=name)
+    model_imgs = ModelImages.objects.filter(modelsinfo_obj=model_data)
+    return render(request, 'users/models.html', {"model_data": model_data, 'imgs': model_imgs})
 
 
 def electric_cars_view(request):

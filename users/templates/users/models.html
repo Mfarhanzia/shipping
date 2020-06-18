@@ -7,8 +7,8 @@
        <div class="row">
            <div class="col-lg-12 text-center">
                <div class="bg-grey py-5">
-                 <h2 class="font2 font-weight-normal mb-3">New Castle Model</h2>
-                 <h4 class="font-weight-normal m-0">3 STORY 2 WIDE 1,800 SQ.FT</h4>
+                 <h2 class="font2 font-weight-normal mb-3">{{ model_data.model_header }}</h2>
+                 <h4 class="font-weight-normal m-0">{{ model_data.model_dimension }}</h4>
                </div>
            </div>
        </div>
@@ -20,45 +20,28 @@
      <div class="row">
          <div class="col-lg-12">
              <div class="slider slider-for">
+                {% for img in imgs %}
                  <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Bedroom-FINAL.jpg' %}">
+                     <img alt="" src="{{ img.path }}">
                  </div>
+                {% endfor %}
+                 {% for img in imgs %}
                  <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Kitchen-FINAL.jpg' %}">
+                     <img alt="" src="{{ img.path }}">
                  </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Living-Area-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Bedroom-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Kitchen-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Living-Area-FINAL.jpg' %}">
-                 </div>
+                {% endfor %}
              </div>
              <div class="slider slider-nav">
+                 {% for img in imgs %}
                  <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Bedroom-FINAL.jpg' %}">
+                     <img alt="" src="{{ img.path }}">
                  </div>
+                {% endfor %}
+                 {% for img in imgs %}
                  <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Kitchen-FINAL.jpg' %}">
+                     <img alt="" src="{{ img.path }}">
                  </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Living-Area-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Bedroom-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Kitchen-FINAL.jpg' %}">
-                 </div>
-                 <div>
-                     <img alt="" src="{% static 'users/new_custom/img/Living-Area-FINAL.jpg' %}">
-                 </div>
-
+                {% endfor %}
              </div>
          </div>
      </div>
@@ -81,23 +64,27 @@
                  </nav>
                  <div class="tab-content mt-3 p-2 no-t-border" id="nav-tabContent">
                      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                          <p>The HO1 is simple. We take a 20’ shipping container, add our Honomobo modern design elements and turn it into a beautiful, efficient and functional space. Whether it’s a home office, studio, gym, or commercial structure we’ve got you covered. The HO1 comes in two models; a home office/open space or as a studio suite complete with a kitchen and bathroom. Either way it is your simple solution to adding some beautiful extra space quickly. Contact us today for more information.</p>
-                          <div class="row">
+                        <p>{{ model_data.model_text }}</p>
+                        <div class="row">
                                <div class="col-12"><p class="font2">Home Facts</p></div>
                                <div class="col-md-6">
                                  <ul class="list-group list-group-flush pl-0">
-                                     <li class="list-group-item">Beds <span>4</span></li>
-                                     <li class="list-group-item">Bath <span>2.5</span></li>
-                                     <li class="list-group-item">Sq.Ft. <span>1,900</span></li>
-                                     <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>
+                                     <li class="list-group-item">Beds <span>{{ model_data.beds }}</span></li>
+                                     <li class="list-group-item">Bath <span>{{ model_data.baths }}<br/><br/></span></li>
+                                     <li class="list-group-item">Sq.Ft. <span>{{ model_data.sq_ft }}</span></li>
+                                     <li class="list-group-item bb">Parking Space <span
+                                     >{{ model_data.parking_spaces }}<br/><br/></span></li>
+{#                                     <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>#}
                                    </ul>
                                </div>
                                <div class="col-md-6">
                                  <ul class="list-group list-group-flush pl-0">
-                                     <li class="list-group-item">Price <span>Starting at $225,000</span></li>
-                                     <li class="list-group-item">Kitchen <span>Breakfast counter/Appliances</span></li>
-                                     <li class="list-group-item">Floor<span>Porcelain tile</span></li>
-                                     <li class="list-group-item bb">Lot Size<span>3,500 Sq.Ft.</span></li>
+                                     <li class="list-group-item">Price <span>{{ model_data.price }}</span></li>
+                                     <li class="list-group-item">Amenities <span>
+                                        {{ model_data.amenities|safe }}</span></li>
+                                     <li class="list-group-item">Floor<span>{{ model_data.floor }}</span></li>
+                                     <li class="list-group-item bb">Garage<span>{{ model_data.garage|safe }}</span></li>
+{#                                     <li class="list-group-item bb">Lot Size<span>3,500 Sq.Ft.</span></li>#}
                                    </ul>
                                </div>
                           </div>
@@ -105,18 +92,19 @@
                              <div class="col-12"><p class="font2">Interior Information</p></div>
                              <div class="col-md-6">
                                <ul class="list-group list-group-flush pl-0">
-                                   <li class="list-group-item">Beds <span>4</span></li>
-                                   <li class="list-group-item">Bath <span>2.5</span></li>
-                                   <li class="list-group-item">Sq.Ft. <span>1,900</span></li>
-                                   <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>
+                                   <li class="list-group-item"># of Kitchen <span>{{ model_data.no_of_kitchen }}</span></li>
+                                   <li class="list-group-item">Kitchen <span>{{ model_data.kitchen|safe }}</span></li>
+                                   <li class="list-group-item bb">Bathroom <span>{{ model_data.bathroom }}<br/><br/></span></li>
+{#                                   <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>#}
                                  </ul>
                              </div>
                              <div class="col-md-6">
                                <ul class="list-group list-group-flush pl-0">
-                                   <li class="list-group-item">Price <span>Starting at $225,000</span></li>
-                                   <li class="list-group-item">Kitchen <span>Breakfast counter/Appliances</span></li>
-                                   <li class="list-group-item">Floor<span>Porcelain tile</span></li>
-                                   <li class="list-group-item bb">Lot Size<span>3,500 Sq.Ft.</span></li>
+                                   <li class="list-group-item">Fireplace<span>{{ model_data.fireplace }}</span></li>
+                                   <li class="list-group-item">Laundry <span>{{ model_data.laundry }}<br/><br/></span></li>
+                                   <li class="list-group-item bb">Interior Features<span>
+                                      {{ model_data.interior_features|safe }}</span></li>
+{#                                   <li class="list-group-item bb">Lot Size<span>3,500 Sq.Ft.</span></li>#}
                                  </ul>
                              </div>
                         </div>
@@ -124,22 +112,18 @@
                              <div class="col-12"><p class="font2">Exterior Information</p></div>
                              <div class="col-md-6">
                              <ul class="list-group list-group-flush pl-0">
-                                 <li class="list-group-item">Beds <span>4</span></li>
-                                 <li class="list-group-item">Bath <span>2.5</span></li>
-                                 <li class="list-group-item">Sq.Ft. <span>1,900</span></li>
-                                 <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>
+                                 <li class="list-group-item">Frame Material
+                                    <span>{{ model_data.frame_material }}</span></li>
+{#                                 <li class="list-group-item bb">Lot Size <span>3,500 Sq.Ft.</span></li>#}
                                  </ul>
                              </div>
                              <div class="col-md-6">
                              <ul class="list-group list-group-flush pl-0">
-                                 <li class="list-group-item">Price <span>Starting at $225,000</span></li>
-                                 <li class="list-group-item">Kitchen <span>Breakfast counter/Appliances</span></li>
-                                 <li class="list-group-item">Floor<span>Porcelain tile</span></li>
-                                 <li class="list-group-item bb">Lot Size<span>3,500 Sq.Ft.</span></li>
+                                 <li class="list-group-item">Construction Material <span>
+                                    {{ model_data.construction_material|safe }}</span></li>
                                  </ul>
                              </div>
                      </div>
-
                      </div>
                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                           <div class="row">
@@ -229,7 +213,9 @@
               </div>
          </div>
      </div>
+     <p>*All prices are subject to change. Please contact info@boltonbloks.com for latest pricing.</p>
  </div>
+
 </section>
 
 
