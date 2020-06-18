@@ -22,9 +22,9 @@
         //     $('.color_15').css({"color":"black"});
         // }
         function fixed_nav(){
-            var nav = $(".navbar-custom ");
-            console.log("nav: ",nav)
-            if (window.pageYOffset > 204 && window.location.pathname != "/register/") {
+            var nav = $("#nav-header");
+            var sticky = nav[0].offsetTop;
+            if (window.pageYOffset > sticky && window.location.pathname != "/register/" && window.screen.width > 992) {
             nav.addClass("fixed-top");
             } else {
               nav.removeClass("fixed-top");

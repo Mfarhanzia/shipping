@@ -18,14 +18,10 @@
 	<!-- font awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-	<!-- <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
+	
    <link rel="stylesheet"
    href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display|Raleway|Quicksand">	
    <!-- boostrap -->
-{#	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"#}
-{#	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
-
 	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/vendor/bootstrap/css/bootstrap.min.css' %}" />
 	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/slick.css' %}" />
 	<link type="text/css" rel="stylesheet" href="{% static 'users/new_custom/css/slick-theme.css' %}" />
@@ -40,12 +36,12 @@
    {% block custom_css %}
    {% endblock %}
 	<link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
-{#	<link type="text/css" rel="stylesheet" href="{% static 'users/custom/flipdown.css' %}" />#}
 </head>
 
 <body>
  <div id="overlay"></div> 
- <header>
+ <header id="nav-header">
+	 <!-- Top Slider -->
 	<div class="container-fluid bg-dark top-header-fixed">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 add-bar">
@@ -70,143 +66,8 @@
 			</div>
 		</div>
 	</div>
-{#	<!--Navbar-->#}
-{#	<div class="container-fluid nav-bg-color fixed-nav quicksand-font">#}
-{#		<div class="container-fluid" >#}
-{#			<nav id="nav_" class="navbar navbar-expand-lg nav-bg-color navbar-dark">#}
-{#				<!-- Navbar brand -->#}
-{#				<div class="logo">#}
-{#					<div id="comp-ipqmgnl1inlineContent-gridWrapper" data-mesh-internal="true">#}
-{#						<div id="comp-ipqmgnl1inlineContent-gridContainer" data-mesh-internal="true">#}
-{#							<div data-packed="true" style="width: 80px; pointer-events: none;" class="txtNew"#}
-{#								id="comp-ir1r4w4s">#}
-{#								<h1 class="font_0" id="b-color"  style="line-height:0.3em;">#}
-{#									<a href="/" target="_self">#}
-{#										<span style="letter-spacing:2px;">#}
-{#											<span class="color_15">BOLT</span>#}
-{#										</span>#}
-{#										<span style="letter-spacing:1px;">#}
-{#											<span class="color_15">ON</span>#}
-{#										</span>#}
-{#										<span style="letter-spacing:2px;">#}
-{#											<span class="color_15">BLOKS</span>#}
-{#										</span>#}
-{#									</a>#}
-{#								</h1>#}
-{#							</div>#}
-{#						</div>#}
-{#					</div>#}
-{#				</div>#}
-{#				<!-- <a class="navbar-brand" href="#">Navbar</a> -->#}
-{##}
-{#				<!-- Collapse button -->#}
-{#				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"#}
-{#					aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">#}
-{#					<span class="navbar-toggler-icon"></span>#}
-{#				</button>#}
-{##}
-{#				<!-- Collapsible content -->#}
-{#				<div class="collapse navbar-collapse" id="basicExampleNav">#}
-{#					<!-- Links -->#}
-{#					<ul class="navbar-nav nav-margin  ml-auto">#}
-{#						<li class="nav-item" >#}
-{#							<a class="nav-link" href="{% url 'home' %}">Home#}
-{#								<span class="sr-only">(current)</span>#}
-{#							</a>#}
-{#						</li>#}
-{#						<li class="nav-item dropdown">#}
-{#							<a class="nav-link dropdown-toggle about" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About our Units</a>#}
-{#							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#								<a class="dropdown-item" href="{% url 'concept' %}">Concept</a>#}
-{#								<a class="dropdown-item" href="{% url 'amenities' %}">Amenities</a>#}
-{#								<a class="dropdown-item" href="{% url 'video-page' %}">Assembling Process</a>#}
-{#							{% if user.is_authenticated %}#}
-{#								{% if request.user.specuser.user_type != "vendor" %}	#}
-{#									<a class="dropdown-item" href="{% url 'struc-drawings' %}">Structural drawings</a>#}
-{#									<a class="dropdown-item" href="{% url 'arc-drawings' %}">Architectural Drawings</a>#}
-{#									<a class="dropdown-item" href="{% url 'report-sap' %}">Report FEA SAP</a>#}
-{#									<a class="dropdown-item" href="{% url 'floor_plan' %}">Floor Plans</a>#}
-{#								{% endif %}#}
-{#							{% endif %}#}
-{#							</div>#}
-{#						</li>#}
-{#						{% if request.user.specuser.user_type != "vendor" %}#}
-{#							{% if user.is_superuser %}#}
-{#							<li class="nav-item dropdown">#}
-{#								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Controls</a>#}
-{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#									<a class="dropdown-item" href="{% url 'view-container-orders' %}">Container Orders</a>#}
-{#									<a class="dropdown-item"href="{%url 'buyer-app' %}">Buyer Applications</a>#}
-{#									<a class="dropdown-item" href="{% url 'view-quotation' %}">Quotations</a>#}
-{#									<a class="dropdown-item" href="/admin">Admin Panel</a>#}
-{#								</div>#}
-{#							</li>#}
-{#							{% endif %}#}
-{#							<li class="nav-item dropdown">#}
-{#								<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models</a>#}
-{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#									<a class="dropdown-item" href="{% url 'models' %}">View Models</a>#}
-{#									<a class="dropdown-item" href="{% url 'interior-view' %}">Interior</a>#}
-{#									<a class="dropdown-item" href="{% url 'exterior-view' %}">Exterior</a>#}
-{#									<a class="dropdown-item" href="{% url 'model-3d' %}">3d Model</a>#}
-{#								</div>#}
-{#							</li>#}
-{#							<li class="nav-item dropdown">#}
-{#								<a class="nav-link dropdown-toggle electric_car"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Electric Car</a>#}
-{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#								  <a class="dropdown-item" href="{% url 'electric-cars' %}">Cars</a>#}
-{#								  <a class="dropdown-item" href="{% url 'cars-interior' %}">Car Interior</a>#}
-{#								  <a class="dropdown-item" href="{% url 'cars-exterior' %}">Car Exterior</a>#}
-{#								</div>#}
-{#							</li>#}
-{#						{% endif %}#}
-{#						{% if user.is_authenticated %}#}
-{#							#}
-{#							{% if user.specuser.user_type == 'dealer' %}#}
-{#								<li class="nav-item">#}
-{#									<a class="nav-link" href="{% url 'dealer-view' %}">View HomeOwners</a>#}
-{#								</li>#}
-{#							{% endif %}#}
-{#						#}
-{#						{% if user.specuser.user_type == "vendor" %}#}
-{#							<li class="nav-item">#}
-{#								<a class="nav-link" href="{% url 'vendor-quotation' %}">Give Quotation</a>#}
-{#							</li>#}
-{#						{% endif %}#}
-{##}
-{#						{% endif %}#}
-{#						<li class="nav-item">#}
-{#							<a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a>#}
-{#						</li>#}
-{#					</ul>#}
-{#					{% if not request.user.is_superuser%}#}
-{#						<div class="nav-margin">#}
-{#							<a class="nav-link" href="{% url 'order-form' %}"><button class="place-order-btn btn-outline-black">Place an order</button> </a>						#}
-{#						</div>#}
-{#					{% endif %}#}
-{#					<div class="nav-margin">#}
-{#						{% if request.user.is_authenticated %}#}
-{#						<ul class="navbar-nav nav-margin">#}
-{#							<li class="nav-item dropdown" >#}
-{#								<a class="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>#}
-{#								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#									<a class="dropdown-item" href="/logout">LogOut</a>#}
-{#									{% if not request.user.is_superuser %}#}
-{#									<a class="dropdown-item" href="{% url 'my-orders' %}">Order History</a>#}
-{#									{% endif %}#}
-{#								</div>#}
-{#							</li>#}
-{#						</ul>#}
-{#						{% else %}#}
-{#							<a class="nav-link" href="/login">Log in/Register</a>#}
-{#						{% endif %}#}
-{#					</div>#}
-{#				</div>#}
-{#				<!-- Collapsible content -->#}
-{#			</nav>#}
-{#		</div>#}
-{#	</div>#}
-{#   <!-- Navigation -->#}
+
+ <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom ss">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">BOLT ON BLOKS</a>
@@ -248,26 +109,25 @@
     </div>
   </nav>
 </header>
+{% if messages %}
 	<div class="container text-center">
 		<div class="col-md-12">
-			{% if messages %}
-				{% for message in messages %}
-					{% ifchanged message %}
-						<div class="text-center alert {% if 'error' in message.tags %} alert-danger {% else %} alert-{{ message.tags }} {% endif %}">
-							{{ message }}
-						</div>
-					{% endifchanged %}
-				{% endfor %}
-			{% endif %}
+			{% for message in messages %}
+				{% ifchanged message %}
+					<div class="text-center alert {% if 'error' in message.tags %} alert-danger {% else %} alert-{{ message.tags }} {% endif %}">
+						{{ message }}
+					</div>
+				{% endifchanged %}
+			{% endfor %}
 		</div>
 	</div>
-
+{% endif %}
 
 	<!-- Error messaging -->
+{% if form.errors %}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-sm-12 m-auto p-auto">
-				{% if form.errors %}
+			<div class="col-md-8 col-sm-12 m-auto p-auto">	
 				<div id="errors" class="mt-2 text-center" >
 					<div class="inner font-weight-bold" style="background-color: #d9534f; padding: 10px; border-radius:20px; color:white">
 						<p>There were some errors in the information you entered. Please correct the following:</p>
@@ -278,11 +138,11 @@
 							{% endfor %}
 						</ul>
 					</div>
-				</div>
-				{% endif %}
+				</div>	
 			</div>
 		</div>
 	</div>
+{% endif %}
 	<div class="md-padding">
 		{% block  content %}
 		{% endblock %}

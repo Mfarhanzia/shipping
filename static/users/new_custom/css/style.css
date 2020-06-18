@@ -431,7 +431,7 @@
 }
 @media only screen and (min-width: 768px) {
 	header {
-		position: fixed;
+		/* position: fixed; */
 		z-index: 5;
 		width: 100% !important;
 	}

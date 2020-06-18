@@ -180,10 +180,10 @@ form {
     background-color: #ffffff !important;
 }
 
-.md-padding {
+/* .md-padding {
     margin-top: 5% !important;
     margin-bottom: 5% !important;
-}
+} */
 .nav-bg-color{
     background-color: white;
     -webkit-box-shadow: none !important;
@@ -1078,13 +1078,13 @@ border-bottom: 1px white solid;
     .font_7days{
         font-size: 36px;
     }
-    .loading_bar{
+    .loading_bar {
     font-size: 14px;
     width: 100%;
     }
-    .md-padding {
+    /* .md-padding {
         display: none;
-    }
+    } */
 }
 
 @media only screen and (max-width:685px) {
