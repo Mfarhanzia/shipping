@@ -198,7 +198,12 @@ header.masthead .masthead-content .masthead-subheading {
 
 #nav-tabContent{font-family: Montserrat;font-style: normal;font-weight: normal;font-size: 16px;line-height: 20px; color: #453937;border-top: none !important}
 #tabs .list-group-item{padding:1rem .75rem;font-family: Montserrat;font-style: normal; font-weight: normal;font-size: 16px;line-height: 20px;color: #5CA6CF !important;}
-#tabs .list-group-item span{color: #333; float: right;font-weight: 500;}
+#tabs .list-group-item span{
+    color: #333;
+    float: right;
+    font-weight: 600;
+    text-align: end;
+}
 #nav-tabContent p.font2{color: #555;    border-bottom:1px solid #D4E0E3;line-height: 60px;margin-bottom: 0;}
 .border1{border: 1px solid #333;}
 .bb{border-bottom: 1px solid rgba(0,0,0,.125) !important;}
