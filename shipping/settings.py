@@ -25,15 +25,12 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 # DEBUG = True
 DEBUG = False
 
-
-if DEBUG == False:
-    SECURE_SSL_REDIRECT = True
-    DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
-else:
-    DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
-
-ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
-        'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'www.boltonbloks.com', 'boltonbloks.com', '*.boltonbloks.com']
+# if DEBUG == False:
+#     SECURE_SSL_REDIRECT = False
+ALLOWED_HOSTS=["*"]
+# ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
+#         'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'www.boltonbloks.com', 'boltonbloks.com',
+#                  '*.boltonbloks.com','127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -127,8 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -145,9 +140,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    # os.path.join(BASE_DIR, 'staticfiles'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
