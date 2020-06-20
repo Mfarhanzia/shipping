@@ -355,7 +355,7 @@ def update_preferences(request):
     try:
         form = UserPreferencesForm(request.POST or None, instance=UserPreferences.objects.get(user_obj=request.user))
     except:
-        form = UserPreferencesForm()
+        form = UserPreferencesForm(request.POST or None)
     if form.is_valid():
         form.save()
         return redirect('my-pref')
