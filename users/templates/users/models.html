@@ -118,50 +118,53 @@
                                  </ul>
                              </div>
                              <div class="col-md-6">
-                             <ul class="list-group list-group-flush pl-0">
-                                 <li class="list-group-item">Construction Material <span>
-                                    {{ model_data.construction_material|safe }}</span></li>
+                                 <ul class="list-group list-group-flush pl-0">
+                                    <li class="list-group-item">Construction Material <span>
+                                       {{ model_data.construction_material|safe }}</span></li>
                                  </ul>
                              </div>
                      </div>
                      </div>
+
+                    <!-- floor plans -->
+
                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                           <div class="row">
-                             <div class="col-lg-6 text-center mb-4">
+                              <div class="col-lg-6 text-center mb-4">
                                  <a href="#" class="text-black" data-toggle="modal" data-target="#myModal"><img
-                                       alt="garage" src="{% static 'users/imgs/garage.png' %}" class="img-fluid">
-                                     <br><br>Garage</a>
-                                   <!-- Modal -->
-                                     <div id="myModal" class="modal fade" role="dialog">
-                                         <div class="modal-dialog modal-lg">
-                                             <!-- Modal content-->
-                                             <div class="modal-content">
-                                                 <div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                      <object data="{% static 'users/files/floor_plans/garage.pdf' %}"
-                                                              type="application/pdf" width="100%" height="800px"></object>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="col-lg-6 text-center mb-4">
-                                     <a href="#" class="text-black" data-toggle="modal" data-target="#myModal1">
-                                         <img alt="first_floor" src="{% static 'users/imgs/first_floor.png' %}" class="img-fluid">
-                                         <br><br>First Floor
-                                     </a>
-                                     <!-- Modal -->
-                                       <div id="myModal1" class="modal fade" role="dialog">
-                                           <div class="modal-dialog modal-lg">
-                                               <!-- Modal content-->
-                                               <div class="modal-content">
-                                                   <div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                      <object data="{% static 'users/files/floor_plans/first_floor.pdf' %}"
-                                                              type="application/pdf" width="100%" height="800px"></object>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
+                                    alt="garage" src="{% static 'users/imgs/garage.png' %}" class="img-fluid">
+                                  <br><br>Garage</a>
+                                <!-- Modal -->
+                                  <div id="myModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog modal-lg">
+                                          <!-- Modal content-->
+                                          <div class="modal-content">
+                                              <div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                   <object data="{% static 'users/files/floor_plans/garage.pdf' %}"
+                                                           type="application/pdf" width="100%" height="800px"></object>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-6 text-center mb-4">
+                                  <a href="#" class="text-black" data-toggle="modal" data-target="#myModal1">
+                                      <img alt="first_floor" src="{% static 'users/imgs/first_floor.png' %}" class="img-fluid">
+                                      <br><br>First Floor
+                                  </a>
+                                  <!-- Modal -->
+                                    <div id="myModal1" class="modal fade" role="dialog">
+                                        <div class="modal-dialog modal-lg">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                   <object data="{% static 'users/files/floor_plans/first_floor.pdf' %}"
+                                                           type="application/pdf" width="100%" height="800px"></object>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              </div>
                           </div>
                           <div class="row">
                              <div class="col-lg-6 text-center mb-4">

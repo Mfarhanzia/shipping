@@ -137,6 +137,7 @@ class ModelsInfo(models.Model):
 class ModelImages(models.Model):
     modelsinfo_obj = models.ForeignKey(ModelsInfo, on_delete=models.CASCADE)
     path = models.CharField('Beds',max_length=900, default='', blank=True, null=True)
+    pdf_file_path = models.CharField('Beds',max_length=900, default='', blank=True, null=True)
 
 
 
