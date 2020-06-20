@@ -352,7 +352,10 @@ def update_password(request):
 
 @login_required()
 def update_preferences(request):
-    form = UserPreferencesForm(request.POST or None, instance=UserPreferences.objects.get(user_obj=request.user))
+    try:
+        form = UserPreferencesForm(request.POST or None, instance=UserPreferences.objects.get(user_obj=request.user))
+    except:
+        form = UserPreferencesForm()
     if form.is_valid():
         form.save()
         return redirect('my-pref')
