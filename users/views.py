@@ -94,6 +94,9 @@ def home_view(request):
             messages.warning(request, f'You have already Subscribed!')
         return redirect('/')
     else:
+        # models_info = ModelsInfo.objects.all()
+        # three_story_model = models_info.get(model_name="3S-2W")
+        # print(models_info.get(model_name="3S-2W"))
         return render(request, 'users/home.html')
 
 
@@ -296,7 +299,6 @@ def contact_view(request):
 
 @login_required()
 def update_userprofile(request):
-    print("here")
     if request.method == "POST":
         form1 = UserProfileForm(request.POST)
         form2 = UserProfileForm2(request.POST)
@@ -317,19 +319,23 @@ def update_userprofile(request):
             messages.success(request, "Updated")
         else:
             return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
-        if form2.is_valid():
-            request.user.specuser.country = form2.cleaned_data['country']
-            request.user.specuser.state = form2.cleaned_data['state']
-            request.user.specuser.city = form2.cleaned_data['city']
-            request.user.specuser.address = form2.cleaned_data['address']
-            request.user.specuser.postal = form2.cleaned_data['postal']
-            request.user.specuser.save()
-            messages.success(request, "Updated")
-        else:
-            return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+        if not request.user.is_superuser:
+            if form2.is_valid():
+                request.user.specuser.country = form2.cleaned_data['country']
+                request.user.specuser.state = form2.cleaned_data['state']
+                request.user.specuser.city = form2.cleaned_data['city']
+                request.user.specuser.address = form2.cleaned_data['address']
+                request.user.specuser.postal = form2.cleaned_data['postal']
+                request.user.specuser.save()
+                messages.success(request, "Updated")
+            else:
+                return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
         return redirect('user-profile')
     form1 = UserProfileForm(instance=request.user)
-    form2 = UserProfileForm2(instance=request.user.specuser)
+    if not request.user.is_superuser:
+        form2 = UserProfileForm2(instance=request.user.specuser)
+    else:
+        form2 = None
     return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
 
 
