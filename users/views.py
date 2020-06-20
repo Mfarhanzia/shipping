@@ -318,7 +318,11 @@ def update_userprofile(request):
             request.user.save()
             messages.success(request, "Updated")
         else:
-            return render(request, "users/user_profile.html", {"form": form1,"form2":form2})
+            if request.user.is_superuser:
+                return render(request, "users/user_profile.html", {"form": form1})
+            else:
+                return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+
         if not request.user.is_superuser:
             if form2.is_valid():
                 request.user.specuser.country = form2.cleaned_data['country']
