@@ -3,24 +3,7 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-one-page-wonder/blob/master/LICENSE)
  */
- @font-face {
-    font-family: 'Hoefler Text Regular';
-    src: url('../fonts/Hoefler Text Regular.eot');
-    src: url('../fonts/Hoefler Text Regular.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/Hoefler Text Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'HoeflerText';
-    src: url('../fonts/HoeflerText.svg#HoeflerText') format('svg'),
-         url('../fonts/HoeflerText.ttf') format('truetype'),
-         url('../fonts/HoeflerText.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+
   
  body {font-family: 'Montserrat', sans-serif;}
 .font2{font-family: 'HoeflerText';}
