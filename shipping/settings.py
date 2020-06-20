@@ -26,7 +26,6 @@ SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 DEBUG = False
 
 if DEBUG == False:
-    # SECURE_SSL_REDIRECT = False
     SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
@@ -53,8 +52,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
