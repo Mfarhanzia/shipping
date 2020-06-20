@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'BrushScriptStd';
+	src: url('./BrushScriptStd.eot');
+	src: local('BrushScriptStd'), url('./BrushScriptStd.woff') format('woff'), url('./BrushScriptStd.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_11739">Text with this font applied</p> */
+.fontsforweb_fontid_11739 {
+	font-family: 'BrushScriptStd' !important;
+}
+
+/* Font downloaded from FontsForWeb.com */

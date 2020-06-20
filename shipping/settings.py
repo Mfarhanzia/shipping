@@ -22,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 if DEBUG == False:
-    SECURE_SSL_REDIRECT = False
-# SECURE_SSL_REDIRECT = True
+    # SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
         'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'www.boltonbloks.com', 'boltonbloks.com',
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'shipping.urls'
 
