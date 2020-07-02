@@ -23,11 +23,15 @@
         // }
         function fixed_nav(){
             var nav = $("#nav-header");
-            var sticky = nav[0].offsetTop;
-            if (window.pageYOffset > sticky && window.location.pathname != "/register/" && window.screen.width > 992) {
-            nav.addClass("fixed-top");
-            } else {
-              nav.removeClass("fixed-top");
+            try{
+                var sticky = nav[0].offsetTop;
+                if (window.pageYOffset > sticky && window.location.pathname != "/register/" && window.screen.width > 992) {
+                nav.addClass("fixed-top");
+                } else {
+                  nav.removeClass("fixed-top");
+                }
+            }catch (e) {
+                console.log("error",e)
             }
         }
         fixed_nav()
@@ -35,8 +39,8 @@
 
 
         //remove blank options
-        $("ul[id=id_1-letter_of_credit] > li:first").remove();
-        $("ul[id=id_1-line_of_credit] > li:first").remove();
+        $("ul[id=id_3-letter_of_credit] > li:first").remove();
+        $("ul[id=id_3-line_of_credit] > li:first").remove();
         $("ul[id=id_2-learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_1-septic_infrastructure] > li:first").remove();
@@ -55,13 +59,13 @@
         
         // letter_of_credit show/hide
         letter_of_credit_input()
-        $("#id_radio_field_7").on("click",function() {
+        $("#id_3-letter_of_credit").on("click",function() {
             letter_of_credit_input()
         });
 
         // line_of_credit show/hide
         line_of_credit_input()
-        $("#id_radio_field_9").on("click",function() {
+        $("#id_3-line_of_credit").on("click",function() {
             line_of_credit_input()
         });
 
@@ -474,25 +478,25 @@ function myFunction(){
     $('#b-color').css("color","black");
 }   
 function letter_of_credit_input(){
-    if ($("#id_1-letter_of_credit_1").is(":checked")){
-        $("#id_8").show();
-        $('#id_1-how_much_letter_of_credit').attr('required', 'required');
+    if ($("#id_3-letter_of_credit_1").is(":checked")){
+        $("#div_id_3-how_much_letter_of_credit").show();
+        $('#id_3-how_much_letter_of_credit').attr('required', 'required');
     }
     else{
-        $('#id_1-how_much_letter_of_credit').removeAttr('required');
-        $('#id_1-how_much_letter_of_credit').val('');
-        $("#id_8").hide();
+        $('#id_3-how_much_letter_of_credit').removeAttr('required');
+        $('#id_3-how_much_letter_of_credit').val('');
+        $("#div_id_3-how_much_letter_of_credit").hide();
     }
 }
 function line_of_credit_input(){
-    if ($('#id_1-line_of_credit_1').is(":checked")) {
-        $("#id_10").show();
-        $('#id_1-how_much_line_of_credit').attr('required', 'required');
+    if ($('#id_3-line_of_credit_1').is(":checked")) {
+        $("#div_id_3-how_much_line_of_credit").show();
+        $('#id_3-how_much_line_of_credit').attr('required', 'required');
     }
     else{
-        $('#id_1-how_much_line_of_credit').removeAttr('required');
-        $('#id_1-how_much_line_of_credit').val('');
-        $("#id_10").hide();
+        $('#id_3-how_much_line_of_credit').removeAttr('required');
+        $('#id_3-how_much_line_of_credit').val('');
+        $("#div_id_3-how_much_line_of_credit").hide();
     }
 }
 

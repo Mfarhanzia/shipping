@@ -551,22 +551,18 @@ input[type="radio"]:checked~label {
 }
 
 
-.order_form_h2{
-    font-family: 'Times New Roman';
-}
-
 .order_form_h2 h2 {
-    text-decoration: underline;
     text-align: center;
     font-weight: bold;
     padding: 2%;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .order_form_h2 b {
     font-weight: bold;
 }
 .order_form_h2 p {
     font-size: 20px;
-    
 }
 
 /* Always display the drop down caret */
@@ -647,7 +643,12 @@ input[type="date"], focus {
     font-size: .88em;
     height: 50px;
 }
-
+.text-info{
+    color: #5ca6cf;
+}
+.text-info1{
+    color: #5ca6cf;
+}
 
 
 .top-add a{
@@ -985,7 +986,7 @@ border-bottom: 1px white solid;
 }
 
 .custom_font2{
-    font-family: Montserrat;
+    font-family: Montserrat !important;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;

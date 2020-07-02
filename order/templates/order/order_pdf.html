@@ -54,25 +54,22 @@ table td {
     <table style="border: 1px black solid;">
         <thead>
             <tr style="padding: 2px;">
-                <th><b>No. of Floors</b></th>
-                <th><b>Variant</b></th>
-                <th><b>Approx.<br> Square Feet</b></th>
+                <th><b>Model</b></th>
                 <th><b>Delivered Price (Delivered to site for <br>20 units or less)</b></th>
                 <th><b><br>Delivered Price (Delivered to site for <br>21 or more units)</b></th>
                 <th><b>Quantity</b></th>
-                <th><b>Delivery Date</b></th>
+                <th><b>Furnishing Option</b></th>
             </tr>
         </thead>
         <thead>
             {% for value in cart %}
             <tr style="padding: 1 1px 0 3px;">                       
-                <td> {{value.order_items.no_of_floors}}</td>
-                <td> {{value.order_items.variant}}</td>
-                <td> {{value.order_items.square_feet}}</td>
+                <td> {{value.order_items.no_of_floors}} {{value.order_items.variant}}<br/>
+									{{value.order_items.square_feet}} sq. ft</td>
                 <td> $ {{value.order_items.price|intcomma}} (per unit)</td>
                 <td> $ {{value.order_items.price21|intcomma}} (per unit)</td>
                 <td> {{value.quantity}}</td>
-                <td> {{value.delivery_date}}</td>
+                <td> {{value.furnishing_option}}</td>
             </tr>
             {% endfor %}
         </thead>
@@ -89,7 +86,7 @@ table td {
                     <th>Price per 290s.f. room(for 20units or less)</th>
                     <th>Price per 290s.f. room(for 21units or more)</th>
                     <th>Qty</th>
-                    <th>Date Delivered<br> (to site)</th>
+                    <th>Furnishing Option</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,15 +99,16 @@ table td {
                         <td>$ {{custom_order_obj.custom_order.custom_price|intcomma}}</td>
                         <td>$ {{custom_order_obj.custom_order.custom_price21|intcomma}}</td>
                         <td>{{custom_order_obj.quantity}}</td>
-                        <td>{{custom_order_obj.delivery_date}}</td>
+                        <td>{{custom_order_obj.furnishing_option}}</td>
                     {% else %}
                         <td colspan="8"></td>
                     {% endif %}
                 </tr>
             </tbody>
         </table>
+    <p style="font-size:18px"><b>Delivery Date:</b>  {{delivery_date}}</p>
     <p style="font-size:18px"><b>Total:</b> $ {{total|intcomma}}</p>
-    <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer's reasonable satisfaction. 
+    <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer's reasonable satisfaction.
     </p>
     <p>If no such modifications are made or received by Seller within such time period as indicated above, Buyer is thereafter obligated to purchase any prototypes as is.</p>
     <p>

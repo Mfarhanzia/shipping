@@ -32,7 +32,9 @@
                      {% endif %}
                      <input type="email" name="email" value="{% if email %} {{ email }} {% else %}
                                              {{ request.user.email }}{% endif %}" required>
+
                      {% for field in form2 %}
+
                         {% if field == form2.state %}
                            <div class="w-100" style="width: 100%; display:flex;">
                               <label for="id_state">{{ form2.state.label }}</label>
@@ -48,8 +50,15 @@
 
                         {% elif field == form2.postal %}
                         {% else %}
-                           <label>{{ field.label }}</label>
-                           {{ field }}
+                           {% if field == form2.company_name and request.user.specuser.user_type == "dealer"%}
+                              <label>{{ field.label }}</label>
+                              {{ field }}
+                           {% elif field == form2.company_name and request.user.specuser.user_type not in allowed_users %}
+                           {% elif field == form2.title and request.user.specuser.user_type not in allowed_users %}
+                           {% else %}
+                              <label>{{ field.label }}</label>
+                              {{ field }}
+                           {% endif %}
                         {% endif %}
                      {% endfor %}
                      <br/><br/>

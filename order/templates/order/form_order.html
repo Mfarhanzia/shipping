@@ -2,66 +2,121 @@
 {% extends 'users/base.html' %}
 {% load humanize %}
 {% load widget_tweaks %}
+   {% block custom_css %}
+     <style>
+      .custom_ul{
+        list-style-type: disc !important;
+        overflow: unset;
+        font-size: 16px;
+      }
+     .custom_ul li{
+       margin-left: 20px;
+     }
+     .custom_input input, select{
+       width: 80%;
+       border-radius: 5px;
+       background-color: unset;
+     }
+     thead{
+       background-color: #f2f2f2;
+     }
+		 .view_order_table th{
+			 color: #555;
+		 }
+		 tbody{
+			 color: #616161;
+		 }
+		.text-info1 {
+				color: #5ca6cf !important;
+		}
 
+     </style>
+   {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container custom_font2">
     <div class="row">
         <div class="col-md-12 col-sm-12  order_form_h2">
-            <h2 class="text-center">My Order</h2>
-            <p><b>We have models suited for</b>: single-family homes, duplex, triplex, man camps, employee housing, and
-               other </p>
+            <h2 class="text-center text-uppercase">Place an Order</h2>
+
             <div class="col-md-12 table-responsive">
-               
-                <table  class="table view_order_table table-bordered  text-center table-striped">
-                    <thead >
-                        <tr >  
-                            <th> No. of Floors</th>
-                            <th>Variant</th>
-                            <th>Approx. <br>Square Feet</th>
-                            <th>Delivered Price <br>(Delivered to site for <br>20 units or less)</th>
-                            <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
-                            <th>Qty</th>
-                            <th>Date Delivered<br> (to site)</th>
-                        </tr >
-                    </thead>
+            	<div class="w-100">
+								<h3 class="text-info1 text-uppercase">Individual units</h3>
+								<ul class="nav custom_ul mb-4">
+									<b> We have models suited for</b>:
+									<li>Single-family homes</li>
+									<li>duplex</li>
+									<li>Triplex</li>
+									<li>Man camps</li>
+									<li>Employee	housing</li>
+									<li>other</li>
+								</ul>
+							</div>
+                <table class="table view_order_table table text-center">
+                  <thead>
+                    <tr>
+                      <th>Model</th>
+                      <th>Delivered Price <br>(Delivered to site for <br>20 units or less)</th>
+                      <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
+                      <th>Qty</th>
+                      <th>Furnishing Option</th>
+                    </tr>
+                  </thead>
                     <tbody>
-                    <form autocomplete="off" id="order_form" method="POST" enctype="multipart/form-data">
+                      <form autocomplete="off" id="order_form" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ wizard.management_form }}
                         {% for data in pricing %}
                         <tr>
-                            <td>{{data.no_of_floors}}</td>
-                            <td>{{data.variant}}</td>
-                            <td>{{data.square_feet}}</td>
-                            <td >$ {{data.price|intcomma}}</td>
-                            <td >$ {{data.price21|intcomma}}</td>
-                            <td>
-                                <select onchange="form_submissions()" id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1"> 
-                                    <option value="" selected>-</option>
-                                    {% for i in quantity %}
-                                        <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
-                                    {% endfor %}
-                                </select>
-                            </td>
-                            <td><input onchange="form_submissions()" type="date" class="p-1" name="date_{{date.id}}"></td>
-                        </tr>
+                          <td>{{data.no_of_floors}} {{data.variant}}<br>{{data.square_feet}} sq. ft.<br><a>View
+                            Details</a></td>
+                          <td >$ {{data.price|intcomma}}</td>
+                          <td >$ {{data.price21|intcomma}}</td>
+                          <td>
+                            <select onchange="form_submissions()" id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1">
+                              <option value="" selected>-</option>
+                                {% for i in quantity %}
+                                  <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
+                                {% endfor %}
+                            </select>
+                          </td>
+{#                          <td><input onchange="form_submissions()" type="date" class="p-1" name="date_{{date.id}}"></td>#}
+													<td>
+														<select onchange="form_submissions()" class="p-1" name="furnishing_option">
+															<option value="Fully Furnished">Fully Furnished</option>
+														</select>
+													</td>
+												</tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <p><b>Multi-unit complex</b>: apartment buildings, mixed-use, hotel, motel, boutique hotel, condominium, town homes, hospitals, student housing, and other </p>
+        <div class="w-100 p-3">
+            <h3 class="text-info1 text-uppercase">Multi-unit complex:</h3>
+            <ul class="custom_ul nav mb-3" >
+              <li>Apartment buildings</li>
+              <li>Mixed-use</li>
+              <li>Hotel</li>
+              <li>Motel</li>
+              <li>Boutique Hotel</li>
+              <li>Condominium</li>
+              <li>Town homes</li>
+              <li>Hospitals</li>
+              <li>Student Housing </li>
+              <li>other</li>
+            </ul>
+        </div>
         <div class="col-md-12 table-responsive">
-            <table class="table view_order_table table-bordered  text-center table-striped">
-                <thead>
-                    <tr valign="top">  
-                        <th> No. of Floors (max12)</th>
-                        <th>Width (apt. units)</th>
-                        <th>Depth (apt. units)</th>
-                        <th>Approx. <br>Square Feet per room</th>
-                        <th>Price per 290s.f. room(for 20units or less)</th>
-                        <th>Price per 290s.f. room(for 21units or more)</th>
+            <table class="table view_order_table text-center">
+                <thead class="text-uppercase">
+                    <tr valign="top">
+                        <th> No. of Floors (Max12)</th>
+                        <th>Width (Apt. units)</th>
+                        <th>Depth (Apt. units)</th>
+                        <th>Approx. <br>SQ. Ft. per room</th>
+                        <th>Price per 290 sq. ft. room(for < 20units)</th>
+                        <th>Price per 290 sq. ft. room(for > 21units)</th>
                         <th>Qty</th>
-                        <th>Date Delivered<br> (to site)</th>
+                        <th>Furnishing option</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,39 +128,50 @@
                         <td>$ {{custom_pricing.custom_price|intcomma}}</td>
                         <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
                         <td>
-                            <select onchange="form_submissions()" id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1"> 
+                            <select onchange="form_submissions()" id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1">
                                 <option value="" selected>-</option>
                                 {% for i in quantity %}
                                     <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
                                 {% endfor %}
                             </select>
                         </td>
-                        <td><input onchange="form_submissions()" type="date" class="p-1" name="custom_date"></td>
+											<td><select onchange="form_submissions()" class="p-1" name="furnishing_option_custom">
+												<option value="Fully Furnished">Fully Furnished</option>
+											</select></td>
                     </tr>
                 </tbody>
-            </table>            
+            </table>
         </div>
-            <p><b>Total</b>: <span id="total">$ </span></p>
-
-            {% include "users/formwizard_btns.html" %}
+					<div>
+						 <p><b>TOTAL</b> <span id="total"> - </span></p>
+           </div>
+					<div class="w-100 p-4 mt-5" style="background-color: #f2f2f2;" >
+						<p>This is a preliminary order---not a commitment to complete the purchase---and its cancellation shall
+							be at no cost to the buyer.</p>
+						<br/><p>We reserve the right to make changes to our Housing and Electric Vehicle models at any time as
+						we continue to improve and upgrade our products and techologies. Prices are subject to changes at any
+						time.</p>
+					</div>
+					<div class="fa-pull-right">
+						 {% include "users/formwizard_btns.html" %}
+           </div>
         </form>
         </div>
-    </div> 
+    </div>
 </div>
 
 {% endblock %}
 
 {% comment %} {% block js %}
 <script>
-    
+
     Webcam.set({
         width: 300,
         height: 400,
         image_format: 'jpeg',
         jpeg_quality: 90,
-       
+
         });
     Webcam.attach('#div_id' );
 </script>
 {% endblock %} {% endcomment %}
-          

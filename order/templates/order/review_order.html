@@ -5,31 +5,28 @@
 
 {% block content %}
 <div class="container">
-        <h2 class="text-center mb-4"><strong>Order Summary</strong></h2>
+        <h2 class="text-center mt-5 mb-5"><strong>Order Summary</strong></h2>
     <div class="row">
         <div class="col-md-12 col-sm-12 table-responsive">
-            <table class="table view_order_table table-bordered  text-center table-striped">
+            <table class="table view_order_table text-center table-striped">
                 <thead>
                     <tr>  
-                        <th> No. of Floors</th>
-                        <th>Variant</th>
-                        <th>Approx. <br>Square Feet</th>
+                        <th>Model</th>
                         <th>Delivered Price <br>(Delivered to site for <br>20 units or less)</th>
                         <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
                         <th>Qty</th>
-                        <th>Date Delivered<br> (to site)</th>
+                        <th>Furnishing Option</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for i in order %}
                     <tr>
-                        <td>{{i.product.no_of_floors}}</td>
-                        <td>{{i.product.variant}}</td>
-                        <td>{{i.product.square_feet}}</td>
+                        <td>{{i.product.no_of_floors}} {{i.product.variant}}<br/> {{i.product.square_feet}} sq. ft.
+												</td>
                         <td >$ {{i.product.price|intcomma}}</td>
                         <td >$ {{i.product.price21|intcomma}}</td>
                         <td>{{i.qty}}</td>
-                        <td>{{i.date}}</td>
+                        <td>{{i.furnishing_option}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -39,7 +36,7 @@
         {% if custom_order != None %}
         <div class="row">
             <div class="col-md-12 col-sm-12 mt-5 table-responsive">
-                <table class="table view_order_table table-bordered  text-center table-striped">
+                <table class="table view_order_table text-center table-striped">
                     <legend class="text-center font-weight-bold">Custom Order</legend>
                     <thead>
                         <tr valign="top">  
@@ -50,7 +47,7 @@
                             <th>Price per 290s.f. room(for 20units or less)</th>
                             <th>Price per 290s.f. room(for 21units or more)</th>
                             <th>Qty</th>
-                            <th>Date Delivered<br> (to site)</th>
+                            <th>Furnishing Option</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,7 +59,7 @@
                             <td>$ {{custom_order.product.custom_price|intcomma}}</td>
                             <td>$ {{custom_order.product.custom_price21|intcomma}}</td>
                             <td>{{custom_order.qty}}</td>
-                            <td>{{custom_order.date}}</td>
+                            <td>{{custom_order.furnishing_option_custom}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,26 +67,58 @@
         </div>
         {% endif %} 
 
-    <div class="row">
+		<div class="row mt-5 mb-5">
+			<div class="col-md-4">
+				<div class="w-100"><p class="text-info font-weight-bold">Buyer Information</p></div>
+				<ul>
+					<li><span class="text-capitalize">Name: </span> {{ buyer_info.f_name }} {{ buyer_info.f_name }}</li>
+					{% if buyer_info.email %}
+						<li><span class="text-capitalize">Email: </span> {{ buyer_info.email }} </li>
+					{% endif %}
+					{% if buyer_info.phone_number %}
+						<li><span class="text-capitalize">Phone No. </span> {{ buyer_info.phone_number }} </li>
+					{% endif %}
+					{% if buyer_info.company_name %}
+						<li><span class="text-capitalize">Company Name: </span> {{ buyer_info.company_name }} </li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="col-md-4">
+				<div class="w-100"><p class="text-info font-weight-bold">Shipping Address</p></div>
+				<ul>
+					{% for key, value in shipping_info.items %}
+						{% if key != 'delivery_date' %}
+							<li><span class="text-capitalize">{{ key }}: </span> {{ value }}</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-4">
+				<div class="w-100"><p class="text-info font-weight-bold">Delivery On</p></div>
+				<ul>
+					<li>{{ shipping_info.delivery_date }}</li>
+				</ul>
+			</div>
+		</div>
+
+	<div class="row">
         <div class="col-md-12 col-sm-12 mt-4 mb-5">
             <form method="POST">
                 {%csrf_token%}
                 {{ wizard.management_form }}
+				<div class="form-group text-center">
                 {% if wizard.steps.prev %}
-                    <div class="float-unset form-group fa-pull-left">
-                        <button  name="wizard_goto_step" class="btn btn-black btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
-                    </div>
+                        <button  name="wizard_goto_step" class="btn btn-custom btn-lg"  value="{{ wizard.steps.prev }}" formnovalidate="formnovalidate">Previous</button>
                 {% endif %}
 
-                <div class="float-unset form-group fa-pull-right">
                     {% if wizard.steps.next %}
-                        <button type="submit" class="btn btn-black btn-lg">Continue</button>
+                        <button type="submit" class="btn btn-custom btn-lg">Continue</button>
                     {% else %}
-                    <button type="submit" class="btn btn-black btn-lg">
+                    <button type="submit" class="btn btn-custom btn-lg">
                     {%if next_button%}
                         as{{next_button}}
                         {%else%}
-                        Place Order
+                        Submit
                         {%endif%}
                     </button>
                     {% endif %}

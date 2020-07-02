@@ -1,25 +1,26 @@
-from datetime import date
 import json, base64
+from io import BytesIO
+from datetime import date
+from xhtml2pdf import pisa
 from django.conf import settings
 from django.utils import timezone
+from users .models import SpecUser
 from django.contrib import messages
+from django.http import JsonResponse
 from django.db.models import FloatField
 from django.views.generic import ListView
 from django.core.mail import EmailMessage
 from django.db.models.functions import Cast
-from users .models import SpecUser
+from django.core.files.base import ContentFile
+from django.template.loader import get_template
+from formtools.wizard.views import SessionWizardView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import BuyerAppForm, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm
-from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
-from xhtml2pdf import pisa
-from django.template.loader import get_template
-from io import BytesIO
-from django.http import JsonResponse
-from django.core.files.base import ContentFile
-from formtools.wizard.views import SessionWizardView
+from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
+from .forms import BuyerAppForm, BuyerAppForm2, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm, DeliveryInfoForm
 # Create your views here.
+
 
 class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
@@ -51,7 +52,8 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
 class OrderForm(LoginRequiredMixin, SessionWizardView):
    
     # file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
-    form_list = [AddCustomProductForm, BuyerAppForm, UserTermsForm,AddCustomProductForm]
+    form_list = [AddCustomProductForm, BuyerAppForm, DeliveryInfoForm, BuyerAppForm2, UserTermsForm,
+                 AddCustomProductForm]
     def get_template_names(self):
         """
         Return the template name for the current step
@@ -60,23 +62,26 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         templates = {
         0: 'order/form_order.html',
         1: 'order/buyer_app_form.html',
-        2: 'order/order_terms.html',
-        3: 'order/review_order.html',
+        2: 'order/delivery_info.html',
+        3: 'order/buyer_app_form.html',
+        4: 'order/order_terms.html',
+        5: 'order/review_order.html',
        }
         return [templates[int(self.steps.current)]]
         
-    def save_cart(self, form2):
+    def save_cart(self, form2, buyer_app, delivery_info):
         """saving the container orders"""
-        # print("===saving=======", form2.cleaned_data)
         form1_data = self.request.session["form_1_data"]
+        print("===",form2.cleaned_data,"\n===saving=======",form1_data)
         quantities = form1_data['quantity'] # list
-        dates = form1_data['date_'] # list
+        furnishing_options = form1_data['furnishing_option'] # list
         form1_data['print_name'] = form2.cleaned_data["print_name"]
         no_of_floors = form1_data["custom_order"]['no_of_floors']
         width = form1_data["custom_order"]['width']
         depth = form1_data["custom_order"]['depth']
         cus_qty = form1_data["custom_order"]['custom_quantity']
-        cus_date = form1_data["custom_order"]['custom_date']
+        # cus_date = self.delivery_date
+        cus_date = form1_data["custom_order"]['furnishing_option_custom']
         self.request.session["form_1_data"]['custom_id']=''
         self.request.session["form_1_data"]['list_ids']=''
         order_ids = []
@@ -89,7 +94,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             print(";;;;;;;;;;;  ERROR  ;;;;",e)
             pass
 
-        for q,date in zip(quantities,dates):
+        for q, furnishing_option in zip(quantities, furnishing_options):
             if q == "" or date == "":
                 continue
             qty = int(q.split("##")[0]) 
@@ -97,27 +102,31 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             product = get_object_or_404(ContainerPricing, id=pk)
             current_order = CartOrder(
             user_id=self.request.user.id,
+            delivery_info_obj=delivery_info,
+            buyer_app_obj=buyer_app,
             order_items = product,
             quantity = qty, 
-            delivery_date = date.replace('"',''),
+            furnishing_option = furnishing_option,
             )
             if image != None:
                 current_order.user_image = image
             current_order.save()
             order_ids.append(int(current_order.id))
 
-        if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+        if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
             qty = int(cus_qty.split("##")[0]) 
             pk = int(cus_qty.split("##")[1])      
             product = get_object_or_404(CustomContainerPricing, id=pk)
             custom_order_obj = CartOrder(
             user_id=self.request.user.id,
+            delivery_info_obj = delivery_info,
+            buyer_app_obj = buyer_app,
             custom_order = product,
             custom_floors = no_of_floors,
             custom_width = width,
             custom_depth = depth,
             quantity = qty, 
-            delivery_date = cus_date.replace('"',''),
+            furnishing_option = cus_date.replace('"',''),
             )
             if image != None:
                 custom_order_obj.user_image = image
@@ -169,13 +178,12 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             ids = json.loads(self.request.session["form_1_data"]['list_ids'])
             cart = CartOrder.objects.filter(id__in=ids)
             for data in cart:
-                if data.quantity >20:
+                if data.quantity > 20:
                     total += data.quantity * data.order_items.price21 
                 else:
                     total += data.quantity * data.order_items.price 
         except Exception as e:
             cart = ""
-
         ## custom order
         try:
             custom_id = self.request.session["form_1_data"]['custom_id']
@@ -198,7 +206,6 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         except Exception as e:
             print("no user found",e)
             return "no order"
-        print(":::::user_image:::::",user_image)
         print_name = self.request.session["form_1_data"]['print_name']
         context = {
             "custom_order_obj":custom_order_obj,
@@ -207,6 +214,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             "total":total,
             "user_image": user_image,
             "print_name" : print_name,
+            "delivery_date": self.request.session["delivery_date"],
             }  
         ##admin
         pdf = self.send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
@@ -218,6 +226,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             "total":total,
             "print_name" : print_name,
             "user_image": None,
+            "delivery_date": self.request.session["delivery_date"],
             }  
         pdf = self.send_mail_PDF(template,context,user_mail)
         messages.success(self.request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
@@ -227,17 +236,19 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         if self.steps.step1 == 1:
             self.form1_data = self.request.session["form_1_data"] ={}
             self.form1_data["quantity"] = self.request.POST.getlist('quantity')
-            self.form1_data["date_"] = self.request.POST.getlist('date_')
+            self.form1_data["furnishing_option"] = self.request.POST.getlist('furnishing_option')
             self.form1_data["custom_order"] = self.request.POST
+        elif self.steps.step1 == 3:
+            self.request.session["delivery_date"] = self.request.POST['2-delivery_date']
         return data
 
     def render(self, form=None, **kwargs):
-        if self.steps.step1 == 4:
+        if self.steps.step1 == 6:
             if self.request.POST.get("2-accept") == "decline":
                 self.storage.reset()
                 self.request.session["form_1_data"] = ""
                 return redirect("order-form")
-        if self.steps.step1 > 1 and self.request.session["form_1_data"] == "":
+        if self.steps.step1 > 1 and not self.request.session["form_1_data"]["quantity"]:
             return redirect("order-form")
         return super(OrderForm, self).render(form, **kwargs)
 
@@ -255,13 +266,14 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                 "custom_pricing":custom_pricing,
                 })
 
-        elif self.steps.step1 == 4:
+        elif self.steps.step1 == 6:
             form1_data = self.request.session["form_1_data"]
+            print(form1_data)
             quantities = form1_data['quantity'] # list
-            dates = form1_data['date_'] # list
+            furnishing_options = form1_data['furnishing_option'] # list
             order = []
-            for q,date in zip(quantities,dates):
-                if q == "" or date == "":
+            for q,furnishing_option in zip(quantities,furnishing_options):
+                if q == "" or furnishing_option == "":
                     continue
                 qty = int(q.split("##")[0]) 
                 pk = int(q.split("##")[1]) 
@@ -269,23 +281,23 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                 dictn = {
                     "product": product,
                     "qty":qty,
-                    "date":date,
+                    "furnishing_option":furnishing_option,
                 }
                 order.append(dictn)
             no_of_floors = form1_data["custom_order"]['no_of_floors']
             width = form1_data["custom_order"]['width']
             depth = form1_data["custom_order"]['depth']
             cus_qty = form1_data["custom_order"]['custom_quantity']
-            cus_date = form1_data["custom_order"]['custom_date']
+            furnishing_option_custom = form1_data["custom_order"]['furnishing_option_custom']
             custom_order = None
-            if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+            if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
                 qty = int(cus_qty.split("##")[0]) 
                 pk = int(cus_qty.split("##")[1])      
                 cus_product = get_object_or_404(CustomContainerPricing, id=pk)
                 custom_order = {
                     "product":cus_product,
                     "qty": qty,
-                    "date": cus_date,
+                    "furnishing_option_custom": furnishing_option_custom,
                     "no_of_floors":no_of_floors,
                     "width":width,
                     "depth":depth,
@@ -293,19 +305,38 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             context.update({
                 "order":order,
                 "custom_order":custom_order,
+                'shipping_info': self.get_cleaned_data_for_step('2'),
+                'buyer_info': self.get_cleaned_data_for_step('3'),
                 })        
-        return context 
+        return context
+
+    # def render_next_step(self, form, **kwargs):
+    #     if self.steps.current == '2':
+    #         cleaned_data_2 = self.get_cleaned_data_for_step('2')
+    #     if self.steps.current == '3':
+    #         cleaned_data_3 = self.get_cleaned_data_for_step('3')
+    #     return super(OrderForm, self).render_next_step(form, **kwargs)
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)
-        order_status = self.save_cart(forms[2])
+        delivery_info_form = forms[2]
+        delivery_info = delivery_info_form.save()
+        buyer_app = Order(user=self.request.user)
+        buyer_form = forms[1]
+        buyer_form2 = forms[3]
+        for form in [buyer_form,buyer_form2]:
+            for field_name, value in form.cleaned_data.items():
+                setattr(buyer_app, field_name, value)
+        buyer_app.save()
+
+
+
+        order_status = self.save_cart(forms[4], buyer_app, delivery_info)
         self.request.session["form_1_data"] = ""
         # print("done===",self.request.session.items())
+        print("order_status: ", order_status)
+        print("Form:",forms[1])
         if order_status != "no order":
-            buyer_form = forms[1]
-            buyer_app = buyer_form.save(commit=False)
-            buyer_app.user=self.request.user
-            buyer_app.save()
             return redirect("/")
         else:
             messages.warning(self.request, "You must select something to place an order!")
@@ -314,15 +345,16 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
 
 def add_order(request, pk=None):
     """adding container order to session"""
+    print(request.GET)
     quantities = request.GET.getlist('quantity')
-    dates = request.GET.getlist('date_')
+    furnishing_option = request.GET.getlist('furnishing_option')
     no_of_floors = request.GET['no_of_floors']
     width = request.GET['width']
     depth = request.GET['depth']
     cus_qty = request.GET['custom_quantity']
-    cus_date = request.GET['custom_date']
+    furnishing_option_custom = request.GET['furnishing_option_custom']
     total = 0
-    for q,d in zip(quantities,dates):
+    for q,d in zip(quantities,furnishing_option):
         if q == "" or d == "":
             continue
         qty = int(q.split("##")[0]) 
@@ -333,7 +365,7 @@ def add_order(request, pk=None):
             total += qty * product.price21     
         else:
             total += qty * product.price     
-    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !='' and cus_date != ""):
+    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
         qty = int(cus_qty.split("##")[0]) 
         pk = int(cus_qty.split("##")[1])      
         product = get_object_or_404(CustomContainerPricing, id=pk)
@@ -341,7 +373,9 @@ def add_order(request, pk=None):
         if qty > 20 or area > 20:
             total += (area * qty)* product.custom_price21  
         else:
-            total += (area *  qty)* product.custom_price 
+            total += (area *  qty)* product.custom_price
+    if total == 0:
+        total = ''
     return JsonResponse(total, safe=False)
 
 

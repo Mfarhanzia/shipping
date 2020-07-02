@@ -299,6 +299,7 @@ def contact_view(request):
 
 @login_required()
 def update_userprofile(request):
+    allowed_users = ['developer', 'lender', 'banker']
     if request.method == "POST":
         form1 = UserProfileForm(request.POST)
         form2 = UserProfileForm2(request.POST)
@@ -307,7 +308,7 @@ def update_userprofile(request):
             pass
         elif User.objects.filter(email=email).exists():
             messages.error(request,"Email Already Exists")
-            return render(request, "users/user_profile.html", {"form": form1, "form2": form2, "email":email})
+            return render(request, "users/user_profile.html", {"form": form1, "form2": form2, "email":email, 'allowed_users':allowed_users})
         elif not User.objects.filter(email=email).exists():
             request.user.email = email
             request.user.save()
@@ -321,7 +322,7 @@ def update_userprofile(request):
             if request.user.is_superuser:
                 return render(request, "users/user_profile.html", {"form": form1})
             else:
-                return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+                return render(request, "users/user_profile.html", {"form": form1, "form2": form2, 'allowed_users':allowed_users})
 
         if not request.user.is_superuser:
             if form2.is_valid():
@@ -330,17 +331,23 @@ def update_userprofile(request):
                 request.user.specuser.city = form2.cleaned_data['city']
                 request.user.specuser.address = form2.cleaned_data['address']
                 request.user.specuser.postal = form2.cleaned_data['postal']
+
+                if request.user.specuser.user_type in allowed_users:
+                    request.user.specuser.company_name = form2.cleaned_data['company_name']
+                    request.user.specuser.title = form2.cleaned_data['title']
+                elif request.user.specuser.user_type == 'dealer':
+                    request.user.specuser.company_name = form2.cleaned_data['company_name']
                 request.user.specuser.save()
                 messages.success(request, "Updated")
             else:
-                return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+                return render(request, "users/user_profile.html", {"form": form1, "form2": form2, 'allowed_users':allowed_users})
         return redirect('user-profile')
     form1 = UserProfileForm(instance=request.user)
     if not request.user.is_superuser:
         form2 = UserProfileForm2(instance=request.user.specuser)
     else:
         form2 = None
-    return render(request, "users/user_profile.html", {"form": form1, "form2": form2})
+    return render(request, "users/user_profile.html", {"form": form1, "form2": form2, 'allowed_users':allowed_users})
 
 
 @login_required()

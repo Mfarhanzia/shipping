@@ -24,7 +24,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
     f_name = models.CharField('First Name',max_length=100)
     l_name = models.CharField('Last Name',max_length=100)
-    email = models.EmailField('Email',max_length=100)
+    email = models.EmailField('Email',max_length=100, help_text="Optional", blank=True, null=True)
     company_name = models.CharField('Name of Company',max_length=100, help_text="Optional", blank=True, null=True)
     # phone_number = PhoneNumberField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
     phone_number = models.CharField(("Phone Number"), max_length = 18, help_text="Optional", blank=True, null=True)
@@ -32,11 +32,9 @@ class Order(models.Model):
     zipcode = USZipCodeField("Zip Code",blank=True, null=True)
     
     letter_of_credit = models.CharField("Do you have a Letter of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-
     how_much_letter_of_credit= models.CharField("What is the value of your Letter of Credit (in USD)?",max_length=50, help_text="in USD$", blank=True, null=True)
 
     line_of_credit = models.CharField("Do you have a Line of Credit?", max_length=5, choices= YES_NO_CHOICES, blank=True, null=True)
-
     how_much_line_of_credit= models.CharField("What is the currently unused amount in your Line of Credit?",max_length=50, help_text="in USD$",blank=True, null=True)
 
     STATUS_CHOICES = (("3-6 Months","3-6 Months"),
@@ -48,19 +46,15 @@ class Order(models.Model):
         ('urgent','Urgent(within 30 days)'),
         ('other','Other'),
         )
-
-    when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None)
-    
+    when_to_order = models.CharField("When are you looking to order?",choices=When_To_Order ,max_length=50, default=None, null=True, blank=True)
     other_when_to_order = models.CharField("When To Order",choices=STATUS_CHOICES ,max_length=50, default=None, null=True, blank=True)
     
     type_of_climate_area = MultiSelectField("On which type of climate area(s) will the development(s) be sited? ",choices=Type_Of_Climate_Area, max_length=300, blank=True, null=True)
-    
     other_type_of_climate_area =models.CharField(max_length=200, verbose_name="Other", null=True, blank=True)
 
     septic_infrastructure  = models.CharField("Does the development site already have septic infrastructure or service?",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True)
 
     installation_septic_infrastructure  = models.CharField("Does it require the installation of septic infrastructure? (There will be a charge for initial infrastructure installation and periodic maintenance service charges.) ",choices=YES_NO_CHOICES, max_length=100, blank=True, null=True, default=None)
-
 
     class Meta:
         verbose_name = "Buyer Application"
@@ -112,16 +106,31 @@ class CustomContainerPricing(models.Model):
         return f"Custom Container Pricing"
 
 
+class DeliveryInfo(models.Model):
+    address = models.CharField('Address', max_length=1000, default='')
+    city = models.CharField('City',max_length=60, default='')
+    state = models.CharField('State',max_length=60, default='')
+    postal = USZipCodeField('Postal',max_length=60, default='')
+    country = models.CharField('Country',max_length=60, default='')
+    delivery_date = models.DateField(default=None)
+
+    class Meta:
+        verbose_name = "Delivery Info"
+        verbose_name_plural = "Delivery Info"
+
+
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    delivery_info_obj = models.ForeignKey(DeliveryInfo, on_delete=models.CASCADE, default=None, blank=True, null=True)
+    buyer_app_obj = models.ForeignKey(Order, on_delete=models.CASCADE, default=None, blank=True, null=True)
     order_items = models.ForeignKey(ContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
     custom_order = models.ForeignKey(CustomContainerPricing, on_delete=models.CASCADE, blank=True, null=True)
     custom_floors = models.CharField("No. of Floors", max_length=100, blank=True, null=True)
     custom_width = models.CharField("Width", max_length=100, blank=True, null=True)
     custom_depth = models.CharField("Depth", max_length=100, blank=True, null=True)
     quantity = models.PositiveIntegerField("Quantity")
-    delivery_date = models.DateField(default=None, blank=True, null=True)
     ordered_on = models.DateField(auto_now_add=True)
+    furnishing_option = models.CharField('furnishing_option', max_length=100, blank=True, null=True)
     user_image = models.ImageField(upload_to="pdf-images", blank=True, null=True, default="default.jpeg")
 
     class Meta:

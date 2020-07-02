@@ -132,5 +132,5 @@ class UserProfileForm(forms.ModelForm):
 class UserProfileForm2(forms.ModelForm):
     class Meta:
         model = SpecUser
-        fields = ('address', 'city', 'state', 'postal', 'country',)
+        fields = ('company_name', 'title', 'address', 'city', 'state', 'postal', 'country',)
 
