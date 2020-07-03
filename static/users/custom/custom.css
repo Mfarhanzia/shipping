@@ -189,8 +189,54 @@ form {
     -webkit-box-shadow: none !important;
 }
 
+.capture_image_div{
+    background-color: rgb(0,0,0,0.7);
+    /*display: none;*/
+    position: fixed;
+    z-index: 10000;
+    top:7%;
+    bottom: 5%;
+    width: 100%;
+    left: 0;
+    right: 0;
+    align-content: center;
+    vertical-align: center;
+    transition: transform .3s ease-out;
+    transform: translateY(-200%);
+}
+.open{
+    display: block;
+    transform: translateY(0);
+   transition: transform .3s ease-out;
 
+}
+.close{
+    float: right;
+    font-size: 34px;
+    color: #555555;
+    line-height: 0;
+}
 
+.navbar .dropdown-menu a{
+    color: #9d9f9f !important;
+}
+
+.close:hover{
+    color: White;
+    font-size: 34px;
+    background-color: black !important;
+    opacity: 1;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: white !important;
+    opacity: 1;
+}
 
 #div_id_how_much_letter_of_credit,
 #div_id_how_much_line_of_credit,
@@ -600,8 +646,7 @@ input[type="date"], focus {
 }
 
 .forget-pass{
-    
-    color:black !important;
+    color: #5ca6cf;
     text-decoration: underline;
 }
 
@@ -815,7 +860,7 @@ canvas{
 }
 
 .registration_form_input{
-    background-color: #555555;
+    background-color: #f2f2f2;
 }
 
 .registration_form_input .navbar-custom .navbar-brand {
@@ -845,7 +890,7 @@ border-bottom: 1px white solid;
     border-radius: 12px;
     width: 100%;
     background-color: #f2f2f2;
-    border: 2px solid #c4c2c2;
+    border: 2px solid #949496;
     margin-left: 10px;
 }
 
@@ -877,6 +922,7 @@ border-bottom: 1px white solid;
     font-size: 18px !important;
     line-height: 20px;
     letter-spacing: 0.12em;
+    border-radius: 10px !important;
 }
 
 .margin-auto{
@@ -892,7 +938,7 @@ border-bottom: 1px white solid;
     line-height: 32px;
     /* identical to box height */
     letter-spacing: 0.12em;
-    color: #FFFFFF;
+    color: #555555;
 }
 
 .adjust-spacing{
@@ -922,7 +968,7 @@ border-bottom: 1px white solid;
 .project-tab #tabs h6.section-title{
     color: #eee;
 }
-.project-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.project-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link .active {
     color: #5ca6cf;
     background-color: transparent;
     border-color: transparent transparent #f3f3f3;

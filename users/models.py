@@ -95,7 +95,7 @@ class UserPreferences(models.Model):
         ('Capability to Load Handicapped Person Without Human Assistance','Capability to Load Handicapped Person Without Human Assistance'),
     )
 
-    user_obj = models.ForeignKey(SpecUser, on_delete=models.CASCADE)
+    user_obj = models.ForeignKey(SpecUser, on_delete=models.CASCADE, null=True,blank=True)
     type_of_development = MultiSelectField("What type of development(s) are you seeking?",choices=Type_Of_Development, max_length=300)
 
     other_type_of_development = models.CharField(max_length=300, verbose_name="Other", blank=True, null=True)

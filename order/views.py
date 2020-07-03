@@ -72,7 +72,8 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
     def save_cart(self, form2, buyer_app, delivery_info):
         """saving the container orders"""
         form1_data = self.request.session["form_1_data"]
-        print("===",form2.cleaned_data,"\n===saving=======",form1_data)
+        print("delivery_date:", self.get_cleaned_data_for_step('2')['delivery_date'])
+        # print("===",form2.cleaned_data,"\n===saving=======",form1_data)
         quantities = form1_data['quantity'] # list
         furnishing_options = form1_data['furnishing_option'] # list
         form1_data['print_name'] = form2.cleaned_data["print_name"]
@@ -214,7 +215,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             "total":total,
             "user_image": user_image,
             "print_name" : print_name,
-            "delivery_date": self.request.session["delivery_date"],
+            "delivery_date": self.get_cleaned_data_for_step('2')['delivery_date'],
             }  
         ##admin
         pdf = self.send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
@@ -226,7 +227,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             "total":total,
             "print_name" : print_name,
             "user_image": None,
-            "delivery_date": self.request.session["delivery_date"],
+            "delivery_date": self.get_cleaned_data_for_step('2')['delivery_date'],
             }  
         pdf = self.send_mail_PDF(template,context,user_mail)
         messages.success(self.request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
@@ -238,8 +239,6 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             self.form1_data["quantity"] = self.request.POST.getlist('quantity')
             self.form1_data["furnishing_option"] = self.request.POST.getlist('furnishing_option')
             self.form1_data["custom_order"] = self.request.POST
-        elif self.steps.step1 == 3:
-            self.request.session["delivery_date"] = self.request.POST['2-delivery_date']
         return data
 
     def render(self, form=None, **kwargs):
@@ -290,7 +289,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             cus_qty = form1_data["custom_order"]['custom_quantity']
             furnishing_option_custom = form1_data["custom_order"]['furnishing_option_custom']
             custom_order = None
-            if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
+            if no_of_floors != "" and width != "" and depth != "" and cus_qty !='':
                 qty = int(cus_qty.split("##")[0]) 
                 pk = int(cus_qty.split("##")[1])      
                 cus_product = get_object_or_404(CustomContainerPricing, id=pk)
@@ -303,19 +302,14 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                     "depth":depth,
                 }
             context.update({
-                "order":order,
-                "custom_order":custom_order,
+                "order": order,
+                "custom_order": custom_order,
                 'shipping_info': self.get_cleaned_data_for_step('2'),
                 'buyer_info': self.get_cleaned_data_for_step('3'),
+                'buyer_app1': BuyerAppForm(self.get_cleaned_data_for_step('1')),
                 })        
         return context
 
-    # def render_next_step(self, form, **kwargs):
-    #     if self.steps.current == '2':
-    #         cleaned_data_2 = self.get_cleaned_data_for_step('2')
-    #     if self.steps.current == '3':
-    #         cleaned_data_3 = self.get_cleaned_data_for_step('3')
-    #     return super(OrderForm, self).render_next_step(form, **kwargs)
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)
@@ -328,14 +322,9 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             for field_name, value in form.cleaned_data.items():
                 setattr(buyer_app, field_name, value)
         buyer_app.save()
-
-
-
         order_status = self.save_cart(forms[4], buyer_app, delivery_info)
         self.request.session["form_1_data"] = ""
         # print("done===",self.request.session.items())
-        print("order_status: ", order_status)
-        print("Form:",forms[1])
         if order_status != "no order":
             return redirect("/")
         else:
@@ -345,7 +334,6 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
 
 def add_order(request, pk=None):
     """adding container order to session"""
-    print(request.GET)
     quantities = request.GET.getlist('quantity')
     furnishing_option = request.GET.getlist('furnishing_option')
     no_of_floors = request.GET['no_of_floors']

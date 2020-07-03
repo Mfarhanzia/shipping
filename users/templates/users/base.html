@@ -10,7 +10,6 @@
 
 	{% if title %}
 	<title class="text-capitalize">Shipping Container Home - Bolt on Bloks - {{ title }}</title>
-
 	{% else %}
 	<title>Shipping Container Home - Bolt on Bloks</title>
 	{% endif %}
@@ -68,20 +67,28 @@
 	</div>
 
  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom ss">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">BOLT ON BLOKS</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav mr-auto">
+        <ul id="nav-bar" class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'home' %}">HOME</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'models' %}">MODELS</a>
-          </li>
+
+			<li class="nav-item dropdown" >
+				<a class="nav-link dropdown-toggle models" id="navbarDropdownMenuLink"
+				   data-toggle="dropdown"
+				   aria-haspopup="true" aria-expanded="false">MODELS</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="{% url 'models-info' name='1S-2W' %}">1 Story 2 Wide</a>
+					<a class="dropdown-item" href="{% url 'models-info' name='2S-3W' %}">2 Story 3 Wide</a>
+					<a class="dropdown-item" href="{% url 'models-info' name='3S-2W' %}">3 Story 2 Wide</a>
+				</div>
+			</li>
           <li class="nav-item">
             <a class="nav-link" href="#">ABOUT US</a>
           </li>
@@ -91,7 +98,7 @@
         </ul>
         <div class="form-inline my-2 my-lg-0">
            {% if not request.user.is_authenticated %}
-               <a class="no-btn mr-3" href="/login">LOGIN</a>
+               <a class="no-btn mr-3" href="/register">LOGIN</a>
            {% endif %}
             <a class="no-btn btn-info" href="{% url 'order-form' %}">PLACE AN ORDER</a>
            {% if request.user.is_authenticated %}
@@ -191,7 +198,7 @@
 	<script type="text/javascript" src="{% static 'users/new_custom/vendor/jquery/jquery.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/new_custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/new_custom/vendor/slick/slick.js' %}"></script>
-	<script src="{% static 'users/webcam/webcam.js' %}"></script>
+
 	<script type="text/javascript" src="{% static 'users/dist/jquery.inputmask.js' %}"></script>
 	<script type="text/javascript" src="{% static 'MBD/js/popper.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'users/custom/custom_jquery.js' %}"></script>

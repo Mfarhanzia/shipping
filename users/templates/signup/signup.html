@@ -32,11 +32,14 @@
 	<link type="text/css" rel="stylesheet" href="{% static 'users/fonts/stylesheet.css' %}" />
    <link href="{% static 'MBD/css/mdb.min.css' %}" rel="stylesheet">
 <style>
-/* On mouse-over, add a grey background color */
-.checkbox-container:hover input ~ .checkmark {
-    background-color: #ccc;
-    mso-border-shadow: yes;
-}
+	/* On mouse-over, add a grey background color */
+	.checkbox-container:hover input ~ .checkmark {
+		background-color: #ccc;
+		mso-border-shadow: yes;
+	}
+	.navbar-brand {
+		color: #555 !important;
+	}
 </style>
 </head>
 
@@ -45,7 +48,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">BOLT ON BLOKS</a>
-      <a class="pull-right" href="/">Back to Homepage</a>
+      <a class="pull-right" href="/" style="color: #555">Back to Homepage</a>
     </div>
   </nav>
 	<div class="container text-center">
@@ -61,7 +64,6 @@
 			{% endif %}
 		</div>
 	</div>
-
 
 	<!-- Error messaging -->
 	<div class="container">
@@ -86,50 +88,83 @@
 		</div>
 	</div>
 
-
 <div class="container  md-padding">
-   <h1 class="text-center create_acct_h1 mb-5">Create Your Accounts</h1>
-    <div class="row">
-        <div class="col-md-7 margin-auto col-sm-10 bg-white pt-4 pb-5" style="border-radius:
-        20px;">
-            {% for errors in form.non_field.errors %}
-            <p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
-            {% endfor%}
-            <form method="POST">
-                {% csrf_token %}
-                {{ wizard.management_form }}
-                {% for field in wizard.form  %}
-                    <div style="margin-left: -20px;" id="div_id_{{field.name}}" class="custom_input">
-                        <i class="prefix"> </i>
-                        <label for="{{field.id_for_label}}" class="label" data-error="wrong"
-                            data-success="right">{{field.label}}
-                            {% if 'Phone' in field.label or "Company" in field.label or "Title" in field.label or "Dealer" in field.label %}
-                            <span style="font-size: small;" class="text-muted ml-2">(optional) </span>
-                            {% endif %}
-                        </label><br>
-                        {{field}}
-                        {% for error in field.errors %}
-                        <p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-               <label class="mt-4" style="display: inline-flex;">
-                  <label class="checkbox-container">
-                     <input id="check_all" type="checkbox" required>
-                     <span class="checkmark"></span>
-                  </label>
-                  Click here to indicate that you have read and agree to the terms presented in the
-                  <a href="/static/users/files/term&conditions.pdf" target="_blank" style="display: contents"><span style="display:
-                  contents"
-                                                                                class="text-muted">Terms and Conditions
-                  agreement</span></a>
-               </label>
-               {% include "users/formwizard_btns.html" %}
-            </form>
+
+    <div class="row mt-4">
+		<div class="col-md-6 pt-4 pb-5">
+			<h1 class="text-center create_acct_h1 mb-4"><b>Sign In</b></h1>
+			<div class="w-100 bg-white mt-5 pb-3" style="border-radius: 20px;">
+				<form method="POST" action="/login/">
+					{% csrf_token %}
+					<div class="form-group">
+						<div style="margin-left: -20px;" class="custom_input">
+							<i class="prefix"> </i>
+							<label for="login-email" class="label" data-error="wrong"
+								   data-success="right">Email</label><br>
+							<input type="email" id="login-email" name="username" required>
+						</div>
+						<div style="margin-left: -20px;"class="custom_input">
+							<i class="prefix"> </i>
+							<label for="login-password" class="label" data-error="wrong"
+								   data-success="right">Password*</label><br>
+							<input type="password" id="login-password" name="password" required>
+						</div>
+						<div class="w-100 mt-2">
+							<small>
+							<a class="fa-pull-right forget-pass" href="{% url 'password_reset' %}"> Forgot Password? </a>
+							</small>
+						</div>
+						<br>
+						<div class="w-100 mt-4 text-center">
+							<button class="btn btn-custom btn-lg pl-5 pr-5" type="submit">Login</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+        <div class="col-md-6 margin-auto col-sm-10  pt-4 pb-5" >
+			<h1 class="text-center create_acct_h1 mb-5">Create Your Accounts</h1>
+			<div class="w-100 bg-white pb-4" style="border-radius: 20px;">
+				{% for errors in form.non_field.errors %}
+				<p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+				{% endfor%}
+				<form method="POST">
+					{% csrf_token %}
+					{{ wizard.management_form }}
+					{% for field in wizard.form  %}
+						<div style="margin-left: -20px;" id="div_id_{{field.name}}" class="custom_input">
+							<i class="prefix"> </i>
+							<label for="{{field.id_for_label}}" class="label" data-error="wrong"
+								data-success="right">{{field.label}}
+								{% if 'Phone' in field.label or "Company" in field.label or "Title" in field.label or "Dealer" in field.label %}
+								<span style="font-size: small;" class="text-muted ml-2">(optional) </span>
+								{% endif %}
+							</label><br>
+							{{field}}
+							{% for error in field.errors %}
+							<p style="font-size:14px " class="help text-danger ml-5">{{error}}</p>
+							{% endfor %}
+						</div>
+					{% endfor %}
+				   <label class="mt-4" style="display: inline-flex;">
+					  <label class="checkbox-container">
+						 <input id="check_all" type="checkbox" required>
+						 <span class="checkmark"></span>
+					  </label>
+					  Click here to indicate that you have read and agree to the terms presented in the
+					  <a href="/static/users/files/term&conditions.pdf" target="_blank" style="display: contents"><span style="display:
+					  contents"
+																					class="text-muted">Terms and Conditions
+					  agreement</span></a>
+				   </label>
+					<div class="w-100 text-center">
+				   		{% include "users/formwizard_btns.html" %}
+					</div>
+				</form>
+			</div>
         </div>
     </div>
-    <h6 class="text-center mt-5 mb-5" style="color: #999999">Already have an account? <a href="/login"
-                      class="text-white">Signin</a></h6>
+
 </div>
 <script type="text/javascript" src="{% static 'users/new_custom/vendor/jquery/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'users/new_custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

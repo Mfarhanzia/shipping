@@ -2,7 +2,76 @@
 {% extends 'users/base.html' %}
 {% load humanize %}
 {% load widget_tweaks %}
+{% load static %}
+{% block custom_css %}
+      <link type="text/css" rel="stylesheet" href="{% static 'users/custom/sign_up.css' %}" />
+      <style type="text/css">
 
+      .registration_form_input nav {
+         border: none;
+      }
+      ul{
+         padding-left: 3px !important;
+      }
+      ul li {
+         list-style-type: none;
+      }
+      ul li a{
+         color: #999999;
+      }
+	  .checkbox-container ul{
+		  margin-left: 15px;
+	  }
+      .checkbox-container ul li label{
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .checkmark {
+        position: absolute;
+        top: 3px;
+        left: -3px;
+        height: 22px;
+        width: 22px;
+        background-color: #f0f0f0;
+         border: 1px solid;
+        border-radius: 4px;
+      }
+
+      /*/* Hide the browser's default checkbox */
+      .checkbox-container ul li label input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      /* Style the checkmark/indicator */
+      .checkbox-container .checkmark:after {
+          top:1px;
+      }
+      /* On mouse-over, add a grey background color */
+
+      .align_li li{
+         display: inline-flex;
+         width: 180px !important;
+         margin: 0px 10px 0px 0px;
+      }
+      .align_li li label{
+         margin: 0;
+         margin-left: 0;
+         margin-top: 2px;
+      }
+   </style>
+{% endblock %}
 {% block content %}
 <div class="container">
         <h2 class="text-center mt-5 mb-5"><strong>Order Summary</strong></h2>
@@ -100,6 +169,25 @@
 				</ul>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h5 class="text-info1">Site Information</h5>
+				<form method="POST" class="checkbox-containers custom_input ml-0 mr-0" >
+					{% for field in buyer_app1 %}
+					<div id="div_{{field.id_for_label}}" class="checkbox-container">
+						<i class="prefix"> </i>
+						<label  for="{{field.id_for_label}}" class="label" data-error="wrong"
+							data-success="right">{{field.label}}
+						</label><br>
+						{{field}}
+						{% for error in field.errors %}
+						<p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</form>
+			</div>
+		</div>
 
 	<div class="row">
         <div class="col-md-12 col-sm-12 mt-4 mb-5">
@@ -127,7 +215,15 @@
         </div>
     </div>
 </div>
-
+{% block js %}
+   <script type="text/javascript">
+      chk='<span class="checkmark"></span>'
+      $(chk).appendTo('ul li label')
+      $('#div_id_2-other_type_of_development').removeClass('checkbox-container')
+      $('#div_').addClass('align_li')
+   	$('.checkbox-containers input').attr('disabled', 'disabled');
+   </script>
+{% endblock%}
 {% endblock %}
 
 

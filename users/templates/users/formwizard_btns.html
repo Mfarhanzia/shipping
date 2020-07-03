@@ -5,16 +5,17 @@
                 formnovalidate="formnovalidate">Previous</button>
       {% endif %}
        {% if wizard.steps.next %}
-         <button id="multi-step-continue" type="submit" class="btn btn-custom btn-lg "
-         >{% if wizard.steps.step1 == 1 and not request.user %}
-            Create an Account{% else %}Continue{% endif %}</button>
+         <button id="multi-step-continue" type="submit" class="btn btn-custom btn-lg ">
+			 {% if wizard.steps.step1 == 1 and not request.user %}
+            	Create an Account
+			 {% else %}Continue{% endif %}</button>
        {% else %}
        <button type="submit" class="btn btn-custom btn-lg" >
        {%if next_button %}
            as{{next_button}}
-           {%else%}
-           Submit
-           {%endif%}
+	   {%else%}
+		       Submit
+	   {%endif%}
        </button>
        {% endif %}
 

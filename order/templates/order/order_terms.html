@@ -1,9 +1,74 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
+{% block custom_css %}
+      <link type="text/css" rel="stylesheet" href="{% static 'users/custom/sign_up.css' %}" />
+      <style type="text/css">
+
+
+      ul{
+         padding-left: 3px !important;
+		  display: block ruby;
+      }
+      ul li {
+         list-style-type: none;
+      }
+      ul li a{
+         color: #999999;
+      }
+      .checkbox-container ul li label{
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .checkmark {
+        position: absolute;
+        top: 3px;
+        left: -3px;
+        height: 22px;
+        width: 22px;
+        background-color: #f0f0f0;
+         border: 1px solid;
+        border-radius: 4px;
+      }
+
+      /*/* Hide the browser's default checkbox */
+      .checkbox-container ul li label input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      /* Style the checkmark/indicator */
+      .checkbox-container .checkmark:after {
+          top:1px;
+      }
+      /* On mouse-over, add a grey background color */
+      .checkbox-container ul li:hover input[type="checkbox"] ~ .checkmark {
+         background-color: #ccc;
+         mso-border-shadow: yes;
+         border: 2px solid;
+      }
+	  input[type="text"]{
+		  font-size: 20px;
+		  padding-left: 8px !important;
+	  }
+
+   </style>
+{% endblock %}
 {% block content%}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 col-sm-12">
+        <div class="col-md-8 col-sm-12 mt-5 mb-5 p-0">
             <form method="POST" class="agreement-form" enctype="multipart/form-data">
                 {%csrf_token%}
                 {{ wizard.management_form }}
@@ -64,31 +129,72 @@
 
             </div>
                 <div class="terms-btn mt-3 p-4 mb-4">
-                <div style="display:inline;">      
+                <div class="checkbox-containers custom_input" >
                     {% for field in wizard.form %}
-                       {{field.label}} {{field}}
-                    {% endfor%}</div>
+						{% if field == form.print_name  %}
+							<div class="">
+								<i class="prefix"> </i>
+								<label  for="{{field.id_for_label}}" class="label" data-error="wrong"
+									data-success="right">{{field.label}}
+								</label><br>
+								{{field}}
+								{% for error in field.errors %}
+									<p style="font-size:14px" class="help text-danger ml-5">{{error}}</p>
+								{% endfor %}
+							</div>
+						{% elif field == form.accept %}
+							<div  class="checkbox-container">
+								{{ field }}
+							</div>
+						{% else %}
+								{{ field }}
+						{% endif %}
 
+                    {% endfor%}
+				</div><br/>
+				<button type="button" id="activate-camera" class="btn btn-custom btn-lg">Activate Camera</button>
                 </div>
                 {% comment %} <input type="hidden" name="webcam" id="image-input_id" value=""> {% endcomment %}
+			<div style="float: right">
                 {% include "users/formwizard_btns.html" %}
+			</div>
             </form>
         </div>
-        <div class="col-md-4 col-sm-6 img-div">
-            <div id="div_id"></div>
+		<div class="col-md-4 mt-5 mb-5">
+			<div id="capture_image">
+			</div>
+		</div>
+        <div class="col-md-8 margin-auto img-div capture_image_div text-center">
+			<button type="button" class="close dot" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+            <div class="margin-auto" id="div_id"></div>
+			<button type="button" id="capture"class="btn btn-custom">Capture</button>
         </div>
     </div>
 </div>
 {% endblock%}
 {% block js %}
+<script src="{% static 'users/webcam/webcam.js' %}"></script>
 <script>
-    Webcam.set({
-        width: 300,
-        height: 400,
+
+    $("#activate-camera").click(function()
+        {
+
+		$(".capture_image_div").toggleClass("open");
+		Webcam.set({
+        width: 400,
+        height: 500,
         image_format: 'jpeg',
         jpeg_quality: 90,
-       
         });
-    Webcam.attach('#div_id');
+    	Webcam.attach('#div_id');
+
+    });
+
+   chk='<span class="checkmark"></span>'
+   $(chk).appendTo('ul li label')
+   $('#div_id_2-other_type_of_development').removeClass('checkbox-container')
+   $('#div_id_type_of_development').addClass('align_li')
 </script>
 {% endblock %}

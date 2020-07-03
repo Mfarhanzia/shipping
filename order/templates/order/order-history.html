@@ -108,7 +108,7 @@
    </style>
 {% endblock %}
 {% block content %}
- <div class="container">
+ <div class="container mt-5 mb-5">
      <div class="row">
          {% include 'signup/side_nav.html' %}
          <div class="col-lg-9 col-md-9 m-auto mt-2">
@@ -157,7 +157,8 @@
                                            </div>
                                          </td>
                                          <td rowspan="5">
-                                           <div  class="address-div">{{ order.user.specuser.address }}</div>
+                                           <div  class="address-div">
+											   {{ order.delivery_info_obj.address }}</div>
                                          </td>
                                          <td>Subtotal</td>
                                      {% if order.custom_order %}
@@ -221,7 +222,7 @@
                                           <td class="pt-2"><u>Custom Order </u></td>
                                         {% endif %}
                                          <td class="pt-2" colspan="2">
-                                             DELIVERY ON {{ order.delivery_date }}
+                                             DELIVERY ON {{ order.delivery_info_obj.delivery_date }}
                                          </td>
                                      </tr>
                                      <tr class="custom-tr">

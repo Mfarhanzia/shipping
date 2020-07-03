@@ -7,7 +7,8 @@ from .views import (add_order,ViewBuyerApp, view_struc_drawings,dealer_view, ven
 
 
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(template_name='order/login.html',redirect_authenticated_user=True), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='order/login.html',redirect_authenticated_user=True),
+         name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
     path('view/structural-drawings',view_struc_drawings, name="struc-drawings"),

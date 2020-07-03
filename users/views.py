@@ -164,7 +164,7 @@ def home_access(request):
         messages.success(
             request, f'Your Request has been sent to Admin for confirmation. You will shortly receive an email on the given email address.')
 
-        return redirect('login')
+        return redirect('register')
     else:
         return redirect('/')
 
@@ -184,7 +184,7 @@ def activate(request, uidb64, req_for, token):
         return redirect('admincheck', uidb64, req_for)
     else:
         messages.warning(request, f'Link is Expired!')
-        return redirect('login')
+        return redirect('register')
 
 
 @login_required
@@ -374,6 +374,8 @@ def update_preferences(request):
     except:
         form = UserPreferencesForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        form_obj = form.save(commit=False)
+        form_obj.user_obj=request.user.specuser
+        form_obj.save()
         return redirect('my-pref')
     return render(request, "users/user_preference.html", {"form": form})

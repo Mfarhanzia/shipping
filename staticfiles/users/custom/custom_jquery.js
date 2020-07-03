@@ -23,11 +23,15 @@
         // }
         function fixed_nav(){
             var nav = $("#nav-header");
-            var sticky = nav[0].offsetTop;
-            if (window.pageYOffset > sticky && window.location.pathname != "/register/" && window.screen.width > 992) {
-            nav.addClass("fixed-top");
-            } else {
-              nav.removeClass("fixed-top");
+            try{
+                var sticky = nav[0].offsetTop;
+                if (window.pageYOffset > sticky && window.location.pathname != "/register/" && window.screen.width > 992) {
+                nav.addClass("fixed-top");
+                } else {
+                  nav.removeClass("fixed-top");
+                }
+            }catch (e) {
+                console.log("error",e)
             }
         }
         fixed_nav()
@@ -35,8 +39,10 @@
 
 
         //remove blank options
-        $("ul[id=id_1-letter_of_credit] > li:first").remove();
-        $("ul[id=id_1-line_of_credit] > li:first").remove();
+        $("ul[id=id_septic_infrastructure] > li:first").remove();
+        $("ul[id=id_installation_septic_infrastructure] > li:first").remove();
+        $("ul[id=id_3-letter_of_credit] > li:first").remove();
+        $("ul[id=id_3-line_of_credit] > li:first").remove();
         $("ul[id=id_2-learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_learn_about_electric_drive] > li:first").remove();
         $("ul[id=id_1-septic_infrastructure] > li:first").remove();
@@ -55,13 +61,13 @@
         
         // letter_of_credit show/hide
         letter_of_credit_input()
-        $("#id_radio_field_7").on("click",function() {
+        $("#id_3-letter_of_credit").on("click",function() {
             letter_of_credit_input()
         });
 
         // line_of_credit show/hide
         line_of_credit_input()
-        $("#id_radio_field_9").on("click",function() {
+        $("#id_3-line_of_credit").on("click",function() {
             line_of_credit_input()
         });
 
@@ -91,16 +97,30 @@
         });
 
         // other2_climate_area
-        $("#id_1-type_of_climate_area_6").click(function() {
+        function other2_climate_area(){
             if ($('#id_1-type_of_climate_area_6').is(":checked")) {
                 $('#id_1-other_type_of_climate_area').attr('required', 'required');
-                $('#id_14').show();
-            } else {
+                $('#div_id_1-other_type_of_climate_area').show();
+                }
+            else {
                 $('#id_1-other_type_of_climate_area').removeAttr('required');
                 $('#id_1-other_type_of_climate_area').val('');
-                $("#id_14").hide();
+                $("#div_id_1-other_type_of_climate_area").hide();
             }
+            if ($('#id_type_of_climate_area_6').is(":checked")) {
+                $('#id_other_type_of_climate_area').attr('required', 'required');
+                $('#div_id_other_type_of_climate_area').show();
+                }
+            else {
+                $('#id_other_type_of_climate_area').removeAttr('required');
+                $('#id_other_type_of_climate_area').val('');
+                $("#div_id_other_type_of_climate_area").hide();
+            }
+        }
+        $("#id_1-type_of_climate_area_6").click(function() {
+            other2_climate_area()
         });
+        other2_climate_area()
 
         //admin-check Time access show/hide
         $("input[name=selector]").click(function() {
@@ -196,90 +216,99 @@
 
         $("input[name=price]").inputmask({ 'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': true, 'prefix': '$', 'align': 'left' })
 
-        var path = window.location.pathname;
+        let path = window.location.pathname;
         if (path == '/order-form/') {
             $('[href="/order-form/"]').css({'color':"white"});
         }
         else if (path == '/login/') {
-            $('[href*="/login"]').addClass('active1');
+            $('[href*="/login"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         } else if (path == '/buyer/applications') {
-            $('[href="/buyer/applications"]').addClass('active1');
+            $('[href="/buyer/applications"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         } 
         else if (path == '/floor-plan') {
-            $('.about').addClass('active1');
-            $('[href*="/floor-plan"]').addClass('active1');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/floor-plan"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else if (path == '/assembling/') {
-            $('.about').addClass('active1');
-            $('[href*="/assembling/"]').addClass('active1');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/assembling/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else if (path == '/quotation/') {
-            $('[href*="/quotation/"]').addClass('active1');
+            $('[href*="/quotation/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else if (path == '/view/quotation/') {
-            $('[href*="/view/quotation/"]').addClass('active1');
+            $('[href*="/view/quotation/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else if (path == '/register/') {
-            $('[href*="/register"]').addClass('active1');
-
+            $('[href*="/register"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else if (path == '/dealer/') {
-            $('[href*="/dealer/"]').addClass('active1');
+            $('[href*="/dealer/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
-         else if (path.startsWith('/models') ) {
-            $('.models').addClass('active1');
-            $('[href*="/models"]').addClass('active1');
+         else if (path.startsWith('/models/1S-2W') ) {
+            // $('.models').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/models/1S-2W"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.models').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+
+        }
+         else if (path.startsWith('/models/2S-3W') ) {
+            $('.models').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/models/2S-3W"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+        }
+         else if (path.startsWith('/models/3S-2W') ) {
+            $('.models').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/models/3S-2W"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path == '/electric-cars/') {
-            $('[href="/electric-cars/"]').addClass('active1');
-            $('.electric_car').addClass('active1');
+            $('[href="/electric-cars/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.electric_car').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path == '/electric-cars/interior') {
-            $('.electric_car').addClass('active1');
-            $('[href*="/electric-cars/interior"]').addClass('active1');
+            $('.electric_car').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/electric-cars/interior"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path == '/electric-cars/exterior') {
-            $('.electric_car').addClass('active1');
-            $('[href*="/electric-cars/exterior"]').addClass('active1');
+            $('.electric_car').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('[href*="/electric-cars/exterior"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/view/structural-drawings') != -1) {
-            $('[href="/view/structural-drawings"]').addClass('active1');
-            $('.about').addClass('active1');
+            $('[href="/view/structural-drawings"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/view/architectural-drawings') != -1) {
-            $('[href="/view/architectural-drawings"]').addClass('active1');
-            $('.about').addClass('active1');
+            $('[href="/view/architectural-drawings"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path == '/concept') {
-            $('[href*="/concept"]').addClass('active1');
-            $('.about').addClass('active1');
+            $('[href*="/concept"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path == '/amenities') {
-            $('[href*="/amenities"]').addClass('active1');
-            $('.about').addClass('active1');
+            $('[href*="/amenities"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/view/reportsap') != -1) {
-            $('[href="/view/reportsap"]').addClass('active1');
-            $('.about').addClass('active1');
+            $('[href="/view/reportsap"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
+            $('.about').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/contactus') != -1) {
-            $('[href="/contactus"]').addClass('active1');
+            $('[href="/contactus"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
             
         }
         else if (path.indexOf('/my/orders') != -1) {
-            $('[href="/my/orders"]').addClass('active1');
+            $('[href="/my/orders"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/preferences/') != -1) {
-            $('[href="/preferences/"]').addClass('active1');
+            $('[href="/preferences/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/update/profile') != -1) {
-            $('[href="/update/profile"]').addClass('active1');
+            $('[href="/update/profile"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
         else if (path.indexOf('/logout') != -1) {
-            $('[href="/logout"]').addClass('active1');
+            $('[href="/logout"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
          else {
-            $('[href="/"]').addClass('active1');
+            $('[href="/"]').attr('style', 'color: #5ca6cf!important; font-weight: bold');
         }
 
     }); // end DOM ready
@@ -375,13 +404,29 @@
             });
         });
     
-    $("#multi-step-continue").click(function()
+    // $("#multi-step-continue").click(function()
+    //     {
+    //         if($("#image-input_id").val() == ""){
+    //             Webcam.snap( function(image) {
+    //                 $("#image-input_id").val(image);
+    //             });
+    //         }
+    // });
+
+    $("#capture").click(function()
         {
-            if($("#image-input_id").val() == ""){
-                Webcam.snap( function(image) {
-                    $("#image-input_id").val(image);
-                });
-            }
+        capture_image()
+        $("#capture").text('ReTake')
+    });
+    if($("#image-input_id").val() != ""){
+        const image = $("#image-input_id").val();
+        var img = '<img class="img-fluid" src="'+image+'"/>'
+        $("#capture_image").html(img)
+    }
+
+
+    $(".close").click(function(){
+        $(".capture_image_div").toggleClass('open');
     });
 
     checkbox_checked()
@@ -397,6 +442,8 @@
     $("#form_submission").click(function() {
         form_submissions()
     });
+
+
 
 })(jQuery); // end jQuery
 
@@ -442,7 +489,7 @@ function form_submissions(){
                 var parts = data.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 parts.join(".")
-                $("#total").html("$ " + parts.join("."));
+                $("#total,#grand-total").html("$ " + parts.join("."));
             },
             error: function(data) {
                 // console.log("error",data)
@@ -474,25 +521,33 @@ function myFunction(){
     $('#b-color').css("color","black");
 }   
 function letter_of_credit_input(){
-    if ($("#id_1-letter_of_credit_1").is(":checked")){
-        $("#id_8").show();
-        $('#id_1-how_much_letter_of_credit').attr('required', 'required');
+    if ($("#id_3-letter_of_credit_1").is(":checked")){
+        $("#div_id_3-how_much_letter_of_credit").show();
+        $('#id_3-how_much_letter_of_credit').attr('required', 'required');
     }
     else{
-        $('#id_1-how_much_letter_of_credit').removeAttr('required');
-        $('#id_1-how_much_letter_of_credit').val('');
-        $("#id_8").hide();
+        $('#id_3-how_much_letter_of_credit').removeAttr('required');
+        $('#id_3-how_much_letter_of_credit').val('');
+        $("#div_id_3-how_much_letter_of_credit").hide();
     }
 }
 function line_of_credit_input(){
-    if ($('#id_1-line_of_credit_1').is(":checked")) {
-        $("#id_10").show();
-        $('#id_1-how_much_line_of_credit').attr('required', 'required');
+    if ($('#id_3-line_of_credit_1').is(":checked")) {
+        $("#div_id_3-how_much_line_of_credit").show();
+        $('#id_3-how_much_line_of_credit').attr('required', 'required');
     }
     else{
-        $('#id_1-how_much_line_of_credit').removeAttr('required');
-        $('#id_1-how_much_line_of_credit').val('');
-        $("#id_10").hide();
+        $('#id_3-how_much_line_of_credit').removeAttr('required');
+        $('#id_3-how_much_line_of_credit').val('');
+        $("#div_id_3-how_much_line_of_credit").hide();
     }
 }
 
+function capture_image(){
+        Webcam.snap( function(image) {
+        $("#image-input_id").val(image);
+        // display results in page
+        var img = '<img class="img-fluid" src="'+image+'"/>'
+        $("#capture_image").html(img)
+        });
+}

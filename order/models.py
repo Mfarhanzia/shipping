@@ -86,6 +86,7 @@ class ContainerPricing(models.Model):
     price21 = models.DecimalField("Delivered Price Delivered to site for 21 or more units", max_digits=20, decimal_places=2, blank=True, null=True)
     model_image = models.CharField("Model Image", max_length=1000, blank=True, null=True)
     model_name = models.CharField("Model Name", max_length=100, blank=True, null=True, default='')
+    model_link = models.CharField("model_link", max_length=10, blank=True, null=True, default='')
     class Meta:
         verbose_name = "Containers Pricing"
         verbose_name_plural = "Containers Pricing"

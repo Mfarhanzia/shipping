@@ -37,20 +37,19 @@
     <div class="row">
         <div class="col-md-12 col-sm-12  order_form_h2">
             <h2 class="text-center text-uppercase">Place an Order</h2>
-
             <div class="col-md-12 table-responsive">
             	<div class="w-100">
-								<h3 class="text-info1 text-uppercase">Individual units</h3>
-								<ul class="nav custom_ul mb-4">
-									<b> We have models suited for</b>:
-									<li>Single-family homes</li>
-									<li>duplex</li>
-									<li>Triplex</li>
-									<li>Man camps</li>
-									<li>Employee	housing</li>
-									<li>other</li>
-								</ul>
-							</div>
+					<h3 class="text-info1 text-uppercase">Individual units</h3>
+					<ul class="nav custom_ul mb-4">
+						<b> We have models suited for</b>:
+						<li>Single-family homes</li>
+						<li>duplex</li>
+						<li>Triplex</li>
+						<li>Man camps</li>
+						<li>Employee	housing</li>
+						<li>other</li>
+					</ul>
+				</div>
                 <table class="table view_order_table table text-center">
                   <thead>
                     <tr>
@@ -67,8 +66,12 @@
                         {{ wizard.management_form }}
                         {% for data in pricing %}
                         <tr>
-                          <td>{{data.no_of_floors}} {{data.variant}}<br>{{data.square_feet}} sq. ft.<br><a>View
-                            Details</a></td>
+                          <td><img class="img-fluid" src="{{ data.model_image }}"/>
+							  {{data.no_of_floors}} {{data.variant}}<br>{{data.square_feet}} sq. ft.<br>
+							  {% if data.model_link %}
+							  	<a href="/models/{{ data.model_link }}">View Details</a>
+							  {% endif %}
+						  </td>
                           <td >$ {{data.price|intcomma}}</td>
                           <td >$ {{data.price21|intcomma}}</td>
                           <td>
@@ -80,12 +83,12 @@
                             </select>
                           </td>
 {#                          <td><input onchange="form_submissions()" type="date" class="p-1" name="date_{{date.id}}"></td>#}
-													<td>
-														<select onchange="form_submissions()" class="p-1" name="furnishing_option">
-															<option value="Fully Furnished">Fully Furnished</option>
-														</select>
-													</td>
-												</tr>
+							<td>
+								<select onchange="form_submissions()" class="p-1" name="furnishing_option">
+									<option value="Fully Furnished">Fully Furnished</option>
+								</select>
+							</td>
+						</tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -135,25 +138,119 @@
                                 {% endfor %}
                             </select>
                         </td>
-											<td><select onchange="form_submissions()" class="p-1" name="furnishing_option_custom">
-												<option value="Fully Furnished">Fully Furnished</option>
-											</select></td>
+						<td>
+							<select onchange="form_submissions()" class="p-1" name="furnishing_option_custom">
+								<option value="Fully Furnished">Fully Furnished</option>
+							</select>
+						</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-					<div>
-						 <p><b>TOTAL</b> <span id="total"> - </span></p>
-           </div>
-					<div class="w-100 p-4 mt-5" style="background-color: #f2f2f2;" >
-						<p>This is a preliminary order---not a commitment to complete the purchase---and its cancellation shall
-							be at no cost to the buyer.</p>
-						<br/><p>We reserve the right to make changes to our Housing and Electric Vehicle models at any time as
-						we continue to improve and upgrade our products and techologies. Prices are subject to changes at any
-						time.</p>
-					</div>
-					<div class="fa-pull-right">
-						 {% include "users/formwizard_btns.html" %}
+		<p class="text-uppercase"><b>Total</b> <span id="total"> - </span></p>
+		<div class="col-md-12 mt-5 mb-5">
+			<h5 class="text-info1 text-uppercase">Electric vehicle Add-ons (coming soon)</h5>
+			<p class="text-muted" style="font-size: .9rem">
+				All units are eligible to come with a free Electric Vehicle.
+			</p>
+			<table class="table view_order_table text-center">
+				<thead>
+				<tr class="text-uppercase">
+					<th>MODEL</th>
+					<th>Seating Capacity</th>
+					<th>Range</th>
+					<th>QTY</th>
+					<th>Body Color</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<img src="" alt="car-image"><br/>
+							<a href="#" class="text-info1">EV Compact SUV</a>
+						</td>
+						<td>4</td>
+						<td>180-350 Miles</td>
+						<td>
+							<select onchange="form_submissions()" id="AgeDropdownId" name="vehicle_quantity"
+									class="AgeDropdown p-1">
+                                <option value="" selected>-</option>
+                                {% for i in quantity %}
+                                    <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
+                                {% endfor %}
+                            </select>
+						</td>
+						<td>
+							<select name="body-color">
+								<option value="Blue">Blue</option>
+								<option value="Orange">Orange</option>
+								<option value="Orange">Black</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="" alt="car-image"><br/>
+							<a href="#" class="text-info1">EV Coupe SUV</a>
+						</td>
+						<td>2</td>
+						<td>180-350 Miles</td>
+						<td>
+							<select onchange="form_submissions()" id="AgeDropdownId" name="vehicle_quantity"
+									class="AgeDropdown p-1">
+                                <option value="" selected>-</option>
+                                {% for i in quantity %}
+                                    <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
+                                {% endfor %}
+                            </select>
+						</td>
+						<td>
+							<select name="body-color">
+								<option value="Blue">Blue</option>
+								<option value="Orange">Orange</option>
+								<option value="Orange">Black</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="" alt="car-image"><br/>
+							<a href="#" class="text-info1">EV Community Bus</a>
+						</td>
+						<td>16</td>
+						<td>180-350 Miles</td>
+						<td>
+							<select onchange="form_submissions()" id="AgeDropdownId" name="vehicle_quantity"
+									class="AgeDropdown p-1">
+                                <option value="" selected>-</option>
+                                {% for i in quantity %}
+                                    <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
+                                {% endfor %}
+                            </select>
+						</td>
+						<td>
+							<select name="body-color">
+								<option value="Blue">Blue</option>
+								<option value="Orange">Orange</option>
+								<option value="Orange">Black</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<p class="text-uppercase"><b>Grand Total</b> <span id="grand-total"> - </span></p>
+	   	</div>
+		<div class="w-100 p-4 mt-5" style="background-color: #f2f2f2;" >
+			<p>This is a preliminary order---not a commitment to complete the purchase---and its cancellation shall
+				be at no cost to the buyer.</p>
+			<br/><p>We reserve the right to make changes to our Housing and Electric Vehicle models at any time as
+			we continue to improve and upgrade our products and techologies. Prices are subject to changes at any
+			time.</p>
+		</div>
+		<div style="float: right">
+			 {% include "users/formwizard_btns.html" %}
            </div>
         </form>
         </div>
