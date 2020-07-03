@@ -27,9 +27,7 @@ DEBUG = False
 
 if DEBUG == False:
     SECURE_SSL_REDIRECT = True
-    DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
-else:
-    DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
+
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com',
         'www.boltonblocks.com', '*.boltonblocks.com', 'boltonblocks.com', 'www.boltonbloks.com', 'boltonbloks.com',
@@ -176,7 +174,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "info@boltonbloks.com"
 EMAIL_HOST_PASSWORD = "boltondev1PW" 
-
-
+DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+# DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
 # Activate Django heroku
 django_heroku.settings(locals())

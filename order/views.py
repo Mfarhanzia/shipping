@@ -329,7 +329,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             return redirect("/")
         else:
             messages.warning(self.request, "You must select something to place an order!")
-            return redirect("order-form")
+        return redirect("order-form")
 
 
 def add_order(request, pk=None):
