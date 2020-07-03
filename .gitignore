@@ -5,8 +5,8 @@
 __pycache__
 db.sqlite3
 media
-shipping/settings.py
-.static
+
+./static
 # Backup files # 
 *.bak 
 
