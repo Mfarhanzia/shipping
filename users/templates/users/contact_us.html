@@ -1,8 +1,8 @@
 {% extends "users/base.html" %}
 {% block content%}
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-sm-12" >
+    <div class="row mb-5 mt-5">
+        <div class="col-md-6 col-sm-12 mb-5 mt-5">
             <h1 class="text-center mb-5"><b>Contact Us</b></h1>
             <form class="no-margin boxshadow2" method="POST">
                 {% csrf_token %}
@@ -19,12 +19,12 @@
                     {% endfor %}
                 </div>
                 {% endfor%}
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-black fa-pull-right mb-4">Message</button>
+                <div class="form-actions text-center">
+                    <button type="submit" class="btn btn-custom btn-lg pl-5 pr-5 mb-4">Message</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-6 col-sm-12 mb-5 mt-5">
             <h1 class="text-center mb-5"><b>Find Us</b></h1>
             <iframe class="map-border" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3316.1203412096606!2d-117.9931101!3d33.7833904!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dd28eaf029b70d%3A0x1577635a5c462218!2s12345%20Beach%20Blvd%2C%20Garden%20Grove%2C%20CA%2092841%2C%20USA!5e0!3m2!1sen!2s!4v1581244264424!5m2!1sen!2s" width="100%" height="621" frameborder="0" allowfullscreen=""></iframe>
         </div>

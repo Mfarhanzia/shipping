@@ -65,63 +65,11 @@
             <form method="POST" class="agreement-form" enctype="multipart/form-data">
                 {%csrf_token%}
                 {{ wizard.management_form }}
-            <div class="agreement-terms p-4">
-                <legend >PRE-INSPRCTION SCOPE & AGREEMENT </legend>
-                <h2 class="text-center">BOLT ON BLOKS, LLC PRELIMINARY ORDER FORM</h2>
-                <p>This Preliminary Order Form (“Preliminary Order” or “Agreement”) is related to the Buyer Developer’s (“Buyer”) right to cancel or modify any preliminary orders on prototype walk through models (“prototypes”) created and sold by Bolt on Bloks, LLC (“Seller”) (collectively, the “Parties”).</p>
-                <h2>Recitals</h2>
-                <p><b>WHEREAS</b>, Seller is engaged in the business of producing residential homes that are environmentally conscious, modular, and migration ready.</p>
-                <p><b>WHEREAS</b>, Buyer enters this Preliminary Order in order to warrant and guarantee the purchase of a minimum of Seller’s prototypes pursuant to certain conditional terms as indicated below.</p>
-                <p><b>NOW, THEREFORE</b>, in consideration of the mutual promises contained herein, the Parties hereby agree as follows: </p>
-
-                <h2>Agreement</h2>
-                <p><b>Minimum Orders</b>. Preliminary Orders must be made in a minimum combination of two (2) prototypes accordingly:</p>
-                <p><b>Individual units</b>: single-family homes, duplex, triplex, man camps, employee housing, and other </p>
-                
-                <p><b>Multi-unit complex</b>: apartment buildings, mixed-use, hotel, motel, boutique hotel, condominium, town homes, hospitals, student housing, and other </p>
-                            
-                <p><b>No Commitment Guarantee and Modifications.</b> Upon execution of this Preliminary Order, Buyer has seven (7) business days from said execution to indicate in writing to Seller any modifications to the prototypes ordered. Buyer shall then have thirty (30) days to make such modifications to Buyer’s reasonable satisfaction.<br>
-                If no such modifications are made or received by Seller within such time period as indicated above, Buyer is thereafter obligated to purchase any prototypes as is.<br>  
-                If Buyer cancels its Preliminary Order as indicated above and within seven (7) business days from said execution, Buyer is under no obligation to complete the purchase and such timely cancellation is at no cost to Buyer.</p>
-                <p><b>Buyer’s Financial Integrity</b>. Upon execution of the Preliminary Order, Buyer shall furnish to Seller within seven (7) business days from said execution, proof of Buyer’s Financial Integrity in the full and total amount of the Preliminary Order, the following: bank statements, investment statements, bank loan agreement, Letter of Intent, cash, or asset collateral.</p>
-                <h2>Miscellaneous Provisions</h2>
-                <p><b>Expenses</b>. Each party shall pay her, his or its own costs and expenses, including attorney’s fees, incurred in connection with this Agreement and the transactions described herein.</p>
-                <p><b>Amendment and Waiver</b>. This Agreement may not be amended, modified or supplemented in any manner, and no provision of this Agreement may be waived, whether by course of conduct or otherwise, except by an instrument in writing signed on behalf of each party and otherwise as expressly set forth in this Agreement.</p>
-                <p><b>Choice of Law</b>. It is the intention of the parties that the laws of the State of California, County of Orange, shall govern the validity of this Agreement, the construction of its terms, and the interpretation of the rights and duties of the parties hereunder.</p>
-                <p><b>Plain Meaning</b>. Each party hereto, together with his, her or its respective legal counsel, has reviewed this Agreement and negotiated the terms hereof, and agrees that each provision hereof is to be given its plain meaning. Each party agrees that if any issue arises as to the meaning or construction of any word, phrase or provision hereof, that no party shall be entitled to the benefit of the principles of the construction and interpretation of contracts of written instruments that provide that any ambiguity is to be construed in favor of the party who did not draft the disputed word, phrase, or provision</p>
-                <p>
-                    <b>Severability</b>. If any provision of this Agreement shall be prohibited or invalid under applicable law, such provision shall be ineffective but only to the extent of such prohibition or invalidity, without invalidating the remainder of such provision or the remaining provisions of this Note or other such document. 
-                </p>
-                <p>
-                    <b>Binding Effect</b>. All the terms and provisions of this Agreement shall be binding upon, and inure to the benefit of, and be binding upon, the Parties and their respective legal representatives, successors and permitted assigns
-                </p>
-                <p>
-                    <b>Counterparts</b>. This Agreement may be executed in one or more counterparts, each of which shall be deemed to be an original, but all of which shall constitute one agreement. Photocopies, facsimile transmissions, or email transmission of Adobe portable document format files (“PDF” files) of signatures shall be deemed original signatures and shall be fully binding on the parties to the same extent as original signatures. 
-                </p>
-                <p>
-                    <b>IN WITNESS WHEREOF</b>, the Parties have executed this Preliminary Order Form on the day and year indicated below.
-                </p>
-                {% comment %} <input type="checkbox" class="" value="" required>
-                <label><h5>(clickbox to accept signature)</h5></label> {% endcomment %}
-                <p>
-                {% comment %} Buyer:
-                    <span style="font-family: Brush Script Std;" id="buyer_name"> &nbsp;</span> {% endcomment %}
-                    <span class="fa-pull-right">Dated <span class="date_today"  >_____________________</span></span><br>
-                </p>
-                {% comment %} <p>
-                    Print Name: <input id="print_name" data-toggle="tooltip" title="Full Name" type="text" name="print_name"  placeholder="Full Name" required>
-                </p> {% endcomment %}
-                <p>
-                    <span>Seller: Bolt on Bloks, LLC<span><span class="fa-pull-right">Dated <span class="date_today">_____________________</span></span>
-                </p> <br>
-                <p>Bolt on Bloks, LLC </p>
-                <br>
-                <p>
-                    All parties, add initials to each page and sign the last.
-                </p>
-
+            <div class="agreement-terms">
+				<iframe class="embed-responsive-item" src="{% static 'users/files/term&conditions.pdf' %}"
+						width="100%" height="100%" allowfullscreen></iframe>
             </div>
-                <div class="terms-btn mt-3 p-4 mb-4">
+                <div class="terms-btn mt-3 p-4 mb-5 p-5">
                 <div class="checkbox-containers custom_input" >
                     {% for field in wizard.form %}
 						{% if field == form.print_name  %}
@@ -144,8 +92,9 @@
 						{% endif %}
 
                     {% endfor%}
+				<button type="button" id="activate-camera" class="btn btn-custom btn-lg fa-pull-right">Activate
+					Camera</button>
 				</div><br/>
-				<button type="button" id="activate-camera" class="btn btn-custom btn-lg">Activate Camera</button>
                 </div>
                 {% comment %} <input type="hidden" name="webcam" id="image-input_id" value=""> {% endcomment %}
 			<div style="float: right">
@@ -182,7 +131,6 @@
         jpeg_quality: 90,
         });
     	Webcam.attach('#div_id');
-
     });
 
    chk='<span class="checkmark"></span>'
