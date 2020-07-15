@@ -79,24 +79,25 @@
         <div class="col-md-12 col-sm-12 table-responsive">
             <table class="table view_order_table text-center table-striped">
                 <thead>
-                    <tr>  
+                    <tr>
                         <th>Model</th>
-                        <th>Delivered Price <br>(Delivered to site for <br>20 units or less)</th>
-                        <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
+{#                        <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>#}
                         <th>Qty</th>
                         <th>Furnishing Option</th>
+                        <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in order %}
-                    <tr>
-                        <td>{{i.product.no_of_floors}} {{i.product.variant}}<br/> {{i.product.square_feet}} sq. ft.
-												</td>
-                        <td >$ {{i.product.price|intcomma}}</td>
-                        <td >$ {{i.product.price21|intcomma}}</td>
-                        <td>{{i.qty}}</td>
-                        <td>{{i.furnishing_option}}</td>
-                    </tr>
+                    {% for i in order.values %}
+						{% if "width" not in i.keys %}
+							<tr>
+								<td><img class="img-fluid pb-2" src="{{ i.model_image }}"/>{{i.no_of_floors}}
+									{{i.variant}}<br/> {{i.square_feet}} sq. ft</td>
+								<td>{{i.quantity}}</td>
+								<td>{{i.furnished_option}}</td>
+								<td >$ {{i.price|intcomma}}</td>
+							</tr>
+						{% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -113,28 +114,29 @@
                             <th>Width (apt. units)</th>
                             <th>Depth (apt. units)</th>
                             <th>Approx. <br>Square Feet per room</th>
-                            <th>Price per 290s.f. room(for 20units or less)</th>
-                            <th>Price per 290s.f. room(for 21units or more)</th>
                             <th>Qty</th>
                             <th>Furnishing Option</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{custom_order.no_of_floors}}</td>
+                            <td>{{custom_order.no_of_floors}} </td>
                             <td><span>{{custom_order.width}} wide </span></td>
                             <td>{{custom_order.depth}} deep</td>
-                            <td>{{custom_order.product.sqfeet_per_room}}</td>
-                            <td>$ {{custom_order.product.custom_price|intcomma}}</td>
-                            <td>$ {{custom_order.product.custom_price21|intcomma}}</td>
-                            <td>{{custom_order.qty}}</td>
+                            <td>{{custom_order.sqfeet_per_room}}</td>
+                            <td>{{custom_order.quantity}}</td>
                             <td>{{custom_order.furnishing_option_custom}}</td>
+                            <td>$ {{custom_order.price|intcomma}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        {% endif %} 
+        {% endif %}
+		<div class="w-100">
+			<h5 class="mt-3 text-center" >Grand Total: <b>{{ total|intcomma }}</b></h5>
+		</div>
 
 		<div class="row mt-5 mb-5">
 			<div class="col-md-4">

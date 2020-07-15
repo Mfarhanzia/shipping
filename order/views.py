@@ -13,12 +13,16 @@ from django.core.mail import EmailMessage
 from django.db.models.functions import Cast
 from django.core.files.base import ContentFile
 from django.template.loader import get_template
+from django.contrib.auth import authenticate, login
 from formtools.wizard.views import SessionWizardView
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import Order, Material, MaterialQuotations, ContainerPricing, CartOrder, CustomContainerPricing
-from .forms import BuyerAppForm, BuyerAppForm2, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm, DeliveryInfoForm
+from .forms import (BuyerAppForm, BuyerAppForm2, MaterialQuotationsForm, AddCustomProductForm, UserTermsForm,
+                    DeliveryInfoForm, LoginForm)
+from .cart import Cart
 # Create your views here.
 
 
@@ -49,94 +53,84 @@ class ViewBuyerApp(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return qs
 
 
-class OrderForm(LoginRequiredMixin, SessionWizardView):
-   
+class OrderForm(SessionWizardView):
     # file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
-    form_list = [AddCustomProductForm, BuyerAppForm, DeliveryInfoForm, BuyerAppForm2, UserTermsForm,
+    form_list = [AddCustomProductForm, BuyerAppForm, DeliveryInfoForm, BuyerAppForm2, UserTermsForm, LoginForm,
                  AddCustomProductForm]
+
+    def check_user_authentication(self):
+        if self.request.user.is_authenticated:
+            return False
+        else:
+            return True
+
     def get_template_names(self):
         """
         Return the template name for the current step
         """
-        # self.request.session.clear()
         templates = {
         0: 'order/form_order.html',
         1: 'order/buyer_app_form.html',
         2: 'order/delivery_info.html',
         3: 'order/buyer_app_form.html',
         4: 'order/order_terms.html',
-        5: 'order/review_order.html',
+        5: 'order/form_wizard_login.html',
+        6: 'order/review_order.html',
        }
         return [templates[int(self.steps.current)]]
-        
+
     def save_cart(self, form2, buyer_app, delivery_info):
         """saving the container orders"""
-        form1_data = self.request.session["form_1_data"]
-        print("delivery_date:", self.get_cleaned_data_for_step('2')['delivery_date'])
-        # print("===",form2.cleaned_data,"\n===saving=======",form1_data)
-        quantities = form1_data['quantity'] # list
-        furnishing_options = form1_data['furnishing_option'] # list
-        form1_data['print_name'] = form2.cleaned_data["print_name"]
-        no_of_floors = form1_data["custom_order"]['no_of_floors']
-        width = form1_data["custom_order"]['width']
-        depth = form1_data["custom_order"]['depth']
-        cus_qty = form1_data["custom_order"]['custom_quantity']
-        # cus_date = self.delivery_date
-        cus_date = form1_data["custom_order"]['furnishing_option_custom']
-        self.request.session["form_1_data"]['custom_id']=''
-        self.request.session["form_1_data"]['list_ids']=''
-        order_ids = []
+        cart = Cart(self.request).cart
+        print_name = form2.cleaned_data["print_name"]
+        regular_order_ids = []
+        custom_order_id = None
         image=None
         try:
-            format, imgstr = form2.cleaned_data["image_field"].split(';base64,') 
+            format, imgstr = form2.cleaned_data["image_field"].split(';base64,')
             ext = format.split('/')[-1]
             image = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
         except Exception as e:
             print(";;;;;;;;;;;  ERROR  ;;;;",e)
             pass
+        for key in cart:
+            data = cart[key]
+            if "width" in data.keys():
+                product = get_object_or_404(CustomContainerPricing, id=key)
+                custom_order_obj = CartOrder(
+                    user_id= self.request.user.id,
+                    delivery_info_obj= delivery_info,
+                    buyer_app_obj= buyer_app,
+                    custom_order= product,
+                    custom_floors= data["no_of_floors"],
+                    custom_width= data["width"],
+                    custom_depth= data["depth"],
+                    quantity= data["quantity"],
+                    furnishing_option= data["furnishing_option_custom"],
+                )
+                if image != None:
+                    custom_order_obj.user_image = image
+                custom_order_obj.save()
+                custom_order_id = custom_order_obj.id
 
-        for q, furnishing_option in zip(quantities, furnishing_options):
-            if q == "" or date == "":
-                continue
-            qty = int(q.split("##")[0]) 
-            pk = int(q.split("##")[1]) 
-            product = get_object_or_404(ContainerPricing, id=pk)
-            current_order = CartOrder(
-            user_id=self.request.user.id,
-            delivery_info_obj=delivery_info,
-            buyer_app_obj=buyer_app,
-            order_items = product,
-            quantity = qty, 
-            furnishing_option = furnishing_option,
-            )
-            if image != None:
-                current_order.user_image = image
-            current_order.save()
-            order_ids.append(int(current_order.id))
+            else:
+                product = get_object_or_404(ContainerPricing, id=key)
+                current_order = CartOrder(
+                    user_id=self.request.user.id,
+                    delivery_info_obj=delivery_info,
+                    buyer_app_obj=buyer_app,
+                    order_items=product,
+                    quantity=data["quantity"],
+                    furnishing_option=data["furnished_option"],
+                )
+                if image != None:
+                    current_order.user_image = image
+                current_order.save()
+                regular_order_ids.append(int(current_order.id))
+        return self.create_order_pdf(print_name, custom_order_id, regular_order_ids)
 
-        if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
-            qty = int(cus_qty.split("##")[0]) 
-            pk = int(cus_qty.split("##")[1])      
-            product = get_object_or_404(CustomContainerPricing, id=pk)
-            custom_order_obj = CartOrder(
-            user_id=self.request.user.id,
-            delivery_info_obj = delivery_info,
-            buyer_app_obj = buyer_app,
-            custom_order = product,
-            custom_floors = no_of_floors,
-            custom_width = width,
-            custom_depth = depth,
-            quantity = qty, 
-            furnishing_option = cus_date.replace('"',''),
-            )
-            if image != None:
-                custom_order_obj.user_image = image
-            custom_order_obj.save()
-            self.request.session["form_1_data"]['custom_id'] = custom_order_obj.id
-        self.request.session["form_1_data"]['list_ids'] = json.dumps(order_ids)
-        return self.create_order_pdf()
-
-    def fetch_resources(self,uri, rel):
+    @staticmethod
+    def fetch_resources(uri, rel):
         """
         Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
         `uri` is the href attribute from the html link element.
@@ -147,9 +141,9 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         # print("path",path)
         return uri 
 
-    def render_to_pdf(self,template_src, context_dict={}):
+    def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
-        html  = template.render(context_dict)
+        html = template.render(context_dict)
         result = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result, link_callback=self.fetch_resources, encoding="UTF-8")
         if not pdf.err:
@@ -172,28 +166,15 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         email.encoding = 'us-ascii'
         email.send()
     
-    def create_order_pdf(self):
+    def create_order_pdf(self, print_name, custom_order_id, regular_order_ids):
         template = get_template('order/order_pdf.html')
-        total = 0
         try:
-            ids = json.loads(self.request.session["form_1_data"]['list_ids'])
-            cart = CartOrder.objects.filter(id__in=ids)
-            for data in cart:
-                if data.quantity > 20:
-                    total += data.quantity * data.order_items.price21 
-                else:
-                    total += data.quantity * data.order_items.price 
+            cart = CartOrder.objects.filter(id__in=regular_order_ids)
         except Exception as e:
             cart = ""
         ## custom order
         try:
-            custom_id = self.request.session["form_1_data"]['custom_id']
-            custom_order_obj = CartOrder.objects.get(id=int(custom_id))
-            area = (int(custom_order_obj.custom_floors) * int(custom_order_obj.custom_width) * int(custom_order_obj.custom_depth))
-            if custom_order_obj.quantity > 20 or area > 20:
-                total += (area * custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price21   
-            else:
-                total += (area *  custom_order_obj.quantity)* custom_order_obj.custom_order.custom_price 
+            custom_order_obj = CartOrder.objects.get(id=int(custom_order_id))
         except:
             custom_order_obj = ""
         date_ = date.today()
@@ -207,7 +188,8 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         except Exception as e:
             print("no user found",e)
             return "no order"
-        print_name = self.request.session["form_1_data"]['print_name']
+
+        total = Cart(self.request).get_total_price()
         context = {
             "custom_order_obj":custom_order_obj,
             "cart": cart,
@@ -219,7 +201,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
             }  
         ##admin
         pdf = self.send_mail_PDF(template,context,settings.DEFAULT_FROM_EMAIL)
-        
+
         context = {
             "custom_order_obj":custom_order_obj,
             "cart": cart,
@@ -233,27 +215,47 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         messages.success(self.request,"Order Received.\nYour Receipt is Sent to Your Email Address.")
 
     def get_form_step_data(self, form):
+        print("get_form_step_data", self.steps.step1)
         data = super().get_form_step_data(form)
-        if self.steps.step1 == 1:
-            self.form1_data = self.request.session["form_1_data"] ={}
-            self.form1_data["quantity"] = self.request.POST.getlist('quantity')
-            self.form1_data["furnishing_option"] = self.request.POST.getlist('furnishing_option')
-            self.form1_data["custom_order"] = self.request.POST
+        # if self.steps.step1 == 1:
+        #     self.form1_data = self.request.session["form_1_data"] ={}
+            # self.form1_data["quantity"] = self.request.POST.getlist('quantity')
+            # self.form1_data["furnishing_option"] = self.request.POST.getlist('furnishing_option')
+            # self.form1_data["custom_order"] = self.request.POST
+        if self.steps.step1 == 6:
+            self.form1_data = self.request.session["form_1_data"] = {}
+            print("runing this 6666666",data)
+            email = data.get("5-email")
+            password= data.get("5-password")
+            user = authenticate(email=email, password=password)
+            print(user)
+            if user is not None:
+                if user.is_active:
+                    login(self.request, user)
         return data
 
-    def render(self, form=None, **kwargs):
-        if self.steps.step1 == 6:
+
+    def render(self, form=None, *args,**kwargs):
+        if self.steps.step1 == 7:
             if self.request.POST.get("2-accept") == "decline":
                 self.storage.reset()
                 self.request.session["form_1_data"] = ""
+                cart = Cart(self.request)
+                cart.clear()
                 return redirect("order-form")
-        if self.steps.step1 > 1 and not self.request.session["form_1_data"]["quantity"]:
+        try:
+            iscart = self.request.session["cart"]
+        except:
+            iscart = None
+        if self.steps.step1 > 1 and not iscart:
             return redirect("order-form")
+
         return super(OrderForm, self).render(form, **kwargs)
 
     def get_context_data(self, form, **kwargs):
         context = super(OrderForm, self).get_context_data(form=form, **kwargs)
         if self.steps.step1 == 1:
+            Cart(self.request).clear()
             form2 = AddCustomProductForm()
             pricing = ContainerPricing.objects.all().order_by('id')
             custom_pricing = CustomContainerPricing.objects.all().first()
@@ -264,52 +266,32 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
                 "quantity": range(300),
                 "custom_pricing":custom_pricing,
                 })
-
-        elif self.steps.step1 == 6:
-            form1_data = self.request.session["form_1_data"]
-            print(form1_data)
-            quantities = form1_data['quantity'] # list
-            furnishing_options = form1_data['furnishing_option'] # list
-            order = []
-            for q,furnishing_option in zip(quantities,furnishing_options):
-                if q == "" or furnishing_option == "":
-                    continue
-                qty = int(q.split("##")[0]) 
-                pk = int(q.split("##")[1]) 
-                product = get_object_or_404(ContainerPricing, id=pk)
-                dictn = {
-                    "product": product,
-                    "qty":qty,
-                    "furnishing_option":furnishing_option,
-                }
-                order.append(dictn)
-            no_of_floors = form1_data["custom_order"]['no_of_floors']
-            width = form1_data["custom_order"]['width']
-            depth = form1_data["custom_order"]['depth']
-            cus_qty = form1_data["custom_order"]['custom_quantity']
-            furnishing_option_custom = form1_data["custom_order"]['furnishing_option_custom']
-            custom_order = None
-            if no_of_floors != "" and width != "" and depth != "" and cus_qty !='':
-                qty = int(cus_qty.split("##")[0]) 
-                pk = int(cus_qty.split("##")[1])      
-                cus_product = get_object_or_404(CustomContainerPricing, id=pk)
-                custom_order = {
-                    "product":cus_product,
-                    "qty": qty,
-                    "furnishing_option_custom": furnishing_option_custom,
-                    "no_of_floors":no_of_floors,
-                    "width":width,
-                    "depth":depth,
-                }
-            context.update({
-                "order": order,
-                "custom_order": custom_order,
-                'shipping_info': self.get_cleaned_data_for_step('2'),
-                'buyer_info': self.get_cleaned_data_for_step('3'),
-                'buyer_app1': BuyerAppForm(self.get_cleaned_data_for_step('1')),
-                })        
+        elif self.request.user.is_authenticated and self.steps.step1 == 6:
+            print("im runing6")
+            context = self.update_context(context)
+        elif self.steps.step1 == 7:
+            print("im runing7")
+            context = self.update_context(context)
         return context
 
+    def update_context(self, context):
+        """This is a custom function not form_wizard"""
+        cart_obj = Cart(self.request)
+        regular_order = cart_obj.cart
+        custom_order = None
+        for key in cart_obj.cart:
+            data = cart_obj.cart[key]
+            if "width" in data.keys():
+                custom_order = cart_obj.cart[key]
+        context.update({
+            "order": regular_order,
+            "custom_order": custom_order,
+            "total": cart_obj.get_total_price(),
+            'shipping_info': self.get_cleaned_data_for_step('2'),
+            'buyer_info': self.get_cleaned_data_for_step('3'),
+            'buyer_app1': BuyerAppForm(self.get_cleaned_data_for_step('1')),
+        })
+        return context
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)
@@ -325,6 +307,7 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         order_status = self.save_cart(forms[4], buyer_app, delivery_info)
         self.request.session["form_1_data"] = ""
         # print("done===",self.request.session.items())
+        Cart(self.request).clear()
         if order_status != "no order":
             return redirect("/")
         else:
@@ -332,38 +315,47 @@ class OrderForm(LoginRequiredMixin, SessionWizardView):
         return redirect("order-form")
 
 
-def add_order(request, pk=None):
-    """adding container order to session"""
-    quantities = request.GET.getlist('quantity')
-    furnishing_option = request.GET.getlist('furnishing_option')
-    no_of_floors = request.GET['no_of_floors']
-    width = request.GET['width']
-    depth = request.GET['depth']
-    cus_qty = request.GET['custom_quantity']
-    furnishing_option_custom = request.GET['furnishing_option_custom']
-    total = 0
-    for q,d in zip(quantities,furnishing_option):
-        if q == "" or d == "":
-            continue
-        qty = int(q.split("##")[0]) 
-        pk = int(q.split("##")[1]) 
-        
-        product = get_object_or_404(ContainerPricing, id=pk)
-        if qty > 20:
-            total += qty * product.price21     
-        else:
-            total += qty * product.price     
-    if (no_of_floors != "" and width != "" and depth != "" and cus_qty !=''):
-        qty = int(cus_qty.split("##")[0]) 
-        pk = int(cus_qty.split("##")[1])      
-        product = get_object_or_404(CustomContainerPricing, id=pk)
+@require_POST
+def add_order(request):
+    cart = Cart(request)
+    is_custom = request.POST.get("custom_quantity", None)
+    if is_custom:
+        cus_qty = int(is_custom.split("##")[0])
+        custom_order_id = int(is_custom.split("##")[1])
+        no_of_floors = request.POST['no_of_floors']
+        width = request.POST['width']
+        depth = request.POST['depth']
+        furnishing_option_custom = request.POST['furnishing_option_custom']
+        product = CustomContainerPricing.objects.get(id=custom_order_id)
         area = (int(no_of_floors) * int(width) * int(depth))
-        if qty > 20 or area > 20:
-            total += (area * qty)* product.custom_price21  
+        if cus_qty > 20 or area > 20:
+            price = (area * cus_qty) * product.custom_price21
         else:
-            total += (area *  qty)* product.custom_price
-    if total == 0:
-        total = ''
+            price = (area * cus_qty) * product.custom_price
+        price = int(price)
+        cart.add_custom(no_of_floors, cus_qty, width, depth, furnishing_option_custom, product, price)
+    else:
+        quantity = int(request.POST["quantity"].split("##")[0])
+        order_id = request.POST["quantity"].split("##")[1]
+        furnishing_option = request.POST["furnishing_option"]
+        product = ContainerPricing.objects.get(id=order_id)
+        if quantity > 20:
+            price = product.price21
+        else:
+            price = product.price
+        price = int(price)
+        cart.add(quantity, furnishing_option, product, price)
+    cart_items = request.session['cart']
+    print(">>>Cart: {}".format(len(cart_items)),cart_items)
+    total = cart.get_total_price()
+    return JsonResponse(total, safe=False)
+
+
+@require_POST
+def remove_order(request, pk):
+    cart = Cart(request)
+    cart.remove(pk)
+    total = cart.get_total_price()
     return JsonResponse(total, safe=False)
 
 

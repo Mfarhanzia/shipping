@@ -478,10 +478,11 @@ function ajax() {
     document.getElementById("price_span").innerHTML= "$ " + $('#myselect option:selected').val().toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"); 
 }
 
-function form_submissions(){
-    var frm = $("#order_form");
+function form_submissions(form_id){
+    console.log("form",form_id)
+    var frm = $(`#${form_id}`);
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/add-order/",
             data: frm.serialize(),
             dataType: "json",
@@ -492,12 +493,32 @@ function form_submissions(){
                 $("#total,#grand-total").html("$ " + parts.join("."));
             },
             error: function(data) {
-                // console.log("error",data)
+                console.log("error",data)
                 // $("#MESSAGE-DIV").html("Something went wrong!");
             }
         });
         return false;
-}
+    }
+// function form_submissions(){
+//     var frm = $("#order_form");
+//         $.ajax({
+//             type: "GET",
+//             url: "/add-order/",
+//             data: frm.serialize(),
+//             dataType: "json",
+//             success: function (data) {
+//                 var parts = data.toString().split(".");
+//                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//                 parts.join(".")
+//                 $("#total,#grand-total").html("$ " + parts.join("."));
+//             },
+//             error: function(data) {
+//                 // console.log("error",data)
+//                 // $("#MESSAGE-DIV").html("Something went wrong!");
+//             }
+//         });
+//         return false;
+// }
 
 function show_hide_fields(){
     if ($('#id_2-type_of_development_10').is(":checked")) {

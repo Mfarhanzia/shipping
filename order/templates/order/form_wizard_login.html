@@ -1,0 +1,23 @@
+{% extends 'users/base.html' %}
+{% load staticfiles %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% block content %}
+	<div class="container">
+		<div class="row mt-5 mb-5">
+			<div class="col-md-8 m-auto p-auto col-sm-12 custom_input">
+			  	<form autocomplete="off" id="order_form" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{ wizard.management_form }}
+					{{ wizard.form }}
+					<div style="float: right">
+					 {% include "users/formwizard_btns.html" %}
+				   </div>
+        		</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

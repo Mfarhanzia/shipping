@@ -59,37 +59,42 @@
                       <th>Delivered Price <br>(Delivered to site for <br>21 or more units)</th>
                       <th>Qty</th>
                       <th>Furnishing Option</th>
+                      <th>Add To Order</th>
                     </tr>
                   </thead>
                     <tbody>
-                      <form autocomplete="off" id="order_form" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ wizard.management_form }}
+
                         {% for data in pricing %}
-                        <tr>
-                          <td><img class="img-fluid" src="{{ data.model_image }}"/>
-							  {{data.no_of_floors}} {{data.variant}}<br>{{data.square_feet}} sq. ft.<br>
-							  {% if data.model_link %}
-							  	<a href="/models/{{ data.model_link }}">View Details</a>
-							  {% endif %}
-						  </td>
-                          <td >$ {{data.price|intcomma}}</td>
-                          <td >$ {{data.price21|intcomma}}</td>
-                          <td>
-                            <select onchange="form_submissions()" id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1">
-                              <option value="" selected>-</option>
-                                {% for i in quantity %}
-                                  <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
-                                {% endfor %}
-                            </select>
-                          </td>
-{#                          <td><input onchange="form_submissions()" type="date" class="p-1" name="date_{{date.id}}"></td>#}
-							<td>
-								<select onchange="form_submissions()" class="p-1" name="furnishing_option">
-									<option value="Fully Furnished">Fully Furnished</option>
+						<form autocomplete="off" id="order_form_{{ data.id }}" onsubmit="event.preventDefault();
+						form_submissions(this.id);" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+							<tr>
+							  <td><img class="img-fluid" src="{{ data.model_image }}"/>
+								  {{data.no_of_floors}} {{data.variant}}<br>{{data.square_feet}} sq. ft.<br>
+								  {% if data.model_link %}
+									<a href="/models/{{ data.model_link }}">View Details</a>
+								  {% endif %}
+							  </td>
+							  <td >$ {{data.price|intcomma}}</td>
+							  <td >$ {{data.price21|intcomma}}</td>
+							  <td>
+								<select id="AgeDropdownId" name="quantity"  class="AgeDropdown p-1" required>
+								  <option value="" selected>-</option>
+									{% for i in quantity %}
+									  <option value="{{forloop.counter}}##{{data.id}}">{{forloop.counter}}</option>
+									{% endfor %}
 								</select>
-							</td>
-						</tr>
+							  </td>
+								<td>
+									<select class="p-1" name="furnishing_option" required>
+										<option value="Fully Furnished">Fully Furnished</option>
+									</select>
+								</td>
+								<td>
+									<button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+								</td>
+							</tr>
+						</form>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -121,29 +126,38 @@
                         <th>Price per 290 sq. ft. room(for > 21units)</th>
                         <th>Qty</th>
                         <th>Furnishing option</th>
+						<th>Add to Order</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
-                        <td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
-                        <td>{{form2.depth|add_class:"p-1"}} deep</td>
-                        <td>{{custom_pricing.sqfeet_per_room|intcomma}}</td>
-                        <td>$ {{custom_pricing.custom_price|intcomma}}</td>
-                        <td>$ {{custom_pricing.custom_price21|intcomma}}</td>
-                        <td>
-                            <select onchange="form_submissions()" id="AgeDropdownId" name="custom_quantity"  class="AgeDropdown p-1">
-                                <option value="" selected>-</option>
-                                {% for i in quantity %}
-                                    <option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-						<td>
-							<select onchange="form_submissions()" class="p-1" name="furnishing_option_custom">
-								<option value="Fully Furnished">Fully Furnished</option>
-							</select>
-						</td>
+						<form autocomplete="off" id="custom_order" onsubmit="event.preventDefault();
+								form_submissions(this.id);" method="POST" enctype="multipart/form-data">
+									{% csrf_token %}
+							<td>{{form2.no_of_floors|add_class:"p-1"}} stories</td>
+							<td><span>{{form2.width|add_class:"p-1"}} wide </span></td>
+							<td>{{form2.depth|add_class:"p-1"}} deep</td>
+							<td>{{custom_pricing.sqfeet_per_room|intcomma}}</td>
+							<td>$ {{custom_pricing.custom_price|intcomma}}</td>
+							<td>$ {{custom_pricing.custom_price21|intcomma}}</td>
+							<td>
+								<select id="AgeDropdownId" required name="custom_quantity"  class="AgeDropdown p-1">
+									<option value="" selected>-</option>
+									{% for i in quantity %}
+										<option value="{{forloop.counter}}##{{custom_pricing.id}}">{{forloop.counter}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td>
+								<select class="p-1" required name="furnishing_option_custom">
+									<option value="Fully Furnished">Fully Furnished</option>
+								</select>
+							</td>
+							<td>
+								<button class="btn" type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+							</td>
+						</form>
                     </tr>
                 </tbody>
             </table>
@@ -251,7 +265,10 @@
 			we continue to improve and upgrade our products and techologies. Prices are subject to change at any
 			time.</p>
 		</div>
-		<div style="float: right">
+		  <form autocomplete="off" id="order_form" method="POST" enctype="multipart/form-data">
+			  {% csrf_token %}
+			{{ wizard.management_form }}
+			<div style="float: right">
 			 {% include "users/formwizard_btns.html" %}
            </div>
         </form>
