@@ -59,7 +59,7 @@ class OrderForm(SessionWizardView):
                  AddCustomProductForm]
 
     def check_user_authentication(self):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated == True:
             return False
         else:
             return True
@@ -81,6 +81,7 @@ class OrderForm(SessionWizardView):
 
     def save_cart(self, form2, buyer_app, delivery_info):
         """saving the container orders"""
+
         cart = Cart(self.request).cart
         print_name = form2.cleaned_data["print_name"]
         regular_order_ids = []
@@ -224,16 +225,11 @@ class OrderForm(SessionWizardView):
             # self.form1_data["custom_order"] = self.request.POST
         if self.steps.step1 == 6:
             self.form1_data = self.request.session["form_1_data"] = {}
-            print("runing this 6666666",data)
             email = data.get("5-email")
             password= data.get("5-password")
-            user = authenticate(email=email, password=password)
-            print(user)
-            if user is not None:
-                if user.is_active:
-                    login(self.request, user)
-        return data
+            self.request.session["user_credentials"] = {"email":email,"password":password}
 
+        return data
 
     def render(self, form=None, *args,**kwargs):
         if self.steps.step1 == 7:
@@ -294,6 +290,12 @@ class OrderForm(SessionWizardView):
         return context
 
     def done(self, form_list, **kwargs):
+        email = self.request.session["user_credentials"]["email"]
+        password = self.request.session["user_credentials"]["password"]
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                login(self.request, user)
         forms = list(form_list)
         delivery_info_form = forms[2]
         delivery_info = delivery_info_form.save()

@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('add-order/', add_order, name='add-order'),
 
-    path('order-form/',OrderForm.as_view(condition_dict={5: OrderForm.check_user_authentication}), name='order-form'),
+    path('order-form/',OrderForm.as_view(condition_dict={'5': OrderForm.check_user_authentication}), name='order-form'),
 
     path('container/orders', view_container_orders, name='view-container-orders'), #for admin
     path('container/order/items/<int:pk>/', view_container_order_items, name='view-container-order-items'),
