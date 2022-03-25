@@ -12,22 +12,27 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k6(ca(d8=zwo5l*3)8dwj8u+nsa8-@cucv_7ew4q26-xq-u2cx'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
-# DEFAULT_FROM_EMAIL = "farhan71727@gmail.com"
+DEBUG = True
 
 if DEBUG == False:
-    DEFAULT_FROM_EMAIL = "info@boltonbloks.com"
+    DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
     SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['www.boltonblock.com', '*.boltonblock.com', 'boltonblock.com', 'www.boltonblocks.com',
@@ -89,23 +94,25 @@ WSGI_APPLICATION = 'shipping.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if not DEBUG:
+    #for local testing
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'NAME': 'shipping',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'PORT': '3306',
-#     }
-# }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASS'),
+            'HOST': env('DATABASE_HOST'),
+            'PORT': env('DATABASE_PORT'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -162,7 +169,7 @@ LOGOUT_REDIRECT_URL = 'register'
 PHONENUMBER_DEFAULT_REGION = 'US'
 # PHONENUMBER_DB_FORMAT = 'NATIONAL'
 
-ENCRYPT_KEY = b'v4iU9uh5AAeU1H5cTPqWSq7JAA2ui0G29UK5uMhe8Fg='
+ENCRYPT_KEY = (env("DEFAULT_FROM_EMAIL"))
 AUTH_USER_MODEL = 'users.User'
 CART_SESSION_ID = 'order'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -172,8 +179,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "info@boltonbloks.com"
-EMAIL_HOST_PASSWORD = "boltondev1PW" 
+EMAIL_HOST_USER = env("DEFAULT_FROM_EMAIL")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") 
 
 
 CART_SESSION_ID = 'cart'
